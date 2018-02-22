@@ -94,7 +94,7 @@
 			<div class="navbar-fixed">
 				<nav>
 					<div class="nav-wrapper teal lighten-2" id="loginNav">
-						<a href="#!" class="brand-logo center">Fuze Database Home-page</a>
+						<a href="#!" class="brand-logo center">Proxmity Fuze Database Home-page</a>
 
 						<a class='dropdown-button' href='#' data-activates='dropdownMenu'>
 							<span class='white-text text-darken-5' style="font-size: 20px; padding-left: 20px; font-weight: bold">Menu</span>
@@ -122,7 +122,7 @@
 				<div class="col m8 s12">
 
 					<br>
-					<div class="card-panel grey lighten-4" id="addCard">
+					<div class="card-panel grey lighten-4" id="calibrationCard">
 						<div class="row">
 
 							<center>
@@ -132,22 +132,22 @@
 							<form class="col s12" method="post" id="calibrationForm">
 								<div class="row">
 									<div class="input-field col s6">
-										<input id="fuze_no" name="fuze_no" type="text" class="validate">
-										<label for="fuze_no"><center>Fuze Number</center></label>
+										<input id="pcb_no" name="pcb_no" type="text">
+										<label for="pcb_no"><center>PCB Number</center></label>
 									</div>
 									<div class="input-field col s6">
-										<input id="rf_no" name="rf_no" type="text" class="validate">
+										<input id="rf_no" name="rf_no" type="text">
 										<label for="rf_no"><center>RF Number</center></label>
 									</div>
 								</div>
 
 								<div class="row">
 									<div class="input-field col s6">
-										<input id="before_freq" name="before_freq" type="text" class="validate">
-										<label for="before_freq"><center>Before Calibration - Frequency (MHz)</center></label>
+										<input id="before_freq" name="before_freq" type="text">
+										<label for="before_freq"><center>Before Calibration - Freq (MHz)</center></label>
 									</div>
 									<div class="input-field col s6">
-										<input id="before_bpf" name="before_bpf" type="text" class="validate">
+										<input id="before_bpf" name="before_bpf" type="text">
 										<label for="before_bpf"><center>Before Calibration - BPF AC (V)</center></label>
 									</div>
 								</div>
@@ -168,15 +168,15 @@
 
 								<div class="row">
 									<div class="input-field col s2">
-										<input type="text" name="resChange" id="resChange" class="validate" disabled>
+										<input type="text" name="resChange" id="resChange" disabled>
 										<label for="resChange"><center>Resistor (K&#8486;)</center></label>
 									</div>
 									<div class="input-field col s5">
-										<input type="text" name="after_freq" id="after_freq" class="validate" disabled>
-										<label for="after_freq"><center>After Calibration - Frequency (MHz)</center></label>
+										<input type="text" name="after_freq" id="after_freq" disabled>
+										<label for="after_freq"><center>After Calibration - Freq (MHz)</center></label>
 									</div>
 									<div class="input-field col s5">
-										<input type="text" name="after_bpf" id="after_bpf" class="validate" disabled>
+										<input type="text" name="after_bpf" id="after_bpf" disabled>
 										<label for="after_bpf"><center>After Calibration - BPF AC (V)</center></label>
 									</div>
 								</div>
@@ -193,14 +193,15 @@
 										<label for="datePicker"><center>Record date</center></label>
 									</div>
 									<div class="input-field col s6">
-										<input type="text" name="op_name" id="op_name" class="validate">
+										<input type="text" name="op_name" id="op_name">
 										<label for="op_name"><center>Operator's Name</center></label>
 									</div>
 								</div>
 
 								<center>
-									<button class="waves-effect waves-light btn" type="submit" id="submitButton">SUBMIT</button>
-									<a class="btn waves-effect waves-red red lighten-2">CLEAR</a>
+									<!--<button class="waves-effect waves-light btn" type="submit" id="submitButton">SUBMIT</button>-->
+									<a class="waves-effect waves-light btn" id="submitButton">SUBMIT</a>
+									<a class="btn waves-effect waves-red red lighten-2" id="clearButton">CLEAR</a>
 								</center>
 
 							</form>
@@ -240,11 +241,16 @@
 		});
 
 		function onRadioChange(){
-			var formData = document.getElementById("radioYes");
-			if(formData) {
+			var formData = $('input[name=group1]:checked').attr('id');
+			if(formData === "radioYes") {
 				document.getElementById("resChange").disabled = false;
 				document.getElementById("after_freq").disabled = false;
 				document.getElementById("after_bpf").disabled = false;
+			}
+			else{
+				document.getElementById("resChange").disabled = true;
+				document.getElementById("after_freq").disabled = true;
+				document.getElementById("after_bpf").disabled = true;
 			}
 		}
 
@@ -252,6 +258,69 @@
 			document.cookie = "fuzeLogin=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
 			location.href = "index.php";
 		}
+
+		$('#clearButton').click(function(){
+			$('#pcb_no').val('');
+			$('#rf_no').val('');
+			$('#before_bpf').val('');
+			$('#before_freq').val('');
+			$('#after_freq').val('');
+			$('#after_bpf').val('');
+			$('#resChange').val('');
+			$('#radioNo').prop('checked',true);
+			document.getElementById("resChange").disabled = true;
+			document.getElementById("after_freq").disabled = true;
+			document.getElementById("after_bpf").disabled = true;
+		});
+
+		$('#submitButton').click(function(){
+			if(($('#pcb_no').val().length == 0) || ($('#rf_no').val().length == 0) || ($('#before_freq').val().length == 0) || ($('#before_bpf').val().length == 0) || ($('#datePicker').val().length == 0) || ($('#op_name').val().length == 0))
+			{
+				Materialize.toast("Can't save with blank fields.",4000,'rounded');
+				Materialize.toast("Check what you have missed.",4000,'rounded');
+			}
+			else {
+				$.ajax({
+				url: 'submit_cal.php',
+				type: 'POST',
+				data:{
+					pcb_no: $('#pcb_no').val(),
+					rf_no: $('#rf_no').val(),
+					before_freq: $('#before_freq').val(),
+					after_freq: $('#after_freq').val(),
+					before_bpf: $('#before_bpf').val(),
+					after_bpf: $('#after_bpf').val(),
+					resChange: $('#resChange').val(),
+					changed: (($('#resChange').val().length > 0) ? '1' : '0'),
+					datePicker: $('#datePicker').val(),
+					op_name: $('#op_name').val()
+				},
+				success: function(msg) {
+					if(msg.includes("ok")){
+						Materialize.toast("Record Saved",1000,'rounded');
+						$('#pcb_no').val('');
+						$('#rf_no').val('');
+						$('#before_bpf').val('');
+						$('#before_freq').val('');
+						$('#after_freq').val('');
+						$('#after_bpf').val('');
+						$('#resChange').val('');
+						$('#radioNo').prop('checked',true);
+						document.getElementById("resChange").disabled = true;
+						document.getElementById("after_freq").disabled = true;
+						document.getElementById("after_bpf").disabled = true;
+					}
+					else{
+						Materialize.toast("Failed to save record!",3000,'rounded');
+						Materialize.toast("Database server is offline!",3000,'rounded');
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					 alert(errorThrown + "\n\nDatabase server offline?");
+				}
+			});
+			}
+		});
 	</script>
 
 </html>
