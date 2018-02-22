@@ -17,6 +17,10 @@
 
 		$mypassword = mysqli_real_escape_string($db,$_POST['password']);
 
+		$startPointCookie = "fuzeStart";
+		$startPointValue = $_POST['startPoint'];
+		setcookie($startPointCookie, $startPointValue, 0, "/");
+
 		$sql = "SELECT * FROM password WHERE passwd = '$mypassword'";
 
 		$result = mysqli_query($db,$sql);
@@ -105,7 +109,7 @@
 		<div class="navbar-fixed">
 			<nav>
 				<div class="nav-wrapper teal lighten-2" id="loginNav">
-					<a href="#!" class="brand-logo center">Welcome to Fuze Database</a>
+					<a href="#!" class="brand-logo center">Welcome to Proxmity Fuze Database</a>
 				</div>
 			</nav>
 		</div>
@@ -133,13 +137,14 @@
 
 										<div class="row">
 											<div class="input-field col s12">
-												<select>
+												<select name="startPoint" required>
 													<option value="" disabled selected>Select your start point</option>
 													<option value="1">QA/Visual</option>
-													<option value="1">PCB Testing</option>
-													<option value="1">Calibration</option>
-													<option value="2">After PU</option>
-													<option value="3">Rework</option>
+													<option value="2">PCB Testing</option>
+													<option value="3">Calibration</option>
+													<option value="4">After PU</option>
+													<option value="5">Rework</option>
+													<option value="6">Soldering</option>
 												</select>
 												<label>Select process</label>
 											</div>
@@ -173,8 +178,10 @@
 	</body>
 
 	<script type="text/javascript">
+
 		$(document).ready(function() {
 			$('select').material_select();
 		});
+
 	</script>
 </html>
