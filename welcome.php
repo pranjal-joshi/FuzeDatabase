@@ -122,7 +122,7 @@
 				<div class="col m8 s12">
 
 					<br>
-					<div class="card-panel grey lighten-4" id="calibrationCard">
+					<div class="card-panel grey lighten-4" id="calibrationCard" style="display: none;">
 						<div class="row">
 
 							<center>
@@ -132,11 +132,11 @@
 							<form class="col s12" method="post" id="calibrationForm">
 								<div class="row">
 									<div class="input-field col s6">
-										<input id="pcb_no" name="pcb_no" type="text">
+										<input id="pcb_no" name="pcb_no" type="text" required autofocus>
 										<label for="pcb_no"><center>PCB Number</center></label>
 									</div>
 									<div class="input-field col s6">
-										<input id="rf_no" name="rf_no" type="text">
+										<input id="rf_no" name="rf_no" type="text" required>
 										<label for="rf_no"><center>RF Number</center></label>
 									</div>
 								</div>
@@ -147,7 +147,7 @@
 										<label for="before_freq"><center>Before Calibration - Freq (MHz)</center></label>
 									</div>
 									<div class="input-field col s6">
-										<input id="before_bpf" name="before_bpf" type="text">
+										<input id="before_bpf" name="before_bpf" type="text" required>
 										<label for="before_bpf"><center>Before Calibration - BPF AC (V)</center></label>
 									</div>
 								</div>
@@ -189,17 +189,16 @@
 
 								<div class="row">
 									<div class="input-field col s6">
-										<input type="text" name="datePicker" id="datePicker" class="datepicker">
+										<input type="text" name="datePicker" id="datePicker" class="datepicker" required>
 										<label for="datePicker"><center>Record date</center></label>
 									</div>
 									<div class="input-field col s6">
-										<input type="text" name="op_name" id="op_name">
+										<input type="text" name="op_name" id="op_name" required>
 										<label for="op_name"><center>Operator's Name</center></label>
 									</div>
 								</div>
 
 								<center>
-									<!--<button class="waves-effect waves-light btn" type="submit" id="submitButton">SUBMIT</button>-->
 									<a class="waves-effect waves-light btn" id="submitButton">SUBMIT</a>
 									<a class="btn waves-effect waves-red red lighten-2" id="clearButton">CLEAR</a>
 								</center>
@@ -240,6 +239,11 @@
 			closeOnSelect: false // Close upon selecting a date,
 		});
 
+		switch($.cookie('fuzeStart')){
+			case '3':
+				$('#calibrationCard').fadeIn();
+		}
+
 		function onRadioChange(){
 			var formData = $('input[name=group1]:checked').attr('id');
 			if(formData === "radioYes") {
@@ -271,6 +275,7 @@
 			document.getElementById("resChange").disabled = true;
 			document.getElementById("after_freq").disabled = true;
 			document.getElementById("after_bpf").disabled = true;
+			$('#pcb_no').focus();
 		});
 
 		$('#submitButton').click(function(){
@@ -309,6 +314,7 @@
 						document.getElementById("resChange").disabled = true;
 						document.getElementById("after_freq").disabled = true;
 						document.getElementById("after_bpf").disabled = true;
+						$('#pcb_no').focus();
 					}
 					else{
 						Materialize.toast("Failed to save record!",3000,'rounded');
