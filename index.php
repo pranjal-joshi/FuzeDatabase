@@ -130,7 +130,7 @@
 									<div class="col m4"></div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input type="password" name="password" id="password" class="validate">
+											<input type="password" name="password" id="password" class="validate" required>
 											<label for="password">Password</label>
 										</div>
 									</div>
