@@ -321,15 +321,24 @@
 								<div class="row">
 
 									<div class="row">
-										<div class="input-field col s12">
-											<input id="soldering_pcb_no" name="soldering_pcb_no" type="text" required autofocus>
-											<label for="soldering_pcb_no"><center>PCB Number</center></label>
+										<div class="input-field col s6">
+											<input id="soldering_pcb_no" name="soldering_pcb_no" type="text" autofocus>
+											<label for="soldering_pcb_no"><center>Scan PCB Number</center></label>
+										</div>
+
+										<div class="input-field col s6">
+											<input id="soldering_pcb_no_manual" name="soldering_pcb_no_manual" type="text">
+											<label for="soldering_pcb_no"><center>Or Enter Manually</center></label>
 										</div>
 									</div>
 
 									<center>
 										<br>
 										<div class="row">
+											<span class="teal-text text-darken-2" id="solderingNo" style="font-weight: bold; font-size: 18px; display: none">
+												PCB Number
+											</span>
+											<br><br>
 											<span class="teal-text text-darken-2" id="solderingRes" style="font-weight: bold; font-size: 24px; display: none">
 											100 K&#8486;
 											</span>
@@ -539,17 +548,17 @@
 
 		var timeOutLock = false;
 		$('#soldering_pcb_no').bind('keyup',function(e){
-			if(($(this).val().length > 2) && !timeOutLock){
+			if(($(this).val().length > 4) && !timeOutLock){
 				setTimeout(function(){
 					$('#solderingSubmitButton').trigger("click");
-				}, 300);
+				}, 500);
 				timeOutLock = true;
 			}
 		});
 
 		$('#solderingSubmitButton').click(function(){
 			timeOutLock = false;
-			if ($('#soldering_pcb_no').val().length == 0) {
+			if (($('#soldering_pcb_no').val().length == 0) && ($('#soldering_pcb_no_manual').val().length == 0)) {
 				Materialize.toast("PCB number should not kept blank",3000,'rounded');
 			}
 			else {
@@ -557,15 +566,17 @@
 					url: 'submit_soldering.php',
 					type: 'POST',
 					data: {
-						soldering_pcb_no: $('#soldering_pcb_no').val()
+						soldering_pcb_no: ($('#soldering_pcb_no').val().length == 0) ? $('#soldering_pcb_no_manual').val() : $('#soldering_pcb_no').val()
 					},
 					success: function(msg) {
+						document.getElementById('solderingNo').textContent = ($('#soldering_pcb_no').val().length == 0) ? $('#soldering_pcb_no_manual').val() : $('#soldering_pcb_no').val();
 						console.log(msg);
 						if(msg.toLowerCase().includes("undefined")){
 							document.getElementById('solderingRes').textContent = "Failed to find resistor for scanned PCB No.";
+							$('#soldering_pcb_no').focus();
 						}
 						else{
-							msg = msg.replace($('#soldering_pcb_no').val(),"");
+							msg = msg.replace(($('#soldering_pcb_no').val().length == 0) ? $('#soldering_pcb_no_manual').val() : $('#soldering_pcb_no').val(),"");
 							if(msg == "0") {
 								document.getElementById('solderingRes').textContent = "No need to change resistor."
 							}
@@ -574,6 +585,13 @@
 							}
 						}
 						$('#solderingRes').fadeIn();
+						$('#solderingNo').fadeIn()
+						setTimeout(function(){ 
+							$('#soldering_pcb_no').val('');
+							$('#soldering_pcb_no_manual').val('');
+							$('#soldering_pcb_no').focus();
+						}, 2000
+						);
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						 alert(errorThrown + "\n\nDatabase server offline?");
@@ -584,7 +602,10 @@
 
 		$('#solderingClearButton').click(function(){
 			$('#soldering_pcb_no').val('');
+			$('#soldering_pcb_no_manual').val('');
 			$('#soldering_pcb_no').focus();
+			$('#solderingRes').fadeOut();
+			$('#solderingNo').fadeOut()
 		});
 	</script>
 
