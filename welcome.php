@@ -208,6 +208,106 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="qaCard" style="display: none;">
+						<div class="row">
+							
+							<center>
+								<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Enter QA Details</span>
+							</center>
+
+							<form class="col s12" method="post" id="qaForm">
+								<div class="row">
+
+									<div class="row">
+										<div class="input-field col s12">
+											<input id="qa_pcb_no" name="qa_pcb_no" type="text" required autofocus>
+											<label for="wa_pcb_no"><center>PCB Number</center></label>
+										</div>
+									</div>
+
+									<div class="row">
+										<center>
+										<div class="col s6">
+											<span class="black-text">QA/Visual inspection results :</span>
+										</div>
+										<div class="col s6">
+											<input type="radio" name="qaGroup" class="with-gap" id="radioPass" name="radioPass" value="1" onchange="onQaRadioChange()" checked>
+											<label for="radioPass">PASS</label>
+											<input type="radio" name="qaGroup" class="with-gap" id="radioFail" name="radioFail" value="0" onchange="onQaRadioChange()">
+											<label for="radioFail">FAIL</label>
+										</div>
+										</center>
+									</div>
+
+									<div class="row" style="display: none;" id="qaFailRow">
+										<div class="input-field col s12">
+											<select name="qaFailReason" id="qaFailReason">
+												<option value="" disabled selected>Select reason for rejection</option>
+												<option value="0">0 - MULTIPLE FAULTS</option>
+												<option value="1">1 - Wire not properly soldered</option>
+												<option value="2">2 - Broken wire, Damaged Insulation</option>
+												<option value="3">3 - Improper wire length</option>
+												<option value="4">4 - DET pin not soldered properly</option>
+												<option value="5">5 - VIN pin not soldered properly</option>
+												<option value="6">6 - PST pin not soldered properly</option>
+												<option value="7">7 - SW1/IMP pin not soldered properly</option>
+												<option value="8">8 - GND pin not soldered properly</option>
+												<option value="9">9 - MOD pin not soldered properly</option>
+												<option value="10">10 - SIG pin not soldered properly</option>
+												<option value="11">11 - VRF pin not soldered properly</option>
+												<option value="12">12 - Pin cross / bend</option>
+												<option value="13">13 - Improper pin length</option>
+												<option value="14">14 - Pin / test pin cut</option>
+												<option value="15">15 - Plating of pin / test pin</option>
+												<option value="16">16 - Soldering ring not observed (bottom side)</option>
+												<option value="17">17 - Solder balls seen</option>
+												<option value="18">18 - Imapct switch soldering improper</option>
+												<option value="19">19 - Excess solder on impact switch</option>
+												<option value="20">20 - Damanged / swollen bush of imapct switch</option>
+												<option value="21">21 - Imapct switch tilted</option>
+												<option value="22">22 - Excess flux</option>
+												<option value="23">23 - Components not properly soldered</option>
+												<option value="24">24 - Soldered components damaged</option>
+												<option value="25">25 - Wrong components soldered</option>
+												<option value="26">26 - Shorting of component pins</option>
+												<option value="27">27 - Component missing</option>
+												<option value="28">28 - PCB track cut</option>
+												<option value="29">29 - Solder pan on PCB damaged / removed</option>
+												<option value="30">30 - Improper barcode printing</option>
+												<option value="31">31 - Crystal pad damaged</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="row">
+										<center>
+											<span style="font-weight: bold; font-size: 16px" class="teal-text text-darken-2">Additional Information</span>
+										</center>
+									</div>
+
+									<div class="row">
+										<div class="input-field col s6">
+											<input type="text" name="qaDatePicker" id="qaDatePicker" class="datepicker" required>
+											<label for="qaDatePicker"><center>Record date</center></label>
+										</div>
+										<div class="input-field col s6">
+											<input type="text" name="qa_op_name" id="qa_op_name" required>
+											<label for="qa_op_name"><center>Operator's Name</center></label>
+										</div>
+									</div>
+
+								</div>
+
+								<center>
+									<a class="waves-effect waves-light btn" id="qaSubmitButton">SUBMIT</a>
+									<a class="btn waves-effect waves-red red lighten-2" id="qaClearButton">CLEAR</a>
+								</center>
+
+							</form>
+
+						</div>
+					</div>
+
 				</div>
 			</div>
 	</main>
@@ -240,8 +340,13 @@
 		});
 
 		switch($.cookie('fuzeStart')){
+			case '1':
+				$('select').material_select();
+				$('#qaCard').fadeIn();
+				break;
 			case '3':
 				$('#calibrationCard').fadeIn();
+				break;
 		}
 
 		function onRadioChange(){
@@ -255,6 +360,20 @@
 				document.getElementById("resChange").disabled = true;
 				document.getElementById("after_freq").disabled = true;
 				document.getElementById("after_bpf").disabled = true;
+			}
+		}
+
+		var radioState = "radioPass";
+		function onQaRadioChange() {
+			radioState = $('input[name=qaGroup]:checked').attr('id');
+			if(radioState === "radioPass"){
+				$('#qaFailRow').fadeOut(function(onComplete){
+					$('select').material_select('destroy');
+				});
+			}
+			else {
+				$('select').material_select();
+				$('#qaFailRow').fadeIn();
 			}
 		}
 
@@ -298,7 +417,7 @@
 					resChange: $('#resChange').val(),
 					changed: (($('#resChange').val().length > 0) ? '1' : '0'),
 					datePicker: $('#datePicker').val(),
-					op_name: $('#op_name').val()
+					op_name: $('#op_name').val().toUpperCase()
 				},
 				success: function(msg) {
 					if(msg.includes("ok")){
@@ -326,6 +445,54 @@
 				}
 			});
 			}
+		});
+
+		$('#qaSubmitButton').click(function(){
+			if (($('#qa_pcb_no').val().length == 0) || ($('#qa_op_name').val().length == 0) || ($('#qaDatePicker').val().length == 0)){
+				Materialize.toast("Can't save with blank fields.",4000,'rounded');
+				Materialize.toast("Check what you have missed.",4000,'rounded');
+			}
+			else {
+				$.ajax({
+					url: 'submit_qa.php',
+					type: 'POST',
+					data: {
+						qa_pcb_no: $('#qa_pcb_no').val(),
+						result: ((radioState == "radioPass") ? '1' : '0'),
+						reason: $('#qaFailReason').val(),
+						qaDatePicker: $('#qaDatePicker').val(),
+						qa_op_name: $('#qa_op_name').val().toUpperCase()
+					},
+					success: function(msg) {
+						if(msg.includes("ok")){
+							Materialize.toast("Record Saved",1000,'rounded');
+							$('#qa_pcb_no').val('');
+							$('#radioPass').prop('checked',true);
+							$('#qaFailRow').val('');
+							$('#qaFailRow').fadeOut();
+							$('#qa_pcb_no').focus();
+							radioState = "radioPass";
+						}
+						else{
+							console.log(msg);
+							Materialize.toast("Failed to save record!",3000,'rounded');
+							Materialize.toast("Database server is offline!",3000,'rounded');
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + "\n\nDatabase server offline?");
+					}
+				});
+			}
+		});
+
+		$('#qaClearButton').click(function(){
+			$('#qa_pcb_no').val('');
+			$('#radioPass').prop('checked',true);
+			$('#qaFailRow').val('');
+			$('#qaFailRow').fadeOut();
+			$('#qa_pcb_no').focus();
+			radioState = "radioPass";
 		});
 	</script>
 
