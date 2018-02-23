@@ -94,7 +94,7 @@
 			<div class="navbar-fixed">
 				<nav>
 					<div class="nav-wrapper teal lighten-2" id="loginNav">
-						<a href="#!" class="brand-logo center">Proxmity Fuze Database Home-page</a>
+						<a href="#!" class="brand-logo center">Fuze Database Home-page</a>
 
 						<a class='dropdown-button' href='#' data-activates='dropdownMenu'>
 							<span class='white-text text-darken-5' style="font-size: 20px; padding-left: 20px; font-weight: bold">Menu</span>
@@ -228,7 +228,7 @@
 									<div class="row">
 										<center>
 										<div class="col s6">
-											<span class="black-text">QA/Visual inspection results :</span>
+											<span class="black-text">QA / Visual inspection results :</span>
 										</div>
 										<div class="col s6">
 											<input type="radio" name="qaGroup" class="with-gap" id="radioPass" name="radioPass" value="1" onchange="onQaRadioChange()" checked>
@@ -243,7 +243,6 @@
 										<div class="input-field col s12">
 											<select name="qaFailReason" id="qaFailReason">
 												<option value="" disabled selected>Select reason for rejection</option>
-												<option value="0">0 - MULTIPLE FAULTS</option>
 												<option value="1">1 - Wire not properly soldered</option>
 												<option value="2">2 - Broken wire, Damaged Insulation</option>
 												<option value="3">3 - Improper wire length</option>
@@ -275,6 +274,7 @@
 												<option value="29">29 - Solder pan on PCB damaged / removed</option>
 												<option value="30">30 - Improper barcode printing</option>
 												<option value="31">31 - Crystal pad damaged</option>
+												<option value="100">100 - MULTIPLE FAULTS</option>
 											</select>
 										</div>
 									</div>
@@ -304,6 +304,45 @@
 								</center>
 
 							</form>
+
+						</div>
+					</div>
+
+					<div class="card-panel grey lighten-4" id="solderingCard" style="display: none;">
+						<div class="row">
+							
+							<center>
+								<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Scan PCB number for resistor value</span>
+							</center>
+
+							<br>
+							<br>
+							
+								<div class="row">
+
+									<div class="row">
+										<div class="input-field col s12">
+											<input id="soldering_pcb_no" name="soldering_pcb_no" type="text" required autofocus>
+											<label for="soldering_pcb_no"><center>PCB Number</center></label>
+										</div>
+									</div>
+
+									<center>
+										<br>
+										<div class="row">
+											<span class="teal-text text-darken-2" id="solderingRes" style="font-weight: bold; font-size: 24px; display: none">
+											100 K&#8486;
+											</span>
+										</div>
+
+										<br>
+										<br>
+										<a class="waves-effect waves-light btn" id="solderingSubmitButton">SUBMIT</a>
+										<a class="btn waves-effect waves-red red lighten-2" id="solderingClearButton">CLEAR</a>
+									</center>
+
+								</div>
+							
 
 						</div>
 					</div>
@@ -346,6 +385,9 @@
 				break;
 			case '3':
 				$('#calibrationCard').fadeIn();
+				break;
+			case '6':
+				$('#solderingCard').fadeIn();
 				break;
 		}
 
@@ -468,7 +510,7 @@
 							Materialize.toast("Record Saved",1000,'rounded');
 							$('#qa_pcb_no').val('');
 							$('#radioPass').prop('checked',true);
-							$('#qaFailRow').val('');
+							$('#qaFailReason').val('');
 							$('#qaFailRow').fadeOut();
 							$('#qa_pcb_no').focus();
 							radioState = "radioPass";
@@ -489,10 +531,60 @@
 		$('#qaClearButton').click(function(){
 			$('#qa_pcb_no').val('');
 			$('#radioPass').prop('checked',true);
-			$('#qaFailRow').val('');
+			$('#qaFailReason').val('');
 			$('#qaFailRow').fadeOut();
 			$('#qa_pcb_no').focus();
 			radioState = "radioPass";
+		});
+
+		var timeOutLock = false;
+		$('#soldering_pcb_no').bind('keyup',function(e){
+			if(($(this).val().length > 2) && !timeOutLock){
+				setTimeout(function(){
+					$('#solderingSubmitButton').trigger("click");
+				}, 300);
+				timeOutLock = true;
+			}
+		});
+
+		$('#solderingSubmitButton').click(function(){
+			timeOutLock = false;
+			if ($('#soldering_pcb_no').val().length == 0) {
+				Materialize.toast("PCB number should not kept blank",3000,'rounded');
+			}
+			else {
+				$.ajax({
+					url: 'submit_soldering.php',
+					type: 'POST',
+					data: {
+						soldering_pcb_no: $('#soldering_pcb_no').val()
+					},
+					success: function(msg) {
+						console.log(msg);
+						if(msg.toLowerCase().includes("undefined")){
+							document.getElementById('solderingRes').textContent = "Failed to find resistor for scanned PCB No.";
+						}
+						else{
+							msg = msg.replace($('#soldering_pcb_no').val(),"");
+							if(msg == "0") {
+								document.getElementById('solderingRes').textContent = "No need to change resistor."
+							}
+							else {
+								document.getElementById('solderingRes').textContent = msg + " K\u2126";
+							}
+						}
+						$('#solderingRes').fadeIn();
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + "\n\nDatabase server offline?");
+					}
+				});
+			}
+		});
+
+		$('#solderingClearButton').click(function(){
+			$('#soldering_pcb_no').val('');
+			$('#soldering_pcb_no').focus();
 		});
 	</script>
 
