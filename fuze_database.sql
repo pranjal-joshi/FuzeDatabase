@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2018 at 06:19 AM
+-- Generation Time: Feb 26, 2018 at 05:24 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -25,6 +25,40 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `after_pu`
+--
+
+CREATE TABLE `after_pu` (
+  `_id` int(11) NOT NULL,
+  `pcb_no` text,
+  `i` float NOT NULL,
+  `vee` float NOT NULL,
+  `vbat_pst` float NOT NULL,
+  `pst_amp` float NOT NULL,
+  `pst_wid` float NOT NULL,
+  `mod_freq` float NOT NULL,
+  `mod_dc` float NOT NULL,
+  `mod_ac` float NOT NULL,
+  `cap_charge` float NOT NULL,
+  `vrf_amp` float NOT NULL,
+  `vbat_vrf` float NOT NULL,
+  `vbat_sil` float NOT NULL,
+  `det_wid` float NOT NULL,
+  `det_amp` float NOT NULL,
+  `cycles` int(11) NOT NULL,
+  `bpf_dc` float NOT NULL,
+  `bpf_ac` float NOT NULL,
+  `sil` float NOT NULL,
+  `lvp` float NOT NULL,
+  `pd_delay` float NOT NULL,
+  `pd_det` float NOT NULL,
+  `safe` varchar(4) NOT NULL,
+  `result` varchar(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `calibration_table`
 --
 
@@ -41,6 +75,17 @@ CREATE TABLE `calibration_table` (
   `timestamp` text,
   `op_name` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `calibration_table`
+--
+
+INSERT INTO `calibration_table` (`_id`, `pcb_no`, `rf_no`, `before_freq`, `before_bpf`, `changed`, `res_val`, `after_freq`, `after_bpf`, `timestamp`, `op_name`) VALUES
+(2, '123', '4567', '1100', '0.7', 1, 67, '795', '1.0', '23 February, 2018', 'PRANJAL'),
+(4, '3P1216001196', '1234', '700', '1', 1, 55, '708', '1.1', '23 February, 2018', 'XYZ'),
+(5, '3P1216001121', '1121', '814', '1.40', 1, 120, '799.35', '1.29', '23 February, 2018', 'PRANJAL'),
+(6, '3P1216001005', '1005', '809.12', '1.03', 0, 0, '', '', '23 February, 2018', 'PRANJAL'),
+(7, '3P1216001196', '1234', '1', '1.2', 1, 120, '2', '3', '26 February, 2018', 'P');
 
 -- --------------------------------------------------------
 
@@ -79,6 +124,12 @@ CREATE TABLE `qa_table` (
 --
 
 --
+-- Indexes for table `after_pu`
+--
+ALTER TABLE `after_pu`
+  ADD PRIMARY KEY (`_id`);
+
+--
 -- Indexes for table `calibration_table`
 --
 ALTER TABLE `calibration_table`
@@ -95,10 +146,16 @@ ALTER TABLE `qa_table`
 --
 
 --
+-- AUTO_INCREMENT for table `after_pu`
+--
+ALTER TABLE `after_pu`
+  MODIFY `_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `calibration_table`
 --
 ALTER TABLE `calibration_table`
-  MODIFY `_id` mediumint(9) NOT NULL AUTO_INCREMENT;
+  MODIFY `_id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `qa_table`
