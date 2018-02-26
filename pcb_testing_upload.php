@@ -45,50 +45,80 @@
 
 					<title>Fuze-Home</title>
 				</head>
+
+				<body class='indexBody'>
+
+				<main class='contents'>
+
+				<div class='navbar-fixed'>
+					<nav>
+						<div class='nav-wrapper teal lighten-2' id='loginNav'>
+							<a href='#!' class='brand-logo center'>Upload report</a>
+						</div>
+					</nav>
+				</div>
 			";
 
 			$html.="
-			<body>
 				<center>
-					<span class='red-text text-darken-2' style='font-size: 18px; font-weight: bold;'>Following details are added to the database.</span>
-					<br>
-					<a href='welcome.php'>Go Back</a>
-				</center>
+				<div class='row'>
 				<br>
+					<div class='preloader-wrapper big active' id='uploadPreloader'>
+							<div class='spinner-layer spinner-red-only'>
+								<div class='circle-clipper left'>
+									<div class='circle'></div>
+								</div><div class='gap-patch'>
+									<div class='circle'></div>
+								</div><div class='circle-clipper right'>
+									<div class='circle'></div>
+								</div>
+							</div>
+						</div>
+
+						<br>
+						<br>
+
+						<span class='red-text text-darken-2' style='font-size: 18px; font-weight: bold;' id='uploadSpan'>Uploading.. Please wait.</span>
+						<br>
+						<a href='welcome.php'>Click here to Go Back</a>
+					</center>
+					<br>
+				</div>
 				";
-			$html.="<table class='striped' style='padding: 10px'>";
+			$html.="<table class='striped' style='padding: 10px' id='uploadTable' style='display: none;'>";
 			$html.="
 				<thead>
-          <tr>
-              <th>PCB No.</th>
-              <th>I</th>
-              <th>VEE</th>
-              <th>Vbat-PST</th>
-              <th>PST Amp</th>
-              <th>PST Wid</th>
-              <th>Freq</th>
-              <th>MOD DC</th>
-              <th>MOD AC</th>
-              <th>Cap Charge</th>
-              <th>VRF Amp</th>
-              <th>Vbat-VRF</th>
-              <th>Vbat-SIL</th>
-              <th>DET Wid</th>
-              <th>DET Amp</th>
-              <th>Cycles</th>
-              <th>BPF AC</th>
-              <th>BPF DC</th>
-              <th>SIL</th>
-              <th>LVP</th>
-              <th>PD-Delay</th>
-              <th>PD-DET Amp</th>
-              <th>SAFE</th>
-              <th>RESULT</th>
+					<tr>
+						<th>Sr No.</th>
+						<th>PCB No.</th>
+						<th>I</th>
+						<th>VEE</th>
+						<th>Vbat-PST</th>
+						<th>PST Amp</th>
+						<th>PST Wid</th>
+						<th>Freq</th>
+						<th>MOD DC</th>
+						<th>MOD AC</th>
+						<th>Cap Charge</th>
+						<th>VRF Amp</th>
+						<th>Vbat-VRF</th>
+						<th>Vbat-SIL</th>
+						<th>DET Wid</th>
+						<th>DET Amp</th>
+						<th>Cycles</th>
+						<th>BPF AC</th>
+						<th>BPF DC</th>
+						<th>SIL</th>
+						<th>LVP</th>
+						<th>PD-Delay</th>
+						<th>PD-DET Amp</th>
+						<th>SAFE</th>
+						<th>RESULT</th>
+					</tr>
+				</thead>
 
-
-          </tr>
-        </thead>
-        ";
+				<script text='text/javascript'>$('#uploadTable').hide();</script>
+				";
 
 
 			/* For Loop for all sheets */
@@ -102,7 +132,9 @@
 					<center>
 						<br>
 						<br>
-						<span class='red-text text-darken-2' style='font-size: 22px; font-weight: bold;'>Following details are added to the database.</span>
+						<span class='red-text text-darken-2' style='font-size: 22px; font-weight: bold;'>
+							Failed to upload files. Database server is offline.
+						</span>
 						<br>
 						<a href='welcome.php'>Go Back</a>
 					</center>
@@ -117,7 +149,7 @@
 
 				$a = array();
 
-				$sqlAdd = "INSERT INTO `after_pu` (`_id`, `pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`) VALUES ";
+				$sqlAdd = "REPLACE INTO `after_pu` (`_id`, `pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`) VALUES ";
 
 				foreach ($Reader as $Row)
 				{
@@ -150,6 +182,7 @@
 						$safe = isset($Row[22]) ? $Row[22] : '';
 						$result = isset($Row[23]) ? $Row[23] : '';
 
+						$html.="<td>".($cnt-4)."</td>";
 						$html.="<td>".$pcb_no."</td>";
 						$html.="<td>".$current."</td>";
 						$html.="<td>".$vee."</td>";
@@ -213,11 +246,30 @@
 			}
 
 
-			$html.="</table></body></html>";
+			$html.="</table></main>
+
+				<footer class='page-footer teal lighten-2'>
+							<div class='footer-copyright'>
+								<div class='container'>
+									<center>&copy; Bharat Electronics Ltd. (2018), All rights reserved.</center>
+								</div>
+							</div>
+				</footer>
+				</body>
+
+				<script type='text/javascript'>
+					document.getElementById('uploadSpan').textContent = 'Following details are added to the database.';
+					$('#uploadPreloader').hide();
+					$('#uploadTable').show();
+				</script>
+
+				</html>";
 			echo $html;
 
 		}else { 
-			die("<br/><center><h3 style='color: red;'>Sorry, File type is not allowed. Only Excel file can be uploaded.</h3></center>"); 
+			die("
+				<br/><center><h3 style='color: red;'>Sorry, File type is not allowed. Only Excel file can be uploaded.</h3></center>
+				"); 
 		}
 	}
 ?>
