@@ -1,0 +1,223 @@
+<?php
+
+	include('db_config.php');
+	require('library/php-excel-reader/excel_reader2.php');
+	require('library/SpreadsheetReader.php');
+
+	if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+		$mimes = ['application/vnd.ms-excel','text/xls','text/xlsx','application/vnd.oasis.opendocument.spreadsheet'];
+
+		if($_FILES['file']['type'] == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+
+			$uploadFilePath = 'uploads/'.basename($_FILES['file']['name']);
+			move_uploaded_file($_FILES['file']['tmp_name'], $uploadFilePath);
+
+			$Reader = new SpreadsheetReader($uploadFilePath);
+			$totalSheet = count($Reader->sheets());
+
+			$html = "
+			<html>
+				<style type='text/css'>
+						.indexBody {
+							display: flex;
+							min-height: 100vh;
+							flex-direction: column;
+						}
+						.contents {
+							flex: 1;
+						}
+				</style>
+
+				<head>
+					<link rel='stylesheet' type='text/css' href='materialize.min.css'>
+					<script type='text/javascript' src='jquery.min.js'></script>
+					<script type='text/javascript' src='materialize.min.js'></script>
+					<script type='text/javascript' src='jquery.cookie.js'></script>
+
+					<!-- Set responsive viewport -->
+					<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+
+					<!-- Disable caching of browser -->
+					<meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate' />
+					<meta http-equiv='Pragma' content='no-cache' />
+					<meta http-equiv='Expires' content='0' />
+
+					<title>Fuze-Home</title>
+				</head>
+			";
+
+			$html.="
+			<body>
+				<center>
+					<span class='red-text text-darken-2' style='font-size: 18px; font-weight: bold;'>Following details are added to the database.</span>
+					<br>
+					<a href='welcome.php'>Go Back</a>
+				</center>
+				<br>
+				";
+			$html.="<table class='striped' style='padding: 10px'>";
+			$html.="
+				<thead>
+          <tr>
+              <th>PCB No.</th>
+              <th>I</th>
+              <th>VEE</th>
+              <th>Vbat-PST</th>
+              <th>PST Amp</th>
+              <th>PST Wid</th>
+              <th>Freq</th>
+              <th>MOD DC</th>
+              <th>MOD AC</th>
+              <th>Cap Charge</th>
+              <th>VRF Amp</th>
+              <th>Vbat-VRF</th>
+              <th>Vbat-SIL</th>
+              <th>DET Wid</th>
+              <th>DET Amp</th>
+              <th>Cycles</th>
+              <th>BPF AC</th>
+              <th>BPF DC</th>
+              <th>SIL</th>
+              <th>LVP</th>
+              <th>PD-Delay</th>
+              <th>PD-DET Amp</th>
+              <th>SAFE</th>
+              <th>RESULT</th>
+
+
+          </tr>
+        </thead>
+        ";
+
+
+			/* For Loop for all sheets */
+			$sql = "CREATE TABLE IF NOT EXISTS`fuze_database`.`after_pu` ( `_id` INT NOT NULL AUTO_INCREMENT , `pcb_no` TEXT NULL DEFAULT NULL , `i` FLOAT NOT NULL , `vee` FLOAT NOT NULL , `vbat_pst` FLOAT NOT NULL , `pst_amp` FLOAT NOT NULL , `pst_wid` FLOAT NOT NULL , `mod_freq` FLOAT NOT NULL , `mod_dc` FLOAT NOT NULL , `mod_ac` FLOAT NOT NULL , `cap_charge` FLOAT NOT NULL , `vrf_amp` FLOAT NOT NULL , `vbat_vrf` FLOAT NOT NULL , `vbat_sil` FLOAT NOT NULL , `det_wid` FLOAT NOT NULL , `det_amp` FLOAT NOT NULL , `cycles` INT NOT NULL , `bpf_dc` FLOAT NOT NULL , `bpf_ac` FLOAT NOT NULL , `sil` FLOAT NOT NULL , `lvp` FLOAT NOT NULL , `pd_delay` FLOAT NOT NULL , `pd_det` FLOAT NOT NULL , `safe` VARCHAR(4) NOT NULL , `result` VARCHAR(4) NOT NULL , PRIMARY KEY (`_id`)) ENGINE = InnoDB";
+
+
+			$sqlResult = mysqli_query($db,$sql);
+
+			if(!$sqlResult){
+				die("
+					<center>
+						<br>
+						<br>
+						<span class='red-text text-darken-2' style='font-size: 22px; font-weight: bold;'>Following details are added to the database.</span>
+						<br>
+						<a href='welcome.php'>Go Back</a>
+					</center>
+					");
+			}
+
+			for($i=0;$i<$totalSheet;$i++){
+
+
+				$Reader->ChangeSheet($i);
+				$cnt = 0;
+
+				$a = array();
+
+				$sqlAdd = "INSERT INTO `after_pu` (`_id`, `pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`) VALUES ";
+
+				foreach ($Reader as $Row)
+				{
+					$cnt++;
+					if($cnt > 4)
+					{
+						$html.="<tr>";
+						$pcb_no = isset($Row[0]) ? $Row[0] : '';
+						$current = isset($Row[1]) ? $Row[1] : '';
+						$vee = isset($Row[2]) ? $Row[2] : '';
+						$vbat_pst = isset($Row[3]) ? $Row[3] : '';
+						$pst_amp = isset($Row[4]) ? $Row[4] : '';
+						$pst_wid = isset($Row[5]) ? $Row[5] : '';
+						$freq = isset($Row[6]) ? $Row[6] : '';
+						$dc = isset($Row[7]) ? $Row[7] : '';
+						$ac = isset($Row[8]) ? $Row[8] : '';
+						$cap_charge = isset($Row[9]) ? $Row[9] : '';
+						$vrf_amp = isset($Row[10]) ? $Row[10] : '';
+						$vbat_vrf = isset($Row[11]) ? $Row[11] : '';
+						$vbat_sil = isset($Row[12]) ? $Row[12] : '';
+						$det_wid = isset($Row[13]) ? $Row[13] : '';
+						$det_amp = isset($Row[14]) ? $Row[14] : '';
+						$cycles = isset($Row[15]) ? $Row[15] : '';
+						$bpf_ac = isset($Row[16]) ? $Row[16] : '';
+						$bpf_dc = isset($Row[17]) ? $Row[17] : '';
+						$sil = isset($Row[18]) ? $Row[18] : '';
+						$lvp = isset($Row[19]) ? $Row[19] : '';
+						$delay = isset($Row[20]) ? $Row[20] : '';
+						$det_pd = isset($Row[21]) ? $Row[21] : '';
+						$safe = isset($Row[22]) ? $Row[22] : '';
+						$result = isset($Row[23]) ? $Row[23] : '';
+
+						$html.="<td>".$pcb_no."</td>";
+						$html.="<td>".$current."</td>";
+						$html.="<td>".$vee."</td>";
+						$html.="<td>".$vbat_pst."</td>";
+						$html.="<td>".$pst_amp."</td>";
+						$html.="<td>".$pst_wid."</td>";
+						$html.="<td>".$freq."</td>";
+						$html.="<td>".$dc."</td>";
+						$html.="<td>".$ac."</td>";
+						$html.="<td>".$cap_charge."</td>";
+						$html.="<td>".$vrf_amp."</td>";
+						$html.="<td>".$vbat_vrf."</td>";
+						$html.="<td>".$vbat_pst."</td>";
+						$html.="<td>".$det_wid."</td>";
+						$html.="<td>".$det_amp."</td>";
+						$html.="<td>".$cycles."</td>";
+						$html.="<td>".$bpf_ac."</td>";
+						$html.="<td>".$bpf_dc."</td>";
+						$html.="<td>".$sil."</td>";
+						$html.="<td>".$lvp."</td>";
+						$html.="<td>".$delay."</td>";
+						$html.="<td>".$det_pd."</td>";
+						$html.="<td>".$safe."</td>";
+						$html.="<td>".$result."</td>";
+						$html.="</tr>";
+
+						$sqlAdd.= "(
+							NULL, 
+							'".$pcb_no."', 
+							'".$current."', 
+							'".$vee."', 
+							'".$vbat_pst."',
+							'".$pst_amp."',
+							'".$pst_wid."',
+							'".$freq."',
+							'".$dc."', 
+							'".$ac."', 
+							'".$cap_charge."', 
+							'".$vrf_amp."', 
+							'".$vbat_vrf."', 
+							'".$vbat_sil."', 
+							'".$det_wid."', 
+							'".$det_amp."', 
+							'".$cycles."', 
+							'".$bpf_dc."', 
+							'".$bpf_ac."', 
+							'".$sil."', 
+							'".$lvp."', 
+							'".$delay."', 
+							'".$det_pd."', 
+							'".$safe."', 
+							'".$result."'),";
+					}
+				 }
+
+				$sqlAdd = rtrim($sqlAdd,",");
+				$sqlAdd = rtrim($sqlAdd,", ");
+				$sqlAdd.=";";
+				$res = mysqli_query($db,$sqlAdd);
+				mysqli_close($db);
+			}
+
+
+			$html.="</table></body></html>";
+			echo $html;
+
+		}else { 
+			die("<br/><center><h3 style='color: red;'>Sorry, File type is not allowed. Only Excel file can be uploaded.</h3></center>"); 
+		}
+	}
+?>
