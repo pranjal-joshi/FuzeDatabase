@@ -105,7 +105,7 @@
 						</a>
 
 						<ul id='dropdownMenu' class='dropdown-content'>
-							<li><a href="#!">Add</a></li>
+							<li><a href="#!">Search</a></li>
 							<li class="divider"></li>
 							<li><a href="#!">Edit</a></li>
 							<li class="divider"></li>
@@ -356,6 +356,115 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="afterPUCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Upload Excel file of results After PU Potting</span>
+								</center>
+							</div>
+
+							<div class="row">
+								<br>
+								<form action="after_pu_upload.php" method="POST" id="after_pu_upload" enctype="multipart/form-data">
+									<div class="file-field file-input">
+										<div class="btn">
+											<span>Select File</span>
+											<input type="file">
+										</div>
+										<div class="file-path-wrapper">
+											<input type="text" class="file-path validate">
+										</div>
+									</div>
+
+									<center>
+										<button type="submit" form="after_pu_upload" value="Submit" class="btn">Upload</button>
+									</center>
+
+								</form>
+							</div>
+
+							<div class="row">
+								<br>
+								<br>
+								<center>
+									<a href="LogToExcel.exe">Download Log to Excel converter application</a>
+								</center>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="card-panel grey lighten-4" id="pcbTestingCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Upload Excel file of results After PCB testing</span>
+								</center>
+							</div>
+
+							<div class="row">
+								<br>
+								<form action="pcb_testing_upload.php" method="POST" enctype="multipart/form-data">
+								
+									<center>
+										<input type="file"  name="file" >
+										<button type="submit" value="submit" class="btn">Upload</button>
+									</center>
+
+								</form>
+							</div>
+
+							<div class="row">
+								<br>
+								<br>
+								<center>
+									<a href="LogToExcel.exe">Download Log to Excel converter application</a>
+								</center>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="card-panel grey lighten-4" id="searchCard" style="display: none;">
+						<div class="row">
+							<center>
+								<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Search</span>
+							</center>
+
+							<div class="row" id="searchSelect">
+								<div class="input-field col s2">
+									<select name="searchSelect" id="searchSelect">
+										<option value="1" selected>PCB Number</option>
+										<option value="2">RF Number</option>
+										<option value="3">Resistor Value</option>
+										<option value="4">Before Freq</option>
+										<option value="5">Before BPF AC</option>
+										<option value="6">After Freq</option>
+										<option value="7">After BPF AC</option>
+										<option value="8">Date</option>
+										<option value="9">Operator Name</option>
+									</select>
+									<label>Search by</label>
+								</div>
+
+								<div class="input-field col s8">
+									<input type="text" name="search_box" id="search_box" autofocus>
+									<label for="search_box">What to search?</label>
+								</div>
+
+								<br>
+								<a class="btn col s2" href="#" id="searchButton">SEARCH</a>
+
+							</div>
+
+							<script type="text/javascript">$('select').material_select();</script>
+
+						</div>
+					</div>
+
 				</div>
 			</div>
 	</main>
@@ -392,8 +501,14 @@
 				$('select').material_select();
 				$('#qaCard').fadeIn();
 				break;
+			case '2':
+				$('#pcbTestingCard').fadeIn();
+				break;
 			case '3':
 				$('#calibrationCard').fadeIn();
+				break;
+			case '4':
+				$('#afterPUCard').fadeIn();
 				break;
 			case '6':
 				$('#solderingCard').fadeIn();
