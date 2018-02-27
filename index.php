@@ -16,6 +16,7 @@
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		$mypassword = mysqli_real_escape_string($db,$_POST['password']);
+		$mypassword = md5($mypassword);
 
 		$startPointCookie = "fuzeStart";
 		$startPointValue = $_POST['startPoint'];
@@ -51,7 +52,7 @@
 						<div class='card-panel col s12 m4 grey lighten-4'>
 							<center>
 							<br>
-							<span class='red-text text-darken-3'>Wrong password! Please try again.</span>
+							<span class='red-text text-darken-3'>Wrong password! Please try again or contact site admin.</span>
 							<br>
 							<br>
 							<a href='index.php'>Go Back</a>
@@ -109,7 +110,7 @@
 		<div class="navbar-fixed">
 			<nav>
 				<div class="nav-wrapper teal lighten-2" id="loginNav">
-					<a href="#!" class="brand-logo center">Welcome to Proxmity Fuze Database</a>
+					<a href="#!" class="brand-logo center">Welcome to Fuze Database</a>
 				</div>
 			</nav>
 		</div>
@@ -130,7 +131,7 @@
 									<div class="col m4"></div>
 									<div class="row">
 										<div class="input-field col s12">
-											<input type="password" name="password" id="password" class="validate" required>
+											<input type="password" name="password" id="password" class="validate" required autofocus>
 											<label for="password">Password</label>
 										</div>
 									</div>
