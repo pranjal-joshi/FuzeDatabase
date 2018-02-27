@@ -105,7 +105,7 @@
 						</a>
 
 						<ul id='dropdownMenu' class='dropdown-content'>
-							<li><a href="#!">Search</a></li>
+							<li><a class="waves-effect waves-light modal-trigger" href="#searchModal">Search</a></li>
 							<li class="divider"></li>
 							<li><a href="#!">Edit</a></li>
 							<li class="divider"></li>
@@ -115,6 +115,64 @@
 					</div>
 
 				</nav>
+			</div>
+
+			<!-- search modal -->
+			<div id="searchModal" class="modal">
+				<div class="modal-content">
+					<center>
+						<span class="teal-text text-darken-2" style="font-weight: bold; font-size: 24px;">Search the record</span>
+						<div class="row">
+							
+							<div class="row" id="searchSelect" style="min-height: 300px;">
+								<div class="input-field col s3">
+									<select name="searchSelect" id="searchSelect">
+										<option value="1" selected>PCB Number</option>
+										<option value="2">RF Number</option>
+										<option value="3">Resistor Value</option>
+										<option value="4">Before Freq</option>
+										<option value="5">Before BPF AC</option>
+										<option value="6">After Freq</option>
+										<option value="7">After BPF AC</option>
+										<option value="8">Date</option>
+										<option value="9">Operator Name</option>
+									</select>
+									<label>Search by</label>
+								</div>
+
+								<div class="row" id="searchTableSelect">
+									<div class="input-field col s2">
+										<select name="searchTableSelect" id="searchTableSelect">
+											<option value="1" selected>After PU</option>
+											<option value="2">Calibration</option>
+											<option value="3">QA</option>
+										</select>
+										<label>Search In</label>
+									</div>
+
+								<div class="input-field col s5">
+									<input type="text" name="search_box" id="search_box" autofocus>
+									<label for="search_box">What to search?</label>
+								</div>
+
+								<br>
+								<a class="btn col s2" href="#" id="searchButton" name="searchButton">SEARCH</a>
+
+							</div>
+
+							<div class="row" id="searchDynamicTable" rules="cols">
+							</div>
+
+							<script type="text/javascript">$('select').material_select();</script>
+
+						</div>
+					</center>
+				</div>
+				<div class="modal-footer">
+					<center>
+						<a href="#" class="btn-flat waves-light waves-red waves-effect" onclick="$('#searchModal').closeModal();">Cancel</a>
+					</center>
+				</div>
 			</div>
 
 			<div class="row">
@@ -147,7 +205,7 @@
 										<label for="before_freq"><center>Before Calibration - Freq (MHz)</center></label>
 									</div>
 									<div class="input-field col s6">
-										<input id="before_bpf" name="before_bpf" type="text" required>
+										<input id="before_bpf" name="before_bpf" type="text">
 										<label for="before_bpf"><center>Before Calibration - BPF AC (V)</center></label>
 									</div>
 								</div>
@@ -480,6 +538,65 @@
 	</body>
 
 	<script type="text/javascript">
+
+		var isBound = false;
+		$('.modal-trigger').leanModal({
+					dismissible: true, // Modal can be dismissed by clicking outside of the modal
+					opacity: .5, // Opacity of modal background
+					inDuration: 300, // Transition in duration
+					outDuration: 200, // Transition out duration
+					startingTop: '4%', // Starting top style attribute
+					endingTop: '10%', // Ending top style attribute
+					ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+						$('#search_box').focus();
+						if(!isBound) {
+							$('#search_box').keypress(function (e) {
+							 var key = e.which;
+							 console.log(key);
+							 if(key == 13)  // the enter key code
+								{
+									$('#searchButton').trigger('click');
+									return false;  
+								}
+							});
+
+							$('#searchButton').click(function(){
+								var text = $('#search_box').val();
+								var select = $('#searchSelect :selected').val();
+								var tableSelect = $('#searchTableSelect :selected').val();
+								if(text === ""){
+									Materialize.toast("Search box can't be kept blank",2500,'rounded');
+									$('#search_box').focus();
+									return false;
+								}
+								$.ajax({
+									url : 'search.php',
+									type: 'post',
+									data: {
+										query: text,
+										select: select,
+										tableSelect: tableSelect
+									},
+									success: function(msg) {
+										document.getElementById('searchDynamicTable').innerHTML = msg;
+										console.log(msg);
+									},
+									error: function(XMLHttpRequest, textStatus, errorThrown) {
+										 alert(errorThrown + "\n\nDatabase server offline?");
+									}
+								});
+							});
+							isBound = true;
+						}
+					},
+
+					complete: function() { // Callback for Modal close
+						$('#search_box').val('');
+						document.getElementById('searchDynamicTable').innerHTML = '';
+					} 
+				}
+			);
+
 		$(".button-collapse").sideNav({
 			menuWidth: 130,
 			edge: 'left',
@@ -564,7 +681,7 @@
 		});
 
 		$('#submitButton').click(function(){
-			if(($('#pcb_no').val().length == 0) || ($('#rf_no').val().length == 0) || ($('#before_freq').val().length == 0) || ($('#before_bpf').val().length == 0) || ($('#datePicker').val().length == 0) || ($('#op_name').val().length == 0))
+			if(($('#pcb_no').val().length == 0) || ($('#rf_no').val().length == 0) || ($('#before_bpf').val().length == 0) || ($('#datePicker').val().length == 0) || ($('#op_name').val().length == 0))
 			{
 				Materialize.toast("Can't save with blank fields.",4000,'rounded');
 				Materialize.toast("Check what you have missed.",4000,'rounded');
