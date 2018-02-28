@@ -1,12 +1,29 @@
 <?php
 
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
+
 	include('db_config.php');
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 		$searchIn = "";
+		$searchInTable = $_POST['tableSelect'];
 		$query = $_POST['query'];
 		$table_head = "";
+
+		switch ($searchInTable) {
+			case '1':
+				$searchInTable = "after_pu";
+				break;
+			case '2':
+				$searchInTable = "calibration_table";
+				break;
+			case '3':
+				$searchInTable = "qa_table";
+				break;
+		}
 
 		switch ($_POST['select']) {
 			case '1':
@@ -14,17 +31,18 @@
 				$table_head.= "
 				<thead>
 					<tr>
-						<th>_id</th>
-						<th>PCB No.</th>
-						<th>RF No.</th>
-						<th>Before Freq.</th>
-						<th>Before BPF AC</th>
-						<th></th>
-						<th>RES</th>
-						<th>After Freq</th>
-						<th>After BPF</th>
-						<th>Time</th>
-						<th>OP</th>
+						<center><th>ID</th></center>
+						<center><th>PCB NO.</th></center>
+						<center><th>TABLE</th></center>
+						<center><th>ACTION</th></center>
+						<!--
+						<center><th>Before BPF AC</th></center>
+						<center><th>RES</th></center>
+						<center><th>After Freq</th></center>
+						<center><th>After BPF</th></center>
+						<center><th>Time</th></center>
+						<center><th>OP</th></center>
+						-->
 					</tr>
 				</thead>";
 				break;
@@ -55,28 +73,53 @@
 				break;
 		}
 
-		$sql = "SELECT * FROM `calibration_table` WHERE `".$searchIn."` LIKE '".$query."%'";
+		//$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE '".$query."%'";
+
+		$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE '".$query."%'";
 
 		$results = mysqli_query($db,$sql);
 
-		$value = "<table class='striped'>".$table_head;
+		$value = "<center><table class='striped' style='left: 0px; right: 0px; top: 0px; bottom: 0px;'>".$table_head;
 
+		$cnt = 0;
+		if($results) {
+			while ($row = mysqli_fetch_assoc($results)) {
+				$value.="<tr>";
+				$cnt++;
+				$value.="<td>".$cnt."</td>";
+				$value.="<td>".$row[$searchIn]."</td>";
+				$value.="<td>".strtoupper($searchInTable)."</td>";
+				$value.="<td><a href='details.php/?q=".$row[$searchIn]."&s=".$searchIn."&t=".$searchInTable."' class='btn waves-effect waves-light'>SHOW DETAILS</a></td>";
+				$value.="</tr></center>";
+			}
+			echo $value."</table>";
+		}
+		else {
+			echo($sql);
+			die("fail to search.");
+		}
+
+		/*
 		if($results) {
 			while($row = mysqli_fetch_assoc($results))
 			{
 				$value.= "<tr>";
+				$cnt = 0;
 				foreach ($row as $item) {
-					$value.= "<td>".$item."</td>";
+					$cnt++;
+					if($cnt != 4) {
+						$value.= "<td>".$item."</td>";
+					}
 				}
-				$value.="<td><a href='#' class='btn waves-light waves-effect waves-green green'>EDIT</a></td>";
-				$value.="<td><a href='#' class='btn waves-light waves-effect waves-red red'>DELETE</a></td>";
 				$value.="</tr>";
 			}
 			echo $value;
 			mysqli_close($db);
 		}
 		else {
+			echo($sql);
 			die("fail to search.");
 		}
+		*/
 	}
 ?>

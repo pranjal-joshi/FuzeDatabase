@@ -160,7 +160,7 @@
 
 							</div>
 
-							<div class="row" id="searchDynamicTable" rules="cols">
+							<div class="row" id="searchDynamicTable">
 							</div>
 
 							<script type="text/javascript">$('select').material_select();</script>
@@ -579,7 +579,6 @@
 									},
 									success: function(msg) {
 										document.getElementById('searchDynamicTable').innerHTML = msg;
-										console.log(msg);
 									},
 									error: function(XMLHttpRequest, textStatus, errorThrown) {
 										 alert(errorThrown + "\n\nDatabase server offline?");
