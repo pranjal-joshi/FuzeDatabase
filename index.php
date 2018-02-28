@@ -34,6 +34,11 @@
 			$cookie_name = "fuzeLogin";
 			$cookie_value = "ok";
 			setcookie($cookie_name, $cookie_value, 0,"/");
+
+			$accessCookie = "accessCookie";
+			$accessCookieValue = $row['access'];
+			setcookie($testCookie, $testCookieValue, 0,"/");
+
 			header("location: welcome.php");
 		}
 		else {
