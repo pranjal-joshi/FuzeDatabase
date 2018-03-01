@@ -31,10 +31,10 @@
 				$table_head.= "
 				<thead>
 					<tr>
-						<center><th>ID</th></center>
-						<center><th>PCB NO.</th></center>
-						<center><th>TABLE</th></center>
-						<center><th>ACTION</th></center>
+						<th class='center'>ID</th>
+						<th class='center'>PCB NO.</th>
+						<th class='center'>TABLE</th>
+						<th class='center'>ACTION</th>
 						<!--
 						<center><th>Before BPF AC</th></center>
 						<center><th>RES</th></center>
@@ -86,10 +86,10 @@
 			while ($row = mysqli_fetch_assoc($results)) {
 				$value.="<tr>";
 				$cnt++;
-				$value.="<td>".$cnt."</td>";
-				$value.="<td>".$row[$searchIn]."</td>";
-				$value.="<td>".strtoupper($searchInTable)."</td>";
-				$value.="<td><a href='details.php/?q=".$row[$searchIn]."&s=".$searchIn."&t=".$searchInTable."' class='btn waves-effect waves-light'>SHOW DETAILS</a></td>";
+				$value.="<td class='center'>".$cnt."</td>";
+				$value.="<td class='center'>".$row[$searchIn]."</td>";
+				$value.="<td class='center'>".strtoupper($searchInTable)."</td>";
+				$value.="<td class='center'><a href='details.php/?q=".$row[$searchIn]."&s=".$searchIn."&t=".$searchInTable."' class='btn waves-effect waves-light'>SHOW DETAILS</a></td>";
 				$value.="</tr></center>";
 			}
 			echo $value."</table>";
