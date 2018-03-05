@@ -35,9 +35,9 @@
 			$cookie_value = "ok";
 			setcookie($cookie_name, $cookie_value, 0,"/");
 
-			$accessCookie = "accessCookie";
+			$accessCookie = "fuzeAccess";
 			$accessCookieValue = $row['access'];
-			setcookie($testCookie, $testCookieValue, 0,"/");
+			setcookie($accessCookie, $accessCookieValue, 0,"/");
 
 			header("location: welcome.php");
 		}

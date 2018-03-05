@@ -146,6 +146,7 @@
 											<option value="1" selected>After PU</option>
 											<option value="2">Calibration</option>
 											<option value="3">QA</option>
+											<option value="4">PCB Testing</option>
 										</select>
 										<label>Search In</label>
 									</div>
@@ -425,19 +426,11 @@
 
 							<div class="row">
 								<br>
-								<form action="after_pu_upload.php" method="POST" id="after_pu_upload" enctype="multipart/form-data">
-									<div class="file-field file-input">
-										<div class="btn">
-											<span>Select File</span>
-											<input type="file">
-										</div>
-										<div class="file-path-wrapper">
-											<input type="text" class="file-path validate">
-										</div>
-									</div>
-
+								<form action="after_pu_upload.php" method="POST" enctype="multipart/form-data">
+								
 									<center>
-										<button type="submit" form="after_pu_upload" value="Submit" class="btn">Upload</button>
+										<input type="file"  name="file" >
+										<button type="submit" value="submit" class="btn">Upload</button>
 									</center>
 
 								</form>
