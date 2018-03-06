@@ -17,14 +17,54 @@
 		return $pageURL;
 	}
 
-	$url = parse_url(curPageURL());
+	if($_SERVER["REQUEST_METHOD"] == "POST"){
+		$form = $_POST['form'];
+		switch ($form) {
+			case 'qaUpdate':
+				$pcb_no = $_POST['pcb_no'];
+				$reason = $_POST['reason'];
+				$result = ($_POST['result'] == "PASS" ? '1' : '0');
+				$timestamp = $_POST['timestamp'];
+				$op_name = strtoupper($_POST['op_name']);
 
-	$splitUrl = explode("&", $url['query']);
+				$sql = "UPDATE `qa_table` SET 
+				`_id`=NULL,
+				`pcb_no`='".$pcb_no."',
+				`result`='".$result."',
+				`reason`='".$reason."',
+				`record_date`='".$timestamp."',
+				`op_name`='".$op_name."' 
+				WHERE `pcb_no`='".$pcb_no."'";
 
-	$toSearch = explode("=", $splitUrl[0])[1];
-	$searchIn = explode("=", $splitUrl[1])[1];
-	$searchTable = explode("=", $splitUrl[2])[1];
+				$results = mysqli_query($db,$sql);
+				print_r($results);
+				break;
+		}
+		$toSearch = $_COOKIE['toSearch'];
+		$searchIn = $_COOKIE['searchIn'];
+		$searchTable = $_COOKIE['searchTable'];
+	}
+	else {
+		$url = parse_url(curPageURL());
+		try {
+			$splitUrl = explode("&", $url['query']);
 
+			$toSearch = explode("=", $splitUrl[0])[1];
+			$searchIn = explode("=", $splitUrl[1])[1];
+			$searchTable = explode("=", $splitUrl[2])[1];
+
+			setcookie('toSearch',$toSearch,0,"/");
+			setcookie('searchIn',$searchIn,0,"/");
+			setcookie('searchTable',$searchTable,0,"/");
+		}
+		catch(Exception $e)
+		{
+			$toSearch = $_COOKIE['toSearch'];
+			$searchIn = $_COOKIE['searchIn'];
+			$searchTable = $_COOKIE['searchTable'];
+		}
+	}
+		
 	if(!isset($_COOKIE["fuzeLogin"])){
 			die("
 
@@ -229,6 +269,11 @@
 
 									</tbody>
 								</table>
+
+								<center>
+									<a class='btn waves-effect waves-light' id='qaUpdateButton'>UPDATE</a>
+								</center>
+
 							</form>
 
 						</div>
@@ -340,16 +385,56 @@
 								break;
 						}
 
-						$html.= "	$('#qaDetailsPcbNo').val('".$row[1]."');
+						$html.= "
+											$('#qaDetailsPcbNo').val('".$row[1]."');
 											$('#qaDetailsResult').val('".($row[2] == '1' ? 'PASS' : 'FAIL')."');
 											$('#qaDetailsReason').val('".$row[3]."');
 											$('#qaDetailsTimestamp').val('".$row[4]."');
 											$('#qaDetailsOperator').val('".$row[5]."');
+											$('#qaDetailsPcbNo').prop('readonly','true');
+											$('#qaDetailsPcbNo').click(function(){
+												alert('PCB number is primary record. You can\'t change it!')
+											});
 											";
 
 						// ### Control record modification based on login access
 						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "write") == 0)){
-							$html.= "$('input[type=text]').prop('readonly','true');";
+							$html.= "
+												$('input[type=text]').prop('readonly','true');
+												$('#qaUpdateButton').hide();
+												$('#qaDetailsPcbNo').unbind('click');
+											";
+						}
+						else {
+							$html.="
+										$('#qaUpdateButton').click(function(){
+											$.ajax({
+												type: 'POST',
+												data: {
+													form: 'qaUpdate',
+													pcb_no: $('#qaDetailsPcbNo').val(),
+													result: $('#qaDetailsResult').val(),
+													reason: $('#qaDetailsReason').val(),
+													timestamp: $('#qaDetailsTimestamp').val(),
+													op_name: $('#qaDetailsOperator').val(),
+													query: '".$url['query']."'
+												},
+												success: function(msg) {
+													console.log(msg);
+													if(msg.includes('ok')){
+														Materialize.toast('Record Updated',1500,'rounded');
+													}
+													else{
+														Materialize.toast('Failed to save record!',3000,'rounded');
+														Materialize.toast('Database server is offline!',3000,'rounded');
+													}
+												},
+												error: function(XMLHttpRequest, textStatus, errorThrown) {
+													 alert(errorThrown + 'Database server offline?');
+												}
+											});
+										});
+							";
 						}
 					}
 					catch(Exception $e){

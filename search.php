@@ -23,6 +23,9 @@
 			case '3':
 				$searchInTable = "qa_table";
 				break;
+			case '4':
+				$searchInTable = "pcb_testing";
+				break;
 		}
 
 		switch ($_POST['select']) {
@@ -89,7 +92,7 @@
 				$value.="<td class='center'>".$cnt."</td>";
 				$value.="<td class='center'>".$row[$searchIn]."</td>";
 				$value.="<td class='center'>".strtoupper($searchInTable)."</td>";
-				$value.="<td class='center'><a href='details.php/?q=".$row[$searchIn]."&s=".$searchIn."&t=".$searchInTable."' class='btn waves-effect waves-light'>SHOW DETAILS</a></td>";
+				$value.="<td class='center'><a href='details.php/?q=".$row[$searchIn]."&s=".$searchIn."&t=".$searchInTable."' class='btn waves-effect waves-light' target='_blank'>SHOW DETAILS</a></td>";
 				$value.="</tr></center>";
 			}
 			echo $value."</table>";
