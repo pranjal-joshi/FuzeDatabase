@@ -23,7 +23,7 @@
 			case 'qaUpdate':
 				$pcb_no = $_POST['pcb_no'];
 				$reason = $_POST['reason'];
-				$result = ($_POST['result'] == "PASS" ? '1' : '0');
+				$result = (strtoupper($_POST['result']) == "PASS" ? '1' : '0');
 				$timestamp = $_POST['timestamp'];
 				$op_name = strtoupper($_POST['op_name']);
 
@@ -37,7 +37,85 @@
 				WHERE `pcb_no`='".$pcb_no."'";
 
 				$results = mysqli_query($db,$sql);
-				print_r($results);
+				break;
+
+			case 'afterPuUpdate':
+				$sql = "UPDATE `after_pu` SET 
+				`_id`=NULL,
+				`pcb_no`='".$_POST['pcb_no']."',
+				`i`='".$_POST['current']."',
+				`vee`='".$_POST['vee']."',
+				`vbat_pst`='".$_POST['vbat_pst']."',
+				`pst_amp`='".$_POST['pst_ampl']."',
+				`pst_wid`='".$_POST['pst_wid']."',
+				`mod_freq`='".$_POST['mod_freq']."',
+				`mod_dc`='".$_POST['mod_dc']."',
+				`mod_ac`='".$_POST['mod_ac']."',
+				`cap_charge`='".$_POST['cap_charge']."',
+				`vrf_amp`='".$_POST['vrf_ampl']."',
+				`vbat_vrf`='".$_POST['vbat_vrf']."',
+				`vbat_sil`='".$_POST['vbat_sil']."',
+				`det_wid`='".$_POST['det_wid']."',
+				`det_amp`='".$_POST['det_ampl']."',
+				`cycles`='".$_POST['cycles']."',
+				`bpf_dc`='".$_POST['bpf_dc']."',
+				`bpf_ac`='".$_POST['bpf_ac']."',
+				`sil`='".$_POST['sil']."',
+				`lvp`='".$_POST['lvp']."',
+				`pd_delay`='".$_POST['pd_delay']."',
+				`pd_det`='".$_POST['pd_det']."',
+				`safe`='".$_POST['safe']."',
+				`result`='".$_POST['result']."' WHERE `pcb_no`='".$_POST['pcb_no']."'";
+
+				$results = mysqli_query($db,$sql);
+				break;
+
+			case 'pcbTestingUpdate':
+				$sql = "UPDATE `pcb_testing` SET 
+				`_id`=NULL,
+				`pcb_no`='".$_POST['pcb_no']."',
+				`i`='".$_POST['current']."',
+				`vee`='".$_POST['vee']."',
+				`vbat_pst`='".$_POST['vbat_pst']."',
+				`pst_amp`='".$_POST['pst_ampl']."',
+				`pst_wid`='".$_POST['pst_wid']."',
+				`mod_freq`='".$_POST['mod_freq']."',
+				`mod_dc`='".$_POST['mod_dc']."',
+				`mod_ac`='".$_POST['mod_ac']."',
+				`cap_charge`='".$_POST['cap_charge']."',
+				`vrf_amp`='".$_POST['vrf_ampl']."',
+				`vbat_vrf`='".$_POST['vbat_vrf']."',
+				`vbat_sil`='".$_POST['vbat_sil']."',
+				`det_wid`='".$_POST['det_wid']."',
+				`det_amp`='".$_POST['det_ampl']."',
+				`cycles`='".$_POST['cycles']."',
+				`bpf_dc`='".$_POST['bpf_dc']."',
+				`bpf_ac`='".$_POST['bpf_ac']."',
+				`sil`='".$_POST['sil']."',
+				`lvp`='".$_POST['lvp']."',
+				`pd_delay`='".$_POST['pd_delay']."',
+				`pd_det`='".$_POST['pd_det']."',
+				`safe`='".$_POST['safe']."',
+				`result`='".$_POST['result']."' WHERE `pcb_no`='".$_POST['pcb_no']."'";
+
+				$results = mysqli_query($db,$sql);
+				break;
+
+			case 'calibrationUpdate':
+				$sql = "UPDATE `calibration_table` SET 
+				`_id`= NULL,
+				`pcb_no`=".$_POST['pcb_no'].",
+				`rf_no`=".$_POST['rf_no'].",
+				`before_freq`=".$_POST['before_freq'].",
+				`before_bpf`=".$_POST['before_bpf'].",
+				`changed`=".$_POST['res_change'].",
+				`res_val`=".$_POST['res_val'].",
+				`after_freq`=".$_POST['after_freq'].",
+				`after_bpf`=".$_POST['after_bpf'].",
+				`timestamp`=".$_POST['timestamp'].",
+				`op_name`=".$_POST['op_name']." WHERE `pcb_no`='".$_POST['pcb_no']."'";
+
+				$results = mysqli_query($db,$sql);
 				break;
 		}
 		$toSearch = $_COOKIE['toSearch'];
@@ -416,8 +494,7 @@
 													result: $('#qaDetailsResult').val(),
 													reason: $('#qaDetailsReason').val(),
 													timestamp: $('#qaDetailsTimestamp').val(),
-													op_name: $('#qaDetailsOperator').val(),
-													query: '".$url['query']."'
+													op_name: $('#qaDetailsOperator').val()
 												},
 												success: function(msg) {
 													console.log(msg);
@@ -720,6 +797,10 @@
 									</tbody>
 								</table>
 
+								<center>
+									<a class='btn waves-light waves-effect' id='afterPuUpdateButton'>UPDATE</a>
+								</center>
+
 							</form>
 
 						</div>
@@ -754,19 +835,76 @@
 											$('#AfterPuDetailsSafe').val('".$row[23]."');
 											$('#AfterPuDetailsResult').val('".$row[24]."');
 
-
+											$('#AfterPuDetailsPcbNo').prop('readonly','true');
+											$('#AfterPuDetailsPcbNo').click(function(){
+												alert('PCB number is primary record. You can\'t change it!')
+											});
 											";
 
 						// ### Control record modification based on login access
 						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "write") == 0)){
-							$html.= "$('input[type=text]').prop('readonly','true');";
+							$html.= "
+											$('input[type=text]').prop('readonly','true');
+											$('#afterPuUpdateButton').hide();
+											$('#AfterPuDetailsPcbNo').unbind('click');
+											";
+						}
+						else {
+							$html.="
+										$('#afterPuUpdateButton').click(function(){
+											$.ajax({
+												type: 'POST',
+												data: {
+													form: 'afterPuUpdate',
+													pcb_no: $('#AfterPuDetailsPcbNo').val(),
+													current: $('#AfterPuDetailsCurrent').val().replace(/[^\d.-]/g, ''),
+													vee: $('#AfterPuDetailsVee').val().replace(/[^\d.-]/g, ''),
+													vbat_pst: $('#AfterPuDetailsVbatPst').val().replace(/[^\d.-]/g, ''),
+													pst_ampl: $('#AfterPuDetailsPstAmpl').val().replace(/[^\d.-]/g, ''),
+													pst_wid: $('#AfterPuDetailsPstWid').val().replace(/[^\d.-]/g, ''),
+													mod_freq: $('#AfterPuDetailsFreq').val().replace(/[^\d.-]/g, ''),
+													mod_dc: $('#AfterPuDetailsModDC').val().replace(/[^\d.-]/g, ''),
+													mod_ac: $('#AfterPuDetailsModAC').val().replace(/[^\d.-]/g, ''),
+													vrf_ampl: $('#AfterPuDetailsVrfAmpl').val().replace(/[^\d.-]/g, ''),
+													vbat_vrf: $('#AfterPuDetailsVbatVrf').val().replace(/[^\d.-]/g, ''),
+													cap_charge: $('#AfterPuDetailsCapCharge').val().replace(/[^\d.-]/g, ''),
+													det_wid: $('#AfterPuDetailsDetWidth').val().replace(/[^\d.-]/g, ''),
+													det_ampl: $('#AfterPuDetailsDetAmpl').val().replace(/[^\d.-]/g, ''),
+													cycles: $('#AfterPuDetailsCycles').val().replace(/[^\d.-]/g, ''),
+													bpf_dc: $('#AfterPuDetailsBpfDC').val().replace(/[^\d.-]/g, ''),
+													bpf_ac: $('#AfterPuDetailsBpfAC').val().replace(/[^\d.-]/g, ''),
+													sil: $('#AfterPuDetailsSil').val().replace(/[^\d.-]/g, ''),
+													vbat_sil: $('#AfterPuDetailsVbatSil').val().replace(/[^\d.-]/g, ''),
+													lvp: $('#AfterPuDetailsLvp').val().replace(/[^\d.-]/g, ''),
+													pd_delay: $('#AfterPuDetailsPDDelay').val().replace(/[^\d.-]/g, ''),
+													pd_det: $('#AfterPuDetailsPDDet').val().replace(/[^\d.-]/g, ''),
+													safe: $('#AfterPuDetailsSafe').val().toUpperCase(),
+													result: $('#AfterPuDetailsResult').val().toUpperCase()
+												},
+												success: function(msg) {
+													console.log(msg);
+													if(msg.includes('ok')){
+														Materialize.toast('Record Updated',1500,'rounded');
+													}
+													else{
+														Materialize.toast('Failed to save record!',3000,'rounded');
+														Materialize.toast('Database server is offline!',3000,'rounded');
+													}
+												},
+												error: function(XMLHttpRequest, textStatus, errorThrown) {
+													 alert(errorThrown + 'Database server offline?');
+												}
+											});
+										});
+							";
 						}
 					}
 					catch(Exception $e){
 							$html.="
 								$('#afterPuDetailsForm').hide();
-								document.getElementById('calibrationDetailsTitle').innerHTML = 'Failed to search the given parameter!';
+								document.getElementById('afterPuDetailsTitle').innerHTML = 'Failed to search the given parameter!';
 							";
+							print_r($e);
 					}
 					$html.= "</script>";
 				}
@@ -1046,6 +1184,10 @@
 									</tbody>
 								</table>
 
+								<center>
+									<a class='btn waves-light waves-effect' id='pcbTestingUpdateButton'>UPDATE</a>
+								</center>
+
 							</form>
 
 						</div>
@@ -1080,12 +1222,68 @@
 											$('#PcbTestingDetailsSafe').val('".$row[23]."');
 											$('#PcbTestingDetailsResult').val('".$row[24]."');
 
-
+											$('#PcbTestingDetailsPcbNo').prop('readonly','true');
+											$('#PcbTestingDetailsPcbNo').click(function(){
+												alert('PCB number is primary record. You can\'t change it!')
+											});
 											";
 
 						// ### Control record modification based on login access
 						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "write") == 0)){
-							$html.= "$('input[type=text]').prop('readonly','true');";
+							$html.= "
+											$('input[type=text]').prop('readonly','true');
+											$('#pcbTestingUpdateButton').hide();
+											$('#PcbTestingDetailsPcbNo').unbind('click');
+											";
+						}
+						else {
+							$html.="
+										$('#pcbTestingUpdateButton').click(function(){
+											$.ajax({
+												type: 'POST',
+												data: {
+													form: 'pcbTestingUpdate',
+													pcb_no: $('#PcbTestingDetailsPcbNo').val(),
+													current: $('#PcbTestingDetailsCurrent').val().replace(/[^\d.-]/g, ''),
+													vee: $('#PcbTestingDetailsVee').val().replace(/[^\d.-]/g, ''),
+													vbat_pst: $('#PcbTestingDetailsVbatPst').val().replace(/[^\d.-]/g, ''),
+													pst_ampl: $('#PcbTestingDetailsPstAmpl').val().replace(/[^\d.-]/g, ''),
+													pst_wid: $('#PcbTestingDetailsPstWid').val().replace(/[^\d.-]/g, ''),
+													mod_freq: $('#PcbTestingDetailsFreq').val().replace(/[^\d.-]/g, ''),
+													mod_dc: $('#PcbTestingDetailsModDC').val().replace(/[^\d.-]/g, ''),
+													mod_ac: $('#PcbTestingDetailsModAC').val().replace(/[^\d.-]/g, ''),
+													vrf_ampl: $('#PcbTestingDetailsVrfAmpl').val().replace(/[^\d.-]/g, ''),
+													vbat_vrf: $('#PcbTestingDetailsVbatVrf').val().replace(/[^\d.-]/g, ''),
+													cap_charge: $('#PcbTestingDetailsCapCharge').val().replace(/[^\d.-]/g, ''),
+													det_wid: $('#PcbTestingDetailsDetWidth').val().replace(/[^\d.-]/g, ''),
+													det_ampl: $('#PcbTestingDetailsDetAmpl').val().replace(/[^\d.-]/g, ''),
+													cycles: $('#PcbTestingDetailsCycles').val().replace(/[^\d.-]/g, ''),
+													bpf_dc: $('#PcbTestingDetailsBpfDC').val().replace(/[^\d.-]/g, ''),
+													bpf_ac: $('#PcbTestingDetailsBpfAC').val().replace(/[^\d.-]/g, ''),
+													sil: $('#PcbTestingDetailsSil').val().replace(/[^\d.-]/g, ''),
+													vbat_sil: $('#PcbTestingDetailsVbatSil').val().replace(/[^\d.-]/g, ''),
+													lvp: $('#PcbTestingDetailsLvp').val().replace(/[^\d.-]/g, ''),
+													pd_delay: $('#PcbTestingDetailsPDDelay').val().replace(/[^\d.-]/g, ''),
+													pd_det: $('#PcbTestingDetailsPDDet').val().replace(/[^\d.-]/g, ''),
+													safe: $('#PcbTestingDetailsSafe').val().toUpperCase(),
+													result: $('#PcbTestingDetailsResult').val().toUpperCase()
+												},
+												success: function(msg) {
+													console.log(msg);
+													if(msg.includes('ok')){
+														Materialize.toast('Record Updated',1500,'rounded');
+													}
+													else{
+														Materialize.toast('Failed to save record!',3000,'rounded');
+														Materialize.toast('Database server is offline!',3000,'rounded');
+													}
+												},
+												error: function(XMLHttpRequest, textStatus, errorThrown) {
+													 alert(errorThrown + 'Database server offline?');
+												}
+											});
+										});
+							";
 						}
 					}
 					catch(Exception $e){
@@ -1114,11 +1312,11 @@
 					switch ($row[5])
 					{
 						case '1':
-							$row[5] = "Yes";
+							$row[5] = "YES";
 							break;
 						
 						default:
-							$row[5] = "No";
+							$row[5] = "NO";
 							break;
 					}
 					$html.="
@@ -1228,6 +1426,11 @@
 
 									</tbody>
 								</table>
+
+								<center>
+									<a class='btn waves-light waves-effect' id='calibrationUpdateButton'>UPDATE</a>
+								</center>
+
 							</form>
 						</div>
 					</div>
@@ -1247,12 +1450,56 @@
 										$('#calibrationDetailsBpfAfter').val('".$row[8]." V');
 										$('#calibrationDetailsDate').val('".$row[9]."');
 										$('#calibrationDetailsOperator').val('".$row[10 ]."');
+
+										$('#calibrationDetailsPcbNo').prop('readonly','true');
+										$('#calibrationDetailsPcbNo').click(function(){
+											alert('PCB number is primary record. You can\'t change it!')
+										});
 										";
 
 					// ### Control record modification based on login access
 					if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "write") == 0)){
-						$html.= "$('input[type=text]').prop('readonly','true');";
+						$html.= "
+										$('input[type=text]').prop('readonly','true');
+										$('#calibrationUpdateButton').hide();
+										$('#calibrationDetailsPcbNo').unbind('click');
+										";
 					}
+					else {
+							$html.="
+										$('#calibrationUpdateButton').click(function(){
+											$.ajax({
+												type: 'POST',
+												data: {
+													form: 'calibrationUpdate',
+													pcb_no: $('#calibrationDetailsPcbNo').val(),
+													rf_no: $('#calibrationDetailsRfNo').val(),
+													before_bpf: $('#calibrationDetailsBpfbefore').val().replace(/[^\d.-]/g, ''),
+													after_bpf: $('#calibrationDetailsBpfAfter').val().replace(/[^\d.-]/g, ''),
+													before_freq: $('#calibrationDetailsFreqBefore').val().replace(/[^\d.-]/g, ''),
+													after_freq: $('#calibrationDetailsFreqAfter').val().replace(/[^\d.-]/g, ''),
+													res_change: ($('#calibrationDetailsResChange').val().toUpperCase() == 'YES' ? '1' : '0'),
+													res_val: $('#calibrationDetailsResValue').val().replace(/[^\d.-]/g, ''),
+													timestamp: $('#calibrationDetailsDate').val(),
+													op_name: $('#calibrationDetailsOperator').val().toUpperCase()
+												},
+												success: function(msg) {
+													console.log(msg);
+													if(msg.includes('ok')){
+														Materialize.toast('Record Updated',1500,'rounded');
+													}
+													else{
+														Materialize.toast('Failed to save record!',3000,'rounded');
+														Materialize.toast('Database server is offline!',3000,'rounded');
+													}
+												},
+												error: function(XMLHttpRequest, textStatus, errorThrown) {
+													 alert(errorThrown + 'Database server offline?');
+												}
+											});
+										});
+							";
+						}
 				}
 				catch(Exception $e){
 						$html.="
