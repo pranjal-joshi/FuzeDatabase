@@ -415,6 +415,64 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="lotCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Lot-wise Entry</span>
+								</center>
+								<br>
+								<br>
+
+								<div class="row">
+									<div class="input-field col s3">
+										<select name="lotFuzeType" id="lotFuzeType" required>
+											<option value="" disabled selected>-- Please select --</option>
+											<option value="EPD">EPD</option>
+											<option value="TIME">TIME</option>
+											<option value="PROX">PROX</option>
+										</select>
+										<label>Select Fuze Type</label>
+									</div>
+									<div class="input-field col s3">
+										<select name="lotSize" id="lotSize" required>
+											<option value="" disabled selected>-- Please select --</option>
+											<option value="30">30</option>
+											<option value="60">60</option>
+										</select>
+										<label>Select Kit-Lot size</label>
+									</div>
+									<div class="input-field col s3">
+										<input id="mainLotNoText" name="mainLotNoText" type="text">
+										<label for="mainLotNoText"><center>Enter Main Lot Number</center></label>
+									</div>
+									<div class="input-field col s3">
+										<input id="kitLotNoText" name="kitLotNoText" type="text">
+										<label for="kitLotNoText"><center>Enter Kit Lot Number</center></label>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="input-field col s4">
+										<input id="lotScanPcb" name="lotScanPcb" type="text" autofocus>
+										<label for="lotScanPcb"><center>Scan PCB Number</center></label>
+									</div>
+									<div class="input-field col s4">
+										<input id="lotManualPcb" name="lotManualPcb" type="text">
+										<label for="lotManualPcb"><center>Or Enter manually</center></label>
+									</div>
+									<br>
+									<a class="btn waves-effect waves-light col s4 center" id='lotManualButton'>ADD MANUALLY</a>
+								</div>
+
+								<div class="row" id="lotEntryTable">
+								</div>
+
+							</div>
+						</div>
+					</div>
+
 					<div class="card-panel grey lighten-4" id="afterPUCard" style="display: none;">
 						<div class="row">
 							
@@ -622,6 +680,17 @@
 			case '6':
 				$('#solderingCard').fadeIn();
 				break;
+			case '7':
+				$('#lotCard').fadeIn();
+				$('#lotManualPcb').keypress(function (e) {
+					var key = e.which;
+					if(key == 13)  // the enter key code
+					{
+						$('#lotManualButton').trigger('click');
+						return false;  
+					}
+				});
+				break;
 		}
 
 		function onRadioChange(){
@@ -780,6 +849,16 @@
 			}
 		});
 
+		var lotTimeOutLock = false;
+		$('#lotScanPcb').bind('keyup',function(e){
+			if(($(this).val().length > 4) && !lotTimeOutLock){
+				setTimeout(function(){
+					$('#lotManualButton').trigger("click");
+				}, 500);
+				lotTimeOutLock = true;
+			}
+		});
+
 		$('#solderingSubmitButton').click(function(){
 			timeOutLock = false;
 			if (($('#soldering_pcb_no').val().length == 0) && ($('#soldering_pcb_no_manual').val().length == 0)) {
@@ -830,6 +909,48 @@
 			$('#soldering_pcb_no').focus();
 			$('#solderingRes').fadeOut();
 			$('#solderingNo').fadeOut()
+		});
+
+		$('#lotManualButton').click(function(){
+			lotTimeOutLock = false;
+			if (($('#mainLotNoText').val().length == 0) || ($('#kitLotNoText').val().length == 0) || ($('#lotFuzeType').val() == '') || ($('#lotSize').val() == '') || (($('#lotScanPcb').val().length == 0) && ($('#lotManualPcb').val().length == 0))){
+				Materialize.toast("Can't save with blank fields.",4000,'rounded');
+				Materialize.toast("Check what you have missed.",4000,'rounded');
+			}
+			else{
+				$.ajax({
+					url: 'lot.php',
+					type: 'POST',
+					data: {
+						pcb_no: ($('#lotScanPcb').val().length == 0 ? $('#lotManualPcb').val() : $('#lotScanPcb').val()),
+						fuze: $('#lotFuzeType :selected').val(),
+						size: $('#lotSize :selected').val(),
+						main_lot: $('#mainLotNoText').val(),
+						kit_lot: $('#kitLotNoText').val()
+					},
+					success: function(msg) {
+						console.log(msg);
+						document.getElementById('lotEntryTable').innerHTML = msg;
+						if(msg.includes('</table>')){
+							Materialize.toast('Record created',1500,'rounded');
+							setTimeout(function(){
+								$('#lotScanPcb').val('');
+								$('#lotManualPcb').val('');
+							},1500);
+						}
+						else if(msg.toLowerCase().includes('already')) {
+							Materialize.toast('Record already exists!',3000,'rounded');
+						}
+						else{
+							Materialize.toast('Failed to save record!',3000,'rounded');
+							Materialize.toast('Database server is offline!',3000,'rounded');
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + 'Database server offline?');
+					}
+				});
+			}
 		});
 	</script>
 
