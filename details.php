@@ -147,10 +147,10 @@
 			die("
 
 				<head>
-					<link rel='stylesheet' type='text/css' href='/fuze/materialize.min.css'>
-					<script type='text/javascript' src='/fuze/jquery.min.js'></script>
-					<script type='text/javascript' src='/fuze/materialize.min.js'></script>
-					<script type='text/javascript' src='/fuze/jquery.cookie.js'></script>
+					<link rel='stylesheet' type='text/css' href='/FuzeDatabase/materialize.min.css'>
+					<script type='text/javascript' src='/FuzeDatabase/jquery.min.js'></script>
+					<script type='text/javascript' src='/FuzeDatabase/materialize.min.js'></script>
+					<script type='text/javascript' src='/FuzeDatabase/jquery.cookie.js'></script>
 
 					<!-- Set responsive viewport -->
 					<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
@@ -196,7 +196,7 @@
 										<h5 style='color: red'>Until you're authorized to do this!</h5>
 										<br>
 										<br>
-										<a href='/fuze/index.php'>Go Back to login page</a>
+										<a href='/FuzeDatabase/index.php'>Go Back to login page</a>
 										<br>
 									</center>
 								</div>
@@ -230,10 +230,10 @@
 			</style>
 
 			<head>
-				<link rel='stylesheet' type='text/css' href='/fuze/materialize.min.css'>
-				<script type='text/javascript' src='/fuze/jquery.min.js'></script>
-				<script type='text/javascript' src='/fuze/materialize.min.js'></script>
-				<script type='text/javascript' src='/fuze/jquery.cookie.js'></script>
+				<link rel='stylesheet' type='text/css' href='/FuzeDatabase/materialize.min.css'>
+				<script type='text/javascript' src='/FuzeDatabase/jquery.min.js'></script>
+				<script type='text/javascript' src='/FuzeDatabase/materialize.min.js'></script>
+				<script type='text/javascript' src='/FuzeDatabase/jquery.cookie.js'></script>
 
 				<!-- Set responsive viewport -->
 				<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
@@ -1530,7 +1530,7 @@
 				<script type='text/javascript'>
 					function logout(){
 						document.cookie = 'fuzeLogin=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
-						location.href = '/fuze/index.php';
+						location.href = '/FuzeDatabase/index.php';
 					}
 					";
 				$html.= "</script>
