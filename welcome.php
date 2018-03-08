@@ -426,7 +426,7 @@
 								<br>
 
 								<div class="row">
-									<div class="input-field col s3">
+									<div class="input-field col s2">
 										<select name="lotFuzeType" id="lotFuzeType" required>
 											<option value="" disabled selected>-- Please select --</option>
 											<option value="EPD">EPD</option>
@@ -435,7 +435,7 @@
 										</select>
 										<label>Select Fuze Type</label>
 									</div>
-									<div class="input-field col s3">
+									<div class="input-field col s2">
 										<select name="lotSize" id="lotSize" required>
 											<option value="" disabled selected>-- Please select --</option>
 											<option value="30">30</option>
@@ -451,6 +451,8 @@
 										<input id="kitLotNoText" name="kitLotNoText" type="text">
 										<label for="kitLotNoText"><center>Enter Kit Lot Number</center></label>
 									</div>
+									<br>
+									<a class="btn waves-effect waves-light col s2 center" id='lotViewButton'>VIEW LOT</a>
 								</div>
 
 								<div class="row">
@@ -933,15 +935,15 @@
 						fuze: $('#lotFuzeType :selected').val(),
 						size: $('#lotSize :selected').val(),
 						main_lot: $('#mainLotNoText').val(),
-						kit_lot: $('#kitLotNoText').val()
+						kit_lot: $('#kitLotNoText').val(),
+						task: 'add'
 					},
 					success: function(msg) {
-						console.log(msg);
 						document.getElementById('lotEntryTable').innerHTML = msg;
+						console.log(msg);
 						if(msg.includes('</table>')){
 							Materialize.toast('Record created',1500,'rounded');
 							var cnt = occurrences(msg,"</tr>").toString();
-							console.log(cnt);
 							document.getElementById('lotRecordCountTitle').innerHTML = cnt.concat(' Records found in this Kit Lot');
 							setTimeout(function(){
 								$('#lotScanPcb').val('');
@@ -963,6 +965,49 @@
 				});
 			}
 		});
+
+		$('#kitLotNoText').bind('keyup',function(e){
+			viewLot();
+		});
+
+		$('#lotViewButton').click(function(){
+			viewLot();
+		});
+
+		function viewLot(){
+			if (($('#mainLotNoText').val().length == 0) || ($('#lotFuzeType').val() == '') || ($('#lotSize').val() == '')){
+				Materialize.toast("Insufficient data to search.",4000,'rounded');
+			}
+			else{
+				$.ajax({
+					url: 'lot.php',
+					type: 'POST',
+					data: {
+						pcb_no: ($('#lotScanPcb').val().length == 0 ? $('#lotManualPcb').val() : $('#lotScanPcb').val()),
+						fuze: $('#lotFuzeType :selected').val(),
+						size: $('#lotSize :selected').val(),
+						main_lot: $('#mainLotNoText').val(),
+						kit_lot: $('#kitLotNoText').val(),
+						task: 'view'
+					},
+					success: function(msg) {
+						document.getElementById('lotEntryTable').innerHTML = msg;
+						if(msg.includes('</table>')){
+							var cnt = occurrences(msg,"</tr>").toString();
+							console.log(cnt);
+							document.getElementById('lotRecordCountTitle').innerHTML = cnt.concat(' Records found in this Kit Lot');
+						}
+						else{
+							Materialize.toast('Failed to save record!',3000,'rounded');
+							Materialize.toast('Database server is offline!',3000,'rounded');
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + 'Database server offline?');
+					}
+				});
+			}
+		}
 
 		function occurrences(string, subString, allowOverlapping) {
 			string += "";
