@@ -85,7 +85,7 @@
 
 		$results = mysqli_query($db,$sql);
 
-		$value = "<center><table class='striped' style='left: 0px; right: 0px; top: 0px; bottom: 0px;'>".$table_head;
+		$value = "<center><table class='centered striped' style='left: 0px; right: 0px; top: 0px; bottom: 0px;'>".$table_head;
 
 		$cnt = 0;
 		if($results) {
