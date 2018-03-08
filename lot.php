@@ -1,6 +1,22 @@
 <?php
 	include("db_config.php");
 
+	set_error_handler('exceptions_error_handler');
+
+	function exceptions_error_handler($severity, $message, $filename, $lineno) {
+		if (error_reporting() == 0) {
+			return;
+		}
+		if (error_reporting() & $severity) {
+			throw new ErrorException($message, 0, $severity, $filename, $lineno);
+		}
+	}
+
+	function curPageURL() {
+		$pageURL = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
+		return $pageURL;
+	}
+
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		if($_POST['task'] == "add") {
@@ -95,12 +111,52 @@
 												<td class='center'>".$row['kit_lot']."</td>
 												<td class='center'>".$row['pcb_no']."</td>
 												<td class='center'>".$row['kit_lot_size']."</td>
-												<td class='center'><a class='btn waves-effect waves-light red'>DELETE</a></td>
+												<td class='center'><a href='lot.php/?pcb_no=".$row['pcb_no']."&fuze=".$row['fuze_type']."' class='btn waves-effect waves-light red' target='_blank'>DELETE</a></td>
 											</tr>
 										";
 					}
 					$html.= "</tbody></table>";
 					echo $html;
+		}
+	}
+
+	else{
+		$url = parse_url(curPageURL());
+		
+		try {
+			$splitUrl = explode("&", $url['query']);
+			$pcb_no = explode("=", $splitUrl[0])[1];
+			$fuze_type = explode("=", $splitUrl[1])[1];
+
+			$deleteQuery = "DELETE FROM `lot_table` WHERE `pcb_no`='".$pcb_no."' AND `fuze_type`='".$fuze_type."'";
+			$deleteResult = mysqli_query($db, $deleteQuery);
+
+			if(mysqli_affected_rows($db) > 0){
+				echo"
+							<center>
+								<br>
+								<br>
+								<h3 style='color: red; font-weight: bold;'>Following entry has been deleted from Lot-wise records.</h3>
+								<p>PCB Number: ".$pcb_no."</p>
+								<p>Fuze Type : ".$fuze_type."</p>
+								<br>
+								<a href='#' onclick='self.close();'>Go Back</a> and press \"View Lot\" button to refresh.
+							</center>
+						";
+			}
+			else{
+				echo"
+							<center>
+								<br>
+								<br>
+								<h3 style='color: red; font-weight: bold;'>No match found! Nothing to delete!</h3>
+								<h3 style='color: red; font-weight: bold;'>Have you already deleted this?</h3>
+							</center>
+						";
+			}
+		}
+		catch(Exception $e){
+			print_r($e);
 		}
 	}
 
