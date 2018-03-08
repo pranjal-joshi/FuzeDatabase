@@ -151,6 +151,7 @@
 													<option value="4">After PU</option>
 													<option value="5">Rework</option>
 													<option value="6">Soldering</option>
+													<option value="7">Lotwise Entry</option>
 												</select>
 												<label>Select process</label>
 											</div>
