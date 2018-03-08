@@ -944,7 +944,7 @@
 						if(msg.includes('</table>')){
 							Materialize.toast('Record created',1500,'rounded');
 							var cnt = occurrences(msg,"</tr>").toString();
-							document.getElementById('lotRecordCountTitle').innerHTML = cnt.concat(' Records found in this Kit Lot');
+							document.getElementById('lotRecordCountTitle').innerHTML = cnt + "/" + $('#lotSize :selected').val() + " Records found in this Kit Lot";
 							setTimeout(function(){
 								$('#lotScanPcb').val('');
 								$('#lotManualPcb').val('');
@@ -995,7 +995,7 @@
 						if(msg.includes('</table>')){
 							var cnt = occurrences(msg,"</tr>").toString();
 							console.log(cnt);
-							document.getElementById('lotRecordCountTitle').innerHTML = cnt.concat(' Records found in this Kit Lot');
+							document.getElementById('lotRecordCountTitle').innerHTML = cnt + "/" + $('#lotSize :selected').val() + " Records found in this Kit Lot";
 						}
 						else{
 							Materialize.toast('Failed to save record!',3000,'rounded');

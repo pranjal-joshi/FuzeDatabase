@@ -71,7 +71,7 @@
 				$searchIn = "after_bpf";
 				break;
 			case '8':
-				$searchIn = "timestamp";
+				$searchIn = "record_date";
 				break;
 			case '9':
 				$searchIn = "op_name";
