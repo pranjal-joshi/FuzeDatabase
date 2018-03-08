@@ -14,7 +14,7 @@
 
 	function curPageURL() {
 		$pageURL = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-		return $pageURL;
+		return urldecode($pageURL);
 	}
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){

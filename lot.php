@@ -14,7 +14,7 @@
 
 	function curPageURL() {
 		$pageURL = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
-		return $pageURL;
+		return urldecode($pageURL);
 	}
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -69,7 +69,7 @@
 												<td class='center'>".$row['kit_lot']."</td>
 												<td class='center'>".$row['pcb_no']."</td>
 												<td class='center'>".$row['kit_lot_size']."</td>
-												<td class='center'><a class='btn waves-effect waves-light red'>DELETE</a></td>
+												<td class='center'><a href='lot.php/?pcb_no=".$row['pcb_no']."&fuze=".$row['fuze_type']."' class='btn waves-effect waves-light red' target='_blank'>DELETE</a></td>
 											</tr>
 										";
 					}
