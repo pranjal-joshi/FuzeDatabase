@@ -466,6 +466,12 @@
 									<a class="btn waves-effect waves-light col s4 center" id='lotManualButton'>ADD MANUALLY</a>
 								</div>
 
+								<div class="row">
+									<center>
+										<span style="font-weight: bold; font-size: 18px" id='lotRecordCountTitle'class="teal-text text-darken-2"># Records found in this Kit Lot</span>
+									</center>
+								</div>
+
 								<div class="row" id="lotEntryTable">
 								</div>
 
@@ -916,6 +922,7 @@
 			if (($('#mainLotNoText').val().length == 0) || ($('#kitLotNoText').val().length == 0) || ($('#lotFuzeType').val() == '') || ($('#lotSize').val() == '') || (($('#lotScanPcb').val().length == 0) && ($('#lotManualPcb').val().length == 0))){
 				Materialize.toast("Can't save with blank fields.",4000,'rounded');
 				Materialize.toast("Check what you have missed.",4000,'rounded');
+				$('#lotScanPcb').val('');
 			}
 			else{
 				$.ajax({
@@ -933,13 +940,17 @@
 						document.getElementById('lotEntryTable').innerHTML = msg;
 						if(msg.includes('</table>')){
 							Materialize.toast('Record created',1500,'rounded');
+							var cnt = occurrences(msg,"</tr>").toString();
+							console.log(cnt);
+							document.getElementById('lotRecordCountTitle').innerHTML = cnt.concat(' Records found in this Kit Lot');
 							setTimeout(function(){
 								$('#lotScanPcb').val('');
 								$('#lotManualPcb').val('');
-							},1500);
+							},1000);
 						}
 						else if(msg.toLowerCase().includes('already')) {
 							Materialize.toast('Record already exists!',3000,'rounded');
+							$('#lotScanPcb').val('');
 						}
 						else{
 							Materialize.toast('Failed to save record!',3000,'rounded');
@@ -952,6 +963,25 @@
 				});
 			}
 		});
+
+		function occurrences(string, subString, allowOverlapping) {
+			string += "";
+			subString += "";
+			if (subString.length <= 0) return (string.length + 1);
+
+			var n = 0,
+					pos = 0,
+					step = allowOverlapping ? 1 : subString.length;
+
+			while (true) {
+					pos = string.indexOf(subString, pos);
+					if (pos >= 0) {
+							++n;
+							pos += step;
+					} else break;
+			}
+			return n;
+		}
 	</script>
 
 </html>
