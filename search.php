@@ -34,9 +34,12 @@
 				$table_head.= "
 				<thead>
 					<tr>
-						<th class='center'>ID</th>
+						<th class='center'>S.N.</th>
 						<th class='center'>PCB NO.</th>
 						<th class='center'>TABLE</th>
+						<th class='center'>TYPE</th>
+						<th class='center'>MAIN LOT</th>
+						<th class='center'>KIT LOT</th>
 						<th class='center'>ACTION</th>
 						<!--
 						<center><th>Before BPF AC</th></center>
@@ -87,11 +90,17 @@
 		$cnt = 0;
 		if($results) {
 			while ($row = mysqli_fetch_assoc($results)) {
+				$sqlLot = "SELECT * FROM `lot_table` WHERE `pcb_no` = '".$row['pcb_no']."'";
+				$lotResult = mysqli_query($db,$sqlLot);
+				$lotRow = mysqli_fetch_assoc($lotResult);
 				$value.="<tr>";
 				$cnt++;
 				$value.="<td class='center'>".$cnt."</td>";
 				$value.="<td class='center'>".$row[$searchIn]."</td>";
 				$value.="<td class='center'>".strtoupper($searchInTable)."</td>";
+				$value.="<td class='center'>".$lotRow['fuze_type']."</td>";
+				$value.="<td class='center'>".$lotRow['main_lot']."</td>";
+				$value.="<td class='center'>".$lotRow['kit_lot']."</td>";
 				$value.="<td class='center'><a href='details.php/?q=".$row[$searchIn]."&s=".$searchIn."&t=".$searchInTable."' class='btn waves-effect waves-light' target='_blank'>SHOW DETAILS</a></td>";
 				$value.="</tr></center>";
 			}
