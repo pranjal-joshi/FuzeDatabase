@@ -16,7 +16,7 @@
 		$checkResult = mysqli_query($db,$sqlCheck);
 		if($checkResult->num_rows)
 		{
-			die("<center><p style='color: red; font-weight: bold;'>Already entered in the lot. Search this PCB Number for more information.</p><center>");
+			die("<center><p style='color: red; font-weight: bold;'>Already entered in the lot. Search this PCB Number for more information. (Menu -> Search)</p><center>");
 		}
 		else{
 			$result = mysqli_query($db,$sql);
