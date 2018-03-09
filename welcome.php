@@ -107,9 +107,7 @@
 						<ul id='dropdownMenu' class='dropdown-content'>
 							<li><a class="waves-effect waves-light modal-trigger" href="#searchModal">Search</a></li>
 							<li class="divider"></li>
-							<li><a href="#!">Edit</a></li>
-							<li class="divider"></li>
-							<li><a href="#!">Modify</a></li>
+							<li><a href="rejection.php" target="_blank">Rejection</a></li>
 						</ul>
 	
 					</div>
