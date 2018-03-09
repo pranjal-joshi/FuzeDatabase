@@ -10,6 +10,8 @@
 
 		$result = mysqli_query($db, $sql);
 
+		echo $sql;
+
 		if($result){
 			echo "ok";
 		}
@@ -21,15 +23,15 @@
 <html>
 
 	<style type="text/css">
-					.indexBody {
-						display: flex;
-						min-height: 100vh;
-						flex-direction: column;
-					}
-					
-					.contents {
-						flex: 1;
-					}
+		.indexBody {
+			display: flex;
+			min-height: 100vh;
+			flex-direction: column;
+		}
+		
+		.contents {
+			flex: 1;
+		}
 	</style>
 
 	<head>
@@ -164,6 +166,7 @@
 						remark: $('#rejection_remark').val()
 					},
 					success: function(msg) {
+						console.log(msg);
 						if(msg.includes("ok")){
 							Materialize.toast('Added to rejection',3000,'rounded');
 						}
