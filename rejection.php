@@ -3,17 +3,28 @@
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-		$sql = "UPDATE `lot_table` SET `rejected`='1',
-		`rejection_stage`='".$_POST['stage']."',
-		`rejection_remark`='".$_POST['remark']."' 
-		WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type` = '".$_POST['fuze']."'";
 
-		$result = mysqli_query($db, $sql);
+		if($_POST['type'] == 'reject') {
+			$sql = "UPDATE `lot_table` SET `rejected`='1',
+			`rejection_stage`='".$_POST['stage']."',
+			`rejection_remark`='".$_POST['remark']."' 
+			WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type` = '".$_POST['fuze']."'";
 
-		echo $sql;
+			$result = mysqli_query($db, $sql);
 
-		if($result){
-			echo "ok";
+			if($result){
+				echo "ok";
+			}
+		}
+		elseif ($_POST['type'] == 'accept') {
+			$sql = "UPDATE `lot_table` SET `rejected`='0'
+			WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type` = '".$_POST['fuze']."'";
+
+			$result = mysqli_query($db, $sql);
+
+			if($result){
+				echo "ok";
+			}
 		}
 	}
 ?>
@@ -71,7 +82,7 @@
 				<div class="col s12 m8">
 					<br>
 					<br>
-					<div class="card-panel grey lighten-4" id="loginCard">
+					<div class="card-panel grey lighten-4" id="rejectionCard">
 						<br>
 
 						<center>
@@ -81,7 +92,7 @@
 						</center>
 
 						<div class="row">
-							<div class="input-field col s3">
+							<div class="input-field col s4">
 								<select name="rejection_fuze_type" id="rejection_fuze_type" required>
 									<option value="" disabled selected>-- Please select --</option>
 									<option value="EPD">EPD</option>
@@ -90,13 +101,9 @@
 								</select>
 								<label>* Select Fuze Type</label>
 							</div>
-							<div class="input-field col s4">
+							<div class="input-field col s8">
 								<input id="rejection_scan_pcb" name="rejection_scan_pcb" type="text" autofocus>
 								<label for="rejection_scan_pcb"><center>* Scan PCB Number</center></label>
-							</div>
-							<div class="input-field col s5">
-								<input id="rejection_manual_pcb" name="rejection_manual_pcb" type="text">
-								<label for="rejection_manual_pcb"><center>Or Enter manually</center></label>
 							</div>
 						</div>
 
@@ -127,6 +134,41 @@
 				</div>
 			</div>
 
+			<div class="row">
+			<div class="col m2"></div>
+				<div class="col s12 m8">
+					<div class="card-panel grey lighten-4" id="acceptionCard">
+						<center>
+							<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Re-accept Rejected Fuze</span>
+							<br>
+						</center>
+
+						<div class="row">
+							<div class="input-field col s4">
+								<select name="acception_fuze_type" id="acception_fuze_type">
+									<option value="" disabled selected>-- Please select --</option>
+									<option value="EPD">EPD</option>
+									<option value="TIME">TIME</option>
+									<option value="PROX">PROX</option>
+								</select>
+								<label>* Select Fuze Type</label>
+							</div>
+							<div class="input-field col s8">
+								<input id="acception_scan_pcb" name="acception_scan_pcb" type="text">
+								<label for="acception_scan_pcb"><center>* Scan PCB Number</center></label>
+							</div>
+						</div>
+
+						<br>
+						<center>
+							<a class="waves-effect waves-light btn green" id="acception_submit">ACCEPT FROM REJECTION</a>
+							<a class="btn waves-effect teal lighten-1" id="acception_clear">CLEAR</a>
+						</center>
+
+					</div>
+				</div>
+			</div>
+
 		</main>
 	</body>
 
@@ -135,14 +177,13 @@
 
 		$('#rejection_clear').click(function(){
 			$('#rejection_scan_pcb').val('');
-			$('#rejection_manual_pcb').val('');
 			$('#rejection_remark').val('');
 			$('#rejection_scan_pcb').focus();
 		});
 
 		var confirmStatus;
 		$('#rejection_submit').click(function(){
-				if (($('#rejection_fuze_type :selected').val() == '') || ($('#rejection_stage :selected').val() == '') || ($('#rejection_remark').val() == '') || (($('#rejection_scan_pcb').val() == '') && ($('#rejection_manual_pcb').val() == ''))){
+				if (($('#rejection_fuze_type :selected').val() == '') || ($('#rejection_stage :selected').val() == '') || ($('#rejection_remark').val() == '') || ($('#rejection_scan_pcb').val() == '')){
 					Materialize.toast("Please fill-up the required fields!",4000,'rounded');
 					}
 				else {
@@ -157,12 +198,47 @@
 				}
 		});
 
+		$('#acception_submit').click(function(){
+			if ($('#acception_fuze_type :selected').val() == '' || $('#acception_scan_pcb').val() == ''){
+				Materialize.toast("Please fill-up the required fields!",4000,'rounded');
+			}
+			else {
+				acceptFromRejection();
+			}
+		});
+
+		function acceptFromRejection(){
+			$.ajax({
+					url: 'rejection.php',
+					type: 'POST',
+					data: {
+						type: 'accept',
+						pcb_no: $('#acception_scan_pcb').val(),
+						fuze: $('#acception_fuze_type :selected').val(),
+					},
+					success: function(msg) {
+						console.log(msg);
+						if(msg.includes("ok")){
+							Materialize.toast('Accepted back from rejection',3000,'rounded');
+						}
+						else{
+							Materialize.toast('Failed to reject!',3000,'rounded');
+							Materialize.toast('Server says: ' + msg.toString(),3000,'rounded');
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + 'Database server offline?');
+					}
+				});
+		}
+
 		function addToRejection(){
 			$.ajax({
 					url: 'rejection.php',
 					type: 'POST',
 					data: {
-						pcb_no: ($('#rejection_scan_pcb').val() == '' ? $('#rejection_manual_pcb').val() : $('#rejection_scan_pcb').val()),
+						type: 'reject',
+						pcb_no: $('#rejection_scan_pcb').val(),
 						fuze: $('#rejection_fuze_type :selected').val(),
 						stage: $('#rejection_stage :selected').val(),
 						remark: $('#rejection_remark').val()
