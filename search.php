@@ -54,24 +54,35 @@
 				break;
 			case '2':
 				$searchIn = "rf_no";
+				$searchInTable = "calibration_table";
 				break;
 			case '3':
 				$searchIn = "res_val";
+				$searchInTable = "calibration_table";
 				break;
 			case '4':
 				$searchIn = "before_freq";
+				$searchInTable = "calibration_table";
 				break;
 			case '5':
 				$searchIn = "before_bpf";
+				$searchInTable = "calibration_table";
 				break;
 			case '6':
 				$searchIn = "after_freq";
+				$searchInTable = "calibration_table";
 				break;
 			case '7':
 				$searchIn = "after_bpf";
+				$searchInTable = "calibration_table";
 				break;
 			case '8':
-				$searchIn = "record_date";
+				if($searchInTable == "calibration_table") {
+					$searchIn = "timestamp";
+				}
+				else {
+					$searchIn = "record_date";
+				}
 				break;
 			case '9':
 				$searchIn = "op_name";
@@ -96,7 +107,18 @@
 				$value.="<tr>";
 				$cnt++;
 				$value.="<td class='center'>".$cnt."</td>";
-				$value.="<td class='center'>".$row[$searchIn]."</td>";
+				if($_POST['select'] == '3')	{
+					$value.="<td class='center'>".$row[$searchIn]."K</td>";
+				}
+				elseif($_POST['select'] == '4' || $_POST['select'] == '6')	{
+					$value.="<td class='center'>".$row[$searchIn]." MHz</td>";
+				}
+				elseif($_POST['select'] == '5' || $_POST['select'] == '7')	{
+					$value.="<td class='center'>".$row[$searchIn]." V</td>";
+				}
+				else{
+					$value.="<td class='center'>".$row[$searchIn]."</td>";
+				}
 				//$value.="<td class='center'>".strtoupper($searchInTable)."</td>";
 				$value.="<td class='center'>".$lotRow['fuze_type']."</td>";
 				$value.="<td class='center'>".$lotRow['main_lot']."</td>";
@@ -108,8 +130,8 @@
 			echo $value."</table>";
 		}
 		else {
-			echo($sql);
-			die("fail to search.");
+			//echo($sql);
+			die("<br><p style='color: red; font-weight: bold;'>Failed to search!</p>");
 		}
 
 		/*
