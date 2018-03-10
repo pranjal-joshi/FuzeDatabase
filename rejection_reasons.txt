@@ -1,0 +1,33 @@
+0 - Not Applicable
+1 - Wire not properly soldered
+2 - Broken wire, Damaged Insulation
+3 - Improper wire length
+4 - DET pin not soldered properly
+5 - VIN pin not soldered properly
+6 - PST pin not soldered properly
+7 - SW1/IMP pin not soldered properly
+8 - GND pin not soldered properly
+9 - MOD pin not soldered properly
+10 - SIG pin not soldered properly
+11 - VRF pin not soldered properly
+12 - Pin cross / bend
+13 - Improper pin length
+14 - Pin / test pin cut
+15 - Plating of pin / test pin
+16 - Soldering ring not observed (bottom side)
+17 - Solder balls seen
+18 - Imapct switch soldering improper
+19 - Excess solder on impact switch
+20 - Damanged / swollen bush of imapct switch
+21 - Imapct switch tilted
+22 - Excess flux
+23 - Components not properly soldered
+24 - Soldered components damaged
+25 - Wrong components soldered
+26 - Shorting of component pins
+27 - Component missing
+28 - PCB track cut
+29 - Solder pan on PCB damaged / removed
+30 - Improper barcode printing
+31 - Crystal pad damaged
+100 - MULTIPLE FAULTS
