@@ -133,12 +133,13 @@
 					#tableInfo {
 						margin-left: 5px;
 						font-weight: bold;
+						color: brown;
 					}
 				</style>
 			</head>
 
 			<body>
-				<div id='generalTable' style='float: left; margin-right: 80px;'>
+				<div id='generalTable' style='float: left; margin-right: 30px;'>
 					<p id='tableInfo'>General Information</p>
 					<table>
 						<tr id='tableHeader'>
@@ -228,7 +229,7 @@
 						<br>
 					</div>
 
-					<div id='pcbTable' style='float: left; margin-right: 80px;'>
+					<div id='pcbTable' style='float: left; margin-right: 15px;'>
 						<p id='tableInfo'>PCB Testing Records</p>
 						<table style='font-size: 15px;'>
 							<tr id='tableHeader'>
@@ -472,7 +473,7 @@
 			}
 
 			$html.=	"
-								<div id='rejectionTable' style='float: left; margin-left: 50px;'>
+								<div id='rejectionTable' style='float: left; margin-left: 15px;'>
 									<p id='tableInfo'>Rejection Report</p>
 									<table style='width: 170px;'>
 										<tr id='tableHeader'>
@@ -485,11 +486,11 @@
 										</tr>
 										<tr>
 											<td>Rejection<br>stage</td>
-											<td>".$lotRow['rejection_stage']."</td>
+											<td>".($lotRow['rejected'] == '0' ? '--' : $lotRow['rejection_stage'])."</td>
 										</tr>
 										<tr>
 											<td>Remark</td>
-											<td>".$lotRow['rejection_remark']."</td>
+											<td>".($lotRow['rejected'] == '0' ? '--' : $lotRow['rejection_remark'])."</td>
 										</tr>
 									</table>
 									<br>
