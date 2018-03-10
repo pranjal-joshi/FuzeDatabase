@@ -62,8 +62,13 @@
 									";
 					
 					while ($row = mysqli_fetch_assoc($tableResult)) {
-						$html.= "
-											<tr>
+						if($row['rejected'] == '1'){
+							$html.= "<tr class='red-text text-darken-2' style='font-weight: bold;'>";
+						}
+						else {
+							$html.= "<tr>";
+						}
+						$html.=	"
 												<td class='center'>".$row['fuze_type']."</td>
 												<td class='center'>".$row['main_lot']."</td>
 												<td class='center'>".$row['kit_lot']."</td>
@@ -73,13 +78,10 @@
 											</tr>
 										";
 					}
-					$html.= "</tbody></table>";
+					$html.= "</tbody></table></center>";
 					echo $html;
 				}
 			}
-		}
-		elseif ($_POST['task'] == 'delete') {
-			print_r($_POST);
 		}
 		elseif ($_POST['task'] == 'view') {
 			$tableQuery = "SELECT * FROM `lot_table` WHERE 
@@ -104,8 +106,13 @@
 									";
 					
 					while ($row = mysqli_fetch_assoc($tableResult)) {
+						if($row['rejected'] == '1'){
+							$html.= "<tr class='red-text text-darken-2' style='font-weight: bold;'>";
+						}
+						else {
+							$html.= "<tr>";
+						}
 						$html.= "	
-											<tr>
 												<td class='center'>".$row['fuze_type']."</td>
 												<td class='center'>".$row['main_lot']."</td>
 												<td class='center'>".$row['kit_lot']."</td>
