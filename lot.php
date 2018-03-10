@@ -151,6 +151,8 @@
 								<br>
 								<h3 style='color: red; font-weight: bold;'>No match found! Nothing to delete!</h3>
 								<h3 style='color: red; font-weight: bold;'>Have you already deleted this?</h3>
+								<br>
+								<a href='#' onclick='self.close();'>Click here to Go Back</a>
 							</center>
 						";
 			}
