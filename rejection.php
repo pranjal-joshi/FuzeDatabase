@@ -6,7 +6,7 @@
 		$sql = "UPDATE `lot_table` SET `rejected`='1',
 		`rejection_stage`='".$_POST['stage']."',
 		`rejection_remark`='".$_POST['remark']."' 
-		WHERE `pcb_no`=".$_POST['pcb_no']." AND `fuze_type` = ".$_POST['fuze'];
+		WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type` = '".$_POST['fuze']."'";
 
 		$result = mysqli_query($db, $sql);
 
@@ -60,6 +60,8 @@
 			<nav>
 				<div class="nav-wrapper teal lighten-2">
 					<a href="#!" class="brand-logo center">Fuze Database Home-Page</a>
+
+					<a><span class='white-text text-darken-5 left' style='font-size: 18px; padding-left: 20px; font-weight: bold' onclick='self.close();'>Back</span></a>
 				</div>
 			</nav>
 		</div>
@@ -162,7 +164,7 @@
 					data: {
 						pcb_no: ($('#rejection_scan_pcb').val() == '' ? $('#rejection_manual_pcb').val() : $('#rejection_scan_pcb').val()),
 						fuze: $('#rejection_fuze_type :selected').val(),
-						stage: $('#rejection_scan_pcb :selected').val(),
+						stage: $('#rejection_stage :selected').val(),
 						remark: $('#rejection_remark').val()
 					},
 					success: function(msg) {
