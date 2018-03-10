@@ -467,12 +467,37 @@
 						</table>
 						<br>
 					</div>
-
-					</body>
-				</html>
 								";
 					break;
 			}
+
+			$html.=	"
+								<div id='rejectionTable' style='float: left; margin-left: 50px;'>
+									<p id='tableInfo'>Rejection Report</p>
+									<table style='width: 170px;'>
+										<tr id='tableHeader'>
+											<td>Parameters</td>
+											<td>Information<br></td>
+										</tr>
+										<tr>
+											<td>Status</td>
+											<td>".($lotRow['rejected'] == '0' ? 'ACCEPTED' : 'REJECTED')."</td>
+										</tr>
+										<tr>
+											<td>Rejection<br>stage</td>
+											<td>".$lotRow['rejection_stage']."</td>
+										</tr>
+										<tr>
+											<td>Remark</td>
+											<td>".$lotRow['rejection_remark']."</td>
+										</tr>
+									</table>
+									<br>
+								</div>
+
+								</body>
+							</html>
+							";
 
 			echo $html;
 ?>
