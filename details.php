@@ -28,7 +28,6 @@
 				$op_name = strtoupper($_POST['op_name']);
 
 				$sql = "UPDATE `qa_table` SET 
-				`_id`=NULL,
 				`pcb_no`='".$pcb_no."',
 				`result`='".$result."',
 				`reason`='".$reason."',
@@ -41,7 +40,6 @@
 
 			case 'afterPuUpdate':
 				$sql = "UPDATE `after_pu` SET 
-				`_id`=NULL,
 				`pcb_no`='".$_POST['pcb_no']."',
 				`i`='".$_POST['current']."',
 				`vee`='".$_POST['vee']."',
@@ -72,7 +70,6 @@
 
 			case 'pcbTestingUpdate':
 				$sql = "UPDATE `pcb_testing` SET 
-				`_id`=NULL,
 				`pcb_no`='".$_POST['pcb_no']."',
 				`i`='".$_POST['current']."',
 				`vee`='".$_POST['vee']."',
@@ -103,17 +100,16 @@
 
 			case 'calibrationUpdate':
 				$sql = "UPDATE `calibration_table` SET 
-				`_id`= NULL,
-				`pcb_no`=".$_POST['pcb_no'].",
-				`rf_no`=".$_POST['rf_no'].",
-				`before_freq`=".$_POST['before_freq'].",
-				`before_bpf`=".$_POST['before_bpf'].",
-				`changed`=".$_POST['res_change'].",
-				`res_val`=".$_POST['res_val'].",
-				`after_freq`=".$_POST['after_freq'].",
-				`after_bpf`=".$_POST['after_bpf'].",
-				`timestamp`=".$_POST['timestamp'].",
-				`op_name`=".$_POST['op_name']." WHERE `pcb_no`='".$_POST['pcb_no']."'";
+				`pcb_no`='".$_POST['pcb_no']."',
+				`rf_no`='".$_POST['rf_no']."',
+				`before_freq`='".$_POST['before_freq']."',
+				`before_bpf`='".$_POST['before_bpf']."',
+				`changed`='".$_POST['res_change']."',
+				`res_val`='".$_POST['res_val']."',
+				`after_freq`='".$_POST['after_freq']."',
+				`after_bpf`='".$_POST['after_bpf']."',
+				`timestamp`='".$_POST['timestamp']."',
+				`op_name`='".$_POST['op_name']."' WHERE `pcb_no`='".$_POST['pcb_no']."'";
 
 				$results = mysqli_query($db,$sql);
 				break;
@@ -319,8 +315,13 @@
 										<td class='center'><span class='center'>Rejection reason <span></td>
 										<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 										<td class='center'>
-											<div class='input-field col s12 center'>
+											<div class='input-field col s9 center tooltipped' data-position='bottom' data-delay='250' data-tooltip='Enter rejection code only. No need to type description.'>
 												<input type='text' id='qaDetailsReason'>
+											</div>
+											<div class='col s3'>
+											<br>
+											<br>
+												<a href='/FuzeDatabase/rejection_reasons.txt' target='_blank'>View Rejection codes</a>
 											</div>
 										</td>
 									</tr>
@@ -497,7 +498,6 @@
 													op_name: $('#qaDetailsOperator').val()
 												},
 												success: function(msg) {
-													console.log(msg);
 													if(msg.includes('ok')){
 														Materialize.toast('Record Updated',1500,'rounded');
 													}
