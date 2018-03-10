@@ -133,28 +133,5 @@
 			//echo($sql);
 			die("<br><p style='color: red; font-weight: bold;'>Failed to search!</p>");
 		}
-
-		/*
-		if($results) {
-			while($row = mysqli_fetch_assoc($results))
-			{
-				$value.= "<tr>";
-				$cnt = 0;
-				foreach ($row as $item) {
-					$cnt++;
-					if($cnt != 4) {
-						$value.= "<td>".$item."</td>";
-					}
-				}
-				$value.="</tr>";
-			}
-			echo $value;
-			mysqli_close($db);
-		}
-		else {
-			echo($sql);
-			die("fail to search.");
-		}
-		*/
 	}
 ?>
