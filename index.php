@@ -18,6 +18,10 @@
 		$mypassword = mysqli_real_escape_string($db,$_POST['password']);
 		$mypassword = md5($mypassword);
 
+		$fuzeDiaCookie = "fuzeDia";
+		$fuzeDiaValue = $_POST['fuze_diameter'];
+		setcookie($fuzeDiaCookie, $fuzeDiaValue, 0, "/");
+
 		$startPointCookie = "fuzeStart";
 		$startPointValue = $_POST['startPoint'];
 		setcookie($startPointCookie, $startPointValue, 0, "/");
@@ -156,12 +160,12 @@
 												<label>Select process</label>
 											</div>
 											<div class="input-field col s4">
-												<select name="login_fuze_size" id="login_fuze_size" required>
+												<select name="fuze_diameter" id="fuze_diameter" required>
 													<option value="" selected disabled>--Select--</option>
 													<option value="105">105 mm</option>
 													<option value="155">155 mm</option>
 												</select>
-												<label>Fuze size</label>
+												<label>Fuze Diameter</label>
 											</div>
 										</div>
 								</div>

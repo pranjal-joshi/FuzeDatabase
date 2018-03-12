@@ -546,6 +546,9 @@
 					<div class="card-panel grey lighten-4" id="reworkCard" style="display: none;">
 						<div class="row">
 							<center>
+								<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Rework</span>
+								<br>
+								<br>
 								<img class="responsive-img" src="under_con.jpg" width="258" height="196"></img>
 							</center>
 						</div>
