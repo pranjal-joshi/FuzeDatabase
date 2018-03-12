@@ -70,7 +70,7 @@
 		<div class="navbar-fixed">
 			<nav>
 				<div class="nav-wrapper teal lighten-2">
-					<a href="#!" class="brand-logo center">Fuze Database Home-Page</a>
+					<a href="#!" class="brand-logo center" id="loginNavTitle">Fuze Database Home-Page</a>
 
 					<a><span class='white-text text-darken-5 left' style='font-size: 18px; padding-left: 20px; font-weight: bold' onclick='self.close();'>Back</span></a>
 				</div>
@@ -159,6 +159,11 @@
 							</div>
 						</div>
 
+						<div class="input-field col s12">
+							<input class="tooltipped" id="acception_remark" name="acception_remark" type="text" data-position="top" data-delay="50" data-tooltip="Help us knowing how you solved this problem">
+							<label for="acception_remark"><center>Remark</center></label>
+						</div>
+
 						<br>
 						<center>
 							<a class="waves-effect waves-light btn green" id="acception_submit">ACCEPT FROM REJECTION</a>
@@ -174,6 +179,15 @@
 
 	<script type="text/javascript">
 		$('select').material_select();
+
+		switch($.cookie('fuzeDia')){
+			case '105':
+				document.getElementById('loginNavTitle').innerHTML = "105 mm Fuze Database";
+				break;
+			case '155':
+				document.getElementById('loginNavTitle').innerHTML = "155 mm Fuze Database";
+				break;
+		}
 
 		$('#rejection_clear').click(function(){
 			$('#rejection_scan_pcb').val('');
@@ -215,6 +229,7 @@
 						type: 'accept',
 						pcb_no: $('#acception_scan_pcb').val(),
 						fuze: $('#acception_fuze_type :selected').val(),
+						remark: $('#acception_remark').val()
 					},
 					success: function(msg) {
 						console.log(msg);
