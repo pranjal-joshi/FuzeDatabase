@@ -785,6 +785,10 @@
 						document.getElementById("after_bpf").disabled = true;
 						$('#pcb_no').focus();
 					}
+					else if(msg.includes("exist")) {
+							Materialize.toast("Record already exist!",3000,'rounded');
+							Materialize.toast("Search this PCB number for details.",3000,'rounded');
+						}
 					else{
 						Materialize.toast("Failed to save record!",3000,'rounded');
 						Materialize.toast("Database server is offline!",3000,'rounded');
@@ -822,6 +826,10 @@
 							$('#qaFailRow').fadeOut();
 							$('#qa_pcb_no').focus();
 							radioState = "radioPass";
+						}
+						else if(msg.includes("exist")) {
+							Materialize.toast("Record already exist!",3000,'rounded');
+							Materialize.toast("Search this PCB number in QA table for details.",3000,'rounded');
 						}
 						else{
 							console.log(msg);

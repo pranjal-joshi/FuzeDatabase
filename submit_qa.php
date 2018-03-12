@@ -5,6 +5,13 @@
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 
+		$sqlCheck = "SELECT * from `qa_table` WHERE `pcb_no`='".$_POST['qa_pcb_no']."';";
+		$checkResult = mysqli_query($db, $sqlCheck);
+
+		if($checkResult->num_rows > 0){
+			die("exist");
+		}
+
 		$sql = "INSERT INTO `qa_table` (`_id`, `pcb_no`, `result`, `reason`, `record_date`, `op_name`) VALUES (
 			NULL, 
 			'".$_POST['qa_pcb_no']."', 

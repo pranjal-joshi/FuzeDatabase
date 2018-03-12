@@ -7,6 +7,13 @@
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
+		$sqlCheck = "SELECT * from `calibration_table` WHERE `pcb_no`='".$_POST['pcb_no']."';";
+		$checkResult = mysqli_query($db, $sqlCheck);
+
+		if($checkResult->num_rows > 0){
+			die("exist");
+		}
+
 		$sql = "INSERT INTO `calibration_table` (`_id`, `pcb_no`, `rf_no`, `before_freq`, `before_bpf`, `changed`, `res_val`, `after_freq`, `after_bpf`, `timestamp`, `op_name`) VALUES (
 			NULL, 
 			'".$_POST['pcb_no']."', 

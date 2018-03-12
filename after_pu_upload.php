@@ -149,7 +149,10 @@
 
 				$a = array();
 
-				$sqlAdd = "INSERT INTO `after_pu` (`_id`, `pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`) VALUES ";
+				$sqlAutoIncReset = "ALTER TABLE `after_pu` DROP `_id`;";
+				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
+
+				$sqlAdd = "REPLACE INTO `after_pu` (`_id`, `pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`) VALUES ";
 
 				foreach ($Reader as $Row)
 				{
@@ -242,9 +245,12 @@
 				$sqlAdd = rtrim($sqlAdd,", ");
 				$sqlAdd.=";";
 				$res = mysqli_query($db,$sqlAdd);
+
+				$sqlAutoIncReset = "ALTER TABLE `after_pu` ADD `_id` INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`_id`);";
+				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
+
 				mysqli_close($db);
 			}
-
 
 			$html.="</table></main>
 
