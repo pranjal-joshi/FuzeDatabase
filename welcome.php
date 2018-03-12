@@ -94,7 +94,7 @@
 			<div class="navbar-fixed">
 				<nav>
 					<div class="nav-wrapper teal lighten-2" id="loginNav">
-						<a href="#!" class="brand-logo center">Fuze Database Home-page</a>
+						<a href="#!" class="brand-logo center" id="loginNavTitle">Fuze Database Home-page</a>
 
 						<a class='dropdown-button' href='#' data-activates='dropdownMenu'>
 							<span class='white-text text-darken-5' style="font-size: 20px; padding-left: 20px; font-weight: bold">Menu</span>
@@ -679,6 +679,15 @@
 			close: 'Ok',
 			closeOnSelect: false // Close upon selecting a date,
 		});
+
+		switch($.cookie('fuzeDia')){
+			case '105':
+				document.getElementById('loginNavTitle').innerHTML = "105 mm Fuze Database";
+				break;
+			case '155':
+				document.getElementById('loginNavTitle').innerHTML = "155 mm Fuze Database";
+				break;
+		}
 
 		switch($.cookie('fuzeStart')){
 			case '1':
