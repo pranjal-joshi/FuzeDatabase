@@ -142,7 +142,7 @@
 									</div>
 
 										<div class="row">
-											<div class="input-field col s12">
+											<div class="input-field col s8">
 												<select name="startPoint" required>
 													<option value="" disabled selected>Select your start point</option>
 													<option value="1">QA/Visual</option>
@@ -154,6 +154,14 @@
 													<option value="7">Lotwise Entry</option>
 												</select>
 												<label>Select process</label>
+											</div>
+											<div class="input-field col s4">
+												<select name="login_fuze_size" id="login_fuze_size" required>
+													<option value="" selected disabled>--Select--</option>
+													<option value="105">105 mm</option>
+													<option value="155">155 mm</option>
+												</select>
+												<label>Fuze size</label>
 											</div>
 										</div>
 								</div>
