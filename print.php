@@ -144,12 +144,12 @@
 					<table>
 						<tr id='tableHeader'>
 							<td>Fuze Type</td>
-							<td>PCB Number</td>
-							<td>Main Lot</td>
-							<td>Kit Lot</td>
+							<td>PCB<br>Number</td>
+							<td>Main<br>Lot</td>
+							<td>Kit<br>Lot</td>
 						</tr>
 						<tr>
-							<td>".$lotRow['fuze_type']."</td>
+							<td>".$lotRow['fuze_diameter']."mm ".$lotRow['fuze_type']."</td>
 							<td>".$lotRow['pcb_no']."</td>
 							<td>".$lotRow['main_lot']."</td>
 							<td>".$lotRow['kit_lot']."</td>
