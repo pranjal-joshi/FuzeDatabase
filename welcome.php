@@ -543,6 +543,14 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="reworkCard" style="display: none;">
+						<div class="row">
+							<center>
+								<img class="responsive-img" src="under_con.jpg" width="258" height="196"></img>
+							</center>
+						</div>
+					</div>
+
 					<div class="card-panel grey lighten-4" id="searchCard" style="display: none;">
 						<div class="row">
 							<center>
@@ -682,6 +690,9 @@
 				break;
 			case '4':
 				$('#afterPUCard').fadeIn();
+				break;
+			case '5':
+				$('#reworkCard').fadeIn();
 				break;
 			case '6':
 				$('#solderingCard').fadeIn();
