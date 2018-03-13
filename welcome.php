@@ -979,6 +979,7 @@
 						size: $('#lotSize :selected').val(),
 						main_lot: $('#mainLotNoText').val(),
 						kit_lot: $('#kitLotNoText').val(),
+						fuze_diameter: $.cookie('fuzeDia'),
 						task: 'add'
 					},
 					success: function(msg) {

@@ -21,9 +21,10 @@
 
 		if($_POST['task'] == "add") {
 
-			$sql = "INSERT INTO `lot_table`(`_id`,`fuze_type`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
+			$sql = "INSERT INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
 			(NULL,
 			'".$_POST['fuze']."',
+			'".$_POST['fuze_diameter']."',
 			'".$_POST['main_lot']."',
 			'".$_POST['kit_lot']."',
 			'".$_POST['pcb_no']."',
