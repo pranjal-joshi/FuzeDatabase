@@ -108,6 +108,20 @@
 							<li><a class="waves-effect waves-light modal-trigger" href="#searchModal">Search</a></li>
 							<li class="divider"></li>
 							<li><a href="rejection.php" target="_blank">Rejection</a></li>
+							<li class="divider"></li>
+							<?php
+								if($_COOKIE["fuzeAccess"] == "edit"){
+									echo "<li><a href='analytics.php' target='_blank'>Analytics</a></li>";
+								}
+								else {
+									echo "<li><a class='grey-text' id='analyticsLink'>Analytics</a></li>";
+									echo "<script>
+													$('#analyticsLink').click(function(){
+														alert('Sorry! You dont have access to this feature.');
+													});
+												</script>";
+								}
+							?>
 						</ul>
 	
 					</div>
