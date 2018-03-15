@@ -66,7 +66,9 @@
 			$productionData = array();
 
 			for($i=1;$i<=$_POST['days_in_month'];$i++) {
-				$productionSql = "SELECT `_id` FROM `".$table_name."` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."'";
+
+				$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."'";
+
 				$productionResult = mysqli_query($db, $productionSql);
 				array_push($productionData, 
 					array("x"=>$i, "y"=>mysqli_num_rows($productionResult))
