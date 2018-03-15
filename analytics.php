@@ -1,5 +1,7 @@
 
 <?php
+
+	error_reporting(0);
 	
 	include("db_config.php");
 
@@ -147,15 +149,15 @@
 						<div class="row">
 
 							<div class="input-field col s4">
-								<select name="analytics_select" id="analytics_select">
-									<option value="" selected>-- Select --</option>
+								<select name="analytics_select" id="analytics_select" onchange="whatToShow(this.value)">
+									<option value="" selected disabled>-- Select --</option>
 									<option value="rejection">Rejection</option>
 									<option value="production">Prodution</option>
 								</select>
 								<label>Select criteria</label>
 							</div>
 
-							<div class="input-field col s4">
+							<div class="input-field col s4" style="display: none;" id="analytics_fuze_type_div">
 							<select name="analytics_fuze_type" id="analytics_fuze_type">
 								<option value="" disabled selected>-- select --</option>
 								<option value="EPD">EPD</option>
@@ -165,7 +167,7 @@
 							<label>Select Fuze Type</label>
 						</div>
 
-						<div class="input-field col s4">
+						<div class="input-field col s4" style="display: none;" id="analytics_fuze_diameter_div">
 							<select name="analytics_fuze_diameter" id="analytics_fuze_diameter" required>
 								<option value="" selected disabled>--Select--</option>
 								<option value="105">105 mm</option>
@@ -174,13 +176,46 @@
 							<label>Fuze Diameter</label>
 						</div>
 
+					</div>
+
+					<div class="row" id="production_select_row" style="display: none;">
+						<div class="input-field col s4" id="analytics_process_div">
+							<select name="analytics_proess" id="analytics_process" required>
+								<option value="" selected disabled>--Select--</option>
+								<option value="Q/A">Q/A</option>
+								<option value="calibration">Calibration</option>
+							</select>
+							<label>Process</label>
 						</div>
 
-						<div class="row">
-							<center>
-								<a class="btn waves-effect waves-light" id="analyticsShowButton">SHOW</a>
-							</center>
-						</div>
+						<!--<div class="input-field col s4" id="analytics_month_div">
+							<select name="analytics_month" id="analytics_month" required>
+								<option value="" selected disabled>--Select--</option>
+								<option value="1">January</option>
+								<option value="2">February</option>
+								<option value="3">March</option>
+								<option value="4">April</option>
+								<option value="5">May</option>
+								<option value="6">June</option>
+								<option value="7">July</option>
+								<option value="8">August</option>
+								<option value="9">September</option>
+								<option value="10">October</option>
+								<option value="11">November</option>
+								<option value="12">December</option>
+							</select>
+							<label>Month</label>
+						</div>-->
+						<label for="analytics_month" style="margin-left: 30px;">Select month</label>
+						<br>
+						<input type="month" name="analytics_month" id="analytics_month" style="margin-left: 30px;" onchange="alert(this.value)">
+					</div>
+
+					<div class="row">
+						<center>
+							<a class="btn waves-effect waves-light" id="analyticsShowButton">SHOW</a>
+						</center>
+					</div>
 
 					</div>
 					<br>
@@ -231,6 +266,16 @@
 				});
 			}
 		});
+
+		function whatToShow(mode) {
+			$('#analytics_fuze_diameter_div').fadeIn();
+			$('#analytics_fuze_type_div').fadeIn();
+			if(mode == "production") {
+				$('#production_select_row').fadeIn();
+			}
+			else {
+			}
+		}
 	</script>
 
 </html>
