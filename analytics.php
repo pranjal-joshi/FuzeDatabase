@@ -1,48 +1,78 @@
 
 <?php
 
-	error_reporting(0);
+	//error_reporting(0);
 	
 	include("db_config.php");
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-		if($_POST['fuze_type'] == "PROX") {
+		if($_POST['select'] == "rejection") {
 
-			$qaRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='Q/A' AND 
-				`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
-				`fuze_type` = '".$_POST['fuze_type']."'";
-			$qaRejectionGraphResult = mysqli_query($db, $qaRejectionGraphQuery);
+			if($_POST['fuze_type'] == "PROX") {
 
-			$pcbRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='PCB' AND 
-				`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
-				`fuze_type` = '".$_POST['fuze_type']."'";
-			$pcbRejectionGraphResult = mysqli_query($db, $pcbRejectionGraphQuery);
+				$qaRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='Q/A' AND 
+					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+					`fuze_type` = '".$_POST['fuze_type']."'";
+				$qaRejectionGraphResult = mysqli_query($db, $qaRejectionGraphQuery);
 
-			$housingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='HOUSING' AND 
-				`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
-				`fuze_type` = '".$_POST['fuze_type']."'";
-			$housingRejectionGraphResult = mysqli_query($db, $housingRejectionGraphQuery);
+				$pcbRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='PCB' AND 
+					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+					`fuze_type` = '".$_POST['fuze_type']."'";
+				$pcbRejectionGraphResult = mysqli_query($db, $pcbRejectionGraphQuery);
 
-			$pottingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='POTTING' AND 
-				`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
-				`fuze_type` = '".$_POST['fuze_type']."'";
-			$pottingRejectionGraphResult = mysqli_query($db, $pottingRejectionGraphQuery);
+				$housingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='HOUSING' AND 
+					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+					`fuze_type` = '".$_POST['fuze_type']."'";
+				$housingRejectionGraphResult = mysqli_query($db, $housingRejectionGraphQuery);
 
-			$puPottingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='PU POTTING' AND 
-				`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
-				`fuze_type` = '".$_POST['fuze_type']."'";
-			$puPottingRejectionGraphResult = mysqli_query($db, $puPottingRejectionGraphQuery);
+				$pottingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='POTTING' AND 
+					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+					`fuze_type` = '".$_POST['fuze_type']."'";
+				$pottingRejectionGraphResult = mysqli_query($db, $pottingRejectionGraphQuery);
 
-			$rejectionData = array(
-				array("label"=>"QA/Visual","symbol"=>"Q/A","y"=>mysqli_num_rows($qaRejectionGraphResult)),
-				array("label"=>"PCB","symbol"=>"PCB","y"=>mysqli_num_rows($pcbRejectionGraphResult)),
-				array("label"=>"HOUSING","symbol"=>"HOUSING","y"=>mysqli_num_rows($housingRejectionGraphResult)),
-				array("label"=>"POTTING","symbol"=>"POTTING","y"=>mysqli_num_rows($pottingRejectionGraphResult)),
-				array("label"=>"PU POTTING","symbol"=>"PU POTTING","y"=>mysqli_num_rows($puPottingRejectionGraphResult))
-			);
+				$puPottingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='PU POTTING' AND 
+					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+					`fuze_type` = '".$_POST['fuze_type']."'";
+				$puPottingRejectionGraphResult = mysqli_query($db, $puPottingRejectionGraphQuery);
 
-			die(json_encode($rejectionData, JSON_NUMERIC_CHECK));
+				$rejectionData = array(
+					array("label"=>"QA/Visual","symbol"=>"Q/A","y"=>mysqli_num_rows($qaRejectionGraphResult)),
+					array("label"=>"PCB","symbol"=>"PCB","y"=>mysqli_num_rows($pcbRejectionGraphResult)),
+					array("label"=>"HOUSING","symbol"=>"HOUSING","y"=>mysqli_num_rows($housingRejectionGraphResult)),
+					array("label"=>"POTTING","symbol"=>"POTTING","y"=>mysqli_num_rows($pottingRejectionGraphResult)),
+					array("label"=>"PU POTTING","symbol"=>"PU POTTING","y"=>mysqli_num_rows($puPottingRejectionGraphResult))
+				);
+
+				die(json_encode($rejectionData, JSON_NUMERIC_CHECK));
+		}
+
+		}
+		elseif($_POST['select'] == "production") {
+
+			$table_name = "";
+			$column_name = "";
+			$sql = "";
+
+			if($_POST['process'] == "calibration") {
+				$table_name = "calibration_table";
+				$column_name = "timestamp";
+			}
+			elseif ($_POST['process'] == "Q/A") {
+				$table_name = "qa_table";
+				$column_name = "record_date";
+			}
+
+			$productionData = array();
+
+			for($i=1;$i<=$_POST['days_in_month'];$i++) {
+				$productionSql = "SELECT `_id` FROM `".$table_name."` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."'";
+				$productionResult = mysqli_query($db, $productionSql);
+				array_push($productionData, 
+					array("x"=>$i, "y"=>mysqli_num_rows($productionResult))
+				);
+			}
+			die(json_encode($productionData, JSON_NUMERIC_CHECK));
 		}
 	}
 	else {
@@ -208,7 +238,7 @@
 						</div>-->
 						<label for="analytics_month" style="margin-left: 30px;">Select month</label>
 						<br>
-						<input type="month" name="analytics_month" id="analytics_month" style="margin-left: 30px;" onchange="alert(this.value)">
+						<input type="month" name="analytics_month" id="analytics_month" style="margin-left: 30px;">
 					</div>
 
 					<div class="row">
@@ -232,38 +262,90 @@
 		$('select').material_select();
 
 		$('#analyticsShowButton').click(function(){
-			if($('#analytics_select :selected').val() == '' || $('#analytics_fuze_diameter :selected').val() == '' || $('#analytics_fuze_type :selected').val() == '') {
-				Materialize.toast("Please select the required fields!",3000,'rounded');
+
+			if($('#analytics_select :selected').val() == "rejection") {
+
+				if($('#analytics_fuze_diameter :selected').val() == '' || $('#analytics_fuze_type :selected').val() == '') {
+					Materialize.toast("Please select the required fields!",3000,'rounded');
+				}
+				else {
+					$.ajax({
+						type: 'POST',
+						data: {
+							select: $('#analytics_select :selected').val(),
+							fuze_type: $('#analytics_fuze_type :selected').val(),
+							fuze_diameter: $('#analytics_fuze_diameter :selected').val()
+						},
+						success: function(msg) {
+							var chart = new CanvasJS.Chart("chartContainer",{
+									theme: 'light2',
+									exportEnabled: true,
+									animationEnabled: 'true',
+									title: {
+										text: 'Rejection Analysis for ' + $('#analytics_fuze_diameter :selected').val() + ' mm ' + $('#analytics_fuze_type :selected').val() + ' Fuze'
+									},
+									data: [{
+										type: 'doughnut',
+										indexLabel: '{symbol} - #percent%',
+										showInLegend: true,
+										legendText: "{label} : {y} - #percent%",
+										dataPoints: JSON.parse(msg)
+									}]
+							});
+							chart.render();
+						},
+						error: function(XMLHttpRequest, textStatus, errorThrown) {
+							 alert(errorThrown + 'Database server offline?');
+						}
+					});
+				}
 			}
-			else {
-				$.ajax({
-					type: 'POST',
-					data: {
-						select: $('#analytics_select :selected').val(),
-						fuze_type: $('#analytics_fuze_type :selected').val(),
-						fuze_diameter: $('#analytics_fuze_diameter :selected').val()
-					},
-					success: function(msg) {
-						var chart = new CanvasJS.Chart("chartContainer",{
-								theme: 'light2',
-								animationEnabled: 'true',
+			else if($('#analytics_select :selected').val() == "production") {
+				if($('#analytics_fuze_diameter :selected').val() == '' || $('#analytics_fuze_type :selected').val() == '' || selectedMonth == "" || $('#analytics_process :selected').val() == '') {
+					Materialize.toast("Please select the required fields!",3000,'rounded');
+				}
+				else {
+					$.ajax({
+						type: 'POST',
+						data: {
+							select: $('#analytics_select :selected').val(),
+							fuze_type: $('#analytics_fuze_type :selected').val(),
+							fuze_diameter: $('#analytics_fuze_diameter :selected').val(),
+							process: $('#analytics_process :selected').val(),
+							month: selectedMonth,
+							days_in_month: daysInMonth
+						},
+						success: function(msg) {
+							var chart = new CanvasJS.Chart("chartContainer", {
+								animationEnabled: true,
+								exportEnabled: true,
+								theme: "light2",
 								title: {
-									text: 'Rejection Analysis for ' + $('#analytics_fuze_diameter :selected').val() + ' mm ' + $('#analytics_fuze_type :selected').val() + ' Fuze'
+									text: $('#analytics_process :selected').val() + " of " + $('#analytics_fuze_diameter :selected').val() + " mm " + $('#analytics_fuze_type :selected').val() + " Fuze in " + selectedMonth
+								},
+								axisX: {
+									title: "Days",
+								},
+								axisY: {
+									title: "Prodution rate",
+									includeZero: false
 								},
 								data: [{
-									type: 'doughnut',
-									indexLabel: '{symbol} - #percent%',
-									showInLegend: true,
-									legendText: "{label} : {y} - #percent%",
+									type: "line",
 									dataPoints: JSON.parse(msg)
 								}]
-						});
-						chart.render();
-					},
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						 alert(errorThrown + 'Database server offline?');
-					}
-				});
+							});
+							chart.render();
+							$('#chartContainer').css({"margin-bottom":"100px"});
+						},
+						error: function(XMLHttpRequest, textStatus, errorThrown) {
+							 alert(errorThrown + 'Database server offline?');
+						}
+					});
+				}
+			}
+			else {
+				Materialize.toast("Please select the required fields!",3000,'rounded');
 			}
 		});
 
@@ -274,8 +356,79 @@
 				$('#production_select_row').fadeIn();
 			}
 			else {
+				$('#production_select_row').fadeOut();
 			}
 		}
+
+		var selectedMonth = "";
+		var daysInMonth = 30;
+
+		function getMonthYear(pickString) {
+			var splitString = pickString.split("-");
+			var year = splitString[0];
+			var month;
+			switch(splitString[1]) {
+				case '01':
+					month = "January, ";
+					daysInMonth = 31;
+					break;
+				case '02':
+					month = "February, ";
+					if(parseInt(year)%4 == 0) {
+						daysInMonth = 28;
+					}
+					else {
+						daysInMonth = 27;
+					}
+					break;
+				case '03':
+					month = "March, ";
+					daysInMonth = 31;
+					break;
+				case '04':
+					month = "April, ";
+					daysInMonth = 30;
+					break;
+				case '05':
+					month = "May, ";
+					daysInMonth = 31;
+					break;
+				case '06':
+					month = "June, ";
+					daysInMonth = 30;
+					break;
+				case '07':
+					month = "July, ";
+					daysInMonth = 31;
+					break;
+				case '08':
+					month = "August, ";
+					daysInMonth = 31;
+					break;
+				case '09':
+					month = "September, ";
+					daysInMonth = 30;
+					break;
+				case '10':
+					month = "October, ";
+					daysInMonth = 31;
+					break;
+				case '11':
+					month = "November, ";
+					daysInMonth = 30;
+					break;
+				case '12':
+					month = "December, ";
+					daysInMonth = 31;
+					break;
+			}
+			//month = "%".concat(month);
+			return (month.concat(year));
+		}
+
+		$('#analytics_month').change(function(){
+			selectedMonth = getMonthYear($(this).val())
+		});
 	</script>
 
 </html>
