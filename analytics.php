@@ -113,7 +113,7 @@
 		";
 	}
 
-	if($_COOKIE["fuzeAccess"] != "edit"){
+	if(!isset($_COOKIE['fuzeAccess']) || $_COOKIE["fuzeAccess"] != "edit"){
 		die("
 				<body class='analyticsBody'>
 				<main class='contents'>
