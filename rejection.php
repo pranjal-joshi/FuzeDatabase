@@ -177,6 +177,14 @@
 		</main>
 	</body>
 
+	<footer class="page-footer teal lighten-2">
+		<div class="footer-copyright">
+			<div class="container">
+				<center>&copy; Bharat Electronics Ltd. (2018), All rights reserved.</center>
+			</div>
+		</div>
+	</footer>
+
 	<script type="text/javascript">
 		$('select').material_select();
 
