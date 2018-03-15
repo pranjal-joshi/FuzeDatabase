@@ -54,7 +54,7 @@
 			$column_name = "";
 			$sql = "";
 
-			if($_POST['process'] == "calibration") {
+			if($_POST['process'] == "calibration" && $_POST['fuze_type'] == "PROX") {
 				$table_name = "calibration_table";
 				$column_name = "timestamp";
 			}
@@ -209,7 +209,7 @@
 					</div>
 
 					<div class="row" id="production_select_row" style="display: none;">
-						<div class="input-field col s4" id="analytics_process_div">
+						<div class="input-field col s6" id="analytics_process_div">
 							<select name="analytics_proess" id="analytics_process" required>
 								<option value="" selected disabled>--Select--</option>
 								<option value="Q/A">Q/A</option>
@@ -321,7 +321,7 @@
 								exportEnabled: true,
 								theme: "light2",
 								title: {
-									text: $('#analytics_process :selected').val() + " of " + $('#analytics_fuze_diameter :selected').val() + " mm " + $('#analytics_fuze_type :selected').val() + " Fuze in " + selectedMonth
+									text: ($('#analytics_process :selected').val().charAt(0).toUpperCase() + $('#analytics_process :selected').val().slice(1)) + " of " + $('#analytics_fuze_diameter :selected').val() + " mm " + $('#analytics_fuze_type :selected').val() + " Fuze in " + selectedMonth
 								},
 								axisX: {
 									title: "Days",
@@ -332,6 +332,8 @@
 								},
 								data: [{
 									type: "line",
+									lineColor: "#009688",
+									color: "#00897b",
 									dataPoints: JSON.parse(msg)
 								}]
 							});
