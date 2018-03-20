@@ -18,14 +18,6 @@
 		$mypassword = mysqli_real_escape_string($db,$_POST['password']);
 		$mypassword = md5($mypassword);
 
-		$fuzeDiaCookie = "fuzeDia";
-		$fuzeDiaValue = $_POST['fuze_diameter'];
-		setcookie($fuzeDiaCookie, $fuzeDiaValue, 0, "/");
-
-		$startPointCookie = "fuzeStart";
-		$startPointValue = $_POST['startPoint'];
-		setcookie($startPointCookie, $startPointValue, 0, "/");
-
 		$sql = "SELECT * FROM password WHERE passwd = '$mypassword'";
 
 		$result = mysqli_query($db,$sql);
@@ -42,6 +34,18 @@
 			$accessCookie = "fuzeAccess";
 			$accessCookieValue = $row['access'];
 			setcookie($accessCookie, $accessCookieValue, 0,"/");
+
+			$fuzeDiaCookie = "fuzeDia";
+			$fuzeDiaValue = $_POST['fuze_diameter'];
+			setcookie($fuzeDiaCookie, $fuzeDiaValue, 0, "/");
+
+			$fuzeTypeCookie = "fuzeType";
+			$fuzeTypeValue = $_POST['fuze_type'];
+			setcookie($fuzeTypeCookie, $fuzeTypeValue, 0, "/");
+
+			$startPointCookie = "fuzeStart";
+			$startPointValue = $_POST['startPoint'];
+			setcookie($startPointCookie, $startPointValue, 0, "/");
 
 			header("location: welcome.php");
 		}
@@ -125,8 +129,8 @@
 		</div>
 
 		<div class="row">
-			<div class="col m4"></div>
-				<div class="col s12 m4">
+			<div class="col m3"></div>
+				<div class="col s12 m6">
 					<br>
 					<br>
 					<div class="card-panel grey lighten-4" id="loginCard">
@@ -146,6 +150,26 @@
 									</div>
 
 										<div class="row">
+
+											<div class="input-field col s2">
+												<select name="fuze_type" id="fuze_type" required>
+													<option value="" disabled selected>--Select--</option>
+													<option value="EPD">EPD</option>
+													<option value="TIME">TIME</option>
+													<option value="PROX">PROX</option>
+												</select>
+												<label>Fuze Type</label>
+											</div>
+
+											<div class="input-field col s2">
+												<select name="fuze_diameter" id="fuze_diameter" required>
+													<option value="" selected disabled>--Select--</option>
+													<option value="105">105 mm</option>
+													<option value="155">155 mm</option>
+												</select>
+												<label>Fuze Diameter</label>
+											</div>
+
 											<div class="input-field col s8">
 												<select name="startPoint" required>
 													<option value="" disabled selected>Select your start point</option>
@@ -158,14 +182,6 @@
 													<option value="7">Lotwise Entry</option>
 												</select>
 												<label>Select process</label>
-											</div>
-											<div class="input-field col s4">
-												<select name="fuze_diameter" id="fuze_diameter" required>
-													<option value="" selected disabled>--Select--</option>
-													<option value="105">105 mm</option>
-													<option value="155">155 mm</option>
-												</select>
-												<label>Fuze Diameter</label>
 											</div>
 										</div>
 								</div>
