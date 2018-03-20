@@ -3,27 +3,30 @@
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
+		print_r($_POST);
 
 		if($_POST['type'] == 'reject') {
 			$sql = "UPDATE `lot_table` SET `rejected`='1',
 			`rejection_stage`='".$_POST['stage']."',
 			`rejection_remark`='".$_POST['remark']."' 
-			WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type` = '".$_POST['fuze']."'";
+			WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type` = '".$_POST['fuze']."' AND `fuze_diameter` = '".$_POST['diameter']."'";
 
 			$result = mysqli_query($db, $sql);
 
 			if($result){
-				echo "ok";
+				die("ok");
 			}
 		}
 		elseif ($_POST['type'] == 'accept') {
-			$sql = "UPDATE `lot_table` SET `rejected`='0'
-			WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type` = '".$_POST['fuze']."'";
+			$sql = "UPDATE `lot_table` SET `rejected`='0', `rejection_stage`='', `rejection_remark`='', `acception_remark`='".$_POST['remark']."'
+			WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type` = '".$_POST['fuze']."' AND `fuze_diameter` = '".$_POST['diameter']."'";
+
+			print_r($sql);
 
 			$result = mysqli_query($db, $sql);
 
 			if($result){
-				echo "ok";
+				die("ok");
 			}
 		}
 	}
@@ -92,15 +95,25 @@
 						</center>
 
 						<div class="row">
-							<div class="input-field col s4">
+							<div class="input-field col s2">
 								<select name="rejection_fuze_type" id="rejection_fuze_type" required>
-									<option value="" disabled selected>-- Please select --</option>
+									<option value="" disabled selected>--Select--</option>
 									<option value="EPD">EPD</option>
 									<option value="TIME">TIME</option>
 									<option value="PROX">PROX</option>
 								</select>
 								<label>* Select Fuze Type</label>
 							</div>
+
+							<div class="input-field col s2">
+								<select name="rejection_fuze_diameter" id="rejection_fuze_diameter" required>
+									<option value="" selected disabled>--Select--</option>
+									<option value="105">105 mm</option>
+									<option value="155">155 mm</option>
+								</select>
+								<label>* Fuze Diameter</label>
+							</div>
+
 							<div class="input-field col s8">
 								<input id="rejection_scan_pcb" name="rejection_scan_pcb" type="text" autofocus>
 								<label for="rejection_scan_pcb"><center>* Scan PCB Number</center></label>
@@ -144,15 +157,25 @@
 						</center>
 
 						<div class="row">
-							<div class="input-field col s4">
+							<div class="input-field col s2">
 								<select name="acception_fuze_type" id="acception_fuze_type">
-									<option value="" disabled selected>-- Please select --</option>
+									<option value="" disabled selected>--Select--</option>
 									<option value="EPD">EPD</option>
 									<option value="TIME">TIME</option>
 									<option value="PROX">PROX</option>
 								</select>
 								<label>* Select Fuze Type</label>
 							</div>
+
+							<div class="input-field col s2">
+								<select name="acception_fuze_diameter" id="acception_fuze_diameter" required>
+									<option value="" selected disabled>--Select--</option>
+									<option value="105">105 mm</option>
+									<option value="155">155 mm</option>
+								</select>
+								<label>* Fuze Diameter</label>
+							</div>
+
 							<div class="input-field col s8">
 								<input id="acception_scan_pcb" name="acception_scan_pcb" type="text">
 								<label for="acception_scan_pcb"><center>* Scan PCB Number</center></label>
@@ -205,7 +228,7 @@
 
 		var confirmStatus;
 		$('#rejection_submit').click(function(){
-				if (($('#rejection_fuze_type :selected').val() == '') || ($('#rejection_stage :selected').val() == '') || ($('#rejection_remark').val() == '') || ($('#rejection_scan_pcb').val() == '')){
+				if (($('#rejection_fuze_type :selected').val() == '') || ($('#rejection_fuze_diameter :selected').val() == '') || ($('#rejection_stage :selected').val() == '') || ($('#rejection_remark').val() == '') || ($('#rejection_scan_pcb').val() == '')){
 					Materialize.toast("Please fill-up the required fields!",4000,'rounded');
 					}
 				else {
@@ -221,7 +244,7 @@
 		});
 
 		$('#acception_submit').click(function(){
-			if ($('#acception_fuze_type :selected').val() == '' || $('#acception_scan_pcb').val() == ''){
+			if ($('#acception_fuze_type :selected').val() == '' || $('#acception_scan_pcb').val() == '' || $('#acception_fuze_diameter :selected').val() == ''){
 				Materialize.toast("Please fill-up the required fields!",4000,'rounded');
 			}
 			else {
@@ -237,7 +260,8 @@
 						type: 'accept',
 						pcb_no: $('#acception_scan_pcb').val(),
 						fuze: $('#acception_fuze_type :selected').val(),
-						remark: $('#acception_remark').val()
+						remark: $('#acception_remark').val(),
+						diameter: $('#acception_fuze_diameter :selected').val()
 					},
 					success: function(msg) {
 						console.log(msg);
@@ -264,7 +288,8 @@
 						pcb_no: $('#rejection_scan_pcb').val(),
 						fuze: $('#rejection_fuze_type :selected').val(),
 						stage: $('#rejection_stage :selected').val(),
-						remark: $('#rejection_remark').val()
+						remark: $('#rejection_remark').val(),
+						diameter: $('#rejection_fuze_diameter :selected').val()
 					},
 					success: function(msg) {
 						console.log(msg);
