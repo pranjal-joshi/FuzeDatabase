@@ -67,7 +67,7 @@
 							$html.= "<tr class='red-text text-darken-2' style='font-weight: bold;'>";
 						}
 						else {
-							$html.= "<tr>";
+							$html.= "<tr style='font-weight: bold;'>";
 						}
 						$html.=	"
 												<td class='center'>".$row['fuze_type']."</td>
@@ -111,7 +111,7 @@
 							$html.= "<tr class='red-text text-darken-2' style='font-weight: bold;'>";
 						}
 						else {
-							$html.= "<tr>";
+							$html.= "<tr style='font-weight: bold;'>";
 						}
 						$html.= "	
 												<td class='center'>".$row['fuze_type']."</td>
