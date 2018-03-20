@@ -10,6 +10,9 @@ ECHO ""
 ECHO ** Starting - Daily database backup process..
 ECHO ""
 
+REM - start maintainance of tables - Alter tables for reseting AUTO_INCREMENT
+C:\xampp\mysql\bin\mysql.exe -u root --password=fuzedbpass fuze_database < "C:\xampp\htdocs\FuzeDatabase\auto_inc_reset.sql"
+
 REM Export all databases into file C:\path\backup\databases.[year][month][day].sql
 ECHO Backing up FuzeDatabase...
 "C:\xampp\mysql\bin\mysqldump.exe" fuze_database --result-file="E:\FuzeDatabase_backups\fuze_database.%TIMESTAMP%.sql" --user="root" --password="fuzedbpass"
