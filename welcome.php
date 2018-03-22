@@ -696,16 +696,49 @@
 				break;
 		}
 
-		switch($.cookie('fuzeStart')){
+		if($.cookie('fuzeType') == "PROX") {
+			switch($.cookie('fuzeStart')){
 			case '1':
 				$('select').material_select();
 				$('#qaCard').fadeIn();
+				$('#qaCard').keypress(function (e) {
+					var key = e.which || e.keyCode;
+					if(key == 13)  // the enter key code
+					{
+						$('#qaSubmitButton').trigger('click');
+						return false;  
+					}
+				});
+				$('#qaCard').keydown(function (e) {
+					var key = e.which || e.keyCode;
+					if(key == 27)  // the enter key code
+					{
+						$('#qaClearButton').trigger('click');
+						return false;  
+					}
+				});
 				break;
 			case '2':
 				$('#pcbTestingCard').fadeIn();
 				break;
 			case '3':
 				$('#calibrationCard').fadeIn();
+				$('#calibrationCard').keypress(function (e) {
+					var key = e.which || e.keyCode;
+					if(key == 13)  // the enter key code
+					{
+						$('#submitButton').trigger('click');
+						return false;  
+					}
+				});
+				$('#calibrationCard').keydown(function (e) {
+					var key = e.which || e.keyCode;
+					if(key == 27)  // the enter key code
+					{
+						$('#clearButton').trigger('click');
+						return false;  
+					}
+				});
 				break;
 			case '4':
 				$('#afterPUCard').fadeIn();
@@ -727,6 +760,7 @@
 					}
 				});
 				break;
+			}
 		}
 
 		function onRadioChange(){
