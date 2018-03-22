@@ -568,8 +568,11 @@
 						</div>
 					</div>
 
+					<div class='card-panel grey lighten-4 housing-testing-manual' id='HousingTestingManualCard' style="display: none;">
+					</div>					
+
 					<div class='card-panel grey lighten-4' id='pcbTestingManualCard' style="display: none;">
-						<div class='row'>
+						<div class='row manual-testing-clone' id='manuaTestingClone'>
 							<center>
 								<span style='font-weight: bold; font-size: 22px' class='teal-text text-darken-2' id='pcbTestingManualTitle'>PCB Testing - Manual</span>
 							</center>
@@ -1283,8 +1286,10 @@
 					}
 				});
 				break;
-			case '9':
-				// FURTHER CODE HERE...
+			case '10':
+				$('#manuaTestingClone').clone().appendTo("#HousingTestingManualCard");
+				$('#HousingTestingManualCard').fadeIn();
+				document.getElementById('pcbTestingManualTitle').innerHTML = "Housing Testing - Manual";
 				break;
 			}
 		}
@@ -1629,7 +1634,7 @@
 				manualTestingData.push($(this).val());
 			});
 			
-			if(!isEmpty) { ////////////////////////////// REMOVE ! LATER ///////////////////////
+			if(isEmpty) {
 				Materialize.toast("Please fill up all fields.",3000,'rounded');
 			}
 			else {
