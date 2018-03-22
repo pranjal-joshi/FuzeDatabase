@@ -1618,18 +1618,42 @@
 			}
 		}
 
+		var manualTestingData = new Array();
 		$('#pcbTestingManualSubmitButton').click(function(){
+			manualTestingData = new Array();
 			var isEmpty = false;
-			$('input[type="text"]').each(function(){
+			$('#pcbTestingManualCard input[type="text"]').each(function(){
 				if($(this).val() == "") {
 					isEmpty = true;
 				}
+				manualTestingData.push($(this).val());
 			});
-			if(isEmpty) {
+			
+			if(!isEmpty) { ////////////////////////////// REMOVE ! LATER ///////////////////////
 				Materialize.toast("Please fill up all fields.",3000,'rounded');
 			}
 			else {
 				// ajax stuff here
+				$.ajax({
+					url: 'pcb_testing_manual_upload.php',
+					type: 'POST',
+					data: {
+						jsonData: JSON.stringify(manualTestingData)
+					},
+					success: function(msg) {
+						if(msg.includes("ok")) {
+							Materialize.toast('Record saved',2000,'rounded');
+							$('#pcbTestingManualClearButton').trigger('click');
+						}
+						else {
+							Materialize.toast('Failed to save the record!',2000,'rounded');
+							Materialize.toast('Server says - ' + msg,2000,'rounded');
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + "\n\nDatabase server offline?");
+					}
+				});
 			}
 		});
 
@@ -1638,7 +1662,8 @@
 				if($(this).attr('id') != "pcbTestingManualOperatorName") {
 					$(this).val('');
 				}
-			})
+			});
+			$('#pcbTestingManualPcbNo').focus();
 		});
 
 		function occurrences(string, subString, allowOverlapping) {
