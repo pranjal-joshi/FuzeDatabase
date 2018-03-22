@@ -170,16 +170,27 @@
 												<label>Fuze Diameter</label>
 											</div>
 
-											<div class="input-field col s8">
+											<div class="input-field col s8" id="startPointDiv">
 												<select name="startPoint" required>
 													<option value="" disabled selected>Select your start point</option>
-													<option value="1">QA/Visual</option>
-													<option value="2">PCB Testing</option>
-													<option value="3">Calibration</option>
-													<option value="4">After PU</option>
-													<option value="5">Rework</option>
-													<option value="6">Soldering</option>
-													<option value="7">Lotwise Entry</option>
+													<optgroup label="Common">
+														<option value="1">QA/Visual</option>
+														<option value="2">PCB Testing - ATE</option>
+														<option value="8">PCB Testing - Manual</option>
+														<option value="9">Housing Testing - ATE</option>
+														<option value="10">Housing Testing - Manual</option>
+														<option value="11">Potted Housing Testing - ATE</option>
+														<option value="12">Potted Housing Testing - Manual</option>
+													</optgroup>
+													<optgroup label="For Proximity">
+														<option value="3">Calibration</option>
+														<option value="4">After PU - ATE</option>
+														<option value="5">Rework</option>
+														<option value="6">Soldering</option>
+													</optgroup>
+													<optgroup label="For supervisors">
+														<option value="7">Lotwise Entry</option>
+													</optgroup>
 												</select>
 												<label>Select process</label>
 											</div>
@@ -217,6 +228,5 @@
 		$(document).ready(function() {
 			$('select').material_select();
 		});
-
 	</script>
 </html>
