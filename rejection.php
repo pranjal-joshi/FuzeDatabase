@@ -129,6 +129,7 @@
 									<option value="HOUSING">HOUSING</option>
 									<option value="POTTING">POTTING</option>
 									<option value="PU POTTING">PU POTTING</option>
+									<option value="HEAD">ELECTRONIC HEAD</option>
 								</select>
 								<label>* Rejection Stage</label>
 							</div>

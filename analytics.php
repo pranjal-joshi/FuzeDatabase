@@ -36,12 +36,18 @@
 					`fuze_type` = '".$_POST['fuze_type']."'";
 				$puPottingRejectionGraphResult = mysqli_query($db, $puPottingRejectionGraphQuery);
 
+				$headRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='HEAD' AND 
+					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+					`fuze_type` = '".$_POST['fuze_type']."'";
+				$headRejectionGraphResult = mysqli_query($db, $headRejectionGraphQuery);
+
 				$rejectionData = array(
 					array("label"=>"QA/Visual","symbol"=>"Q/A","y"=>mysqli_num_rows($qaRejectionGraphResult)),
 					array("label"=>"PCB","symbol"=>"PCB","y"=>mysqli_num_rows($pcbRejectionGraphResult)),
 					array("label"=>"HOUSING","symbol"=>"HOUSING","y"=>mysqli_num_rows($housingRejectionGraphResult)),
 					array("label"=>"POTTING","symbol"=>"POTTING","y"=>mysqli_num_rows($pottingRejectionGraphResult)),
-					array("label"=>"PU POTTING","symbol"=>"PU POTTING","y"=>mysqli_num_rows($puPottingRejectionGraphResult))
+					array("label"=>"PU POTTING","symbol"=>"PU POTTING","y"=>mysqli_num_rows($puPottingRejectionGraphResult)),
+					array("label"=>"PU POTTING","symbol"=>"ELECTRONIC HEAD","y"=>mysqli_num_rows($puPottingRejectionGraphResult))
 				);
 
 				die(json_encode($rejectionData, JSON_NUMERIC_CHECK));
