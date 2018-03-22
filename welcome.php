@@ -1264,7 +1264,6 @@
 								}
 								break;
 						}
-						setPassOrFail();
 					});
 				});
 				$('#pcbTestingManualCard').keypress(function (e) {
@@ -1636,7 +1635,9 @@
 
 		$('#pcbTestingManualClearButton').click(function(){
 			$('input[type="text"]').each(function(){
-				$(this).val('');
+				if($(this).attr('id') != "pcbTestingManualOperatorName") {
+					$(this).val('');
+				}
 			})
 		});
 
