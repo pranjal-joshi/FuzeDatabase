@@ -70,7 +70,7 @@
 							$html.= "<tr style='font-weight: bold;'>";
 						}
 						$html.=	"
-												<td class='center'>".$row['fuze_type']."</td>
+												<td class='center'>".$row['fuze_diameter']." ".$row['fuze_type']."</td>
 												<td class='center'>".$row['main_lot']."</td>
 												<td class='center'>".$row['kit_lot']."</td>
 												<td class='center'>".$row['pcb_no']."</td>
@@ -114,7 +114,7 @@
 							$html.= "<tr style='font-weight: bold;'>";
 						}
 						$html.= "	
-												<td class='center'>".$row['fuze_type']."</td>
+												<td class='center'>".$row['fuze_diameter']." ".$row['fuze_type']."</td>
 												<td class='center'>".$row['main_lot']."</td>
 												<td class='center'>".$row['kit_lot']."</td>
 												<td class='center'>".$row['pcb_no']."</td>
