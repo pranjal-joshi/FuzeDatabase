@@ -568,6 +568,274 @@
 						</div>
 					</div>
 
+					<div class='card-panel grey lighten-4' id='pcbTestingManualCard' style="display: none;">
+						<div class='row'>
+							<center>
+								<span style='font-weight: bold; font-size: 22px' class='teal-text text-darken-2' id='pcbTestingManualTitle'>PCB Testing - Manual</span>
+							</center>
+
+							<form id='pcbTestingManualForm'>
+							<br>
+								<table id='pcbTestingManualTable'>
+									<tbody>
+
+										<tr>
+										<td class='center'><span class='center'>PCB Number <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualPcbNo'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Supply Current (I) <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualCurrent' data-position='bottom' data-delay='500' data-tooltip='7 to 14 mA' class='tooltipped'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Supply Voltage (VEE) <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualVee' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5.30 to 6.20 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PST Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>VBAT-PST Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualVbatPst' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='600 to 700 mS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>PST Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualPstAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='12 to 21 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>PST Width <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualPstWid' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='30 to 120 uS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>MOD Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>Frequency <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualFreq' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='46 to 55 KHz'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualModDC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='7 to 8.1 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>AC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualModAC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0.95 to 1.35 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>VRF Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>VRF Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualVrfAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='15.3 to 16.7 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>VBAT-VRF Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualVbatVrf' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.08 to 2.30 Sec'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>VBAT-Cap Charge T <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualCapCharge' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='695 to 730 mS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PROX Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>DET Width <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualDetWidth' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='30 to 120 uS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualDetAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='-12 to -21 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Cycles <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualCycles' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4 to 6'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>BPF DC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualBpfDC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5.2 to 6.4 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>BPF AC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualBpfAC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.5 to 3.6 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Noise Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>SIL <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualSil' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='480 to 650 mS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>VBAT-SIL Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualVbatSil' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.7 to 3.2 Sec'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>LVP <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualLvp' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='18.8 to 21 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PD Test</span></center>
+
+								<table>
+									<tbody>
+
+											<td class='center'><span class='center'>Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualPDDelay' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 10 uS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualPDDet' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='-12 to -22 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Results</span></center>
+
+								<table>
+									<tbody>
+
+											<td class='center'><span class='center'>SAFE Test <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualSafe'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Result <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualResult'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center>
+									<a class='btn waves-light waves-effect' id='pcbTestingManualSubmitButton'>SUBMIT</a>
+								</center>
+
+							</form>
+						</div>
+					</div>
+
 					<div class="card-panel grey lighten-4" id="searchCard" style="display: none;">
 						<div class="row">
 							<center>
@@ -760,6 +1028,183 @@
 					}
 				});
 				break;
+			case '8':
+				$('#pcbTestingManualCard').fadeIn();
+				$('#pcbTestingManualPcbNo').focus();
+				$('input[type="text"]').each(function(){
+					$(this).change(function(){
+						switch($(this).attr('id')) {
+							case 'pcbTestingManualCurrent':
+								if(parseFloat($(this).val()) < 7 || parseFloat($(this).val()) > 6.2) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualVee':
+								if(parseFloat($(this).val()) < 5.30 || parseFloat($(this).val()) > 6.2) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualVbatPst':
+								if(parseFloat($(this).val()) < 600 || parseFloat($(this).val()) > 700) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualPstAmpl':
+								if(parseFloat($(this).val()) < 12 || parseFloat($(this).val()) > 21) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualPstWid':
+								if(parseFloat($(this).val()) < 30 || parseFloat($(this).val()) > 120) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualFreq':
+								if(parseFloat($(this).val()) < 46 || parseFloat($(this).val()) > 55) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualModDC':
+								if(parseFloat($(this).val()) < 7 || parseFloat($(this).val()) > 8.1) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualModAC':
+								if(parseFloat($(this).val()) < 0.95 || parseFloat($(this).val()) > 1.35) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualVrfAmpl':
+								if(parseFloat($(this).val()) < 15.3 || parseFloat($(this).val()) > 16.7) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualVbatVrf':
+								if(parseFloat($(this).val()) < 2.08 || parseFloat($(this).val()) > 2.30) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualCapCharge':
+								if(parseFloat($(this).val()) < 695 || parseFloat($(this).val()) > 730) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualDetWidth':
+								if(parseFloat($(this).val()) < 30 || parseFloat($(this).val()) > 120) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualDetAmpl':
+								if(parseFloat($(this).val()) < -21 || parseFloat($(this).val()) > -12) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualCycles':
+								if(parseFloat($(this).val()) < 4 || parseFloat($(this).val()) > 6) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualBpfDC':
+								if(parseFloat($(this).val()) < 5.2 || parseFloat($(this).val()) > 6.4) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualBpfAC':
+								if(parseFloat($(this).val()) < 2.5 || parseFloat($(this).val()) > 3.6) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualSil':
+								if(parseFloat($(this).val()) < 480 || parseFloat($(this).val()) > 650) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualVbatSil':
+								if(parseFloat($(this).val()) < 2.7 || parseFloat($(this).val()) > 3.2) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualLvp':
+								if(parseFloat($(this).val()) < 18.8 || parseFloat($(this).val()) > 21) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualPDDelay':
+								if(parseFloat($(this).val()) < 0 || parseFloat($(this).val()) > 10) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+							case 'pcbTestingManualPDDet':
+								if(parseFloat($(this).val()) < -22 || parseFloat($(this).val()) > -12) {
+									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+								}
+								else {
+									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+								}
+								break;
+						}
+					});
+				});
 			}
 		}
 
