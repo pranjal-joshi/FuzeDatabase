@@ -230,125 +230,151 @@
 					</div>
 
 					<div id='pcbTable' style='float: left; margin-right: 15px;'>
-						<p id='tableInfo'>PCB Testing Records</p>
+						<p id='tableInfo'>Test Records</p>
 						<table style='font-size: 15px;'>
 							<tr id='tableHeader'>
 								<td rowspan='2'>Test</td>
 								<td>Parameter</td>
-								<td>Value</td>
+								<td>PCB Testing</td>
+								<td>After PU</td>
 							</tr>
 							<tr>
 								<td>PCB Number</td>
 								<td>".$pcbRow['pcb_no']."</td>
+								<td>".$afterPuRow['pcb_no']."</td>
 							</tr>
 							<tr>
 								<td rowspan='2'>VIN</td>
 								<td>Current (I)</td>
 								<td>".$pcbRow['i']." mA</td>
+								<td>".$afterPuRow['i']." mA</td>
 							</tr>
 							<tr>
 								<td>VEE</td>
 								<td>".$pcbRow['vee']." V</td>
+								<td>".$afterPuRow['vee']." V</td>
 							</tr>
 							<tr>
 								<td rowspan='3'>PST Test</td>
 								<td>VBAT-PST Delay</td>
 								<td>".$pcbRow['vbat_pst']." mS</td>
+								<td>".$afterPuRow['vbat_pst']." mS</td>
 							</tr>
 							<tr>
 								<td>PST Amplitude</td>
 								<td>".$pcbRow['pst_amp']." V</td>
+								<td>".$afterPuRow['pst_amp']." V</td>
 							</tr>
 							<tr>
 								<td>PST Width</td>
 								<td>".$pcbRow['pst_wid']." uS</td>
+								<td>".$afterPuRow['pst_wid']." uS</td>
 							</tr>
 							<tr>
 								<td rowspan='3'>MOD Test</td>
 								<td>Frequency</td>
 								<td>".$pcbRow['mod_freq']." KHz</td>
+								<td>".$afterPuRow['mod_freq']." KHz</td>
 							</tr>
 							<tr>
 								<td>DC</td>
 								<td>".$pcbRow['mod_dc']." V</td>
+								<td>".$afterPuRow['mod_dc']." V</td>
 							</tr>
 							<tr>
 								<td>AC</td>
 								<td>".$pcbRow['mod_ac']." V</td>
+								<td>".$afterPuRow['mod_ac']." V</td>
 							</tr>
 							<tr>
 								<td>DET CAP<br>Charge T</td>
 								<td>VBAT-Cap Charge T</td>
 								<td>".$pcbRow['cap_charge']." mS</td>
+								<td>".$afterPuRow['cap_charge']." mS</td>
 							</tr>
 							<tr>
 								<td rowspan='2'>VRF</td>
 								<td>Amplitude</td>
 								<td>".$pcbRow['vrf_amp']." V</td>
+								<td>".$afterPuRow['vrf_amp']." V</td>
 							</tr>
 							<tr>
 								<td>VBAT-VRF Delay</td>
 								<td>".$pcbRow['vbat_vrf']." Sec</td>
+								<td>".$afterPuRow['vbat_vrf']." Sec</td>
 							</tr>
 							<tr>
 								<td>Silence</td>
 								<td>VBAT-SIL Delay</td>
 								<td>".$pcbRow['vbat_sil']." Sec</td>
+								<td>".$afterPuRow['vbat_sil']." Sec</td>
 							</tr>
 							<tr>
 								<td  rowspan='5'>PROX</td>
 								<td>DET Pulse Width</td>
 								<td>".$pcbRow['det_wid']." uS</td>
+								<td>".$afterPuRow['det_wid']." uS</td>
 							</tr>
 							<tr>
 								<td>DET Amplitude</td>
 								<td>".$pcbRow['det_amp']." V</td>
+								<td>".$afterPuRow['det_amp']." V</td>
 							</tr>
 							<tr>
 								<td>Cycles</td>
 								<td>".$pcbRow['cycles']." </td>
+								<td>".$afterPuRow['cycles']." </td>
 							</tr>
 							<tr>
 								<td>BPF DC</td>
 								<td>".$pcbRow['bpf_dc']." V</td>
+								<td>".$afterPuRow['bpf_dc']." V</td>
 							</tr>
 							<tr>
 								<td>BPF AC</td>
 								<td>".$pcbRow['bpf_ac']." V</td>
+								<td>".$afterPuRow['bpf_ac']." V</td>
 							</tr>
 							<tr>
 								<td>Noise</td>
 								<td>SIL</td>
 								<td>".$pcbRow['sil']." mS</td>
+								<td>".$afterPuRow['sil']." mS</td>
 							</tr>
 							<tr>
 								<td>LVP</td>
 								<td>VBAT</td>
 								<td>".$pcbRow['lvp']." V</td>
+								<td>".$afterPuRow['lvp']." V</td>
 							</tr>
 							<tr>
 								<td rowspan='2'>PD</td>
 								<td>Delay</td>
 								<td>".$pcbRow['pd_delay']." uS</td>
+								<td>".$afterPuRow['pd_delay']." uS</td>
 							</tr>
 							<tr>
 								<td>DET Amplitude</td>
 								<td>".$pcbRow['pd_det']." V</td>
+								<td>".$afterPuRow['pd_det']." V</td>
 							</tr>
 							<tr>
 								<td>SAFE</td>
 								<td>No PST/No DET</td>
 								<td>".$pcbRow['safe']." </td>
+								<td>".$afterPuRow['safe']." </td>
 							</tr>
 							<tr>
 								<td>RESULT</td>
 								<td>PASS/FAIL</td>
 								<td>".$pcbRow['result']." </td>
+								<td>".$afterPuRow['result']." </td>
 							</tr>
 						</table>
 						<br>
 					</div>
 
+					<!--
 					<div id='afterPuTable' style='float: left;'>
 						<p id='tableInfo'>After PU Test Records (Final)</p>
 						<table style='font-size: 15px;'>
@@ -467,7 +493,7 @@
 							</tr>
 						</table>
 						<br>
-					</div>
+					</div> -->
 								";
 					break;
 			}
