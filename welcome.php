@@ -813,14 +813,30 @@
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
-													<input type='text' id='pcbTestingManualSafe'>
+													<input type='text' id='pcbTestingManualSafe' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='PASS or FAIL'>
 												</div>
 											</td>
 											<td class='center'><span class='center'>Result <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
-													<input type='text' id='pcbTestingManualResult'>
+													<input type='text' id='pcbTestingManualResult' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='PASS or FAIL'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Additional Information</span></center>
+
+								<table>
+									<tbody>
+											<td class='center'><span class='center'>Operator Name <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualOperatorName'>
 												</div>
 											</td>
 										</tr>
@@ -830,6 +846,7 @@
 
 								<center>
 									<a class='btn waves-light waves-effect' id='pcbTestingManualSubmitButton'>SUBMIT</a>
+									<a class='btn red waves-effect' id='pcbTestingManualClearButton'>CLEAR</a>
 								</center>
 
 							</form>
@@ -964,6 +981,8 @@
 				break;
 		}
 
+		var validationArray = new Array();
+
 		if($.cookie('fuzeType') == "PROX") {
 			switch($.cookie('fuzeStart')){
 			case '1':
@@ -1035,177 +1054,252 @@
 					$(this).change(function(){
 						switch($(this).attr('id')) {
 							case 'pcbTestingManualCurrent':
-								if(parseFloat($(this).val()) < 7 || parseFloat($(this).val()) > 6.2) {
+								if(parseFloat($(this).val()) < 7 || parseFloat($(this).val()) > 14) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[0] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[0] = true;
 								}
 								break;
 							case 'pcbTestingManualVee':
 								if(parseFloat($(this).val()) < 5.30 || parseFloat($(this).val()) > 6.2) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[1] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[1] = true;
 								}
 								break;
 							case 'pcbTestingManualVbatPst':
 								if(parseFloat($(this).val()) < 600 || parseFloat($(this).val()) > 700) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[2] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[2] = true;
 								}
 								break;
 							case 'pcbTestingManualPstAmpl':
 								if(parseFloat($(this).val()) < 12 || parseFloat($(this).val()) > 21) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[3] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[3] = true;
 								}
 								break;
 							case 'pcbTestingManualPstWid':
 								if(parseFloat($(this).val()) < 30 || parseFloat($(this).val()) > 120) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[4] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[4] = true;
 								}
 								break;
 							case 'pcbTestingManualFreq':
 								if(parseFloat($(this).val()) < 46 || parseFloat($(this).val()) > 55) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[5] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[5] = true;
 								}
 								break;
 							case 'pcbTestingManualModDC':
 								if(parseFloat($(this).val()) < 7 || parseFloat($(this).val()) > 8.1) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[6] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[6] = true;
 								}
 								break;
 							case 'pcbTestingManualModAC':
 								if(parseFloat($(this).val()) < 0.95 || parseFloat($(this).val()) > 1.35) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[7] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[7] = true;
 								}
 								break;
 							case 'pcbTestingManualVrfAmpl':
 								if(parseFloat($(this).val()) < 15.3 || parseFloat($(this).val()) > 16.7) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[8] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[8] = true;
 								}
 								break;
 							case 'pcbTestingManualVbatVrf':
 								if(parseFloat($(this).val()) < 2.08 || parseFloat($(this).val()) > 2.30) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[9] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[9] = true;
 								}
 								break;
 							case 'pcbTestingManualCapCharge':
 								if(parseFloat($(this).val()) < 695 || parseFloat($(this).val()) > 730) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[10] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[10] = true;
 								}
 								break;
 							case 'pcbTestingManualDetWidth':
 								if(parseFloat($(this).val()) < 30 || parseFloat($(this).val()) > 120) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[11] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[11] = true;
 								}
 								break;
 							case 'pcbTestingManualDetAmpl':
 								if(parseFloat($(this).val()) < -21 || parseFloat($(this).val()) > -12) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[12] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[12] = true;
 								}
 								break;
 							case 'pcbTestingManualCycles':
 								if(parseFloat($(this).val()) < 4 || parseFloat($(this).val()) > 6) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[13] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[13] = true;
 								}
 								break;
 							case 'pcbTestingManualBpfDC':
 								if(parseFloat($(this).val()) < 5.2 || parseFloat($(this).val()) > 6.4) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[14] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[14] = true;
 								}
 								break;
 							case 'pcbTestingManualBpfAC':
 								if(parseFloat($(this).val()) < 2.5 || parseFloat($(this).val()) > 3.6) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[15] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[15] = true;
 								}
 								break;
 							case 'pcbTestingManualSil':
 								if(parseFloat($(this).val()) < 480 || parseFloat($(this).val()) > 650) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[16] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[16] = true;
 								}
 								break;
 							case 'pcbTestingManualVbatSil':
 								if(parseFloat($(this).val()) < 2.7 || parseFloat($(this).val()) > 3.2) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[17] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[17] = true;
 								}
 								break;
 							case 'pcbTestingManualLvp':
 								if(parseFloat($(this).val()) < 18.8 || parseFloat($(this).val()) > 21) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[18] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[18] = true;
 								}
 								break;
 							case 'pcbTestingManualPDDelay':
 								if(parseFloat($(this).val()) < 0 || parseFloat($(this).val()) > 10) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[19] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[19] = true;
 								}
 								break;
 							case 'pcbTestingManualPDDet':
 								if(parseFloat($(this).val()) < -22 || parseFloat($(this).val()) > -12) {
 									$(this).css({"border-bottom":"1px solid red", "box-shadow":"0 1px 0 0 red"});
+									validationArray[20] = false;
 								}
 								else {
 									$(this).css({"border-bottom":"1px solid #00c853", "box-shadow":"0 1px 0 0 #00c853"});
+									validationArray[20] = true;
 								}
 								break;
 						}
+						setPassOrFail();
 					});
 				});
+				$('#pcbTestingManualCard').keypress(function (e) {
+					var key = e.which || e.keyCode;
+					if(key == 13)  // the enter key code
+					{
+						$('#pcbTestingManualSubmitButton').trigger('click');
+						return false;  
+					}
+				});
+				$('#pcbTestingManualCard').keydown(function (e) {
+					var key = e.which || e.keyCode;
+					if(key == 27)  // the enter key code
+					{
+						$('#pcbTestingManualClearButton').trigger('click');
+						return false;  
+					}
+				});
+				break;
+			case '9':
+				// FURTHER CODE HERE...
+				break;
 			}
+		}
+
+		function validateTestEntries() {
+			var finalValidation = true;
+			$('#pcbTestingManualSafe').val($('#pcbTestingManualSafe').val().toUpperCase());
+			if(validationArray.length < 21) {
+				return false;
+			}
+			for(var i=0;i<validationArray.length;i++) {
+				finalValidation &= validationArray[i];
+			}
+			return finalValidation;
 		}
 
 		function onRadioChange(){
@@ -1524,6 +1618,27 @@
 				});
 			}
 		}
+
+		$('#pcbTestingManualSubmitButton').click(function(){
+			var isEmpty = false;
+			$('input[type="text"]').each(function(){
+				if($(this).val() == "") {
+					isEmpty = true;
+				}
+			});
+			if(isEmpty) {
+				Materialize.toast("Please fill up all fields.",3000,'rounded');
+			}
+			else {
+				// ajax stuff here
+			}
+		});
+
+		$('#pcbTestingManualClearButton').click(function(){
+			$('input[type="text"]').each(function(){
+				$(this).val('');
+			})
+		});
 
 		function occurrences(string, subString, allowOverlapping) {
 			string += "";
