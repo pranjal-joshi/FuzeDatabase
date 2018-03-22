@@ -678,13 +678,6 @@
 				}
 			);
 
-		$(".button-collapse").sideNav({
-			menuWidth: 130,
-			edge: 'left',
-			closeOnClick: false,
-			draggable: true
-		});
-
 		$('.datepicker').pickadate({
 			selectMonths: true, // Creates a dropdown to control month
 			selectYears: 15, // Creates a dropdown of 15 years to control year,
@@ -696,10 +689,10 @@
 
 		switch($.cookie('fuzeDia')){
 			case '105':
-				document.getElementById('loginNavTitle').innerHTML = "105 mm Fuze Database";
+				document.getElementById('loginNavTitle').innerHTML = "105 mm " + $.cookie('fuzeType') + " Fuze Database";
 				break;
 			case '155':
-				document.getElementById('loginNavTitle').innerHTML = "155 mm Fuze Database";
+				document.getElementById('loginNavTitle').innerHTML = "155 mm "+ $.cookie('fuzeType') +" Fuze Database";
 				break;
 		}
 
