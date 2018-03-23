@@ -572,7 +572,7 @@
 
 					<div class='card-panel grey lighten-4' id='HousingTestingManualCard' style="display: none;"></div>
 
-					<div class='card-panel grey lighten-4' id='PottingTestingManualCard' style="display: none;"></div>					
+					<div class='card-panel grey lighten-4' id='PottingTestingManualCard' style="display: none;"></div>          
 
 					<div class='card-panel grey lighten-4' id='pcbTestingManualCard' style="display: none;">
 						<div class='row manual-testing-clone' id='manualTestingClone'>
