@@ -20,6 +20,16 @@ ALTER TABLE `pcb_testing` DROP `_id`;
 ALTER TABLE `pcb_testing` AUTO_INCREMENT = 1;
 ALTER TABLE `pcb_testing` ADD `_id` int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
 
+SELECT 'Processing `housing_table` table..' as '';
+ALTER TABLE `housing_table` DROP `_id`;
+ALTER TABLE `housing_table` AUTO_INCREMENT = 1;
+ALTER TABLE `housing_table` ADD `_id` int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
+
+SELECT 'Processing `potting_table` table..' as '';
+ALTER TABLE `potting_table` DROP `_id`;
+ALTER TABLE `potting_table` AUTO_INCREMENT = 1;
+ALTER TABLE `potting_table` ADD `_id` int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
+
 SELECT 'Processing `qa_table` table..' as '';
 ALTER TABLE `qa_table` DROP `_id`;
 ALTER TABLE `qa_table` AUTO_INCREMENT = 1;
