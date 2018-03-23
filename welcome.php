@@ -2126,7 +2126,7 @@
 				});
 			}
 			
-			if(!isEmpty) { /////////////////////////// CHANGE ! LATER ///////////////////////////////////////////////////
+			if(isEmpty) { /////////////////////////// CHANGE ! LATER - DONE ////////////////////////////////////////
 				Materialize.toast("Please fill up all fields.",3000,'rounded');
 			}
 			else {
@@ -2138,7 +2138,7 @@
 				else if($.cookie('fuzeStart') == "10") {
 					phpUrl = 'housing_testing_manual_upload.php';
 				}
-				else if($.cookie('fuzeStart') == "10") {
+				else if($.cookie('fuzeStart') == "12") {
 					phpUrl = 'potting_testing_manual_upload.php';
 				}
 
