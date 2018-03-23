@@ -143,7 +143,7 @@
 										<h5 style='color: red'>This incident will be reported.</h5>
 										<br>
 										<br>
-										<a onclick='self.close();'>Go Back</a>
+										<a href='index.php'>Go Back</a>
 										<br>
 									</center>
 								</div>

@@ -31,4 +31,14 @@
 			die("ok");
 		}
 	}
+	else {
+		die("
+				<center>
+					</br>
+					<h3 style='color: red'>This is suspecious! Unauthorized access to this page.</h3>
+					</br>
+					<a href='index.php'>Go back</a> to Login Page
+				</center>
+			");
+	}
 ?>

@@ -30,6 +30,84 @@
 			}
 		}
 	}
+	else {
+		if(!isset($_COOKIE["fuzeLogin"])) {
+			die("
+				<!DOCTYPE html>
+			<html>
+
+			<style type='text/css'>
+					.analyticsBody {
+						display: flex;
+						min-height: 100vh;
+						flex-direction: column;
+					}
+					.contents {
+						flex: 1;
+					}
+			</style>
+
+			<head>
+				<link rel='stylesheet' type='text/css' href='materialize.min.css'>
+				<script type='text/javascript' src='jquery.min.js'></script>
+				<script type='text/javascript' src='materialize.min.js'></script>
+				<script type='text/javascript' src='jquery.cookie.js'></script>
+				<script src='canvasjs-2.0.1/canvasjs.min.js'></script>
+
+				<!-- Set responsive viewport -->
+				<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+
+				<!-- Disable caching of browser -->
+				<meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate' />
+				<meta http-equiv='Pragma' content='no-cache' />
+				<meta http-equiv='Expires' content='0' />
+
+				<title>Fuze-Analytics</title>
+			</head>
+
+			<body class='analyticsBody'>
+				<main class='contents'>
+
+				<nav>
+					<div class='nav-wrapper red lighten-2' id='analyticsNav'>
+						<a href='#!'' class='brand-logo center'>What are you doing? (-_-)</a>
+					</div>
+				</nav>
+
+				<br>
+				<div class='row'>
+					<div class='col m4'></div>
+						<div class='col s12 m4'>
+							<div class='card-panel grey lighten-4'>
+								<div class='row'>
+									<center>
+										<br>
+										<h5 style='color: red'>Unauthorized access detected!!</h5>
+										<br>
+										<h5 style='color: red'>This incident will be reported.</h5>
+										<br>
+										<br>
+										<a href='index.php'>Go Back</a>
+										<br>
+									</center>
+								</div>
+							</div>
+						</div>
+				</div>
+				</main>
+
+				<footer class='page-footer red lighten-2'>
+					<div class='footer-copyright'>
+						<div class='container'>
+							<center>&copy; Bharat Electronics Ltd. (2018), All rights reserved.</center>
+						</div>
+					</div>
+				</footer>
+				</body>
+				</html>
+			");
+		}
+	}
 ?>
 
 <!DOCTYPE html>
