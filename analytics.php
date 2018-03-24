@@ -274,24 +274,6 @@
 							<label>Process</label>
 						</div>
 
-						<!--<div class="input-field col s4" id="analytics_month_div">
-							<select name="analytics_month" id="analytics_month" required>
-								<option value="" selected disabled>--Select--</option>
-								<option value="1">January</option>
-								<option value="2">February</option>
-								<option value="3">March</option>
-								<option value="4">April</option>
-								<option value="5">May</option>
-								<option value="6">June</option>
-								<option value="7">July</option>
-								<option value="8">August</option>
-								<option value="9">September</option>
-								<option value="10">October</option>
-								<option value="11">November</option>
-								<option value="12">December</option>
-							</select>
-							<label>Month</label>
-						</div>-->
 						<label for="analytics_month" style="margin-left: 30px;">Select month</label>
 						<br>
 						<input type="month" name="analytics_month" id="analytics_month" style="margin-left: 30px;">
@@ -302,7 +284,7 @@
 							<a class="btn waves-effect waves-light" id="analyticsShowButton">SHOW</a>
 							<br>
 							<br>
-							<span class="grey-text" id="analytics_detail_span" style="display: none;">Click on the pie-chart for more details</span>
+							<span class="grey-text text-darken-1" id="analytics_detail_span" style="display: none;">Click on the pie-chart for more details</span>
 						</center>
 					</div>
 
