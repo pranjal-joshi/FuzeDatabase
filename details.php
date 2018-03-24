@@ -231,6 +231,9 @@
 				<script type='text/javascript' src='/FuzeDatabase/materialize.min.js'></script>
 				<script type='text/javascript' src='/FuzeDatabase/jquery.cookie.js'></script>
 
+				<script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
+				<link rel='stylesheet' href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'>
+
 				<!-- Set responsive viewport -->
 				<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
 
@@ -321,7 +324,23 @@
 											<div class='col s3'>
 											<br>
 											<br>
-												<a href='/FuzeDatabase/rejection_reasons.txt' target='_blank'>View Rejection codes</a>
+												<!--<a href='/FuzeDatabase/rejection_reasons.txt' target='_blank'>View Rejection codes</a>-->
+												<a onclick='modalFunction()'>View Rejection codes</a>
+												<div id='dialog'></div>
+												<script>
+													function modalFunction() {
+														$.ajax({
+															url: '/FuzeDatabase/rejection_reasons.txt',
+															success: function(data) {
+																//alert(data);
+																$('#dialog').dialog({autoOpen : false, modal : true, show : 'blind', hide : 'blind'});
+																$('#dialog').css('white-space','pre-wrap');
+																$('#dialog').html(data);
+																$('#dialog').dialog('open');
+															}
+														});
+													}
+												</script>
 											</div>
 										</td>
 									</tr>
