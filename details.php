@@ -248,6 +248,7 @@
 			<body class='indexBody'>
 				<main class='contents'>
 
+				<div class='navbar-fixed'>
 				<nav>
 					<div class='nav-wrapper teal lighten-2' id='detailsNav'>
 						<a href='#!'' class='brand-logo center'>Fuze Details</a>
@@ -257,6 +258,7 @@
 						<a><span class='white-text text-darken-5 left' style='font-size: 18px; padding-left: 20px; font-weight: bold' onclick='self.close();'>Back</span></a>
 					</div>
 				</nav>
+				</div>
 
 				<div class='row'>
 					<div class='col m2'></div>

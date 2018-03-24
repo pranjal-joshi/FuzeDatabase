@@ -197,7 +197,7 @@
 				</nav>
 			</div>
 
-			<!-- search modal -->
+			<!-- Analytics modal -->
 			<div id="analyticsModal" class="modal">
 				<div class="modal-content">
 					<center>
