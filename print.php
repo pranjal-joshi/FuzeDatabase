@@ -250,10 +250,10 @@
 							</tr>
 							<tr>
 								<td>PCB Number</td>
-								<td>".$pcbRow['pcb_no']."</td>
-								<td>".$housingRow['pcb_no']."</td>
+								<td colspan='4'>".$pcbRow['pcb_no']."</td>
+								<!--<td>".$housingRow['pcb_no']."</td>
 								<td>".$pottingRow['pcb_no']."</td>
-								<td>".$afterPuRow['pcb_no']."</td>
+								<td>".$afterPuRow['pcb_no']."</td>-->
 							</tr>
 							<tr>
 								<td rowspan='2'>VIN</td>
