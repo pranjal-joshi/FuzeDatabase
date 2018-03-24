@@ -42,12 +42,12 @@
 				$headRejectionGraphResult = mysqli_query($db, $headRejectionGraphQuery);
 
 				$rejectionData = array(
-					array("label"=>"QA/Visual","symbol"=>"Q/A","y"=>mysqli_num_rows($qaRejectionGraphResult)),
+					array("label"=>"Q/A","symbol"=>"Q/A","y"=>mysqli_num_rows($qaRejectionGraphResult)),
 					array("label"=>"PCB","symbol"=>"PCB","y"=>mysqli_num_rows($pcbRejectionGraphResult)),
 					array("label"=>"HOUSING","symbol"=>"HOUSING","y"=>mysqli_num_rows($housingRejectionGraphResult)),
 					array("label"=>"POTTING","symbol"=>"POTTING","y"=>mysqli_num_rows($pottingRejectionGraphResult)),
 					array("label"=>"PU POTTING","symbol"=>"PU POTTING","y"=>mysqli_num_rows($puPottingRejectionGraphResult)),
-					array("label"=>"PU POTTING","symbol"=>"ELECTRONIC HEAD","y"=>mysqli_num_rows($puPottingRejectionGraphResult))
+					array("label"=>"ELECTRONIC HEAD","symbol"=>"ELECTRONIC HEAD","y"=>mysqli_num_rows($puPottingRejectionGraphResult))
 				);
 
 				die(json_encode($rejectionData, JSON_NUMERIC_CHECK));
@@ -81,6 +81,25 @@
 				);
 			}
 			die(json_encode($productionData, JSON_NUMERIC_CHECK));
+		}
+		elseif($_POST['select'] == "rejection_details") {
+			
+			$detailsSql = "SELECT `pcb_no`,`rejection_remark` FROM `lot_table` WHERE 
+				`rejection_stage`='".$_POST['rejection_stage']."' AND 
+				`fuze_type`='".$_POST['fuze_type']."' AND 
+				`fuze_diameter` = '".$_POST['fuze_diameter']."';
+			";
+
+			$detailsRes = mysqli_query($db, $detailsSql);
+
+			$htmlTable = "";
+			while ($row = mysqli_fetch_assoc($detailsRes)) {
+				$htmlTable.="<tr>";
+				$htmlTable.="<td>".$row['pcb_no']."</td>";
+				$htmlTable.="<td>".$row['rejection_remark']."</td>";
+				$htmlTable.="</tr>";
+			}
+			die($htmlTable);
 		}
 	}
 	else {
@@ -178,6 +197,35 @@
 				</nav>
 			</div>
 
+			<!-- search modal -->
+			<div id="analyticsModal" class="modal">
+				<div class="modal-content">
+					<center>
+						<span class="teal-text text-darken-2" id="analyticsModalHeader" style="font-weight: bold; font-size: 24px;">Rejection Details</span>
+						<br>
+						<br>
+						<div class="row">
+							<table class="striped" id="rejection_details_table">
+								<thead>
+									<tr>
+										<th>PCB Number</th>
+										<th>Remark</th>
+									</tr>
+								</thead>
+								<tbody id="rejection_details_tbody">
+									
+								</tbody>
+							</table>
+						</div>
+					</center>
+				</div>
+				<div class="modal-footer">
+					<center>
+						<a href="#" class="btn-flat waves-light waves-red waves-effect" onclick="$('#analyticsModal').closeModal();">BACK</a>
+					</center>
+				</div>
+			</div>
+
 			<div class="row">
 				<div class="col m2"></div>
 				<div class="col m8 s12">
@@ -252,6 +300,9 @@
 					<div class="row">
 						<center>
 							<a class="btn waves-effect waves-light" id="analyticsShowButton">SHOW</a>
+							<br>
+							<br>
+							<span class="grey-text" id="analytics_detail_span" style="display: none;">Click on the pie-chart for more details</span>
 						</center>
 					</div>
 
@@ -269,6 +320,7 @@
 
 		$('select').material_select();
 
+		var chart;
 		$('#analyticsShowButton').click(function(){
 
 			if($('#analytics_select :selected').val() == "rejection") {
@@ -277,6 +329,7 @@
 					Materialize.toast("Please select the required fields!",3000,'rounded');
 				}
 				else {
+					$('#analytics_detail_span').fadeIn();
 					$.ajax({
 						type: 'POST',
 						data: {
@@ -285,7 +338,7 @@
 							fuze_diameter: $('#analytics_fuze_diameter :selected').val()
 						},
 						success: function(msg) {
-							var chart = new CanvasJS.Chart("chartContainer",{
+							chart = new CanvasJS.Chart("chartContainer",{
 									theme: 'light2',
 									exportEnabled: true,
 									animationEnabled: 'true',
@@ -297,6 +350,7 @@
 										indexLabel: '{symbol} - #percent%',
 										showInLegend: true,
 										legendText: "{label} : {y} - #percent%",
+										click: onChartClick,
 										dataPoints: JSON.parse(msg)
 									}]
 							});
@@ -364,9 +418,11 @@
 			$('#analytics_fuze_type_div').fadeIn();
 			if(mode == "production") {
 				$('#production_select_row').fadeIn();
+				$('#analytics_detail_span').fadeOut();
 			}
 			else {
 				$('#production_select_row').fadeOut();
+				$('#analytics_detail_span').fadeOut();
 			}
 		}
 
@@ -439,6 +495,28 @@
 		$('#analytics_month').change(function(){
 			selectedMonth = getMonthYear($(this).val())
 		});
+
+		function onChartClick(e) {
+			$('#analyticsModalHeader').html("Rejection Details of " + e.dataPoint.label + " stage");
+			$('#analyticsModal').openModal();
+			$.ajax({
+				type: 'POST',
+				data: {
+					select: 'rejection_details',
+					fuze_type: $('#analytics_fuze_type :selected').val(),
+					fuze_diameter: $('#analytics_fuze_diameter :selected').val(),
+					rejection_stage: e.dataPoint.label
+				},
+				success: function(msg) {
+					console.log(msg);
+					$('#rejection_details_tbody').html(msg);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+				 alert(errorThrown + 'Database server offline?');
+				}
+			});
+		}
+
 	</script>
 
 </html>
