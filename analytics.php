@@ -222,6 +222,7 @@
 				<div class="modal-footer">
 					<center>
 						<a href="#" class="btn-flat waves-light waves-red waves-effect" onclick="$('#analyticsModal').closeModal();">BACK</a>
+						<a href="rejection.php" target="_blank" class="btn-flat waves-light waves-red waves-effect">Go to rejection</a>
 					</center>
 				</div>
 			</div>

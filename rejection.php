@@ -167,7 +167,7 @@
 						<br>
 
 						<center>
-							<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Add to Rejection</span>
+							<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Add to Rejection / Edit Rejection</span>
 							<p class="red-text text-lighten-1" style="font-size: 12px;">Fields indicated by (*) are mandatory.</p>
 							<br>
 						</center>
