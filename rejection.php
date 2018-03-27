@@ -140,7 +140,7 @@
 		<meta http-equiv="Pragma" content="no-cache" />
 		<meta http-equiv="Expires" content="0" />
 
-		<title>Fuze-DB</title>
+		<title>Fuze-Rejection</title>
 
 	</head>
 
