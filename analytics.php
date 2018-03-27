@@ -83,23 +83,43 @@
 			die(json_encode($productionData, JSON_NUMERIC_CHECK));
 		}
 		elseif($_POST['select'] == "rejection_details") {
-			
-			$detailsSql = "SELECT `pcb_no`,`rejection_remark` FROM `lot_table` WHERE 
-				`rejection_stage`='".$_POST['rejection_stage']."' AND 
-				`fuze_type`='".$_POST['fuze_type']."' AND 
-				`fuze_diameter` = '".$_POST['fuze_diameter']."';
-			";
 
-			$detailsRes = mysqli_query($db, $detailsSql);
+			if($_POST['rejection_stage'] == "ELECTRONIC HEAD" && $_POST['fuze_type'] == "PROX")
+			{
+				$detailsSql = "SELECT `lot_table`.`rejection_remark`,`lot_table`.`pcb_no`,`after_pu`.`bpf_ac`,`after_pu`.`bpf_noise_ac` FROM `lot_table` JOIN `after_pu` ON `lot_table`.`pcb_no`=`after_pu`.`pcb_no` WHERE `lot_table`.`fuze_type` = 'PROX' AND `lot_table`.`rejection_stage` = 'ELECTRONIC HEAD'";
 
-			$htmlTable = "";
-			while ($row = mysqli_fetch_assoc($detailsRes)) {
-				$htmlTable.="<tr>";
-				$htmlTable.="<td>".$row['pcb_no']."</td>";
-				$htmlTable.="<td>".$row['rejection_remark']."</td>";
-				$htmlTable.="</tr>";
+				$detailsRes = mysqli_query($db, $detailsSql);
+
+				$htmlTable = "";
+				while ($row = mysqli_fetch_assoc($detailsRes)) {
+					$htmlTable.="<tr>";
+					$htmlTable.="<td>".$row['pcb_no']."</td>";
+					$htmlTable.="<td>".$row['bpf_ac']."</td>";
+					$htmlTable.="<td>".$row['bpf_noise_ac']."</td>";
+					$htmlTable.="<td>".$row['rejection_remark']."</td>";
+					$htmlTable.="</tr>";
+				}
+				die($htmlTable);
 			}
-			die($htmlTable);
+			else 
+			{
+				$detailsSql = "SELECT `pcb_no`,`rejection_remark` FROM `lot_table` WHERE 
+					`rejection_stage`='".$_POST['rejection_stage']."' AND 
+					`fuze_type`='".$_POST['fuze_type']."' AND 
+					`fuze_diameter` = '".$_POST['fuze_diameter']."';
+				";
+
+				$detailsRes = mysqli_query($db, $detailsSql);
+
+				$htmlTable = "";
+				while ($row = mysqli_fetch_assoc($detailsRes)) {
+					$htmlTable.="<tr>";
+					$htmlTable.="<td>".$row['pcb_no']."</td>";
+					$htmlTable.="<td>".$row['rejection_remark']."</td>";
+					$htmlTable.="</tr>";
+				}
+				die($htmlTable);
+		}
 		}
 	}
 	else {
@@ -212,16 +232,25 @@
 										<th>Remark</th>
 									</tr>
 								</thead>
-								<tbody id="rejection_details_tbody">
-									
-								</tbody>
+								<tbody id="rejection_details_tbody"></tbody>
+							</table>
+							<table class="striped" id="rejection_details_table_prox_head" style="display: none;">
+								<thead>
+									<tr>
+										<th>PCB Number</th>
+										<th>BPF AC<br>Volt</th>
+										<th>BPF Noise AC<br>Volt</th>
+										<th>Remark</th>
+									</tr>
+								</thead>
+								<tbody id="rejection_details_tbody_prox_head"></tbody>
 							</table>
 						</div>
 					</center>
 				</div>
 				<div class="modal-footer">
 					<center>
-						<a href="#" class="btn-flat waves-light waves-red waves-effect" onclick="$('#analyticsModal').closeModal();">BACK</a>
+						<a href="#" class="btn-flat waves-light waves-red waves-effect" onclick="$('#analyticsModal').closeModal();$('#rejection_details_table').show();$('#rejection_details_table_prox_head').hide();">BACK</a>
 						<a href="rejection.php" target="_blank" class="btn-flat waves-light waves-red waves-effect">Go to rejection</a>
 					</center>
 				</div>
@@ -330,7 +359,13 @@
 									},
 									data: [{
 										type: 'doughnut',
-										indexLabel: '{symbol} - #percent%',
+										indexLabelFormatter: function(e) {
+											console.log(e);
+											if (e.percent == 0)
+												return "";
+											else
+												return e.dataPoint.label + " - " + e.percent.toFixed(2) + "%";
+										},
 										showInLegend: true,
 										legendText: "{label} : {y} - #percent%",
 										click: onChartClick,
@@ -481,7 +516,16 @@
 
 		function onChartClick(e) {
 			$('#analyticsModalHeader').html("Rejection Details of " + e.dataPoint.label + " stage");
-			$('#analyticsModal').openModal();
+			$('#analyticsModal').openModal({
+				complete: function() {
+					$('#rejection_details_table').show();
+					$('#rejection_details_table_prox_head').hide();
+				}
+			});
+			if(e.dataPoint.label == "ELECTRONIC HEAD" && $('#analytics_fuze_type').val() == "PROX") {
+				$('#rejection_details_table').hide();
+				$('#rejection_details_table_prox_head').show();
+			}
 			$.ajax({
 				type: 'POST',
 				data: {
@@ -492,7 +536,12 @@
 				},
 				success: function(msg) {
 					console.log(msg);
-					$('#rejection_details_tbody').html(msg);
+					if(e.dataPoint.label == "ELECTRONIC HEAD" && $('#analytics_fuze_type').val() == "PROX") {
+						$('#rejection_details_tbody_prox_head').html(msg);
+					}
+					else {
+						$('#rejection_details_tbody').html(msg);
+					}
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
 				 alert(errorThrown + 'Database server offline?');
