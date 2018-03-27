@@ -198,6 +198,7 @@
 							</div>
 						</div>
 
+						<!-- Value and process name will be mismatch. Remember to use the values for further processing -->
 						<div class="row">
 							<div class="input-field col s4">
 								<select name="rejection_stage" id="rejection_stage" required>
@@ -205,9 +206,9 @@
 									<option value="Q/A">Q/A Visual</option>
 									<option value="PCB">PCB</option>
 									<option value="HOUSING">HOUSING</option>
-									<option value="POTTING">POTTING</option>
-									<option value="PU POTTING">PU POTTING</option>
-									<option value="ELECTRONIC HEAD">ELECTRONIC HEAD</option>
+									<option value="POTTING">ASSEMBLY ELECTRONICS (EPOXY POTTING)</option>
+									<option value="PU POTTING">CALIBRATION (BEFORE PU)</option>
+									<option value="ELECTRONIC HEAD">ELECTRONIC HEAD (AFTER PU)</option>
 								</select>
 								<label>* Rejection Stage</label>
 							</div>
@@ -303,6 +304,12 @@
 			$('#rejection_scan_pcb').val('');
 			$('#rejection_remark').val('');
 			$('#rejection_scan_pcb').focus();
+		});
+
+		$('#acception_clear').click(function() {
+			$('#acception_scan_pcb').val('');
+			$('#acception_remark').val('');
+			$('#acception_scan_pcb').focus();
 		});
 
 		var confirmStatus;
