@@ -158,7 +158,7 @@
 		";
 	}
 
-	if(!isset($_COOKIE['fuzeAccess']) || $_COOKIE["fuzeAccess"] != "edit"){
+	if(!isset($_COOKIE['fuzeAccess']) || $_COOKIE["fuzeAccess"] != "DE95B43BCEEB4B998AED4AED5CEF1AE7"){
 		die("
 				<body class='analyticsBody'>
 				<main class='contents'>

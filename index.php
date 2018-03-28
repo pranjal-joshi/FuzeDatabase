@@ -28,11 +28,13 @@
 		if($count == 1) {
 			$_SESSION['login_user'] = $mypassword;
 			$cookie_name = "fuzeLogin";
-			$cookie_value = "ok";
+			$cookie_value = strtoupper(md5("ok"));
+			//$cookie_value = "ok");
 			setcookie($cookie_name, $cookie_value, 0,"/");
 
 			$accessCookie = "fuzeAccess";
-			$accessCookieValue = $row['access'];
+			$accessCookieValue = strtoupper(md5($row['access']));
+			//$accessCookieValue = $row['access'];
 			setcookie($accessCookie, $accessCookieValue, 0,"/");
 
 			$fuzeDiaCookie = "fuzeDia";
