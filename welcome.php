@@ -343,7 +343,7 @@
 												<option value="26">26 - Shorting of component pins</option>
 												<option value="27">27 - Component missing</option>
 												<option value="28">28 - PCB track cut</option>
-												<option value="29">29 - Solder pan on PCB damaged / removed</option>
+												<option value="29">29 - Solder pad on PCB damaged / removed</option>
 												<option value="30">30 - Improper barcode printing</option>
 												<option value="31">31 - Crystal pad damaged</option>
 												<option value="100">100 - MULTIPLE FAULTS</option>

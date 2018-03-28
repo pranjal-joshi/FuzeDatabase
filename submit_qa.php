@@ -118,7 +118,7 @@
 					$reasonToSave = "28 - PCB track cut";
 					break;
 				case '29':
-					$reasonToSave = "29 - Solder pan on PCB damaged / removed";
+					$reasonToSave = "29 - Solder pad on PCB damaged / removed";
 					break;
 				case '30':
 					$reasonToSave = "30 - Improper barcode printing";
