@@ -175,6 +175,20 @@
 				`result`='".$_POST['result']."' WHERE `pcb_no`='".$_POST['pcb_no']."'";
 
 				$results = mysqli_query($db,$sql);
+
+				$sqlLotUpdate = "";
+				if(strtoupper($_POST['result']) == "PASS") {
+					$sqlLotUpdate = "UPDATE `lot_table` SET
+					`rejected` = '0' 
+					WHERE `pcb_no`='".$_POST['pcb_no']."'";
+				}
+				else {
+					$sqlLotUpdate = "UPDATE `lot_table` SET
+					`rejected` = '1' 
+					WHERE `pcb_no`='".$_POST['pcb_no']."'";
+				}
+
+				$lotResults = mysqli_query($db,$sqlLotUpdate);
 				break;
 
 			case 'pcbTestingUpdate':
@@ -957,13 +971,13 @@
 											$('#AfterPuDetailsDetAmpl').val('".$row[15]." V');
 											$('#AfterPuDetailsCycles').val('".$row[16]."');
 											$('#AfterPuDetailsBpfAC').val('".$row[17]." V');
-											$('#AfterPuDetailsBpfDC').val('".$row[18]." V');
-											$('#AfterPuDetailsSil').val('".$row[19]." mS');
-											$('#AfterPuDetailsLvp').val('".$row[20]." V');
-											$('#AfterPuDetailsPDDelay').val('".$row[21]." uS');
-											$('#AfterPuDetailsPDDet').val('".$row[22]." V');
-											$('#AfterPuDetailsSafe').val('".$row[23]."');
-											$('#AfterPuDetailsResult').val('".$row[24]."');
+											$('#AfterPuDetailsBpfDC').val('".$row[19]." V');
+											$('#AfterPuDetailsSil').val('".$row[20]." mS');
+											$('#AfterPuDetailsLvp').val('".$row[21]." V');
+											$('#AfterPuDetailsPDDelay').val('".$row[22]." uS');
+											$('#AfterPuDetailsPDDet').val('".$row[23]." V');
+											$('#AfterPuDetailsSafe').val('".$row[24]."');
+											$('#AfterPuDetailsResult').val('".$row[25]."');
 
 											$('#AfterPuDetailsPcbNo').prop('readonly','true');
 											$('#AfterPuDetailsPcbNo').click(function(){
