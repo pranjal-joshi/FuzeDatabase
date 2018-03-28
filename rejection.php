@@ -18,7 +18,7 @@
 			}
 		}
 		elseif ($_POST['type'] == 'accept') {
-			$sql = "UPDATE `lot_table` SET `rejected`='0', `rejection_stage`='', `rejection_remark`='', `acception_remark`='".$_POST['remark']."'
+			$sql = "UPDATE `lot_table` SET `rejected`='0', `rejection_stage`='', `acception_remark`='".$_POST['remark']."'
 			WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type` = '".$_POST['fuze']."' AND `fuze_diameter` = '".$_POST['diameter']."'";
 
 			print_r($sql);

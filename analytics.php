@@ -36,7 +36,7 @@
 					`fuze_type` = '".$_POST['fuze_type']."'";
 				$puPottingRejectionGraphResult = mysqli_query($db, $puPottingRejectionGraphQuery);
 
-				$headRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='HEAD' AND 
+				$headRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='ELECTRONIC HEAD' AND 
 					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
 					`fuze_type` = '".$_POST['fuze_type']."'";
 				$headRejectionGraphResult = mysqli_query($db, $headRejectionGraphQuery);
@@ -47,7 +47,7 @@
 					array("label"=>"HOUSING","symbol"=>"HOUSING","y"=>mysqli_num_rows($housingRejectionGraphResult)),
 					array("label"=>"POTTING","symbol"=>"POTTING","y"=>mysqli_num_rows($pottingRejectionGraphResult)),
 					array("label"=>"PU POTTING","symbol"=>"PU POTTING","y"=>mysqli_num_rows($puPottingRejectionGraphResult)),
-					array("label"=>"ELECTRONIC HEAD","symbol"=>"ELECTRONIC HEAD","y"=>mysqli_num_rows($puPottingRejectionGraphResult))
+					array("label"=>"ELECTRONIC HEAD","symbol"=>"ELECTRONIC HEAD","y"=>mysqli_num_rows($headRejectionGraphResult))
 				);
 
 				die(json_encode($rejectionData, JSON_NUMERIC_CHECK));
@@ -86,7 +86,7 @@
 
 			if($_POST['rejection_stage'] == "ELECTRONIC HEAD" && $_POST['fuze_type'] == "PROX")
 			{
-				$detailsSql = "SELECT `lot_table`.`rejection_remark`,`lot_table`.`pcb_no`,`after_pu`.`bpf_ac`,`after_pu`.`bpf_noise_ac` FROM `lot_table` JOIN `after_pu` ON `lot_table`.`pcb_no`=`after_pu`.`pcb_no` WHERE `lot_table`.`fuze_type` = 'PROX' AND `lot_table`.`rejection_stage` = 'ELECTRONIC HEAD'";
+				$detailsSql = "SELECT `lot_table`.`rejection_remark`,`lot_table`.`pcb_no`,`after_pu`.`bpf_ac`,`after_pu`.`bpf_noise_ac` FROM `lot_table` JOIN `after_pu` ON `lot_table`.`pcb_no`=`after_pu`.`pcb_no` WHERE `lot_table`.`fuze_type` = 'PROX' AND `lot_table`.`rejection_stage` = 'ELECTRONIC HEAD' AND `lot_table`.`fuze_diameter` = '".$_POST['fuze_diameter']."'";
 
 				$detailsRes = mysqli_query($db, $detailsSql);
 
