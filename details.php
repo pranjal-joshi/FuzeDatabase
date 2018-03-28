@@ -219,6 +219,21 @@
 				`result`='".$_POST['result']."' WHERE `pcb_no`='".$_POST['pcb_no']."'";
 
 				$results = mysqli_query($db,$sql);
+
+				$sqlLotUpdate = "";
+				if(strtoupper($_POST['result']) == "PASS") {
+					$sqlLotUpdate = "UPDATE `lot_table` SET
+					`rejected` = '0' 
+					WHERE `pcb_no`='".$_POST['pcb_no']."'";
+				}
+				else {
+					$sqlLotUpdate = "UPDATE `lot_table` SET
+					`rejected` = '1' 
+					WHERE `pcb_no`='".$_POST['pcb_no']."'";
+				}
+
+				$lotResults = mysqli_query($db,$sqlLotUpdate);
+
 				break;
 
 			case 'calibrationUpdate':
