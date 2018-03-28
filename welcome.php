@@ -160,6 +160,9 @@
 											<option value="2">Calibration</option>
 											<option value="3">QA</option>
 											<option value="4">PCB Testing</option>
+											<option value="5">Housing Testing</option>
+											<option value="6">Potted Housing</option>
+											<option value="7">Electronic Head</option>
 										</select>
 										<label>Search In</label>
 									</div>

@@ -372,6 +372,7 @@
 										dataPoints: JSON.parse(msg)
 									}]
 							});
+							$('#chartContainer').fadeIn();
 							chart.render();
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -417,6 +418,7 @@
 									dataPoints: JSON.parse(msg)
 								}]
 							});
+							$('#chartContainer').fadeIn();
 							chart.render();
 							$('#chartContainer').css({"margin-bottom":"100px"});
 						},
@@ -434,6 +436,11 @@
 		function whatToShow(mode) {
 			$('#analytics_fuze_diameter_div').fadeIn();
 			$('#analytics_fuze_type_div').fadeIn();
+			try {
+				$('#chartContainer').fadeOut();
+			}
+			catch(err) {
+			}
 			if(mode == "production") {
 				$('#production_select_row').fadeIn();
 				$('#analytics_detail_span').fadeOut();

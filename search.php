@@ -26,6 +26,12 @@
 			case '4':
 				$searchInTable = "pcb_testing";
 				break;
+			case '5':
+				$searchInTable = "housing_table";
+				break;
+			case '6':
+				$searchInTable = "potting_table";
+				break;
 		}
 
 		switch ($_POST['select']) {

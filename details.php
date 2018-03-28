@@ -191,6 +191,96 @@
 				$lotResults = mysqli_query($db,$sqlLotUpdate);
 				break;
 
+			case 'housingTableUpdate':
+				$sql = "UPDATE `housing_table` SET 
+				`pcb_no`='".$_POST['pcb_no']."',
+				`i`='".$_POST['current']."',
+				`vee`='".$_POST['vee']."',
+				`vbat_pst`='".$_POST['vbat_pst']."',
+				`pst_amp`='".$_POST['pst_ampl']."',
+				`pst_wid`='".$_POST['pst_wid']."',
+				`mod_freq`='".$_POST['mod_freq']."',
+				`mod_dc`='".$_POST['mod_dc']."',
+				`mod_ac`='".$_POST['mod_ac']."',
+				`cap_charge`='".$_POST['cap_charge']."',
+				`vrf_amp`='".$_POST['vrf_ampl']."',
+				`vbat_vrf`='".$_POST['vbat_vrf']."',
+				`vbat_sil`='".$_POST['vbat_sil']."',
+				`det_wid`='".$_POST['det_wid']."',
+				`det_amp`='".$_POST['det_ampl']."',
+				`cycles`='".$_POST['cycles']."',
+				`bpf_dc`='".$_POST['bpf_dc']."',
+				`bpf_ac`='".$_POST['bpf_ac']."',
+				`sil`='".$_POST['sil']."',
+				`lvp`='".$_POST['lvp']."',
+				`pd_delay`='".$_POST['pd_delay']."',
+				`pd_det`='".$_POST['pd_det']."',
+				`safe`='".$_POST['safe']."',
+				`result`='".$_POST['result']."' WHERE `pcb_no`='".$_POST['pcb_no']."'";
+
+				$results = mysqli_query($db,$sql);
+
+				$sqlLotUpdate = "";
+				if(strtoupper($_POST['result']) == "PASS") {
+					$sqlLotUpdate = "UPDATE `lot_table` SET
+					`rejected` = '0' 
+					WHERE `pcb_no`='".$_POST['pcb_no']."'";
+				}
+				else {
+					$sqlLotUpdate = "UPDATE `lot_table` SET
+					`rejected` = '1' 
+					WHERE `pcb_no`='".$_POST['pcb_no']."'";
+				}
+
+				$lotResults = mysqli_query($db,$sqlLotUpdate);
+
+				break;
+
+			case 'pottingTableUpdate':
+				$sql = "UPDATE `potting_table` SET 
+				`pcb_no`='".$_POST['pcb_no']."',
+				`i`='".$_POST['current']."',
+				`vee`='".$_POST['vee']."',
+				`vbat_pst`='".$_POST['vbat_pst']."',
+				`pst_amp`='".$_POST['pst_ampl']."',
+				`pst_wid`='".$_POST['pst_wid']."',
+				`mod_freq`='".$_POST['mod_freq']."',
+				`mod_dc`='".$_POST['mod_dc']."',
+				`mod_ac`='".$_POST['mod_ac']."',
+				`cap_charge`='".$_POST['cap_charge']."',
+				`vrf_amp`='".$_POST['vrf_ampl']."',
+				`vbat_vrf`='".$_POST['vbat_vrf']."',
+				`vbat_sil`='".$_POST['vbat_sil']."',
+				`det_wid`='".$_POST['det_wid']."',
+				`det_amp`='".$_POST['det_ampl']."',
+				`cycles`='".$_POST['cycles']."',
+				`bpf_dc`='".$_POST['bpf_dc']."',
+				`bpf_ac`='".$_POST['bpf_ac']."',
+				`sil`='".$_POST['sil']."',
+				`lvp`='".$_POST['lvp']."',
+				`pd_delay`='".$_POST['pd_delay']."',
+				`pd_det`='".$_POST['pd_det']."',
+				`safe`='".$_POST['safe']."',
+				`result`='".$_POST['result']."' WHERE `pcb_no`='".$_POST['pcb_no']."'";
+
+				$results = mysqli_query($db,$sql);
+
+				$sqlLotUpdate = "";
+				if(strtoupper($_POST['result']) == "PASS") {
+					$sqlLotUpdate = "UPDATE `lot_table` SET
+					`rejected` = '0' 
+					WHERE `pcb_no`='".$_POST['pcb_no']."'";
+				}
+				else {
+					$sqlLotUpdate = "UPDATE `lot_table` SET
+					`rejected` = '1' 
+					WHERE `pcb_no`='".$_POST['pcb_no']."'";
+				}
+
+				$lotResults = mysqli_query($db,$sqlLotUpdate);
+
+				break;
+
 			case 'pcbTestingUpdate':
 				$sql = "UPDATE `pcb_testing` SET 
 				`pcb_no`='".$_POST['pcb_no']."',
@@ -1450,6 +1540,778 @@
 								$('#pcbTestingDetailsForm').hide();
 								document.getElementById('pcbTestingDetailsTitle').innerHTML = 'Failed to search the given parameter!';
 							";
+					}
+					$html.= "</script>";
+				}
+				break;
+
+		case 'housing_table':
+				$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				$results = mysqli_query($db,$sql);
+
+				if(!$results){
+					die("
+							<center>
+								<span style='font-weight: bold; font-size: 22px' class='red-text text-darken-2'>Search Failure!</span>
+							</center>
+						");
+				}
+				else {
+					$row = mysqli_fetch_row($results);
+					$html.="
+					<div class='card-panel grey lighten-4' id='housingTableDetailsCard'>
+						<div class='row'>
+							<center>
+								<span style='font-weight: bold; font-size: 22px' class='teal-text text-darken-2' id='housingTableDetailsTitle'>Housing Test Report</span>
+							</center>
+
+							<form id='housingTableDetailsForm'>
+							<br>
+								<table id='housingTableDetailsTable'>
+									<tbody>
+
+										<tr>
+										<td class='center'><span class='center'>PCB Number <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsPcbNo'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Supply Current (I) <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsCurrent' data-position='bottom' data-delay='500' data-tooltip='7 to 14 mA' class='tooltipped'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Supply Voltage (VEE) <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsVee' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5.30 to 6.20 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PST Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>VBAT-PST Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsVbatPst' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='600 to 700 mS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>PST Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsPstAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='12 to 21 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>PST Width <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsPstWid' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='30 to 120 uS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>MOD Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>Frequency <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsFreq' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='46 to 55 KHz'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsModDC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='7 to 8.1 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>AC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsModAC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0.95 to 1.35 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>VRF Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>VRF Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsVrfAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='15.3 to 16.7 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>VBAT-VRF Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsVbatVrf' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.08 to 2.30 Sec'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>VBAT-Cap Charge T <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsCapCharge' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='695 to 730 mS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PROX Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>DET Width <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsDetWidth' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='30 to 120 uS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsDetAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='-12 to -21 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Cycles <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsCycles' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4 to 6'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>BPF DC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsBpfDC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5.2 to 6.4 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>BPF AC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsBpfAC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.5 to 3.6 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Noise Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>SIL <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsSil' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='480 to 650 mS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>VBAT-SIL Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsVbatSil' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.7 to 3.2 Sec'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>LVP <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsLvp' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='18.8 to 21 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PD Test</span></center>
+
+								<table>
+									<tbody>
+
+											<td class='center'><span class='center'>Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsPDDelay' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 10 uS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsPDDet' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='-12 to -22 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Results</span></center>
+
+								<table>
+									<tbody>
+
+											<td class='center'><span class='center'>SAFE Test <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsSafe'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Result <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsResult'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center>
+									<a class='btn waves-light waves-effect' id='housingTableUpdateButton'>UPDATE</a>
+								</center>
+
+							</form>
+
+						</div>
+					</div>
+
+					";
+					$html.= "<script type='text/javascript'>";
+					try {
+						$html.= "	$('#HousingTableDetailsPcbNo').val('".$row[1]."');
+											$('#HousingTableDetailsCurrent').val('".$row[2]." mA');
+											$('#HousingTableDetailsVee').val('".$row[3]." V');
+											$('#HousingTableDetailsVbatPst').val('".$row[4]." mS');
+											$('#HousingTableDetailsPstAmpl').val('".$row[5]." V');
+											$('#HousingTableDetailsPstWid').val('".$row[6]." uS');
+											$('#HousingTableDetailsFreq').val('".$row[7]." KHz');
+											$('#HousingTableDetailsModDC').val('".$row[8]." V');
+											$('#HousingTableDetailsModAC').val('".$row[9]." V');
+											$('#HousingTableDetailsCapCharge').val('".$row[10]." mS');
+											$('#HousingTableDetailsVrfAmpl').val('".$row[11]." V');
+											$('#HousingTableDetailsVbatVrf').val('".$row[12]." Sec');
+											$('#HousingTableDetailsVbatSil').val('".$row[13]." Sec');
+											$('#HousingTableDetailsDetWidth').val('".$row[14]." uS');
+											$('#HousingTableDetailsDetAmpl').val('".$row[15]." V');
+											$('#HousingTableDetailsCycles').val('".$row[16]."');
+											$('#HousingTableDetailsBpfAC').val('".$row[17]." V');
+											$('#HousingTableDetailsBpfDC').val('".$row[18]." V');
+											$('#HousingTableDetailsSil').val('".$row[19]." mS');
+											$('#HousingTableDetailsLvp').val('".$row[20]." V');
+											$('#HousingTableDetailsPDDelay').val('".$row[21]." uS');
+											$('#HousingTableDetailsPDDet').val('".$row[22]." V');
+											$('#HousingTableDetailsSafe').val('".$row[23]."');
+											$('#HousingTableDetailsResult').val('".$row[24]."');
+
+											$('#HousingTableDetailsPcbNo').prop('readonly','true');
+											$('#HousingTableDetailsPcbNo').click(function(){
+												alert('PCB number is primary record. You can\'t change it!')
+											});
+											";
+
+						// ### Control record modification based on login access
+						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "write") == 0)){
+							$html.= "
+											$('input[type=text]').prop('readonly','true');
+											$('#housingTableUpdateButton').hide();
+											$('#HousingTableDetailsPcbNo').unbind('click');
+											";
+						}
+						else {
+							$html.="
+										$('#housingTableUpdateButton').click(function(){
+											$.ajax({
+												type: 'POST',
+												data: {
+													form: 'housingTableUpdate',
+													pcb_no: $('#HousingTableDetailsPcbNo').val(),
+													current: $('#HousingTableDetailsCurrent').val().replace(/[^\d.-]/g, ''),
+													vee: $('#HousingTableDetailsVee').val().replace(/[^\d.-]/g, ''),
+													vbat_pst: $('#HousingTableDetailsVbatPst').val().replace(/[^\d.-]/g, ''),
+													pst_ampl: $('#HousingTableDetailsPstAmpl').val().replace(/[^\d.-]/g, ''),
+													pst_wid: $('#HousingTableDetailsPstWid').val().replace(/[^\d.-]/g, ''),
+													mod_freq: $('#HousingTableDetailsFreq').val().replace(/[^\d.-]/g, ''),
+													mod_dc: $('#HousingTableDetailsModDC').val().replace(/[^\d.-]/g, ''),
+													mod_ac: $('#HousingTableDetailsModAC').val().replace(/[^\d.-]/g, ''),
+													vrf_ampl: $('#HousingTableDetailsVrfAmpl').val().replace(/[^\d.-]/g, ''),
+													vbat_vrf: $('#HousingTableDetailsVbatVrf').val().replace(/[^\d.-]/g, ''),
+													cap_charge: $('#HousingTableDetailsCapCharge').val().replace(/[^\d.-]/g, ''),
+													det_wid: $('#HousingTableDetailsDetWidth').val().replace(/[^\d.-]/g, ''),
+													det_ampl: $('#HousingTableDetailsDetAmpl').val().replace(/[^\d.-]/g, ''),
+													cycles: $('#HousingTableDetailsCycles').val().replace(/[^\d.-]/g, ''),
+													bpf_dc: $('#HousingTableDetailsBpfDC').val().replace(/[^\d.-]/g, ''),
+													bpf_ac: $('#HousingTableDetailsBpfAC').val().replace(/[^\d.-]/g, ''),
+													sil: $('#HousingTableDetailsSil').val().replace(/[^\d.-]/g, ''),
+													vbat_sil: $('#HousingTableDetailsVbatSil').val().replace(/[^\d.-]/g, ''),
+													lvp: $('#HousingTableDetailsLvp').val().replace(/[^\d.-]/g, ''),
+													pd_delay: $('#HousingTableDetailsPDDelay').val().replace(/[^\d.-]/g, ''),
+													pd_det: $('#HousingTableDetailsPDDet').val().replace(/[^\d.-]/g, ''),
+													safe: $('#HousingTableDetailsSafe').val().toUpperCase(),
+													result: $('#HousingTableDetailsResult').val().toUpperCase()
+												},
+												success: function(msg) {
+													console.log(msg);
+													if(msg.includes('ok')){
+														Materialize.toast('Record Updated',1500,'rounded');
+													}
+													else{
+														Materialize.toast('Failed to save record!',3000,'rounded');
+														Materialize.toast('Database server is offline!',3000,'rounded');
+													}
+												},
+												error: function(XMLHttpRequest, textStatus, errorThrown) {
+													 alert(errorThrown + 'Database server offline?');
+												}
+											});
+										});
+							";
+						}
+					}
+					catch(Exception $e){
+							$html.="
+								$('#housingTableDetailsForm').hide();
+								document.getElementById('housingTableDetailsTitle').innerHTML = 'Failed to search the given parameter!';
+							";
+							print_r($e);
+					}
+					$html.= "</script>";
+				}
+				break;
+
+			case 'potting_table':
+				$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				$results = mysqli_query($db,$sql);
+
+				if(!$results){
+					die("
+							<center>
+								<span style='font-weight: bold; font-size: 22px' class='red-text text-darken-2'>Search Failure!</span>
+							</center>
+						");
+				}
+				else {
+					$row = mysqli_fetch_row($results);
+					$html.="
+					<div class='card-panel grey lighten-4' id='pottingTableDetailsCard'>
+						<div class='row'>
+							<center>
+								<span style='font-weight: bold; font-size: 22px' class='teal-text text-darken-2' id='pottingTableDetailsTitle'>Potting Test Report</span>
+							</center>
+
+							<form id='pottingTableDetailsForm'>
+							<br>
+								<table id='pottingTableDetailsTable'>
+									<tbody>
+
+										<tr>
+										<td class='center'><span class='center'>PCB Number <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsPcbNo'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Supply Current (I) <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsCurrent' data-position='bottom' data-delay='500' data-tooltip='7 to 14 mA' class='tooltipped'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Supply Voltage (VEE) <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsVee' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5.30 to 6.20 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PST Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>VBAT-PST Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsVbatPst' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='600 to 700 mS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>PST Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsPstAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='12 to 21 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>PST Width <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsPstWid' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='30 to 120 uS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>MOD Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>Frequency <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsFreq' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='46 to 55 KHz'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsModDC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='7 to 8.1 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>AC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsModAC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0.95 to 1.35 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>VRF Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>VRF Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsVrfAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='15.3 to 16.7 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>VBAT-VRF Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsVbatVrf' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.08 to 2.30 Sec'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>VBAT-Cap Charge T <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsCapCharge' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='695 to 730 mS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PROX Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>DET Width <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsDetWidth' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='30 to 120 uS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsDetAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='-12 to -21 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Cycles <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsCycles' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4 to 6'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>BPF DC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsBpfDC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5.2 to 6.4 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>BPF AC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsBpfAC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.5 to 3.6 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Noise Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>SIL <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsSil' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='480 to 650 mS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>VBAT-SIL Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsVbatSil' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.7 to 3.2 Sec'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>LVP <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsLvp' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='18.8 to 21 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PD Test</span></center>
+
+								<table>
+									<tbody>
+
+											<td class='center'><span class='center'>Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsPDDelay' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 10 uS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsPDDet' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='-12 to -22 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Results</span></center>
+
+								<table>
+									<tbody>
+
+											<td class='center'><span class='center'>SAFE Test <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsSafe'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Result <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsResult'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center>
+									<a class='btn waves-light waves-effect' id='pottingTableUpdateButton'>UPDATE</a>
+								</center>
+
+							</form>
+
+						</div>
+					</div>
+
+					";
+					$html.= "<script type='text/javascript'>";
+					try {
+						$html.= "	$('#PottingTableDetailsPcbNo').val('".$row[1]."');
+											$('#PottingTableDetailsCurrent').val('".$row[2]." mA');
+											$('#PottingTableDetailsVee').val('".$row[3]." V');
+											$('#PottingTableDetailsVbatPst').val('".$row[4]." mS');
+											$('#PottingTableDetailsPstAmpl').val('".$row[5]." V');
+											$('#PottingTableDetailsPstWid').val('".$row[6]." uS');
+											$('#PottingTableDetailsFreq').val('".$row[7]." KHz');
+											$('#PottingTableDetailsModDC').val('".$row[8]." V');
+											$('#PottingTableDetailsModAC').val('".$row[9]." V');
+											$('#PottingTableDetailsCapCharge').val('".$row[10]." mS');
+											$('#PottingTableDetailsVrfAmpl').val('".$row[11]." V');
+											$('#PottingTableDetailsVbatVrf').val('".$row[12]." Sec');
+											$('#PottingTableDetailsVbatSil').val('".$row[13]." Sec');
+											$('#PottingTableDetailsDetWidth').val('".$row[14]." uS');
+											$('#PottingTableDetailsDetAmpl').val('".$row[15]." V');
+											$('#PottingTableDetailsCycles').val('".$row[16]."');
+											$('#PottingTableDetailsBpfAC').val('".$row[17]." V');
+											$('#PottingTableDetailsBpfDC').val('".$row[18]." V');
+											$('#PottingTableDetailsSil').val('".$row[19]." mS');
+											$('#PottingTableDetailsLvp').val('".$row[20]." V');
+											$('#PottingTableDetailsPDDelay').val('".$row[21]." uS');
+											$('#PottingTableDetailsPDDet').val('".$row[22]." V');
+											$('#PottingTableDetailsSafe').val('".$row[23]."');
+											$('#PottingTableDetailsResult').val('".$row[24]."');
+
+											$('#PottingTableDetailsPcbNo').prop('readonly','true');
+											$('#PottingTableDetailsPcbNo').click(function(){
+												alert('PCB number is primary record. You can\'t change it!')
+											});
+											";
+
+						// ### Control record modification based on login access
+						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "write") == 0)){
+							$html.= "
+											$('input[type=text]').prop('readonly','true');
+											$('#pottingTableUpdateButton').hide();
+											$('#PottingTableDetailsPcbNo').unbind('click');
+											";
+						}
+						else {
+							$html.="
+										$('#pottingTableUpdateButton').click(function(){
+											$.ajax({
+												type: 'POST',
+												data: {
+													form: 'pottingTableUpdate',
+													pcb_no: $('#PottingTableDetailsPcbNo').val(),
+													current: $('#PottingTableDetailsCurrent').val().replace(/[^\d.-]/g, ''),
+													vee: $('#PottingTableDetailsVee').val().replace(/[^\d.-]/g, ''),
+													vbat_pst: $('#PottingTableDetailsVbatPst').val().replace(/[^\d.-]/g, ''),
+													pst_ampl: $('#PottingTableDetailsPstAmpl').val().replace(/[^\d.-]/g, ''),
+													pst_wid: $('#PottingTableDetailsPstWid').val().replace(/[^\d.-]/g, ''),
+													mod_freq: $('#PottingTableDetailsFreq').val().replace(/[^\d.-]/g, ''),
+													mod_dc: $('#PottingTableDetailsModDC').val().replace(/[^\d.-]/g, ''),
+													mod_ac: $('#PottingTableDetailsModAC').val().replace(/[^\d.-]/g, ''),
+													vrf_ampl: $('#PottingTableDetailsVrfAmpl').val().replace(/[^\d.-]/g, ''),
+													vbat_vrf: $('#PottingTableDetailsVbatVrf').val().replace(/[^\d.-]/g, ''),
+													cap_charge: $('#PottingTableDetailsCapCharge').val().replace(/[^\d.-]/g, ''),
+													det_wid: $('#PottingTableDetailsDetWidth').val().replace(/[^\d.-]/g, ''),
+													det_ampl: $('#PottingTableDetailsDetAmpl').val().replace(/[^\d.-]/g, ''),
+													cycles: $('#PottingTableDetailsCycles').val().replace(/[^\d.-]/g, ''),
+													bpf_dc: $('#PottingTableDetailsBpfDC').val().replace(/[^\d.-]/g, ''),
+													bpf_ac: $('#PottingTableDetailsBpfAC').val().replace(/[^\d.-]/g, ''),
+													sil: $('#PottingTableDetailsSil').val().replace(/[^\d.-]/g, ''),
+													vbat_sil: $('#PottingTableDetailsVbatSil').val().replace(/[^\d.-]/g, ''),
+													lvp: $('#PottingTableDetailsLvp').val().replace(/[^\d.-]/g, ''),
+													pd_delay: $('#PottingTableDetailsPDDelay').val().replace(/[^\d.-]/g, ''),
+													pd_det: $('#PottingTableDetailsPDDet').val().replace(/[^\d.-]/g, ''),
+													safe: $('#PottingTableDetailsSafe').val().toUpperCase(),
+													result: $('#PottingTableDetailsResult').val().toUpperCase()
+												},
+												success: function(msg) {
+													console.log(msg);
+													if(msg.includes('ok')){
+														Materialize.toast('Record Updated',1500,'rounded');
+													}
+													else{
+														Materialize.toast('Failed to save record!',3000,'rounded');
+														Materialize.toast('Database server is offline!',3000,'rounded');
+													}
+												},
+												error: function(XMLHttpRequest, textStatus, errorThrown) {
+													 alert(errorThrown + 'Database server offline?');
+												}
+											});
+										});
+							";
+						}
+					}
+					catch(Exception $e){
+							$html.="
+								$('#pottingTableDetailsForm').hide();
+								document.getElementById('pottingTableDetailsTitle').innerHTML = 'Failed to search the given parameter!';
+							";
+							print_r($e);
 					}
 					$html.= "</script>";
 				}
