@@ -177,8 +177,8 @@
 						$det_wid = isset($Row[13]) ? $Row[13] : '';
 						$det_amp = isset($Row[14]) ? $Row[14] : '';
 						$cycles = isset($Row[15]) ? $Row[15] : '';
-						$bpf_ac = isset($Row[16]) ? $Row[16] : '';
-						$bpf_dc = isset($Row[17]) ? $Row[17] : '';
+						$bpf_dc = isset($Row[16]) ? $Row[16] : '';
+						$bpf_ac = isset($Row[17]) ? $Row[17] : '';
 						$sil = isset($Row[18]) ? $Row[18] : '';
 						$lvp = isset($Row[19]) ? $Row[19] : '';
 						$delay = isset($Row[20]) ? $Row[20] : '';
