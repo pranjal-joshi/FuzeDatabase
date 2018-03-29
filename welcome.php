@@ -2153,6 +2153,7 @@
 						jsonData: JSON.stringify(manualTestingData)
 					},
 					success: function(msg) {
+						console.log(manualTestingData);
 						console.log(msg);
 						if(msg.includes("ok")) {
 							Materialize.toast('Record saved',2000,'rounded');

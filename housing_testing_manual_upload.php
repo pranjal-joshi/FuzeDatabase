@@ -13,7 +13,7 @@
 
 		$sqlResult = mysqli_query($db,$sql);
 
-		$sqlAdd = "REPLACE INTO `housing_table` (`pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`, `op_name`) VALUES (";
+		$sqlAdd = "REPLACE INTO `housing_table` (`pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `vrf_amp`, `vbat_vrf`, `cap_charge`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `vbat_sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`, `op_name`) VALUES (";
 
 		foreach ($dataArray as $value) {
 			$sqlAdd.= "'".$value."',";
