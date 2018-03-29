@@ -82,6 +82,33 @@
 			}
 			die(json_encode($productionData, JSON_NUMERIC_CHECK));
 		}
+		elseif($_POST['select'] == "total_rejection") {
+
+			$totalRejectionData = array();
+			$totalProductionData = array();
+			$finalChartData = array();
+
+			$uniqueLotsSql = "SELECT DISTINCT(`main_lot`) FROM `lot_table` WHERE `fuze_diameter`= '".$_POST['fuze_diameter']."' ORDER BY `main_lot` ASC";
+
+			$uniqueLotsResult = mysqli_query($db, $uniqueLotsSql);
+
+			while ($row = mysqli_fetch_assoc($uniqueLotsResult)) {
+				$rejectionSql = "SELECT `_id` FROM `lot_table` WHERE `fuze_diameter`= '".$_POST['fuze_diameter']."' AND `rejected` = '1' AND `main_lot` = '".$row['main_lot']."'";
+
+				$productionSql = "SELECT `_id` FROM `lot_table` WHERE `fuze_diameter`= '".$_POST['fuze_diameter']."' AND `rejected` = '0' AND `main_lot` = '".$row['main_lot']."'";
+
+				$rejectionResult = mysqli_query($db, $rejectionSql);
+				$productionResult = mysqli_query($db, $productionSql);
+
+				array_push($totalRejectionData, array("label"=>"LOT ".$row['main_lot'],"y"=>mysqli_num_rows($rejectionResult)));
+				array_push($totalProductionData, array("label"=>"LOT ".$row['main_lot'],"y"=>mysqli_num_rows($productionResult)));
+			}
+
+			array_push($finalChartData, $totalProductionData);
+			array_push($finalChartData, $totalRejectionData);
+
+			die(json_encode($finalChartData, JSON_NUMERIC_CHECK));
+		}
 		elseif($_POST['select'] == "rejection_details") {
 
 			if($_POST['rejection_stage'] == "ELECTRONIC HEAD" && $_POST['fuze_type'] == "PROX")
@@ -267,13 +294,14 @@
 							<div class="input-field col s4">
 								<select name="analytics_select" id="analytics_select" onchange="whatToShow(this.value)">
 									<option value="" selected disabled>-- Select --</option>
-									<option value="rejection">Rejection</option>
-									<option value="production">Prodution</option>
+									<option value="rejection">Rejection Details</option>
+									<option value="production">Prodution Details</option>
+									<option value="total_rejection">Total Rejection</option>
 								</select>
 								<label>Select criteria</label>
 							</div>
 
-							<div class="input-field col s4" style="display: none;" id="analytics_fuze_type_div">
+							<div class="input-field col s3" style="display: none;" id="analytics_fuze_type_div">
 							<select name="analytics_fuze_type" id="analytics_fuze_type">
 								<option value="" disabled selected>-- select --</option>
 								<option value="EPD">EPD</option>
@@ -283,13 +311,18 @@
 							<label>Select Fuze Type</label>
 						</div>
 
-						<div class="input-field col s4" style="display: none;" id="analytics_fuze_diameter_div">
+						<div class="input-field col s3" style="display: none;" id="analytics_fuze_diameter_div">
 							<select name="analytics_fuze_diameter" id="analytics_fuze_diameter" required>
 								<option value="" selected disabled>--Select--</option>
 								<option value="105">105 mm</option>
 								<option value="155">155 mm</option>
 							</select>
 							<label>Fuze Diameter</label>
+						</div>
+
+						<div class='input-field col s2' style="display: none;" id='analytics_main_lot_div'>
+							<input type='text' id='analytics_main_lot'>
+							<label for='analytics_main_lot'>Main Lot No</label>
 						</div>
 
 					</div>
@@ -428,6 +461,63 @@
 					});
 				}
 			}
+			else if($('#analytics_select :selected').val() == "total_rejection") {
+				if($('#analytics_fuze_diameter :selected').val() == '' || $('#analytics_fuze_type :selected').val() == '') {
+					Materialize.toast("Please select the required fields!",3000,'rounded');
+				}
+				else {
+					$.ajax({
+						type: 'POST',
+						data: {
+							select: $('#analytics_select :selected').val(),
+							fuze_type: $('#analytics_fuze_type :selected').val(),
+							fuze_diameter: $('#analytics_fuze_diameter :selected').val(),
+						},
+						success: function(msg) {
+							var productionData = JSON.parse(msg)[0];
+							var rejectionData = JSON.parse(msg)[1];
+							console.log(productionData);
+							console.log(rejectionData);
+							var chart = new CanvasJS.Chart("chartContainer", {
+								animationEnabled: true,
+								exportEnabled: true,
+								theme: "light2",
+								title: {
+									text: "Rejection against Prodution"
+								},
+								axisX: {
+									title: "Lots",
+								},
+								axisY: {
+									title: "Count",
+								},
+								data: [
+									{
+										type: "stackedColumn",
+										showInLegend: true,
+										name: "Passed",
+										color: "#009688",
+										dataPoints: productionData
+									},
+									{
+										type: "stackedColumn",
+										showInLegend: true,
+										name: "Rejected",
+										color: "#ef5350",
+										dataPoints: rejectionData
+									}
+								]
+							});
+							$('#chartContainer').fadeIn();
+							chart.render();
+							$('#chartContainer').css({"margin-bottom":"100px"});
+						},
+						error: function(XMLHttpRequest, textStatus, errorThrown) {
+							 alert(errorThrown + 'Database server offline?');
+						}
+					});
+				}
+			}
 			else {
 				Materialize.toast("Please select the required fields!",3000,'rounded');
 			}
@@ -436,6 +526,9 @@
 		function whatToShow(mode) {
 			$('#analytics_fuze_diameter_div').fadeIn();
 			$('#analytics_fuze_type_div').fadeIn();
+			if(mode != "total_rejection") {
+				$('#analytics_main_lot_div').fadeIn();
+			}
 			try {
 				$('#chartContainer').fadeOut();
 			}
@@ -445,7 +538,12 @@
 				$('#production_select_row').fadeIn();
 				$('#analytics_detail_span').fadeOut();
 			}
-			else {
+			else if(mode == "rejection"){
+				$('#production_select_row').fadeOut();
+				$('#analytics_detail_span').fadeOut();
+			}
+			else if(mode == "total_rejection") {
+				$('#analytics_main_lot_div').fadeOut();
 				$('#production_select_row').fadeOut();
 				$('#analytics_detail_span').fadeOut();
 			}
