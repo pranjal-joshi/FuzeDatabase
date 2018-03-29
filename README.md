@@ -31,7 +31,7 @@ Windows - path/to/xampp/htdocs/FuzeDatabase
 Linux - /var/www/html/FuzeDatabase (This requires root access)
 ```
 
-Remove other exisiting folders in htdocs if you dont want any other default functionalities provided by your webserver. After cloning, make sure that your webserver is running & you have index.php file in the FuzeDatabase folder. Now you will be able to access the server by visiting ```http://localhost/FuzeDatabase``` from your browser.
+Remove other exisiting folders in htdocs if you dont want any other default functionalities provided by your webserver. After cloning, make sure that your webserver is running & you have index.php file in the FuzeDatabase folder. Now you will be able to access the server by visiting [http://localhost/FuzeDatabase](http://localhost/FuzeDatabase) from your browser.
 
 As the server is intended to collect large amount of data from assembly line, Please modify the configuration as given below:
 ```
