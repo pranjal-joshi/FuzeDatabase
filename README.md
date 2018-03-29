@@ -65,7 +65,7 @@ To prevent data loss due, Setup the auto backup script with Cron or Windows task
 
 Edit the paths in ```db_bkp.bat``` file according to your environment.
 
-### Setting up schedule backup with Task Scheduler:
+### Setting up scheduled backup with Task Scheduler:
 
 * Open Task Schedular
 * Click on "Create Basic Task"
@@ -79,8 +79,8 @@ Now in case of data loss, you can upload the backup zip files directly to PhpMyA
 
 ## Author
 
-* **Pranjal Joshi** - *Development, Testing & Deployment* - [Fuze Dept, Bharat Electronics Ltd, Pune](http://bel-india.com/)
+* **Pranjal Joshi** - *Development, Testing & Deployment* - [Fuze Dept, Bharat Electronics Ltd](http://bel-india.com/)
 
 ## License
 
-Copyright 2018. All rights reserved
+Copyright 2018. All rights reserved.
