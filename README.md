@@ -13,11 +13,11 @@ The current configuration of server is as follow: (Feel free to use upgraded ver
 ```
 XAMPP (V.3.2.2 or above)
 |
-|--Apache Webserver V.2.4
+|--* Apache Webserver V.2.4
 |
-|--PHP V.7.2.2
+|--* PHP V.7.2.2
 |
-|--MariaDB V.10.1.30
+|--* MariaDB V.10.1.30
 
 ```
 
@@ -55,6 +55,6 @@ $cfg['Servers'][$i]['password'] = '**your_root_passwd**';
 
 To make the web & database server to start automatically, you have to add it as a startup service.
 
-If you are linux based, then Apache2 and MySQL are usually configured their daemons to start after boot so you don't need to worry about it unless you mess up with the configuration settings.
+If you are **Linux based**, then Apache2 and MySQL are usually configured their daemons to start after boot so you don't need to worry about it unless you mess up with the configuration settings.
 
-If you are windows based, Run XAMPP control panel with Administrator rights and then add Apache & MySQL to startup services by clicking on the respective checkboxes in xampp control panel. Alternatively, you can run "services.msc" with run command to configure startup services manually.
+If you are **Windows based**, Run XAMPP control panel with Administrator rights and then add Apache & MySQL to startup services by clicking on the respective checkboxes in xampp control panel. Alternatively, you can run ```services.msc``` with run command to configure startup services manually.
