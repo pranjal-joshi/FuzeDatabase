@@ -74,3 +74,13 @@ Edit the paths in ```db_bkp.bat``` file according to your environment.
 * Select "Start a program" as an action.
 * Now use browse button to navigate and select the ```db_bkp.bat``` script. (Make sure you have already changed paths as per your environment).
 * Check the summary of your schedule and click finish to complete the process.
+
+Now in case of data loss, you can upload the backup zip files directly to PhpMyAdmin thorugh import option.
+
+## Author
+
+* **Pranjal Joshi** - *Development, Testing & Deployment* - [Fuze Dept, Bharat Electronics Ltd, Pune](http://bel-india.com/)
+
+## License
+
+Copyright 2018. All rights reserved
