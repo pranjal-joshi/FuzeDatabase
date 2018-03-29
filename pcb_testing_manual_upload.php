@@ -24,8 +24,6 @@
 
 		$res = mysqli_query($db,$sqlAdd);
 
-		print_r($sqlAdd);
-
 		if(!$res) {
 			die("fail");
 		}

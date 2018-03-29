@@ -428,6 +428,13 @@
 								<td>".$pottingRow['result']." </td>
 								<td>".$afterPuRow['result']." </td>
 							</tr>
+							<tr>
+								<td colspan='2'>Operator Name</td>
+								<td>".($pcbRow['op_name'] == "" ? "*ATE*" : $pcbRow['op_name'])."</td>
+								<td>".($housingRow['op_name'] == "" ? "*ATE*" : $housingRow['op_name'])."</td>
+								<td>".($pottingRow['op_name'] == "" ? "*ATE*" : $pottingRow['op_name'])."</td>
+								<td>".($afterPuRow['op_name'] == "" ? "*ATE*" : $afterPuRow['op_name'])."</td>
+							</tr>
 						</table>
 						<br>
 					</div>";
