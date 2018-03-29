@@ -483,13 +483,30 @@
 								exportEnabled: true,
 								theme: "light2",
 								title: {
-									text: "Rejection against Prodution"
+									text: "Rejection against Prodution - " + $('#analytics_fuze_diameter :selected').val() + "mm"
 								},
 								axisX: {
 									title: "Lots",
 								},
 								axisY: {
 									title: "Count",
+								},
+								toolTip: {
+									shared: true,
+									content: function(e) {
+										var str = "";
+										str = "<span style='color: blue; font-weight: bold; font-size: 16px;'>" + e.entries[0].dataPoint.label + "</span>";
+										str += "<br>";
+										str += "<span style='color: #009688; font-weight: bold'>Passed - " + e.entries[0].dataPoint.y + "</span>";
+										str += "<br>";
+										str += "<span style='color: #ff5252; font-weight: bold'>Rejected - " + e.entries[1].dataPoint.y + "</span>";
+										str += "<br>";
+										str += "<span style='color: #ff5252; font-weight: bold'>Rejection - " + (e.entries[1].dataPoint.y/(e.entries[0].dataPoint.y+e.entries[1].dataPoint.y)).toFixed(4)*100 + "%</span>";
+										str += "<br>";
+										str += "<span style='color: black; font-weight: bold'>Manufactured - " + (e.entries[1].dataPoint.y + e.entries[0].dataPoint.y) + "</span>";
+
+										return str;
+									}
 								},
 								data: [
 									{
@@ -503,7 +520,7 @@
 										type: "stackedColumn",
 										showInLegend: true,
 										name: "Rejected",
-										color: "#ef5350",
+										color: "#ff5252",
 										dataPoints: rejectionData
 									}
 								]
