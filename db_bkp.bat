@@ -26,6 +26,18 @@ REM MAKECAB "fuze_database.%TIMESTAMP%.sql" "fuze_database.%TIMESTAMP%.sql.cab"
 ECHO Compressing database file...
 PowerShell -NoProfile -ExecutionPolicy Bypass -Command "Compress-Archive -Path 'E:\FuzeDatabase_backups\fuze_database.%TIMESTAMP%.sql' -DestinationPath 'E:\FuzeDatabase_backups\fuze_database.%TIMESTAMP%.zip' -Update"
 
+ECHO Backing up on FTP Server for extra backup..
+@ECHO OFF
+ECHO user FuzeDatabaseAdmin> ftpcmd.dat
+ECHO >> ftpcmd.dat
+ECHO bin>> ftpcmd.dat
+REM ECHO hash>> ftpcmd.dat
+ECHO put E:\FuzeDatabase_backups\fuze_database.%TIMESTAMP%.zip>> ftpcmd.dat
+ECHO quit>> ftpcmd.dat
+ftp -n -s:ftpcmd.dat 192.168.100.225
+REM Change this IP to intranet FTP Server later.. It should be on diffrent machine than the webserver!
+DEL ftpcmd.dat
+
 REM Delete uncompressed DB dump file.
 ECHO Deleting uncompressed database file...
 DEL /q /f "E:\FuzeDatabase_backups\fuze_database.%TIMESTAMP%.sql"
