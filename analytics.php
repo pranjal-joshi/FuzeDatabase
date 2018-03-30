@@ -164,42 +164,84 @@
 		}
 		elseif($_POST['select'] == "rejection_details") {
 
-			if($_POST['rejection_stage'] == "ELECTRONIC HEAD" && $_POST['fuze_type'] == "PROX")
-			{
-				$detailsSql = "SELECT `lot_table`.`rejection_remark`,`lot_table`.`pcb_no`,`after_pu`.`bpf_ac`,`after_pu`.`bpf_noise_ac` FROM `lot_table` JOIN `after_pu` ON `lot_table`.`pcb_no`=`after_pu`.`pcb_no` WHERE `lot_table`.`fuze_type` = 'PROX' AND `lot_table`.`rejection_stage` = 'ELECTRONIC HEAD' AND `lot_table`.`fuze_diameter` = '".$_POST['fuze_diameter']."'";
+			if($_POST['main_lot'] != "*") {
 
-				$detailsRes = mysqli_query($db, $detailsSql);
+				if($_POST['rejection_stage'] == "ELECTRONIC HEAD" && $_POST['fuze_type'] == "PROX")
+				{
+					$detailsSql = "SELECT `lot_table`.`rejection_remark`,`lot_table`.`pcb_no`,`after_pu`.`bpf_ac`,`after_pu`.`bpf_noise_ac` FROM `lot_table` JOIN `after_pu` ON `lot_table`.`pcb_no`=`after_pu`.`pcb_no` WHERE `lot_table`.`fuze_type` = 'PROX' AND `lot_table`.`rejection_stage` = 'ELECTRONIC HEAD' AND `lot_table`.`fuze_diameter` = '".$_POST['fuze_diameter']."' AND `main_lot` = '".$_POST['main_lot']."'";
 
-				$htmlTable = "";
-				while ($row = mysqli_fetch_assoc($detailsRes)) {
-					$htmlTable.="<tr>";
-					$htmlTable.="<td>".$row['pcb_no']."</td>";
-					$htmlTable.="<td>".$row['bpf_ac']."</td>";
-					$htmlTable.="<td>".$row['bpf_noise_ac']."</td>";
-					$htmlTable.="<td>".$row['rejection_remark']."</td>";
-					$htmlTable.="</tr>";
+					$detailsRes = mysqli_query($db, $detailsSql);
+
+					$htmlTable = "";
+					while ($row = mysqli_fetch_assoc($detailsRes)) {
+						$htmlTable.="<tr>";
+						$htmlTable.="<td>".$row['pcb_no']."</td>";
+						$htmlTable.="<td>".$row['bpf_ac']."</td>";
+						$htmlTable.="<td>".$row['bpf_noise_ac']."</td>";
+						$htmlTable.="<td>".$row['rejection_remark']."</td>";
+						$htmlTable.="</tr>";
+					}
+					die($htmlTable);
 				}
-				die($htmlTable);
+				else 
+				{
+					$detailsSql = "SELECT `pcb_no`,`rejection_remark` FROM `lot_table` WHERE 
+						`rejection_stage`='".$_POST['rejection_stage']."' AND 
+						`fuze_type`='".$_POST['fuze_type']."' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`main_lot` = '".$_POST['main_lot']."'
+					";
+
+					$detailsRes = mysqli_query($db, $detailsSql);
+
+					$htmlTable = "";
+					while ($row = mysqli_fetch_assoc($detailsRes)) {
+						$htmlTable.="<tr>";
+						$htmlTable.="<td>".$row['pcb_no']."</td>";
+						$htmlTable.="<td>".$row['rejection_remark']."</td>";
+						$htmlTable.="</tr>";
+					}
+					die($htmlTable);
+				}
 			}
-			else 
-			{
-				$detailsSql = "SELECT `pcb_no`,`rejection_remark` FROM `lot_table` WHERE 
-					`rejection_stage`='".$_POST['rejection_stage']."' AND 
-					`fuze_type`='".$_POST['fuze_type']."' AND 
-					`fuze_diameter` = '".$_POST['fuze_diameter']."';
-				";
+			else {
+				if($_POST['rejection_stage'] == "ELECTRONIC HEAD" && $_POST['fuze_type'] == "PROX")
+				{
+					$detailsSql = "SELECT `lot_table`.`rejection_remark`,`lot_table`.`pcb_no`,`after_pu`.`bpf_ac`,`after_pu`.`bpf_noise_ac` FROM `lot_table` JOIN `after_pu` ON `lot_table`.`pcb_no`=`after_pu`.`pcb_no` WHERE `lot_table`.`fuze_type` = 'PROX' AND `lot_table`.`rejection_stage` = 'ELECTRONIC HEAD' AND `lot_table`.`fuze_diameter` = '".$_POST['fuze_diameter']."'";
 
-				$detailsRes = mysqli_query($db, $detailsSql);
+					$detailsRes = mysqli_query($db, $detailsSql);
 
-				$htmlTable = "";
-				while ($row = mysqli_fetch_assoc($detailsRes)) {
-					$htmlTable.="<tr>";
-					$htmlTable.="<td>".$row['pcb_no']."</td>";
-					$htmlTable.="<td>".$row['rejection_remark']."</td>";
-					$htmlTable.="</tr>";
+					$htmlTable = "";
+					while ($row = mysqli_fetch_assoc($detailsRes)) {
+						$htmlTable.="<tr>";
+						$htmlTable.="<td>".$row['pcb_no']."</td>";
+						$htmlTable.="<td>".$row['bpf_ac']."</td>";
+						$htmlTable.="<td>".$row['bpf_noise_ac']."</td>";
+						$htmlTable.="<td>".$row['rejection_remark']."</td>";
+						$htmlTable.="</tr>";
+					}
+					die($htmlTable);
 				}
-				die($htmlTable);
-		}
+				else 
+				{
+					$detailsSql = "SELECT `pcb_no`,`rejection_remark` FROM `lot_table` WHERE 
+						`rejection_stage`='".$_POST['rejection_stage']."' AND 
+						`fuze_type`='".$_POST['fuze_type']."' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."';
+					";
+
+					$detailsRes = mysqli_query($db, $detailsSql);
+
+					$htmlTable = "";
+					while ($row = mysqli_fetch_assoc($detailsRes)) {
+						$htmlTable.="<tr>";
+						$htmlTable.="<td>".$row['pcb_no']."</td>";
+						$htmlTable.="<td>".$row['rejection_remark']."</td>";
+						$htmlTable.="</tr>";
+					}
+					die($htmlTable);
+				}
+			}
 		}
 	}
 	else {
@@ -717,7 +759,8 @@
 					select: 'rejection_details',
 					fuze_type: $('#analytics_fuze_type :selected').val(),
 					fuze_diameter: $('#analytics_fuze_diameter :selected').val(),
-					rejection_stage: e.dataPoint.label
+					rejection_stage: e.dataPoint.label,
+					main_lot: $('#analytics_main_lot').val()
 				},
 				success: function(msg) {
 					console.log(msg);
