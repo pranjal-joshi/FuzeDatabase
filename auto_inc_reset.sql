@@ -1,4 +1,24 @@
-SELECT 'Starting Fuze-Database table maintainance engine.. Altering AUTO_INCREMENT..' as '';
+SELECT 'Starting Fuze-Database table maintainance engine.. ' as '';
+SELECT 'Defragmenting all tables.. Please wait..' as '';
+ALTER TABLE `after_pu` ENGINE = INNODB;
+ALTER TABLE `calibration_table` ENGINE = INNODB;
+ALTER TABLE `lot_table` ENGINE = INNODB;
+ALTER TABLE `pcb_testing` ENGINE = INNODB;
+ALTER TABLE `housing_table` ENGINE = INNODB;
+ALTER TABLE `potting_table` ENGINE = INNODB;
+ALTER TABLE `qa_table` ENGINE = INNODB;
+
+SELECT 'Starting InnoDB table compression..' as '';
+SET GLOBAL innodb_file_per_table=1;
+SET GLOBAL innodb_file_format=Barracuda;
+ALTER TABLE `after_pu` ROW_FORMAT=compressed;
+ALTER TABLE `calibration_table` ROW_FORMAT=compressed;
+ALTER TABLE `lot_table` ROW_FORMAT=compressed;
+ALTER TABLE `pcb_testing` ROW_FORMAT=compressed;
+ALTER TABLE `housing_table` ROW_FORMAT=compressed;
+ALTER TABLE `qa_table` ROW_FORMAT=compressed;
+
+SELECT 'Altering tables to normalize AUTO_INCREMENT..' as '';
 
 SELECT 'Processing `after_pu` table..' as '';
 ALTER TABLE `after_pu` DROP `_id`;
