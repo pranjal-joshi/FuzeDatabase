@@ -11,46 +11,99 @@
 
 			if($_POST['fuze_type'] == "PROX") {
 
-				$qaRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='Q/A' AND 
-					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
-					`fuze_type` = '".$_POST['fuze_type']."'";
-				$qaRejectionGraphResult = mysqli_query($db, $qaRejectionGraphQuery);
+				if($_POST['main_lot'] != "*") {
 
-				$pcbRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='PCB' AND 
-					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
-					`fuze_type` = '".$_POST['fuze_type']."'";
-				$pcbRejectionGraphResult = mysqli_query($db, $pcbRejectionGraphQuery);
+					$qaRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='Q/A' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`fuze_type` = '".$_POST['fuze_type']."' AND `main_lot` = '".$_POST['main_lot']."'";
+					$qaRejectionGraphResult = mysqli_query($db, $qaRejectionGraphQuery);
 
-				$housingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='HOUSING' AND 
-					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
-					`fuze_type` = '".$_POST['fuze_type']."'";
-				$housingRejectionGraphResult = mysqli_query($db, $housingRejectionGraphQuery);
+					$pcbRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='PCB' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`fuze_type` = '".$_POST['fuze_type']."' AND `main_lot` = '".$_POST['main_lot']."'";
+					$pcbRejectionGraphResult = mysqli_query($db, $pcbRejectionGraphQuery);
 
-				$pottingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='POTTING' AND 
-					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
-					`fuze_type` = '".$_POST['fuze_type']."'";
-				$pottingRejectionGraphResult = mysqli_query($db, $pottingRejectionGraphQuery);
+					$housingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='HOUSING' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`fuze_type` = '".$_POST['fuze_type']."' AND `main_lot` = '".$_POST['main_lot']."'";
+					$housingRejectionGraphResult = mysqli_query($db, $housingRejectionGraphQuery);
 
-				$puPottingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='PU POTTING' AND 
-					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
-					`fuze_type` = '".$_POST['fuze_type']."'";
-				$puPottingRejectionGraphResult = mysqli_query($db, $puPottingRejectionGraphQuery);
+					$pottingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='POTTING' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`fuze_type` = '".$_POST['fuze_type']."' AND `main_lot` = '".$_POST['main_lot']."'";
+					$pottingRejectionGraphResult = mysqli_query($db, $pottingRejectionGraphQuery);
 
-				$headRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='ELECTRONIC HEAD' AND 
-					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
-					`fuze_type` = '".$_POST['fuze_type']."'";
-				$headRejectionGraphResult = mysqli_query($db, $headRejectionGraphQuery);
+					$puPottingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='PU POTTING' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`fuze_type` = '".$_POST['fuze_type']."' AND `main_lot` = '".$_POST['main_lot']."'";
+					$puPottingRejectionGraphResult = mysqli_query($db, $puPottingRejectionGraphQuery);
 
-				$rejectionData = array(
-					array("label"=>"Q/A","symbol"=>"Q/A","y"=>mysqli_num_rows($qaRejectionGraphResult)),
-					array("label"=>"PCB","symbol"=>"PCB","y"=>mysqli_num_rows($pcbRejectionGraphResult)),
-					array("label"=>"HOUSING","symbol"=>"HOUSING","y"=>mysqli_num_rows($housingRejectionGraphResult)),
-					array("label"=>"POTTING","symbol"=>"POTTING","y"=>mysqli_num_rows($pottingRejectionGraphResult)),
-					array("label"=>"PU POTTING","symbol"=>"PU POTTING","y"=>mysqli_num_rows($puPottingRejectionGraphResult)),
-					array("label"=>"ELECTRONIC HEAD","symbol"=>"ELECTRONIC HEAD","y"=>mysqli_num_rows($headRejectionGraphResult))
-				);
+					$headRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='ELECTRONIC HEAD' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`fuze_type` = '".$_POST['fuze_type']."' AND `main_lot` = '".$_POST['main_lot']."'";
+					$headRejectionGraphResult = mysqli_query($db, $headRejectionGraphQuery);
 
-				die(json_encode($rejectionData, JSON_NUMERIC_CHECK));
+					try {
+						$rejectionData = array(
+						array("label"=>"Q/A","symbol"=>"Q/A","y"=>mysqli_num_rows($qaRejectionGraphResult)),
+						array("label"=>"PCB","symbol"=>"PCB","y"=>mysqli_num_rows($pcbRejectionGraphResult)),
+						array("label"=>"HOUSING","symbol"=>"HOUSING","y"=>mysqli_num_rows($housingRejectionGraphResult)),
+						array("label"=>"POTTING","symbol"=>"POTTING","y"=>mysqli_num_rows($pottingRejectionGraphResult)),
+						array("label"=>"PU POTTING","symbol"=>"PU POTTING","y"=>mysqli_num_rows($puPottingRejectionGraphResult)),
+						array("label"=>"ELECTRONIC HEAD","symbol"=>"ELECTRONIC HEAD","y"=>mysqli_num_rows($headRejectionGraphResult))
+						);
+						die(json_encode($rejectionData, JSON_NUMERIC_CHECK));
+					}
+					catch(Exception $e){
+						die($e);
+					}
+				}
+				else {
+					$qaRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='Q/A' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`fuze_type` = '".$_POST['fuze_type']."'";
+					$qaRejectionGraphResult = mysqli_query($db, $qaRejectionGraphQuery);
+
+					$pcbRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='PCB' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`fuze_type` = '".$_POST['fuze_type']."'";
+					$pcbRejectionGraphResult = mysqli_query($db, $pcbRejectionGraphQuery);
+
+					$housingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='HOUSING' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`fuze_type` = '".$_POST['fuze_type']."'";
+					$housingRejectionGraphResult = mysqli_query($db, $housingRejectionGraphQuery);
+
+					$pottingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='POTTING' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`fuze_type` = '".$_POST['fuze_type']."'";
+					$pottingRejectionGraphResult = mysqli_query($db, $pottingRejectionGraphQuery);
+
+					$puPottingRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='PU POTTING' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`fuze_type` = '".$_POST['fuze_type']."'";
+					$puPottingRejectionGraphResult = mysqli_query($db, $puPottingRejectionGraphQuery);
+
+					$headRejectionGraphQuery = "SELECT `_id` from `lot_table` WHERE `rejected`='1' AND `rejection_stage`='ELECTRONIC HEAD' AND 
+						`fuze_diameter` = '".$_POST['fuze_diameter']."' AND
+						`fuze_type` = '".$_POST['fuze_type']."'";
+					$headRejectionGraphResult = mysqli_query($db, $headRejectionGraphQuery);
+
+					try {
+						$rejectionData = array(
+						array("label"=>"Q/A","symbol"=>"Q/A","y"=>mysqli_num_rows($qaRejectionGraphResult)),
+						array("label"=>"PCB","symbol"=>"PCB","y"=>mysqli_num_rows($pcbRejectionGraphResult)),
+						array("label"=>"HOUSING","symbol"=>"HOUSING","y"=>mysqli_num_rows($housingRejectionGraphResult)),
+						array("label"=>"POTTING","symbol"=>"POTTING","y"=>mysqli_num_rows($pottingRejectionGraphResult)),
+						array("label"=>"PU POTTING","symbol"=>"PU POTTING","y"=>mysqli_num_rows($puPottingRejectionGraphResult)),
+						array("label"=>"ELECTRONIC HEAD","symbol"=>"ELECTRONIC HEAD","y"=>mysqli_num_rows($headRejectionGraphResult))
+						);
+						die(json_encode($rejectionData, JSON_NUMERIC_CHECK));
+					}
+					catch(Exception $e){
+						die($e);
+					}
+				}
 		}
 
 		}
@@ -88,14 +141,14 @@
 			$totalProductionData = array();
 			$finalChartData = array();
 
-			$uniqueLotsSql = "SELECT DISTINCT(`main_lot`) FROM `lot_table` WHERE `fuze_diameter`= '".$_POST['fuze_diameter']."' ORDER BY `main_lot` ASC";
+			$uniqueLotsSql = "SELECT DISTINCT(`main_lot`) FROM `lot_table` WHERE `fuze_diameter`= '".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."' ORDER BY `main_lot` ASC";
 
 			$uniqueLotsResult = mysqli_query($db, $uniqueLotsSql);
 
 			while ($row = mysqli_fetch_assoc($uniqueLotsResult)) {
-				$rejectionSql = "SELECT `_id` FROM `lot_table` WHERE `fuze_diameter`= '".$_POST['fuze_diameter']."' AND `rejected` = '1' AND `main_lot` = '".$row['main_lot']."'";
+				$rejectionSql = "SELECT `_id` FROM `lot_table` WHERE `fuze_diameter`= '".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."' AND `rejected` = '1' AND `main_lot` = '".$row['main_lot']."'";
 
-				$productionSql = "SELECT `_id` FROM `lot_table` WHERE `fuze_diameter`= '".$_POST['fuze_diameter']."' AND `rejected` = '0' AND `main_lot` = '".$row['main_lot']."'";
+				$productionSql = "SELECT `_id` FROM `lot_table` WHERE `fuze_diameter`= '".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."' AND `rejected` = '0' AND `main_lot` = '".$row['main_lot']."'";
 
 				$rejectionResult = mysqli_query($db, $rejectionSql);
 				$productionResult = mysqli_query($db, $productionSql);
@@ -321,8 +374,8 @@
 						</div>
 
 						<div class='input-field col s2' style="display: none;" id='analytics_main_lot_div'>
-							<input type='text' id='analytics_main_lot'>
-							<label for='analytics_main_lot'>Main Lot No</label>
+							<input type='text' id='analytics_main_lot' class='tooltipped' data-position='bottom' data-delay='250' data-tooltip='Use * to select all lots'>
+							<label for='analytics_main_lot'>Main Lot No.</label>
 						</div>
 
 					</div>
@@ -365,13 +418,23 @@
 
 		$('select').material_select();
 
+		$('#analyticsCard').keypress(function (e) {
+			var key = e.which || e.keyCode;
+			if(key == 13)  // the enter key code
+			{
+				$('#analyticsShowButton').trigger('click');
+				return false;  
+			}
+		});
+
 		var chart;
 		$('#analyticsShowButton').click(function(){
 
 			if($('#analytics_select :selected').val() == "rejection") {
 
-				if($('#analytics_fuze_diameter :selected').val() == '' || $('#analytics_fuze_type :selected').val() == '') {
+				if($('#analytics_fuze_diameter :selected').val() == '' || $('#analytics_fuze_type :selected').val() == '' || $('#analytics_main_lot').val() == '') {
 					Materialize.toast("Please select the required fields!",3000,'rounded');
+					$('#analytics_main_lot').focus();
 				}
 				else {
 					$('#analytics_detail_span').fadeIn();
@@ -380,15 +443,17 @@
 						data: {
 							select: $('#analytics_select :selected').val(),
 							fuze_type: $('#analytics_fuze_type :selected').val(),
-							fuze_diameter: $('#analytics_fuze_diameter :selected').val()
+							fuze_diameter: $('#analytics_fuze_diameter :selected').val(),
+							main_lot: $('#analytics_main_lot').val()
 						},
 						success: function(msg) {
+							console.log(msg);
 							chart = new CanvasJS.Chart("chartContainer",{
 									theme: 'light2',
 									exportEnabled: true,
 									animationEnabled: 'true',
 									title: {
-										text: 'Rejection Analysis for ' + $('#analytics_fuze_diameter :selected').val() + ' mm ' + $('#analytics_fuze_type :selected').val() + ' Fuze'
+										text: 'Rejection Analysis for ' + $('#analytics_fuze_diameter :selected').val() + ' mm ' + $('#analytics_fuze_type :selected').val() + ' Fuze - LOT ' + ($('#analytics_main_lot').val() == "*"? "ALL" : $('#analytics_main_lot').val())
 									},
 									data: [{
 										type: 'doughnut',
@@ -406,7 +471,7 @@
 									}]
 							});
 							$('#chartContainer').fadeIn();
-							chart.render();
+							renderChart(chart, "No Data Available");
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
 							 alert(errorThrown + 'Database server offline?');
@@ -476,14 +541,12 @@
 						success: function(msg) {
 							var productionData = JSON.parse(msg)[0];
 							var rejectionData = JSON.parse(msg)[1];
-							console.log(productionData);
-							console.log(rejectionData);
 							var chart = new CanvasJS.Chart("chartContainer", {
 								animationEnabled: true,
 								exportEnabled: true,
 								theme: "light2",
 								title: {
-									text: "Rejection against Prodution - " + $('#analytics_fuze_diameter :selected').val() + "mm"
+									text: "Rejection against Prodution - " + $('#analytics_fuze_diameter :selected').val() + "mm " + $('#analytics_fuze_type :selected').val() + " Fuze"
 								},
 								axisX: {
 									title: "Lots",
@@ -526,7 +589,7 @@
 								]
 							});
 							$('#chartContainer').fadeIn();
-							chart.render();
+							renderChart(chart, "No Data Available");
 							$('#chartContainer').css({"margin-bottom":"100px"});
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -670,6 +733,26 @@
 				}
 			});
 		}
+
+		function renderChart(chart, errorText){
+			var dataPoints = chart.options.data[0].dataPoints;
+			var isEmpty = !(dataPoints && dataPoints.length > 0);
+		 
+			if(!isEmpty){
+				for(var i = 0; i < dataPoints.length; i++){
+					isEmpty = !dataPoints[i].y;
+					if(!isEmpty)
+						break;
+				}
+		 	}
+		
+			if(isEmpty) {
+				document.getElementById('chartContainer').innerHTML = "<br><center><span class='red-text text-darken-1 center' style='font-weight: bold; font-size:18px;'>" + errorText + "</span><center>";
+			}
+		 	else {
+				chart.render();
+			}
+	 	}
 
 	</script>
 
