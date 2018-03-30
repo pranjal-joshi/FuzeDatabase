@@ -168,13 +168,20 @@
 									</div>
 
 								<div class="input-field col s5">
-									<input type="text" name="search_box" id="search_box" autofocus>
+									<input type="text" name="search_box" id="search_box" autofocus class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='For partial search, use wildcard (%__%) like %234%'>
 									<label for="search_box">What to search?</label>
 								</div>
 
 								<br>
 								<a class="btn col s2" href="#" id="searchButton" name="searchButton">SEARCH</a>
 
+							</div>
+
+							<div id="searchPreloader" style="display: none;">
+								<div class="col s4"></div>
+								<div class="progress col s4">
+										<div class="indeterminate"></div>
+								</div>
 							</div>
 
 							<div class="row" id="searchDynamicTable">
@@ -938,12 +945,20 @@
 							});
 
 							$('#searchButton').click(function(){
+								document.getElementById('searchDynamicTable').innerHTML = "";
+								$('#searchPreloader').fadeIn();
 								var text = $('#search_box').val();
 								var select = $('#searchSelect :selected').val();
 								var tableSelect = $('#searchTableSelect :selected').val();
 								if(text === ""){
 									Materialize.toast("Search box can't be kept blank",2500,'rounded');
 									$('#search_box').focus();
+									return false;
+								}
+								else if(text === "%" || text.includes("%%")) {
+									Materialize.toast("Wildcard search is not allowed here!",2500,'rounded');
+									$('#search_box').focus();
+									$('#searchPreloader').fadeOut();
 									return false;
 								}
 								$.ajax({
@@ -955,6 +970,7 @@
 										tableSelect: tableSelect
 									},
 									success: function(msg) {
+										$('#searchPreloader').fadeOut();
 										document.getElementById('searchDynamicTable').innerHTML = msg;
 									},
 									error: function(XMLHttpRequest, textStatus, errorThrown) {
