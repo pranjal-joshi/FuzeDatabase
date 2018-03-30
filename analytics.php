@@ -479,6 +479,7 @@
 					$('#analytics_main_lot').focus();
 				}
 				else {
+					$('#analytics_detail_span').html('Click on the pie-chart for more details');
 					$('#analytics_detail_span').fadeIn();
 					$.ajax({
 						type: 'POST',
@@ -573,6 +574,8 @@
 					Materialize.toast("Please select the required fields!",3000,'rounded');
 				}
 				else {
+					$('#analytics_detail_span').html('Hover mouse on the graph for more details');
+					$('#analytics_detail_span').fadeIn();
 					$.ajax({
 						type: 'POST',
 						data: {
