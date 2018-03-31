@@ -114,6 +114,7 @@
 						<th>PD-DET Amp</th>
 						<th>SAFE</th>
 						<th>RESULT</th>
+						<th>DATE</th>
 					</tr>
 				</thead>
 
@@ -152,7 +153,7 @@
 				$sqlAutoIncReset = "ALTER TABLE `pcb_testing` DROP `_id`;";
 				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
 
-				$sqlAdd = "REPLACE INTO `pcb_testing` (`pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`, `op_name`) VALUES ";
+				$sqlAdd = "REPLACE INTO `pcb_testing` (`pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`, `op_name`, `record_date`) VALUES ";
 
 				foreach ($Reader as $Row)
 				{
@@ -184,6 +185,8 @@
 						$det_pd = isset($Row[21]) ? $Row[21] : '';
 						$safe = isset($Row[22]) ? $Row[22] : '';
 						$result = isset($Row[23]) ? $Row[23] : '';
+						// index 24 contains bpf ac noise which is required only for after_pu stage
+						$record_date = isset($Row[25]) ? $Row[25] : '';
 
 						$html.="<td>".($cnt-4)."</td>";
 						$html.="<td>".$pcb_no."</td>";
@@ -210,6 +213,7 @@
 						$html.="<td>".$det_pd."</td>";
 						$html.="<td>".$safe."</td>";
 						$html.="<td>".$result."</td>";
+						$html.="<td>".$record_date."</td>";
 						$html.="</tr>";
 
 						$sqlAdd.= "(
@@ -236,7 +240,7 @@
 							'".$delay."', 
 							'".$det_pd."', 
 							'".$safe."', 
-							'".$result."',''),";	// keep op_name blank for ATE),";
+							'".$result."', '', '".$record_date."'),";	// keep op_name blank for ATE),";
 					}
 				 }
 
