@@ -849,6 +849,14 @@
 
 								<table>
 									<tbody>
+										<tr>
+											<td class='center'><span class='center'>Record Date <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='date' id='pcbTestingManualRecordDate' class="datepicker" required>
+												</div>
+											</td>
 											<td class='center'><span class='center'>Operator Name <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
@@ -1030,6 +1038,7 @@
 						return false;  
 					}
 				});
+				$('#qaDatePicker').val(getTodaysDate());
 				break;
 			case '2':
 				$('#pcbTestingCard').fadeIn();
@@ -1052,6 +1061,7 @@
 						return false;  
 					}
 				});
+				$('#datePicker').val(getTodaysDate());
 				break;
 			case '4':
 				$('#afterPUCard').fadeIn();
@@ -1074,6 +1084,7 @@
 				});
 				break;
 			case '8':
+				$('#pcbTestingManualRecordDate').val(getTodaysDate());
 				$('#pcbTestingManualCard').fadeIn();
 				$('#pcbTestingManualPcbNo').focus();
 				$('input[type="text"]').each(function(){
@@ -1310,6 +1321,7 @@
 				});
 				break;
 			case '10':
+				$('#pcbTestingManualRecordDate').val(getTodaysDate());
 				$('#manualTestingClone').clone().appendTo("#HousingTestingManualCard");
 				$('#HousingTestingManualCard').fadeIn();
 				document.getElementById('pcbTestingManualTitle').innerHTML = "Housing Testing - Manual";
@@ -1548,6 +1560,7 @@
 				});
 				break;
 			case '12':
+				$('#pcbTestingManualRecordDate').val(getTodaysDate());
 				$('#manualTestingClone').clone().appendTo("#PottingTestingManualCard");
 				$('#PottingTestingManualCard').fadeIn();
 				document.getElementById('pcbTestingManualTitle').innerHTML = "Potted Housing Testing - Manual";
@@ -2126,24 +2139,39 @@
 					if($(this).val() == "") {
 						isEmpty = true;
 					}
-					manualTestingData.push($(this).val());
+					if($(this).attr('id') != "pcbTestingManualRecordDate") {	// field name remains same - DOM manipulted
+						manualTestingData.push($(this).val());
+					}
 				});
+				if($('#pcbTestingManualRecordDate').val() == "") {
+					isEmpty = true;
+				}
 			}
 			else if($.cookie('fuzeStart') == "10") {
 				$('#HousingTestingManualCard input[type="text"]').each(function(){
 					if($(this).val() == "") {
 						isEmpty = true;
 					}
-					manualTestingData.push($(this).val());
+					if($(this).attr('id') != "pcbTestingManualRecordDate") {		// field name remains same - DOM manipulted
+						manualTestingData.push($(this).val());
+					}
 				});
+				if($('#pcbTestingManualRecordDate').val() == "") {
+					isEmpty = true;
+				}
 			}
 			else if($.cookie('fuzeStart') == "12") {
 				$('#PottingTestingManualCard input[type="text"]').each(function(){
 					if($(this).val() == "") {
 						isEmpty = true;
 					}
-					manualTestingData.push($(this).val());
+					if($(this).attr('id') != "pcbTestingManualRecordDate") {		// field name remains same - DOM manipulted
+						manualTestingData.push($(this).val());
+					}
 				});
+				if($('#pcbTestingManualRecordDate').val() == "") {
+					isEmpty = true;
+				}
 			}
 			
 			if(isEmpty) { /////////////////////////// CHANGE ! LATER - DONE ////////////////////////////////////////
@@ -2166,7 +2194,8 @@
 					url: phpUrl,
 					type: 'POST',
 					data: {
-						jsonData: JSON.stringify(manualTestingData)
+						jsonData: JSON.stringify(manualTestingData),
+						record_date: $('#pcbTestingManualRecordDate').val()
 					},
 					success: function(msg) {
 						console.log(manualTestingData);
@@ -2213,6 +2242,13 @@
 					} else break;
 			}
 			return n;
+		}
+
+		function getTodaysDate() {
+			var date = new Date();
+			locale = "en-us";
+			dateString = date.getDate().toString() + " " + date.toLocaleString(locale, { month: "long" }) + ", " + date.getFullYear();
+			return dateString;
 		}
 	</script>
 
