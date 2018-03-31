@@ -110,7 +110,7 @@
 		elseif($_POST['select'] == "production") {
 
 			$table_name = "";
-			$column_name = "";
+			$column_name = "record_date";
 			$sql = "";
 
 			if($_POST['process'] == "calibration" && $_POST['fuze_type'] == "PROX") {
@@ -119,7 +119,15 @@
 			}
 			elseif ($_POST['process'] == "Q/A") {
 				$table_name = "qa_table";
-				$column_name = "record_date";
+			}
+			elseif ($_POST['process'] == "pcb Testing") {
+				$table_name = "pcb_testing";
+			}
+			elseif ($_POST['process'] == "housing Testing") {
+				$table_name = "housing_table";
+			}
+			elseif ($_POST['process'] == "potted Housing Testing") {
+				$table_name = "potting_table";
 			}
 
 			$productionData = array();
@@ -428,6 +436,9 @@
 								<option value="" selected disabled>--Select--</option>
 								<option value="Q/A">Q/A</option>
 								<option value="calibration">Calibration</option>
+								<option value="pcb Testing">PCB Testing</option>
+								<option value="housing Testing">Housing Testing</option>
+								<option value="potted Housing Testing">Potted Housing Testing</option>
 							</select>
 							<label>Process</label>
 						</div>
