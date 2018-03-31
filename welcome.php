@@ -2218,7 +2218,7 @@
 
 		$('#pcbTestingManualClearButton').click(function(){
 			$('input[type="text"]').each(function(){
-				if($(this).attr('id') != "pcbTestingManualOperatorName") {
+				if($(this).attr('id') != "pcbTestingManualOperatorName" || $(this).attr('id') != "pcbTestingManualRecordDate") {
 					$(this).val('');
 				}
 			});
