@@ -35,6 +35,7 @@ REM ECHO hash>> ftpcmd.dat
 ECHO put E:\FuzeDatabase_backups\fuze_database.%TIMESTAMP%.zip>> ftpcmd.dat
 ECHO quit>> ftpcmd.dat
 ftp -n -s:ftpcmd.dat 192.168.100.225
+ftp -n -s:ftpcmd.dat 192.168.100.146
 REM Change this IP to intranet FTP Server later.. It should be on diffrent machine than the webserver!
 DEL ftpcmd.dat
 
