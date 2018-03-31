@@ -115,6 +115,7 @@
 						<th>PD-DET Amp</th>
 						<th>SAFE</th>
 						<th>RESULT</th>
+						<th>DATE</th>
 					</tr>
 				</thead>
 
@@ -123,7 +124,7 @@
 
 
 			/* For Loop for all sheets */
-			$sql = "CREATE TABLE IF NOT EXISTS`fuze_database`.`after_pu` ( `_id` INT NOT NULL AUTO_INCREMENT , `pcb_no` TEXT NULL DEFAULT NULL , `i` FLOAT NOT NULL , `vee` FLOAT NOT NULL , `vbat_pst` FLOAT NOT NULL , `pst_amp` FLOAT NOT NULL , `pst_wid` FLOAT NOT NULL , `mod_freq` FLOAT NOT NULL , `mod_dc` FLOAT NOT NULL , `mod_ac` FLOAT NOT NULL , `cap_charge` FLOAT NOT NULL , `vrf_amp` FLOAT NOT NULL , `vbat_vrf` FLOAT NOT NULL , `vbat_sil` FLOAT NOT NULL , `det_wid` FLOAT NOT NULL , `det_amp` FLOAT NOT NULL , `cycles` INT NOT NULL , `bpf_dc` FLOAT NOT NULL , `bpf_ac` FLOAT NOT NULL , `bpf_noise_ac` FLOAT NOT NULL , `sil` FLOAT NOT NULL , `lvp` FLOAT NOT NULL , `pd_delay` FLOAT NOT NULL , `pd_det` FLOAT NOT NULL , `safe` VARCHAR(4) NOT NULL , `result` VARCHAR(4) NOT NULL , `op_name` TEXT NOT NULL , PRIMARY KEY (`_id`)) ENGINE = InnoDB";
+			$sql = "CREATE TABLE IF NOT EXISTS`fuze_database`.`after_pu` ( `_id` INT NOT NULL AUTO_INCREMENT , `pcb_no` TEXT NULL DEFAULT NULL , `i` FLOAT NOT NULL , `vee` FLOAT NOT NULL , `vbat_pst` FLOAT NOT NULL , `pst_amp` FLOAT NOT NULL , `pst_wid` FLOAT NOT NULL , `mod_freq` FLOAT NOT NULL , `mod_dc` FLOAT NOT NULL , `mod_ac` FLOAT NOT NULL , `cap_charge` FLOAT NOT NULL , `vrf_amp` FLOAT NOT NULL , `vbat_vrf` FLOAT NOT NULL , `vbat_sil` FLOAT NOT NULL , `det_wid` FLOAT NOT NULL , `det_amp` FLOAT NOT NULL , `cycles` INT NOT NULL , `bpf_dc` FLOAT NOT NULL , `bpf_ac` FLOAT NOT NULL , `bpf_noise_ac` FLOAT NOT NULL , `sil` FLOAT NOT NULL , `lvp` FLOAT NOT NULL , `pd_delay` FLOAT NOT NULL , `pd_det` FLOAT NOT NULL , `safe` VARCHAR(4) NOT NULL , `result` VARCHAR(4) NOT NULL , `record_date` TEXT NOT NULL , `op_name` TEXT NOT NULL , PRIMARY KEY (`_id`)) ENGINE = InnoDB";
 
 
 			$sqlResult = mysqli_query($db,$sql);
@@ -153,7 +154,7 @@
 				$sqlAutoIncReset = "ALTER TABLE `after_pu` DROP `_id`;";
 				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
 
-				$sqlAdd = "REPLACE INTO `after_pu` (`pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`, `op_name`, `bpf_noise_ac`) VALUES ";
+				$sqlAdd = "REPLACE INTO `after_pu` (`pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`, `op_name`, `bpf_noise_ac`, `record_date`) VALUES ";
 
 				foreach ($Reader as $Row)
 				{
@@ -186,6 +187,7 @@
 						$safe = isset($Row[22]) ? $Row[22] : '';
 						$result = isset($Row[23]) ? $Row[23] : '';
 						$bpf_noise_ac = isset($Row[24]) ? $Row[24] : 0;
+						$record_date = isset($Row[25]) ? $Row[25] : 0;
 
 						$html.="<td>".($cnt-4)."</td>";
 						$html.="<td>".$pcb_no."</td>";
@@ -213,6 +215,7 @@
 						$html.="<td>".$det_pd."</td>";
 						$html.="<td>".$safe."</td>";
 						$html.="<td>".$result."</td>";
+						$html.="<td>".$record_date."</td>";
 						$html.="</tr>";
 
 						$sqlAdd.= "(
@@ -239,7 +242,7 @@
 							'".$delay."', 
 							'".$det_pd."', 
 							'".$safe."', 
-							'".$result."','',".$bpf_noise_ac."),";	// keep op_name blank for ATE
+							'".$result."','',".$bpf_noise_ac.", '".$record_date."'),";	// keep op_name blank for ATE
 					}
 				 }
 
