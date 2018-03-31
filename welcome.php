@@ -853,8 +853,8 @@
 											<td class='center'><span class='center'>Record Date <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='date' id='pcbTestingManualRecordDate' class="datepicker" required>
+												<div class='input-field col s12 center' id="manualTestingDataDatePicker">
+													<input type='text' id='pcbTestingManualRecordDate' class="datepicker">
 												</div>
 											</td>
 											<td class='center'><span class='center'>Operator Name <span></td>
@@ -996,15 +996,6 @@
 					} 
 				}
 			);
-
-		$('.datepicker').pickadate({
-			selectMonths: true, // Creates a dropdown to control month
-			selectYears: 15, // Creates a dropdown of 15 years to control year,
-			today: 'Today',
-			clear: 'Clear',
-			close: 'Ok',
-			closeOnSelect: false // Close upon selecting a date,
-		});
 
 		switch($.cookie('fuzeDia')){
 			case '105':
@@ -1321,8 +1312,8 @@
 				});
 				break;
 			case '10':
-				$('#pcbTestingManualRecordDate').val(getTodaysDate());
 				$('#manualTestingClone').clone().appendTo("#HousingTestingManualCard");
+				$('#pcbTestingManualRecordDate').val(getTodaysDate());
 				$('#HousingTestingManualCard').fadeIn();
 				document.getElementById('pcbTestingManualTitle').innerHTML = "Housing Testing - Manual";
 				$('#pcbTestingManualPcbNo').focus();
@@ -1560,8 +1551,8 @@
 				});
 				break;
 			case '12':
-				$('#pcbTestingManualRecordDate').val(getTodaysDate());
 				$('#manualTestingClone').clone().appendTo("#PottingTestingManualCard");
+				$('#pcbTestingManualRecordDate').val(getTodaysDate());
 				$('#PottingTestingManualCard').fadeIn();
 				document.getElementById('pcbTestingManualTitle').innerHTML = "Potted Housing Testing - Manual";
 				$('#pcbTestingManualPcbNo').focus();
@@ -2250,6 +2241,16 @@
 			dateString = date.getDate().toString() + " " + date.toLocaleString(locale, { month: "long" }) + ", " + date.getFullYear();
 			return dateString;
 		}
+
+		$('.datepicker').pickadate({
+			selectMonths: true, // Creates a dropdown to control month
+			selectYears: 15, // Creates a dropdown of 15 years to control year,
+			today: 'Today',
+			clear: 'Clear',
+			close: 'Ok',
+			closeOnSelect: false // Close upon selecting a date,
+		});
+		
 	</script>
 
 </html>
