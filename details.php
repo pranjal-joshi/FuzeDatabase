@@ -567,6 +567,10 @@
 																$('#dialog').css('white-space','pre-wrap');
 																$('#dialog').html(data);
 																$('#dialog').dialog('open');
+																$('.ui-widget-overlay').bind('click', function(){
+																	$('#dialog').unbind();
+																	$('#dialog').dialog('close');
+																});
 															}
 														});
 													}
