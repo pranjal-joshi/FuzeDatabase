@@ -82,6 +82,9 @@
 			$tableVar = "";
 
 			if($results) {
+				if(mysqli_num_rows($results) == 0) {
+					die("<tr><td colspan='2' style='color: red; font-weight:bold;'>No Data Available</td></tr>");
+				}
 				while ($row = mysqli_fetch_assoc($results)) {
 					$tableVar.= "<tr>";
 					$tableVar.= "<td>".$row['rejection_remark']."</td>";
