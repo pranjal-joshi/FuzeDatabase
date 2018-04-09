@@ -75,21 +75,32 @@
 		}
 
 		if($_SERVER["REQUEST_METHOD"] == "POST") {
-			$sql = "SELECT `rejection_remark`,`acception_remark` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND`fuze_diameter`='".$_POST['fuze_diameter']."' AND`rejection_remark` != '' AND `acception_remark` != ''";
+
+			print_r($_POST);
+
+			if($_POST['rejection_stage'] == 'All') {
+				$sql = "SELECT `rejection_remark`,`acception_remark` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND`fuze_diameter`='".$_POST['fuze_diameter']."' AND`rejection_remark` != '' AND `acception_remark` != ''";
+			}
+			else {
+				$sql = "SELECT `rejection_remark`,`acception_remark` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND`rejection_remark` != '' AND `acception_remark` != '' AND `rejection_stage`='".$_POST['rejection_stage']."'";
+			}
 
 			$results = mysqli_query($db,$sql);
 
 			$tableVar = "";
+			$cnt = 1;
 
 			if($results) {
 				if(mysqli_num_rows($results) == 0) {
-					die("<tr><td colspan='2' style='color: red; font-weight:bold;'>No Data Available</td></tr>");
+					die("<tr><td colspan='3' style='color: red; font-weight:bold;'>No Data Available</td></tr>");
 				}
 				while ($row = mysqli_fetch_assoc($results)) {
 					$tableVar.= "<tr>";
-					$tableVar.= "<td>".$row['rejection_remark']."</td>";
-					$tableVar.= "<td>".$row['acception_remark']."</td>";
+					$tableVar.= "<td class='left'>".strval($cnt).".</td>";
+					$tableVar.= "<td class='center'><span class='red-text text-darken-3'>".$row['rejection_remark']."</span></td>";
+					$tableVar.= "<td class='center'><span class='green-text text-darken-3'>".$row['acception_remark']."</span></td>";
 					$tableVar.= "</tr>";
+					$cnt++;
 				}
 				mysqli_close($db);
 				die($tableVar);
@@ -136,7 +147,7 @@
 			<div class="navbar-fixed">
 				<nav>
 					<div class="nav-wrapper teal lighten-2" id="solutionNav">
-						<a href="#!" class="brand-logo center" id="solutionNavTitle">Fuze Database Problem-Solutions</a>
+						<a href="#!" class="brand-logo center" id="solutionNavTitle">Fuze Database Problems & Solutions</a>
 						<a onclick="self.close();">
 							<span class='white-text text-darken-5' style="font-size: 18px; padding-left: 20px; font-weight: bold">Back</span>
 						</a>
@@ -151,7 +162,7 @@
 					<br>
 					<div class="card-panel grey lighten-4" id="solutionCard">
 						<div class="row">
-							<div class="input-field col s6" id="solution_fuze_type_div">
+							<div class="input-field col s4" id="solution_fuze_type_div">
 								<select name="solution_fuze_type" id="solution_fuze_type" onchange="onSelectChange()">
 									<option value="" disabled selected>-- select --</option>
 									<option value="EPD">EPD</option>
@@ -161,7 +172,7 @@
 								<label>Select Fuze Type</label>
 							</div>
 
-							<div class="input-field col s6" id="solution_fuze_diameter_div" onchange="onSelectChange()">
+							<div class="input-field col s4" id="solution_fuze_diameter_div" onchange="onSelectChange()">
 								<select name="solution_fuze_diameter" id="solution_fuze_diameter" required>
 									<option value="" selected disabled>--Select--</option>
 									<option value="105">105 mm</option>
@@ -169,12 +180,33 @@
 								</select>
 								<label>Fuze Diameter</label>
 							</div>
+
+							<div class="input-field col s4" onchange="onSelectChange()">
+								<select id="solution_process" required>
+									<option value="All" selected>ALL</option>
+									<option value="Q/A">Q/A</option>
+									<option value="calibration">Calibration</option>
+									<option value="pcb">PCB</option>
+									<option value="housing">Housing</option>
+									<option value="potting">Epoxy Potting</option>
+									<option value="pu potting">PU Potting</option>
+									<option value="electronic head">Electronic Head</option>
+								</select>
+								<label>Rejection Stage</label>
+							</div>
 						</div>
+
+						<center>
+							<span class="teal-text text-darken-1" style="font-size: 18px; font-weight: bold;" id="solution_title"></span>
+							<br>
+							<br>
+						</center>
 
 						<div class="row">
 							<table class="centered striped">
 								<thead>
 									<tr>
+										<th class="left">No.</th>
 										<th class="center">Problem</th>
 										<th class="center">Solution</th>
 									</tr>
@@ -196,12 +228,14 @@
 		});
 
 		function onSelectChange() {
+			$('#solution_title').html("Problems & Solutions at " + $('#solution_process :selected').val() + " stage");
 			if($('#solution_fuze_type :selected').val() != "" && $('#solution_fuze_diameter :selected').val() != "") {
 				$.ajax({
 					type: 'POST',
 					data: {
 						fuze_type: $('#solution_fuze_type :selected').val(),
-						fuze_diameter: $('#solution_fuze_diameter :selected').val()
+						fuze_diameter: $('#solution_fuze_diameter :selected').val(),
+						rejection_stage: $('#solution_process :selected').val()
 					},
 					success: function(msg) {
 						$('#solution_tbody').html(msg);
