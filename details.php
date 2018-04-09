@@ -730,7 +730,7 @@
 											";
 
 						// ### Control record modification based on login access
-						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "write") == 0)){
+						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "EFB2A684E4AFB7D55E6147FBE5A332EE") == 0)){
 							$html.= "
 												$('input[type=text]').prop('readonly','true');
 												$('#qaUpdateButton').hide();
@@ -1095,7 +1095,7 @@
 											";
 
 						// ### Control record modification based on login access
-						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "write") == 0)){
+						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "EFB2A684E4AFB7D55E6147FBE5A332EE") == 0)){
 							$html.= "
 											$('input[type=text]').prop('readonly','true');
 											$('#afterPuUpdateButton').hide();
@@ -1482,7 +1482,7 @@
 											";
 
 						// ### Control record modification based on login access
-						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "write") == 0)){
+						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "EFB2A684E4AFB7D55E6147FBE5A332EE") == 0)){
 							$html.= "
 											$('input[type=text]').prop('readonly','true');
 											$('#pcbTestingUpdateButton').hide();
@@ -1867,7 +1867,7 @@
 											";
 
 						// ### Control record modification based on login access
-						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "write") == 0)){
+						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "EFB2A684E4AFB7D55E6147FBE5A332EE") == 0)){
 							$html.= "
 											$('input[type=text]').prop('readonly','true');
 											$('#housingTableUpdateButton').hide();
@@ -2253,7 +2253,7 @@
 											";
 
 						// ### Control record modification based on login access
-						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "write") == 0)){
+						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "EFB2A684E4AFB7D55E6147FBE5A332EE") == 0)){
 							$html.= "
 											$('input[type=text]').prop('readonly','true');
 											$('#pottingTableUpdateButton').hide();
@@ -2483,7 +2483,7 @@
 										";
 
 					// ### Control record modification based on login access
-					if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "write") == 0)){
+					if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "EFB2A684E4AFB7D55E6147FBE5A332EE") == 0)){
 						$html.= "
 										$('input[type=text]').prop('readonly','true');
 										$('#calibrationUpdateButton').hide();
