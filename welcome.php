@@ -109,8 +109,20 @@
 							<li class="divider"></li>
 							<li><a href="rejection.php" target="_blank">Rejection</a></li>
 							<li class="divider"></li>
-							<li><a href="solution.php" target="_blank">Solutions</a></li>
-							<!-- ### TODO ### : WORK FROM HERE TO SHOW QUESTION/ANSWERS OF REWORK -->
+							<?php
+								//if($_COOKIE["fuzeAccess"] == "edit"){
+								if($_COOKIE["fuzeAccess"] == "DE95B43BCEEB4B998AED4AED5CEF1AE7"){
+									echo "<li><a href='solution.php' target='_blank'>Solutions</a></li>";
+								}
+								else {
+									echo "<li><a class='grey-text' id='solutionLink'>Solutions</a></li>";
+									echo "<script>
+													$('#solutionLink').click(function(){
+														alert('Sorry! You dont have access to this feature.');
+													});
+												</script>";
+								}
+							?>
 							<li class="divider"></li>
 							<?php
 								//if($_COOKIE["fuzeAccess"] == "edit"){
