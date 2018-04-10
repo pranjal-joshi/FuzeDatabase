@@ -528,7 +528,7 @@
 							renderChart(chart, "No Data Available");
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
-							 alert(errorThrown + 'Database server offline?');
+							 alert(errorThrown + 'Is web-server offline?');
 						}
 					});
 				}
@@ -575,7 +575,7 @@
 							$('#chartContainer').css({"margin-bottom":"100px"});
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
-							 alert(errorThrown + 'Database server offline?');
+							 alert(errorThrown + 'Is web-server offline?');
 						}
 					});
 				}
@@ -649,7 +649,7 @@
 							$('#chartContainer').css({"margin-bottom":"100px"});
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
-							 alert(errorThrown + 'Database server offline?');
+							 alert(errorThrown + 'Is web-server offline?');
 						}
 					});
 				}
@@ -786,7 +786,7 @@
 					}
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
-				 alert(errorThrown + 'Database server offline?');
+				 alert(errorThrown + 'Is web-server offline?');
 				}
 			});
 		}

@@ -760,7 +760,7 @@
 													}
 												},
 												error: function(XMLHttpRequest, textStatus, errorThrown) {
-													 alert(errorThrown + 'Database server offline?');
+													 alert(errorThrown + 'Is web-server offline?');
 												}
 											});
 										});
@@ -1145,7 +1145,7 @@
 													}
 												},
 												error: function(XMLHttpRequest, textStatus, errorThrown) {
-													 alert(errorThrown + 'Database server offline?');
+													 alert(errorThrown + 'Is web-server offline?');
 												}
 											});
 										});
@@ -1532,7 +1532,7 @@
 													}
 												},
 												error: function(XMLHttpRequest, textStatus, errorThrown) {
-													 alert(errorThrown + 'Database server offline?');
+													 alert(errorThrown + 'Is web-server offline?');
 												}
 											});
 										});
@@ -1917,7 +1917,7 @@
 													}
 												},
 												error: function(XMLHttpRequest, textStatus, errorThrown) {
-													 alert(errorThrown + 'Database server offline?');
+													 alert(errorThrown + 'Is web-server offline?');
 												}
 											});
 										});
@@ -2303,7 +2303,7 @@
 													}
 												},
 												error: function(XMLHttpRequest, textStatus, errorThrown) {
-													 alert(errorThrown + 'Database server offline?');
+													 alert(errorThrown + 'Is web-server offline?');
 												}
 											});
 										});
@@ -2519,7 +2519,7 @@
 													}
 												},
 												error: function(XMLHttpRequest, textStatus, errorThrown) {
-													 alert(errorThrown + 'Database server offline?');
+													 alert(errorThrown + 'Is web-server offline?');
 												}
 											});
 										});

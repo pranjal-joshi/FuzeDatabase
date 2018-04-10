@@ -1,4 +1,6 @@
 <?php
+	error_reporting(E_ERROR | E_PARSE);
+
 	include('db_config.php');
 
 	if(!isset($_COOKIE["fuzeLogin"]) || $_COOKIE["fuzeAccess"] != "DE95B43BCEEB4B998AED4AED5CEF1AE7"){
@@ -76,8 +78,6 @@
 
 		if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-			print_r($_POST);
-
 			if($_POST['rejection_stage'] == 'All') {
 				$sql = "SELECT `rejection_remark`,`acception_remark`,`pcb_no` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND`fuze_diameter`='".$_POST['fuze_diameter']."' AND`rejection_remark` != '' AND `acception_remark` != ''";
 			}
@@ -105,6 +105,9 @@
 				}
 				mysqli_close($db);
 				die($tableVar);
+			}
+			else {
+				die("<tr><td class='center' colspan='4'><p style='color: red'>Database error - Failed to retrieve results - Is database offline?</p></td></tr>");
 			}
 		}
 
@@ -243,7 +246,7 @@
 						$('#solution_tbody').html(msg);
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						alert(errorThrown + 'Database server offline?');
+						alert(errorThrown + 'Is web-server offline?');
 					}
 				});
 			}

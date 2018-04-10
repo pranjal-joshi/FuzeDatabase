@@ -997,7 +997,7 @@
 										document.getElementById('searchDynamicTable').innerHTML = msg;
 									},
 									error: function(XMLHttpRequest, textStatus, errorThrown) {
-										 alert(errorThrown + "\n\nDatabase server offline?");
+										 alert(errorThrown + "\n\nIs web-server offline?");
 									}
 								});
 							});
@@ -1915,7 +1915,7 @@
 					}
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
-					 alert(errorThrown + "\n\nDatabase server offline?");
+					 alert(errorThrown + "\n\nIs web-server offline?");
 				}
 			});
 			}
@@ -1958,7 +1958,7 @@
 						}
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						 alert(errorThrown + "\n\nDatabase server offline?");
+						 alert(errorThrown + "\n\nIs web-server offline?");
 					}
 				});
 			}
@@ -2031,7 +2031,7 @@
 						);
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						 alert(errorThrown + "\n\nDatabase server offline?");
+						 alert(errorThrown + "\n\nIs web-server offline?");
 					}
 				});
 			}
@@ -2087,7 +2087,7 @@
 						}
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						 alert(errorThrown + 'Database server offline?');
+						 alert(errorThrown + 'Is web-server offline?');
 					}
 				});
 			}
@@ -2130,7 +2130,7 @@
 						}
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						 alert(errorThrown + 'Database server offline?');
+						 alert(errorThrown + 'Is web-server offline?');
 					}
 				});
 			}
@@ -2216,7 +2216,7 @@
 						}
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						 alert(errorThrown + "\n\nDatabase server offline?");
+						 alert(errorThrown + "\n\nIs web-server offline?");
 					}
 				});
 			}
