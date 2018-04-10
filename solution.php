@@ -230,7 +230,7 @@
 		});
 
 		function onSelectChange() {
-			$('#solution_title').html("Problems & Solutions at " + $('#solution_process :selected').val() + " stage");
+			$('#solution_title').html(":: Problems & Solutions at " + $('#solution_process :selected').val() + " stage ::");
 			if($('#solution_fuze_type :selected').val() != "" && $('#solution_fuze_diameter :selected').val() != "") {
 				$.ajax({
 					type: 'POST',
