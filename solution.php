@@ -79,10 +79,10 @@
 			print_r($_POST);
 
 			if($_POST['rejection_stage'] == 'All') {
-				$sql = "SELECT `rejection_remark`,`acception_remark` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND`fuze_diameter`='".$_POST['fuze_diameter']."' AND`rejection_remark` != '' AND `acception_remark` != ''";
+				$sql = "SELECT `rejection_remark`,`acception_remark`,`pcb_no` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND`fuze_diameter`='".$_POST['fuze_diameter']."' AND`rejection_remark` != '' AND `acception_remark` != ''";
 			}
 			else {
-				$sql = "SELECT `rejection_remark`,`acception_remark` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND`rejection_remark` != '' AND `acception_remark` != '' AND `rejection_stage`='".$_POST['rejection_stage']."'";
+				$sql = "SELECT `rejection_remark`,`acception_remark`,`pcb_no` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND`rejection_remark` != '' AND `acception_remark` != '' AND `rejection_stage`='".$_POST['rejection_stage']."'";
 			}
 
 			$results = mysqli_query($db,$sql);
@@ -92,11 +92,12 @@
 
 			if($results) {
 				if(mysqli_num_rows($results) == 0) {
-					die("<tr><td colspan='3' style='color: red; font-weight:bold;'>No Data Available</td></tr>");
+					die("<tr><td colspan='4' style='color: red; font-weight:bold;'>No Data Available</td></tr>");
 				}
 				while ($row = mysqli_fetch_assoc($results)) {
 					$tableVar.= "<tr>";
 					$tableVar.= "<td class='left'>".strval($cnt).".</td>";
+					$tableVar.= "<td class='center'><span>".$row['pcb_no']."</span></td>";
 					$tableVar.= "<td class='center'><span class='red-text text-darken-3'>".$row['rejection_remark']."</span></td>";
 					$tableVar.= "<td class='center'><span class='green-text text-darken-3'>".$row['acception_remark']."</span></td>";
 					$tableVar.= "</tr>";
@@ -207,6 +208,7 @@
 								<thead>
 									<tr>
 										<th class="left">No.</th>
+										<th class="center">PCB No.</th>
 										<th class="center">Problem</th>
 										<th class="center">Solution</th>
 									</tr>
