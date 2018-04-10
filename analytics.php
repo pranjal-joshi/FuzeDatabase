@@ -662,9 +662,6 @@
 		function whatToShow(mode) {
 			$('#analytics_fuze_diameter_div').fadeIn();
 			$('#analytics_fuze_type_div').fadeIn();
-			if(mode != "total_rejection") {
-				$('#analytics_main_lot_div').fadeIn();
-			}
 			try {
 				$('#chartContainer').fadeOut();
 			}
@@ -673,8 +670,10 @@
 			if(mode == "production") {
 				$('#production_select_row').fadeIn();
 				$('#analytics_detail_span').fadeOut();
+				$('#analytics_main_lot_div').fadeOut();
 			}
 			else if(mode == "rejection"){
+				$('#analytics_main_lot_div').fadeIn();
 				$('#production_select_row').fadeOut();
 				$('#analytics_detail_span').fadeOut();
 			}

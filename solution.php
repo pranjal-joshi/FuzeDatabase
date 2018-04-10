@@ -210,7 +210,7 @@
 							<table class="centered striped">
 								<thead>
 									<tr>
-										<th class="left">No.</th>
+										<th class="left">S.N.</th>
 										<th class="center">PCB No.</th>
 										<th class="center">Problem</th>
 										<th class="center">Solution</th>
