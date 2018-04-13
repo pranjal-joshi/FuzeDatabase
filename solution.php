@@ -3,7 +3,7 @@
 
 	include('db_config.php');
 
-	if(!isset($_COOKIE["fuzeLogin"]) || $_COOKIE["fuzeAccess"] != "DE95B43BCEEB4B998AED4AED5CEF1AE7"){
+	if(!isset($_COOKIE["fuzeLogin"]) || $_COOKIE["fuzeAccess"] == "EFB2A684E4AFB7D55E6147FBE5A332EE"){
 			die("
 
 				<head>

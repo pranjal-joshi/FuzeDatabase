@@ -405,6 +405,50 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="mgrsCard" style="display: none;">
+						<div class="row">
+							
+							<center>
+								<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Welcome to Management panel</span>
+							</center>
+							<br>
+							<br>
+
+							<div class="row">
+								<div class="col s6 modal-trigger" href="#searchModal">
+									<center>
+										<img class="responsive-img" src="search.svg">
+										<br>
+										<span style="font-size: 22px">Search</span>
+									</center>
+								</div>
+								<div class="col s6" onclick="window.open('rejection.php','_blank');">
+									<center>
+										<img class="responsive-img" src="error.svg">
+										<br>
+										<span style="font-size: 22px">Rejections</span>
+									</center>
+								</div>
+								<br><br>
+								<div class="col s6" onclick="window.open('analytics.php','_blank');">
+									<center>
+										<img class="responsive-img" src="chart.svg">
+										<br>
+										<span style="font-size: 22px">Analytics</span>
+									</center>
+								</div>
+								<div class="col s6" onclick="window.open('solution.php','_blank');">
+									<center>
+										<img class="responsive-img" src="check.svg">
+										<br>
+										<span style="font-size: 22px">Problems & Solutions</span>
+									</center>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
 					<div class="card-panel grey lighten-4" id="solderingCard" style="display: none;">
 						<div class="row">
 							
@@ -1023,7 +1067,7 @@
 
 		var validationArray = new Array();
 
-		if($.cookie('fuzeType') == "PROX") {
+		if($.cookie('fuzeType') == "PROX" && $.cookie('fuzeAccess') != "37BD0D3935B47BE2AB57BCF91B57F499") {
 			switch($.cookie('fuzeStart')){
 			case '1':
 				$('select').material_select();
@@ -1805,6 +1849,9 @@
 				});
 				break;
 			}
+		}
+		else if($.cookie('fuzeAccess') == "37BD0D3935B47BE2AB57BCF91B57F499") {
+			$('#mgrsCard').fadeIn();
 		}
 
 		function validateTestEntries() {
