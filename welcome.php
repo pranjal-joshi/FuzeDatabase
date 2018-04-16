@@ -96,7 +96,7 @@
 					<div class="nav-wrapper teal lighten-2" id="loginNav">
 						<a href="#!" class="brand-logo center" id="loginNavTitle">Fuze Database</a>
 
-						<a class='dropdown-button' href='#' data-activates='dropdownMenu'>
+						<a class='dropdown-button' href='#' data-activates='dropdownMenu' data-constrainWidth="false" id="menuDropdown">
 							<span class='white-text text-darken-5' style="font-size: 20px; padding-left: 20px; font-weight: bold">&#9776; Menu</span>
 						</a>
 
@@ -104,18 +104,18 @@
 							<span class='white-text text-darken-5' style="font-size: 16px; padding-right: 20px; font-weight: bold">Logout &#128711;</span>
 						</a>
 
-						<ul id='dropdownMenu' class='dropdown-content'>
-							<li><a class="waves-effect waves-light modal-trigger" href="#searchModal">Search</a></li>
+						<ul id='dropdownMenu' class='dropdown-content' data-constrainWidth="false">
+							<li><a class="waves-effect waves-light modal-trigger" href="#searchModal"><img src="search.svg" width="20px" height="20px" style="margin-right: 3px; padding-top: 4px;"></img>Search</a></li>
 							<li class="divider"></li>
-							<li><a href="rejection.php" target="_blank">Rejection</a></li>
+							<li><a href="rejection.php" target="_blank"><img src="error.svg" width="20px" height="20px" style="margin-right: 3px; padding-top: 4px;"></img>Rejection</a></li>
 							<li class="divider"></li>
 							<?php
 								//if($_COOKIE["fuzeAccess"] == "edit"){
 								if($_COOKIE["fuzeAccess"] == "DE95B43BCEEB4B998AED4AED5CEF1AE7"){
-									echo "<li><a href='solution.php' target='_blank'>Solutions</a></li>";
+									echo "<li><a href='solution.php' target='_blank'><img src='check.svg' width='20px' height='20px' style='margin-right: 3px; padding-top: 4px;''></img>Solutions</a></li>";
 								}
 								else {
-									echo "<li><a class='grey-text' id='solutionLink'>Solutions</a></li>";
+									echo "<li><a class='grey-text' id='solutionLink'><img src='check.svg' width='20px' height='20px' style='margin-right: 3px; padding-top: 4px;''></img>Solutions</a></li>";
 									echo "<script>
 													$('#solutionLink').click(function(){
 														alert('Sorry! You dont have access to this feature.');
@@ -127,10 +127,10 @@
 							<?php
 								//if($_COOKIE["fuzeAccess"] == "edit"){
 								if($_COOKIE["fuzeAccess"] == "DE95B43BCEEB4B998AED4AED5CEF1AE7"){
-									echo "<li><a href='analytics.php' target='_blank'>Analytics</a></li>";
+									echo "<li><a href='analytics.php' target='_blank'><img src='chart.svg' width='20px' height='20px' style='margin-right: 3px; padding-top: 4px;''></img>Analytics</a></li>";
 								}
 								else {
-									echo "<li><a class='grey-text' id='analyticsLink'>Analytics</a></li>";
+									echo "<li><a class='grey-text' id='analyticsLink'><img src='chart.svg' width='20px' height='20px' style='margin-right: 3px; padding-top: 4px;''></img>Analytics</a></li>";
 									echo "<script>
 													$('#analyticsLink').click(function(){
 														alert('Sorry! You dont have access to this feature.');
@@ -429,15 +429,14 @@
 										<span style="font-size: 22px">Rejections</span>
 									</center>
 								</div>
-								<br><br>
-								<div class="col s6" onclick="window.open('analytics.php','_blank');">
+								<div class="col s6" onclick="window.open('analytics.php','_blank');" style="margin-top: 45px;">
 									<center>
 										<img class="responsive-img" src="chart.svg">
 										<br>
 										<span style="font-size: 22px">Analytics</span>
 									</center>
 								</div>
-								<div class="col s6" onclick="window.open('solution.php','_blank');">
+								<div class="col s6" onclick="window.open('solution.php','_blank');" style="margin-top: 45px;">
 									<center>
 										<img class="responsive-img" src="check.svg">
 										<br>
@@ -1852,6 +1851,7 @@
 		}
 		else if($.cookie('fuzeAccess') == "37BD0D3935B47BE2AB57BCF91B57F499") {
 			$('#mgrsCard').fadeIn();
+			$('#menuDropdown').hide();
 		}
 
 		function validateTestEntries() {
