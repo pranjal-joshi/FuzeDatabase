@@ -206,9 +206,9 @@
 							<br>
 							<br>
 							<center>
-								<a href="mgrlogin.php">Manager login</a>
+								<a href="mgrlogin.php" style="color: teal; font-size: 16px;">&#10596; Management login &#10594;</a>
 								<br><br>
-								<a href="" onclick="alert('Please contact the system administrator.\n\nPranjal P. Joshi\nFuze department.\n\npranjaljoshi@bel.co.in')">Trouble logging in?</a>
+								<a href="" style="color: #ef5350;" onclick="alert('Please contact the system administrator.\n\nPranjal P. Joshi\nFuze department.\n\npranjaljoshi@bel.co.in')">Trouble logging in?</a>
 							</center>
 
 					</div>
