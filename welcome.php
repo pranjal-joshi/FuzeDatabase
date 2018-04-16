@@ -94,14 +94,14 @@
 			<div class="navbar-fixed">
 				<nav>
 					<div class="nav-wrapper teal lighten-2" id="loginNav">
-						<a href="#!" class="brand-logo center" id="loginNavTitle">Fuze Database Home-page</a>
+						<a href="#!" class="brand-logo center" id="loginNavTitle">Fuze Database</a>
 
 						<a class='dropdown-button' href='#' data-activates='dropdownMenu'>
-							<span class='white-text text-darken-5' style="font-size: 20px; padding-left: 20px; font-weight: bold">Menu</span>
+							<span class='white-text text-darken-5' style="font-size: 20px; padding-left: 20px; font-weight: bold">&#9776; Menu</span>
 						</a>
 
 						<a class='dropdown-button right' href='#' data-activates='dropdownMenu' onclick="logout();">
-							<span class='white-text text-darken-5' style="font-size: 16px; padding-right: 20px; font-weight: bold">Logout</span>
+							<span class='white-text text-darken-5' style="font-size: 16px; padding-right: 20px; font-weight: bold">Logout &#128711;</span>
 						</a>
 
 						<ul id='dropdownMenu' class='dropdown-content'>
