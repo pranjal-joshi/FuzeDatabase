@@ -1,0 +1,211 @@
++------------------------------+
+| Database name: fuze_database |
++------------------------------+
+
++-------------------------+
+| Tables_in_fuze_database |
++-------------------------+
+| after_pu                |
+| calibration_table       |
+| housing_table           |
+| lot_table               |
+| password                |
+| pcb_testing             |
+| potting_table           |
+| qa_table                |
++-------------------------+
+
+* after_pu:
+
++--------------+------------------+------+-----+---------+----------------+
+| Field        | Type             | Null | Key | Default | Extra          |
++--------------+------------------+------+-----+---------+----------------+
+| _id          | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| pcb_no       | varchar(32)      | YES  | UNI | NULL    |                |
+| i            | float            | NO   |     | NULL    |                |
+| vee          | float            | NO   |     | NULL    |                |
+| vbat_pst     | float            | NO   |     | NULL    |                |
+| pst_amp      | float            | NO   |     | NULL    |                |
+| pst_wid      | float            | NO   |     | NULL    |                |
+| mod_freq     | float            | NO   |     | NULL    |                |
+| mod_dc       | float            | NO   |     | NULL    |                |
+| mod_ac       | float            | NO   |     | NULL    |                |
+| cap_charge   | float            | NO   |     | NULL    |                |
+| vrf_amp      | float            | NO   |     | NULL    |                |
+| vbat_vrf     | float            | NO   |     | NULL    |                |
+| vbat_sil     | float            | NO   |     | NULL    |                |
+| det_wid      | float            | NO   |     | NULL    |                |
+| det_amp      | float            | NO   |     | NULL    |                |
+| cycles       | int(11)          | NO   |     | NULL    |                |
+| bpf_dc       | float            | NO   |     | NULL    |                |
+| bpf_ac       | float            | NO   |     | NULL    |                |
+| bpf_noise_ac | float            | NO   |     | NULL    |                |
+| sil          | float            | NO   |     | NULL    |                |
+| lvp          | float            | NO   |     | NULL    |                |
+| pd_delay     | float            | NO   |     | NULL    |                |
+| pd_det       | float            | NO   |     | NULL    |                |
+| safe         | varchar(4)       | NO   |     | NULL    |                |
+| result       | varchar(4)       | NO   |     | NULL    |                |
+| record_date  | text             | NO   |     | NULL    |                |
+| op_name      | text             | NO   |     | NULL    |                |
++--------------+------------------+------+-----+---------+----------------+
+
+* calibration_table:
+
++-------------+------------------+------+-----+---------+----------------+
+| Field       | Type             | Null | Key | Default | Extra          |
++-------------+------------------+------+-----+---------+----------------+
+| _id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| pcb_no      | text             | YES  |     | NULL    |                |
+| rf_no       | text             | YES  |     | NULL    |                |
+| before_freq | text             | YES  |     | NULL    |                |
+| before_bpf  | text             | NO   |     | NULL    |                |
+| changed     | int(11)          | NO   |     | NULL    |                |
+| res_val     | int(11)          | YES  |     | NULL    |                |
+| after_freq  | text             | YES  |     | NULL    |                |
+| after_bpf   | text             | YES  |     | NULL    |                |
+| timestamp   | text             | YES  |     | NULL    |                |
+| op_name     | text             | YES  |     | NULL    |                |
++-------------+------------------+------+-----+---------+----------------+
+
+* housing_table:
+
++-------------+------------------+------+-----+---------+----------------+
+| Field       | Type             | Null | Key | Default | Extra          |
++-------------+------------------+------+-----+---------+----------------+
+| _id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| pcb_no      | varchar(32)      | YES  | UNI | NULL    |                |
+| i           | float            | NO   |     | NULL    |                |
+| vee         | float            | NO   |     | NULL    |                |
+| vbat_pst    | float            | NO   |     | NULL    |                |
+| pst_amp     | float            | NO   |     | NULL    |                |
+| pst_wid     | float            | NO   |     | NULL    |                |
+| mod_freq    | float            | NO   |     | NULL    |                |
+| mod_dc      | float            | NO   |     | NULL    |                |
+| mod_ac      | float            | NO   |     | NULL    |                |
+| cap_charge  | float            | NO   |     | NULL    |                |
+| vrf_amp     | float            | NO   |     | NULL    |                |
+| vbat_vrf    | float            | NO   |     | NULL    |                |
+| vbat_sil    | float            | NO   |     | NULL    |                |
+| det_wid     | float            | NO   |     | NULL    |                |
+| det_amp     | float            | NO   |     | NULL    |                |
+| cycles      | int(11)          | NO   |     | NULL    |                |
+| bpf_dc      | float            | NO   |     | NULL    |                |
+| bpf_ac      | float            | NO   |     | NULL    |                |
+| sil         | float            | NO   |     | NULL    |                |
+| lvp         | float            | NO   |     | NULL    |                |
+| pd_delay    | float            | NO   |     | NULL    |                |
+| pd_det      | float            | NO   |     | NULL    |                |
+| safe        | varchar(4)       | NO   |     | NULL    |                |
+| result      | varchar(4)       | NO   |     | NULL    |                |
+| record_date | text             | NO   |     | NULL    |                |
+| op_name     | text             | NO   |     | NULL    |                |
++-------------+------------------+------+-----+---------+----------------+
+
+* lot_table:
+
++------------------+------------------+------+-----+---------+----------------+
+| Field            | Type             | Null | Key | Default | Extra          |
++------------------+------------------+------+-----+---------+----------------+
+| _id              | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| fuze_type        | text             | NO   |     | NULL    |                |
+| fuze_diameter    | varchar(3)       | NO   |     | NULL    |                |
+| main_lot         | int(11)          | NO   |     | NULL    |                |
+| kit_lot          | text             | NO   |     | NULL    |                |
+| pcb_no           | text             | NO   |     | NULL    |                |
+| kit_lot_size     | int(11)          | NO   |     | NULL    |                |
+| rejected         | int(11)          | NO   |     | NULL    |                |
+| rejection_stage  | text             | NO   |     | NULL    |                |
+| rejection_remark | text             | NO   |     | NULL    |                |
+| acception_remark | text             | NO   |     | NULL    |                |
++------------------+------------------+------+-----+---------+----------------+
+
+* password:
+
++--------+------+------+-----+---------+-------+
+| Field  | Type | Null | Key | Default | Extra |
++--------+------+------+-----+---------+-------+
+| passwd | text | YES  |     | NULL    |       |
+| access | text | NO   |     | NULL    |       |
++--------+------+------+-----+---------+-------+
+
+* pcb_testing:
+
++-------------+------------------+------+-----+---------+----------------+
+| Field       | Type             | Null | Key | Default | Extra          |
++-------------+------------------+------+-----+---------+----------------+
+| _id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| pcb_no      | varchar(32)      | YES  | UNI | NULL    |                |
+| i           | float            | NO   |     | NULL    |                |
+| vee         | float            | NO   |     | NULL    |                |
+| vbat_pst    | float            | NO   |     | NULL    |                |
+| pst_amp     | float            | NO   |     | NULL    |                |
+| pst_wid     | float            | NO   |     | NULL    |                |
+| mod_freq    | float            | NO   |     | NULL    |                |
+| mod_dc      | float            | NO   |     | NULL    |                |
+| mod_ac      | float            | NO   |     | NULL    |                |
+| cap_charge  | float            | NO   |     | NULL    |                |
+| vrf_amp     | float            | NO   |     | NULL    |                |
+| vbat_vrf    | float            | NO   |     | NULL    |                |
+| vbat_sil    | float            | NO   |     | NULL    |                |
+| det_wid     | float            | NO   |     | NULL    |                |
+| det_amp     | float            | NO   |     | NULL    |                |
+| cycles      | int(11)          | NO   |     | NULL    |                |
+| bpf_dc      | float            | NO   |     | NULL    |                |
+| bpf_ac      | float            | NO   |     | NULL    |                |
+| sil         | float            | NO   |     | NULL    |                |
+| lvp         | float            | NO   |     | NULL    |                |
+| pd_delay    | float            | NO   |     | NULL    |                |
+| pd_det      | float            | NO   |     | NULL    |                |
+| safe        | varchar(4)       | NO   |     | NULL    |                |
+| result      | varchar(4)       | NO   |     | NULL    |                |
+| record_date | text             | NO   |     | NULL    |                |
+| op_name     | text             | NO   |     | NULL    |                |
++-------------+------------------+------+-----+---------+----------------+
+
+* potting_table;
+
++-------------+------------------+------+-----+---------+----------------+
+| Field       | Type             | Null | Key | Default | Extra          |
++-------------+------------------+------+-----+---------+----------------+
+| _id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| pcb_no      | varchar(32)      | YES  | UNI | NULL    |                |
+| i           | float            | NO   |     | NULL    |                |
+| vee         | float            | NO   |     | NULL    |                |
+| vbat_pst    | float            | NO   |     | NULL    |                |
+| pst_amp     | float            | NO   |     | NULL    |                |
+| pst_wid     | float            | NO   |     | NULL    |                |
+| mod_freq    | float            | NO   |     | NULL    |                |
+| mod_dc      | float            | NO   |     | NULL    |                |
+| mod_ac      | float            | NO   |     | NULL    |                |
+| cap_charge  | float            | NO   |     | NULL    |                |
+| vrf_amp     | float            | NO   |     | NULL    |                |
+| vbat_vrf    | float            | NO   |     | NULL    |                |
+| vbat_sil    | float            | NO   |     | NULL    |                |
+| det_wid     | float            | NO   |     | NULL    |                |
+| det_amp     | float            | NO   |     | NULL    |                |
+| cycles      | int(11)          | NO   |     | NULL    |                |
+| bpf_dc      | float            | NO   |     | NULL    |                |
+| bpf_ac      | float            | NO   |     | NULL    |                |
+| sil         | float            | NO   |     | NULL    |                |
+| lvp         | float            | NO   |     | NULL    |                |
+| pd_delay    | float            | NO   |     | NULL    |                |
+| pd_det      | float            | NO   |     | NULL    |                |
+| safe        | varchar(4)       | NO   |     | NULL    |                |
+| result      | varchar(4)       | NO   |     | NULL    |                |
+| record_date | text             | NO   |     | NULL    |                |
+| op_name     | text             | NO   |     | NULL    |                |
++-------------+------------------+------+-----+---------+----------------+
+
+* qa_table;
+
++-------------+------------------+------+-----+---------+----------------+
+| Field       | Type             | Null | Key | Default | Extra          |
++-------------+------------------+------+-----+---------+----------------+
+| _id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| pcb_no      | text             | YES  |     | NULL    |                |
+| result      | tinyint(4)       | YES  |     | NULL    |                |
+| reason      | tinyint(4)       | YES  |     | NULL    |                |
+| record_date | text             | YES  |     | NULL    |                |
+| op_name     | text             | YES  |     | NULL    |                |
++-------------+------------------+------+-----+---------+----------------+
