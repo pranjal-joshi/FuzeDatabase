@@ -15,9 +15,12 @@
 
 	<head>
 		<link rel="stylesheet" type="text/css" href="materialize.min.css">
+		<link rel='stylesheet' href='/FuzeDatabase/jquery-ui.css'>
+
 		<script type="text/javascript" src="jquery.min.js"></script>
 		<script type="text/javascript" src="materialize.min.js"></script>
 		<script type="text/javascript" src="jquery.cookie.js"></script>
+		<script src='/FuzeDatabase/jquery-ui.js'></script>
 
 		<!-- Set responsive viewport -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -251,8 +254,36 @@
 
 								<div class="row">
 									<center>
-									<div class="col s6">
+									<div id="dialog"></div>
+									<div class="col s3">
 										<span class="black-text">Calibration resistor changed?</span>
+									</div>
+									<div class="col s3">
+										<a onclick="showCalibrationTable()">Resistor value guide</a>
+										<script type="text/javascript">
+											function showCalibrationTable() {
+												$.ajax({
+															url: '/FuzeDatabase/calibration_res.txt',
+															success: function(data) {
+																$('#dialog').dialog({
+																	autoOpen : false,
+																	modal : true,
+																	show : 'blind',
+																	hide : 'blind',
+																	width: '40%',
+																	title: 'Resistor Value Guide'
+																});
+																$('#dialog').css('white-space','pre-wrap');
+																$('#dialog').html(data);
+																$('#dialog').dialog('open');
+																$('.ui-widget-overlay').bind('click', function(){
+																	$('#dialog').unbind();
+																	$('#dialog').dialog('close');
+																});
+															}
+														});
+											}
+										</script>
 									</div>
 									<div class="col s6">
 										<input type="radio" name="group1" class="with-gap" id="radioYes" name="radioYes" value="1" onchange="onRadioChange()">
