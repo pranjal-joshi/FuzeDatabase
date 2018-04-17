@@ -563,7 +563,14 @@
 															url: '/FuzeDatabase/rejection_reasons.txt',
 															success: function(data) {
 																//alert(data);
-																$('#dialog').dialog({autoOpen : false, modal : true, show : 'blind', hide : 'blind'});
+																$('#dialog').dialog({
+																	autoOpen : false,
+																	modal : true,
+																	show : 'blind',
+																	hide : 'blind',
+																	width: '30%',
+																	title: 'Q/A Rejection Codes'
+																});
 																$('#dialog').css('white-space','pre-wrap');
 																$('#dialog').html(data);
 																$('#dialog').dialog('open');
