@@ -57,6 +57,7 @@
 				 "
 				 <html>
 				 <head>
+				 	<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
 					<link rel='stylesheet' type='text/css' href='materialize.min.css'>
 				 </head>
 
@@ -101,7 +102,10 @@
 	</style>
 
 	<head>
+
 		<link rel="stylesheet" type="text/css" href="materialize.min.css">
+		<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
+
 		<script type="text/javascript" src="jquery.min.js"></script>
 		<script type="text/javascript" src="materialize.min.js"></script>
 		<script type="text/javascript" src="jquery.cookie.js"></script>

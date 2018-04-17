@@ -14,6 +14,7 @@
 	</style>
 
 	<head>
+		<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
 		<link rel="stylesheet" type="text/css" href="materialize.min.css">
 		<link rel='stylesheet' href='/FuzeDatabase/jquery-ui.css'>
 

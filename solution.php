@@ -7,6 +7,7 @@
 			die("
 
 				<head>
+					<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
 					<link rel='stylesheet' type='text/css' href='/FuzeDatabase/materialize.min.css'>
 					<script type='text/javascript' src='/FuzeDatabase/jquery.min.js'></script>
 					<script type='text/javascript' src='/FuzeDatabase/materialize.min.js'></script>
@@ -128,6 +129,7 @@
 	</style>
 
 	<head>
+		<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
 		<link rel='stylesheet' type='text/css' href='materialize.min.css'>
 		<script type='text/javascript' src='jquery.min.js'></script>
 		<script type='text/javascript' src='materialize.min.js'></script>
