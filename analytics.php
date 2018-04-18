@@ -481,6 +481,8 @@
 			}
 		});
 
+		var monthlyCount;
+		var finalMonthlyCount=0;
 		var chart;
 		$('#analyticsShowButton').click(function(){
 
@@ -550,6 +552,13 @@
 							days_in_month: daysInMonth
 						},
 						success: function(msg) {
+							monthlyCount = JSON.parse(msg);
+							for(var i=0;i<monthlyCount.length;i++) {
+								finalMonthlyCount += monthlyCount[i]['y'];
+							}
+							$('#analytics_detail_span').html('Total count for ' + selectedMonth + " is " + finalMonthlyCount.toString());
+							$('#analytics_detail_span').fadeIn();
+							finalMonthlyCount = 0;
 							var chart = new CanvasJS.Chart("chartContainer", {
 								animationEnabled: true,
 								exportEnabled: true,
