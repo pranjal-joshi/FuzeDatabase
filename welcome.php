@@ -142,6 +142,8 @@
 												</script>";
 								}
 							?>
+							<li class="divider"></li>
+							<li><a href="forum.php" target="_blank"><img src="forum.svg" width="20px" height="20px" style="margin-right: 3px; padding-top: 4px;"></img>Forum</a></li>
 						</ul>
 	
 					</div>
