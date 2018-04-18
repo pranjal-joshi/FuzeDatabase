@@ -141,6 +141,10 @@
 
 			if(mysqli_affected_rows($db) > 0){
 				echo"
+							<head>
+								<title>Delete-Success</title>
+								<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
+							</head>
 							<center>
 								<br>
 								<br>
@@ -154,6 +158,10 @@
 			}
 			else{
 				echo"
+							<head>
+								<title>Delete-Error</title>
+								<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
+							</head>
 							<center>
 								<br>
 								<br>
