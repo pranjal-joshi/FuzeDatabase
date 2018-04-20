@@ -137,10 +137,21 @@
 						font-weight: bold;
 						color: brown;
 					}
+
+					@media print
+					{    
+						.no-print, .no-print *
+						{
+							display: none !important;
+						}
+					}
 				</style>
 			</head>
 
 			<body>
+				<div class='no-print'>
+					<a href='#!' onclick='self.close();' oncontextmenu='return false' style='font-size: 18px;'>&#8592; Go Back</a>
+				</div>
 				<div id='generalTable' style='float: left; margin-right: 30px;'>
 					<p id='tableInfo'>General Information</p>
 					<table>
