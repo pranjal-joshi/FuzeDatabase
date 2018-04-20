@@ -127,7 +127,7 @@
 					<div class="card-panel grey lighten-4" id="loginCard">
 						<br>
 						<center>
-							<img class="responsive-img" src="bel-logo-transparent.png" width="350" height="200"></img>
+							<img id="page_logo" class="responsive-img" src="bel-logo-transparent.png" width="350" height="200"></img>
 						</center>
 
 							<form method="POST">
@@ -158,12 +158,26 @@
 		</main>
 
 		<footer class="page-footer teal lighten-2">
-					<div class="footer-copyright">
-						<div class="container">
-							<center>&copy; Bharat Electronics Ltd. (2018), All rights reserved.</center>
-						</div>
-					</div>
+			<div class="footer-copyright">
+				<div class="container">
+					<center>&copy; Bharat Electronics Ltd. (2018), All rights reserved.</center>
+				</div>
+			</div>
 		</footer>
+
+		<script type="text/javascript">
+			$('#page_logo').on("contextmenu", function(e){
+				return false;
+			});
+
+			$('#page_logo').on("dragstart", function(e){
+				return false;
+			});
+
+			$('#page_logo').on("selectstart", function(e){
+				return false;
+			});
+		</script>
 
 	</body>
 </html>
