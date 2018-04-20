@@ -57,7 +57,7 @@
 				 "
 				 <html>
 				 <head>
-				 	<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
+					<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
 					<link rel='stylesheet' type='text/css' href='materialize.min.css'>
 				 </head>
 
@@ -246,6 +246,8 @@
 			$('#page_logo').on("selectstart", function(e){
 				return false;
 			});
+
+			Materialize.toast("Press F11 to go Fullscreen",2500,'rounded');
 
 		});
 	</script>
