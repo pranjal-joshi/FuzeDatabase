@@ -1154,6 +1154,14 @@
 				break;
 			case '6':
 				$('#solderingCard').fadeIn();
+				$('#solderingCard').keypress(function (e) {
+					var key = e.which || e.keyCode;
+					if(key == 13)  // the enter key code
+					{
+						$('#solderingSubmitButton').trigger('click');
+						return false;  
+					}
+				});
 				break;
 			case '7':
 				$('#lotCard').fadeIn();
