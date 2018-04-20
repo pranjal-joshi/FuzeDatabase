@@ -127,7 +127,7 @@
 					<div class="card-panel grey lighten-4" id="loginCard">
 						<br>
 						<center>
-							<img class="responsive-img" src="fuze.svg" width="100" height="100"></img>
+							<img class="responsive-img" src="bel-logo-transparent.png" width="350" height="200"></img>
 						</center>
 
 							<form method="POST">
