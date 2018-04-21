@@ -109,6 +109,7 @@
 		<script type="text/javascript" src="jquery.min.js"></script>
 		<script type="text/javascript" src="materialize.min.js"></script>
 		<script type="text/javascript" src="jquery.cookie.js"></script>
+		<script type="text/javascript" src="jquery.vide.min.js"></script>
 
 		<!-- Set responsive viewport -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -138,7 +139,7 @@
 			<div class="col m3"></div>
 				<div class="col s12 m6">
 					<br>
-					<div class="card-panel grey lighten-4" id="loginCard">
+					<div class="card-panel white" id="loginCard" style="opacity: 0.75;">
 						<br>
 						<center>
 							<img id="page_logo" class="responsive-img" src="bel-logo-transparent.png" width="350" height="200"></img>
@@ -234,6 +235,8 @@
 
 		$(document).ready(function() {
 			$('select').material_select();
+
+			$('body').vide('bgvideo_greyscale.mp4');
 
 			$('#page_logo').on("contextmenu", function(e){
 				return false;
