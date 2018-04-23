@@ -139,7 +139,7 @@
 			<div class="col m3"></div>
 				<div class="col s12 m6">
 					<br>
-					<div class="card-panel white" id="loginCard" style="opacity: 0.75;">
+					<div class="card-panel grey lighten-4" id="loginCard">
 						<br>
 						<center>
 							<img id="page_logo" class="responsive-img" src="bel-logo-transparent.png" width="350" height="200"></img>
@@ -197,6 +197,9 @@
 													<optgroup label="For supervisors">
 														<option value="7">Lotwise Entry</option>
 													</optgroup>
+													<optgroup label="Mechanical">
+														<option value="13">Battery linking</option>
+													</optgroup>
 												</select>
 												<label>Select process</label>
 											</div>
@@ -236,7 +239,7 @@
 		$(document).ready(function() {
 			$('select').material_select();
 
-			$('body').vide('bgvideo_greyscale.mp4');
+			//$('body').vide('bgvideo_greyscale.mp4');
 
 			$('#page_logo').on("contextmenu", function(e){
 				return false;
