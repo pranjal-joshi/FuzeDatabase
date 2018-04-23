@@ -482,6 +482,41 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="batteryCard" style="display: none;">
+						<div class="row">
+							
+							<center>
+								<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Link with Battery Record</span>
+							</center>
+
+							<br><br><br>
+							
+							<div class="row">
+								<div class="col s3"></div>
+								<div class="input-field col s6">
+									<input id="battery_pcb_no" name="battery_pcb_no" type="text" autofocus>
+									<label for="battery_pcb_no"><center>Scan PCB Number</center></label>
+								</div>
+								<div class="col s3"></div>
+							</div>
+							<div class="row">
+								<div class="col s3"></div>
+								<div class="input-field col s6">
+									<input id="battery_lot_no" name="battery_lot_no" type="text">
+									<label for="battery_lot_no"><center>Enter Battery Lot Number</center></label>
+								</div>
+								<div class="col s3"></div>
+							</div>
+							<br><br>
+
+							<center>
+								<a class='btn waves-light waves-effect' id='batterySubmitButton'>SUBMIT</a>
+								<a class='btn red waves-effect' id='batteryClearButton'>CLEAR</a>
+							</center>
+
+						</div>
+					</div>
+
 					<div class="card-panel grey lighten-4" id="solderingCard" style="display: none;">
 						<div class="row">
 							
@@ -1115,7 +1150,7 @@
 				});
 				$('#qaCard').keydown(function (e) {
 					var key = e.which || e.keyCode;
-					if(key == 27)  // the enter key code
+					if(key == 27)  // the esc key code
 					{
 						$('#qaClearButton').trigger('click');
 						return false;  
@@ -1138,7 +1173,7 @@
 				});
 				$('#calibrationCard').keydown(function (e) {
 					var key = e.which || e.keyCode;
-					if(key == 27)  // the enter key code
+					if(key == 27)  // the esc key code
 					{
 						$('#clearButton').trigger('click');
 						return false;  
@@ -1404,7 +1439,7 @@
 				});
 				$('#pcbTestingManualCard').keydown(function (e) {
 					var key = e.which || e.keyCode;
-					if(key == 27)  // the enter key code
+					if(key == 27)  // the esc key code
 					{
 						$('#pcbTestingManualClearButton').trigger('click');
 						return false;  
@@ -1643,7 +1678,7 @@
 				});
 				$('#HousingTestingManualCard').keydown(function (e) {
 					var key = e.which || e.keyCode;
-					if(key == 27)  // the enter key code
+					if(key == 27)  // the esc key code
 					{
 						$('#pcbTestingManualClearButton').trigger('click');
 						return false;  
@@ -1882,9 +1917,29 @@
 				});
 				$('#PottingTestingManualCard').keydown(function (e) {
 					var key = e.which || e.keyCode;
-					if(key == 27)  // the enter key code
+					if(key == 27)  // the esc key code
 					{
 						$('#pcbTestingManualClearButton').trigger('click');
+						return false;  
+					}
+				});
+				break;
+
+			case '13':
+				$('#batteryCard').fadeIn();
+				$('#batteryCard').keypress(function (e) {
+					var key = e.which || e.keyCode;
+					if(key == 13)  // the enter key code
+					{
+						$('#batterySubmitButton').trigger('click');
+						return false;  
+					}
+				});
+				$('#batteryCard').keydown(function (e) {
+					var key = e.which || e.keyCode;
+					if(key == 27)  // the esc key code
+					{
+						$('#batteryClearButton').trigger('click');
 						return false;  
 					}
 				});
@@ -1954,6 +2009,37 @@
 			document.getElementById("after_freq").disabled = true;
 			document.getElementById("after_bpf").disabled = true;
 			$('#pcb_no').focus();
+		});
+
+		$('#batterySubmitButton').click(function(){
+			if($('#battery_lot_no').val() == "" || $('#battery_pcb_no').val() == "") {
+				Materialize.toast("Please enter sufficient data.",3000,'rounded');
+			}
+			else {
+				$('#battery_pcb_no').val($('#battery_pcb_no').val().toUpperCase());
+				$('#battery_lot_no').val($('#battery_lot_no').val().toUpperCase());
+				$.ajax({
+					url: 'submit_battery.php',
+					type: 'POST',
+					data: {
+						pcb_no: $('#battery_pcb_no').val(),
+						battery_lot: $('#battery_lot_no').val()
+					},
+					success: function(msg) {
+						console.log(msg);
+						Materialize.toast("Linked: " + msg, 3000, 'rounded');
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(errorThrown + "\n\nIs web-server offline?");
+					}
+				});
+			}
+		});
+
+		$('#batteryClearButton').click(function() {
+			$('#battery_lot_no').val('');
+			$('#battery_pcb_no').val('');
+			$('#battery_pcb_no').focus();
 		});
 
 		$('#submitButton').click(function(){
