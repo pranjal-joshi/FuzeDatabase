@@ -92,6 +92,10 @@
 		$qaResult = mysqli_query($db, $qaQuery);
 		$qaRow = mysqli_fetch_assoc($qaResult);
 
+		$batteryQuery = "SELECT * FROM `battery_table` WHERE `pcb_no` = '".$pcb_no."'";
+		$batteryResult = mysqli_query($db, $batteryQuery);
+		$batteryRow = mysqli_fetch_assoc($batteryResult);
+
 		$html = "
 		<html>
 			<head>
@@ -220,7 +224,7 @@
 					"
 					<div id='calibrationTable' style='clear: both;'>
 					<br>
-						<p id='tableInfo'>Calibration Record</p>
+						<p id='tableInfo'>Calibration Report</p>
 						<table>
 							<tr id='tableHeader'>
 								<td>PCB Number</td>
@@ -250,8 +254,8 @@
 						<br>
 					</div>
 
-					<div id='pcbTable' style='float: left; margin-right: 15px;'>
-						<p id='tableInfo'>Test Records</p>
+					<div id='pcbTable' style='float: left; margin-right: 30px;'>
+						<p id='tableInfo'>Test Reports</p>
 						<table style='font-size: 15px;'>
 							<tr id='tableHeader'>
 								<td rowspan='2'>Test</td>
@@ -456,7 +460,7 @@
 			}
 
 			$html.=	"
-								<div id='rejectionTable' style='float: left; margin-left: 15px;'>
+								<div id='rejectionTable' style='float: bottom; margin-left: 15px;'>
 									<p id='tableInfo'>Rejection Report</p>
 									<table style='width: 170px;'>
 										<tr id='tableHeader'>
@@ -481,6 +485,21 @@
 
 								</body>
 							</html>
+							";
+
+			$html.= "
+							<div id='batteryTable' style='float: bottom; margin-left: 15px;'>
+								<p id='tableInfo'>Battery Information</p>
+								<table style='width: 210px;'>
+									<tr id='tableHeader'>
+										<td colspan='2'>Details</td>
+									</tr>
+									<tr>
+										<td>Battery Lot</td>
+										<td>".($batteryRow['battery_lot'] == '' ? 'Unavailable' : $batteryRow['battery_lot'])."</td>
+									</tr>
+								</table>
+							</div>
 							";
 
 			echo $html;
