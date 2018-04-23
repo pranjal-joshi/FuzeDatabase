@@ -507,11 +507,15 @@
 								</div>
 								<div class="col s3"></div>
 							</div>
-							<br><br>
+							<br>
+							<center>
+								<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2" id="batterySpan"></span>
+							</center>
+							<br>
 
 							<center>
 								<a class='btn waves-light waves-effect' id='batterySubmitButton'>SUBMIT</a>
-								<a class='btn red waves-effect' id='batteryClearButton'>CLEAR</a>
+								<a class='btn red waves-effect' id='batteryClearButton' >CLEAR</a>
 							</center>
 
 						</div>
@@ -2026,8 +2030,10 @@
 						battery_lot: $('#battery_lot_no').val()
 					},
 					success: function(msg) {
-						console.log(msg);
-						Materialize.toast("Linked: " + msg, 3000, 'rounded');
+						Materialize.toast("Records Linked", 3000, 'rounded');
+						$('#batterySpan').html(msg + "<br><br>");
+						$('#battery_pcb_no').val('')
+						$('#battery_pcb_no').focus();
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						alert(errorThrown + "\n\nIs web-server offline?");
