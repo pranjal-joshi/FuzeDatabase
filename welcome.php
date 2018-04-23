@@ -2030,7 +2030,7 @@
 						battery_lot: $('#battery_lot_no').val()
 					},
 					success: function(msg) {
-						Materialize.toast("Records Linked", 3000, 'rounded');
+						Materialize.toast("Record Linked", 3000, 'rounded');
 						$('#batterySpan').html(msg + "<br><br>");
 						$('#battery_pcb_no').val('')
 						$('#battery_pcb_no').focus();
