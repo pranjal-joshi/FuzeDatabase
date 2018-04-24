@@ -67,6 +67,6 @@ ALTER TABLE `forum_table` ADD `thread_id` int UNSIGNED NOT NULL AUTO_INCREMENT P
 SELECT 'Processing `battery_table` table..' as '';
 ALTER TABLE `battery_table` DROP `_id`;
 ALTER TABLE `battery_table` AUTO_INCREMENT = 1;
-ALTER TABLE `battery_table` ADD `thread_id` int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
+ALTER TABLE `battery_table` ADD `_id` int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
 
 SELECT 'Done Processing all tables!' as '';
