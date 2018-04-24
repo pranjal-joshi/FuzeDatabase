@@ -104,12 +104,14 @@
 	<head>
 
 		<link rel="stylesheet" type="text/css" href="materialize.min.css">
+		<link rel='stylesheet' href='/FuzeDatabase/jquery-ui.css'>
 		<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
 
 		<script type="text/javascript" src="jquery.min.js"></script>
 		<script type="text/javascript" src="materialize.min.js"></script>
 		<script type="text/javascript" src="jquery.cookie.js"></script>
 		<script type="text/javascript" src="jquery.vide.min.js"></script>
+		<script src='/FuzeDatabase/jquery-ui.js'></script>
 
 		<!-- Set responsive viewport -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -123,7 +125,7 @@
 
 	</head>
 
-	<body class="indexBody">
+	<body class="indexBody" id="indexBody">
 
 		<main class="contents">
 
@@ -215,8 +217,10 @@
 							<center>
 								<a href="mgrlogin.php" style="color: teal; font-size: 16px;">&#10596; Management login &#10594;</a>
 								<br><br>
-								<a href="" style="color: #ef5350;" onclick="alert('Please contact the system administrator.\n\nPranjal P. Joshi\nFuze department.\n\npranjaljoshi@bel.co.in')">Trouble logging in?</a>
+								<a href="#" style="color: #ef5350;" onclick="openModal()">Trouble logging in?</a>
 							</center>
+
+							<div id='troubleModal'></div>
 
 					</div>
 				</div>
@@ -225,11 +229,11 @@
 		</main>
 
 		<footer class="page-footer teal lighten-2">
-					<div class="footer-copyright">
-						<div class="container">
-							<center>&copy; Bharat Electronics Ltd. (2018), All rights reserved.</center>
-						</div>
-					</div>
+			<div class="footer-copyright">
+				<div class="container">
+					<center>&copy; Bharat Electronics Ltd. (2018), All rights reserved.</center>
+				</div>
+			</div>
 		</footer>
 
 	</body>
@@ -255,6 +259,36 @@
 
 			Materialize.toast("Press F11 to go Fullscreen",2500,'rounded');
 
+			var elem = document.body;
+			if (elem.requestFullscreen) {
+				elem.requestFullscreen();
+			} else if (elem.msRequestFullscreen) {
+				elem.msRequestFullscreen();
+			} else if (elem.mozRequestFullScreen) {
+				elem.mozRequestFullScreen();
+			} else if (elem.webkitRequestFullscreen) {
+				elem.webkitRequestFullscreen();
+			}
+
 		});
+
+		function openModal() {
+				$('#troubleModal').html('Please contact the system administrator.\n\nE-mail: pranjaljoshi@bel.co.in\nContact: 3919\n\nPranjal P. Joshi\nFuze department.');
+				$('#troubleModal').dialog({
+					autoOpen : false,
+					modal : true,
+					show : 'blind',
+					hide : 'blind',
+					width: '30%',
+					title: 'Login help'
+				});
+				$('#troubleModal').css('white-space','pre-wrap');
+				$('#troubleModal').dialog('open');
+				$('.ui-widget-overlay').bind('click', function(){
+					$('#troubleModal').unbind();
+					$('#troubleModal').dialog('close');
+				});
+			}
+
 	</script>
 </html>
