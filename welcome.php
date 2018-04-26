@@ -1094,7 +1094,7 @@
 									$('#search_box').focus();
 									return false;
 								}
-								else if(text === "%" || text.includes("%%")) {
+								else if(text === "%" || text.includes("%%") || text === "*" || text.includes("**") || text.includes("%*") || text.includes("*%")) {
 									Materialize.toast("Wildcard search is not allowed here!",2500,'rounded');
 									$('#search_box').focus();
 									$('#searchPreloader').fadeOut();

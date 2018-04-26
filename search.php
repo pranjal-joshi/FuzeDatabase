@@ -10,7 +10,7 @@
 
 		$searchIn = "";
 		$searchInTable = $_POST['tableSelect'];
-		$query = $_POST['query'];
+		$query = str_replace("*", "%", $_POST['query']);
 		$table_head = "";
 
 		switch ($searchInTable) {
