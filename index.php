@@ -201,6 +201,7 @@
 													</optgroup>
 													<optgroup label="Mechanical">
 														<option value="13">Battery linking</option>
+														<option value="14">Barcode linking</option>
 													</optgroup>
 												</select>
 												<label>Select process</label>

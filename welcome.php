@@ -521,6 +521,49 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="barcodeCard" style="display: none;">
+						<div class="row">
+							
+							<center>
+								<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Link PCB Number with BEL Barcode</span>
+							</center>
+
+							<br><br><br>
+							
+							<div class="row">
+								<div class="col s3"></div>
+								<div class="input-field col s3">
+									<input id="barcode_pcb_no" name="barcode_pcb_no" type="text" autofocus>
+									<label for="barcode_pcb_no"><center>Scan PCB Number</center></label>
+								</div>
+								<div class="input-field col s3">
+									<input id="barcode_pcb_no_manual" name="barcode_pcb_no_manual" type="text">
+									<label for="barcode_pcb_no_manual"><center>Or Enter Manually</center></label>
+								</div>
+								<div class="col s3"></div>
+							</div>
+							<div class="row">
+								<div class="col s3"></div>
+								<div class="input-field col s6">
+									<input id="barcode_sticker_no" name="barcode_sticker_no" type="text">
+									<label for="barcode_sticker_no"><center>Scan Barcode Sticker</center></label>
+								</div>
+								<div class="col s3"></div>
+							</div>
+							<br>
+							<center>
+								<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2" id="barcodeSpan"></span>
+							</center>
+							<br>
+
+							<center>
+								<a class='btn waves-light waves-effect' id='barcodeSubmitButton'>SUBMIT</a>
+								<a class='btn red waves-effect' id='barcodeClearButton' >CLEAR</a>
+							</center>
+
+						</div>
+					</div>
+
 					<div class="card-panel grey lighten-4" id="solderingCard" style="display: none;">
 						<div class="row">
 							
@@ -1948,6 +1991,51 @@
 					}
 				});
 				break;
+
+			case '14':
+				$('#barcodeCard').fadeIn();
+				/*$('#barcodeCard').keypress(function (e) {
+					var key = e.which || e.keyCode;
+					if(key == 13)  // the enter key code
+					{
+						$('#barcodeSubmitButton').trigger('click');
+						return false;  
+					}
+				});*/
+				$('#barcodeCard').keydown(function (e) {
+					var key = e.which || e.keyCode;
+					if(key == 27)  // the esc key code
+					{
+						$('#barcodeClearButton').trigger('click');
+						return false;  
+					}
+				});
+				$('#barcode_pcb_no').bind('keyup', function(e){
+					if($(this).val().length > 4){
+						setTimeout(function(){
+							$('#barcode_sticker_no').focus();
+						}, 500);
+					}
+				});
+				var barcodeSubmitFunction = function(e){
+					if($(this).val().length > 15){
+						$('#barcode_sticker_no').unbind('keyup');
+						setTimeout(function(){
+							$('#barcodeSubmitButton').trigger('click');
+							$('#barcode_sticker_no').bind('keyup', barcodeSubmitFunction);
+						}, 600);
+					}
+				};
+				$('#barcode_sticker_no').bind('keyup', function(e){
+					if($(this).val().length > 15){
+						$('#barcode_sticker_no').unbind('keyup');
+						setTimeout(function(){
+							$('#barcodeSubmitButton').trigger('click');
+							$('#barcode_sticker_no').bind('keyup', barcodeSubmitFunction);
+						}, 600);
+					}
+				});
+				break;
 			}
 		}
 		else if($.cookie('fuzeAccess') == "37BD0D3935B47BE2AB57BCF91B57F499") {
@@ -2040,6 +2128,40 @@
 					}
 				});
 			}
+		});
+
+		$('#barcodeSubmitButton').click(function() {
+			if(($('#barcode_pcb_no').val() == "" && $('#barcode_pcb_no_manual').val() == "") || $('#barcode_sticker_no').val() == "") {
+				Materialize.toast("Please enter sufficient data.",3000,'rounded');
+			}
+			else {
+				$('#barcode_pcb_no').val($('#barcode_pcb_no').val().toUpperCase());
+				$('#barcode_pcb_no_manual').val($('#barcode_pcb_no_manual').val().toUpperCase());
+				$('#barcode_sticker_no').val($('#barcode_sticker_no').val().toUpperCase());
+				$.ajax({
+					url: 'submit_barcode.php',
+					type: 'POST',
+					data: {
+						pcb_no: $('#barcode_pcb_no').val() == "" ? $('#barcode_pcb_no_manual').val() : $('#barcode_pcb_no').val(),
+						barcode_no: $('#barcode_sticker_no').val()
+					},
+					success: function(msg) {
+						Materialize.toast("Record Linked", 3000, 'rounded');
+						$('#barcodeSpan').html(msg + "<br><br>");
+						$('#barcodeClearButton').trigger('click');
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(errorThrown + "\n\nIs web-server offline?");
+					}
+				});
+			}
+		});
+
+		$('#barcodeClearButton').click(function() {
+			$('#barcode_pcb_no').val('')
+			$('#barcode_pcb_no_manual').val('')
+			$('#barcode_sticker_no').val('')
+			$('#barcode_pcb_no').focus();
 		});
 
 		$('#batteryClearButton').click(function() {
