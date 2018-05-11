@@ -9,6 +9,7 @@ ALTER TABLE `potting_table` ENGINE = INNODB;
 ALTER TABLE `qa_table` ENGINE = INNODB;
 ALTER TABLE `forum_table` ENGINE = INNODB;
 ALTER TABLE `battery_table` ENGINE = INNODB;
+ALTER TABLE `barcode_table` ENGINE = INNODB;
 
 SELECT 'Starting InnoDB table compression..' as '';
 SET GLOBAL innodb_file_per_table=1;
@@ -21,6 +22,7 @@ ALTER TABLE `housing_table` ROW_FORMAT=compressed;
 ALTER TABLE `qa_table` ROW_FORMAT=compressed;
 ALTER TABLE `forum_table` ROW_FORMAT=compressed;
 ALTER TABLE `battery_table` ROW_FORMAT=compressed;
+ALTER TABLE `barcode_table` ROW_FORMAT=compressed;
 
 SELECT 'Altering tables to normalize AUTO_INCREMENT..' as '';
 
@@ -68,5 +70,10 @@ SELECT 'Processing `battery_table` table..' as '';
 ALTER TABLE `battery_table` DROP `_id`;
 ALTER TABLE `battery_table` AUTO_INCREMENT = 1;
 ALTER TABLE `battery_table` ADD `_id` int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
+
+SELECT 'Processing `barcode_table` table..' as '';
+ALTER TABLE `barcode_table` DROP `_id`;
+ALTER TABLE `barcode_table` AUTO_INCREMENT = 1;
+ALTER TABLE `barcode_table` ADD `_id` int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
 
 SELECT 'Done Processing all tables!' as '';
