@@ -96,6 +96,10 @@
 		$batteryResult = mysqli_query($db, $batteryQuery);
 		$batteryRow = mysqli_fetch_assoc($batteryResult);
 
+		$barcodeQuery = "SELECT * FROM `barcode_table` WHERE `pcb_no` = '".$pcb_no."'";
+		$barcodeResult = mysqli_query($db, $barcodeQuery);
+		$barcodeRow = mysqli_fetch_assoc($barcodeResult);
+
 		$html = "
 		<html>
 			<head>
@@ -497,6 +501,21 @@
 									<tr>
 										<td>Battery Lot</td>
 										<td>".($batteryRow['battery_lot'] == '' ? 'Unavailable' : $batteryRow['battery_lot'])."</td>
+									</tr>
+								</table>
+							</div>
+							";
+
+			$html.= "
+							<div id='barcodeTable' style='float: bottom; margin-left: 15px;'>
+								<p id='tableInfo'>Barcode Information</p>
+								<table style='width: 210px;'>
+									<tr id='tableHeader'>
+										<td colspan='2'>Details</td>
+									</tr>
+									<tr>
+										<td>Barcode Number</td>
+										<td>".($barcodeRow['barcode_no'] == '' ? 'Unavailable' : $barcodeRow['barcode_no'])."</td>
 									</tr>
 								</table>
 							</div>
