@@ -220,6 +220,60 @@
 				</div>
 			</div>
 
+			<!-- report modal -->
+			<div id="reportModal" class="modal">
+				<div class="modal-content" style="min-height: 250px;">
+					<center>
+						<span class="teal-text text-darken-2" style="font-weight: bold; font-size: 24px;">Generate Report</span>
+						<br><br>
+						<div class="row">
+
+							<div class="input-field col s4">
+								<select name="searchSelect" id="reportSelect">
+									<option value="" selected disabled>-- Select --</option>
+									<option value="barcode_record">Barcode Record</option>
+									<option value="battery_record">Battery Record</option>
+								</select>
+								<label>Report type</label>
+							</div>
+
+							<div class="input-field col s3">
+								<select name="searchSelect" id="reportFuzeSelect">
+									<option value="" selected disabled>-- Select --</option>
+									<option value="EPD">EPD</option>
+									<option value="TIME">TIME</option>
+									<option value="PROX">PROX</option>
+								</select>
+								<label>Fuze type</label>
+							</div>
+
+							<div class="input-field col s3">
+								<select name="searchSelect" id="reportDiaSelect">
+									<option value="" selected disabled>-- Select --</option>
+									<option value="105">105</option>
+									<option value="155">155</option>
+								</select>
+								<label>Fuze type</label>
+							</div>
+
+							<div class="input-field col s2">
+								<input type="text" id="reportLotNo">
+								<label for="reportLotNo">Lot No.</label>
+							</div>
+						</div>
+						<br>
+						<a class="btn col s2" href="#" id="reportButton" name="reportButton">Get report</a>
+						<script type="text/javascript">$('select').material_select();</script>
+					</center>
+				</div>
+							
+				<div class="modal-footer">
+					<center>
+						<a href="#" class="btn-flat waves-light waves-red waves-effect" onclick="$('#reportModal').closeModal();">Cancel</a>
+					</center>
+				</div>
+			</div>
+
 			<div class="row">
 				<div class="col m2"></div>
 				<div class="col m8 s12">
@@ -449,32 +503,41 @@
 							<br>
 
 							<div class="row">
-								<div class="col s6 modal-trigger" href="#searchModal">
+								<div class="col s2"></div>
+								<div class="col s4 modal-trigger" href="#searchModal">
 									<center>
 										<img class="responsive-img" src="search.svg">
 										<br>
 										<span style="font-size: 22px">Search</span>
 									</center>
 								</div>
-								<div class="col s6" onclick="window.open('rejection.php','_blank');">
+								<div class="col s4" onclick="window.open('rejection.php','_blank');">
 									<center>
 										<img class="responsive-img" src="error.svg">
 										<br>
 										<span style="font-size: 22px">Rejections</span>
 									</center>
 								</div>
-								<div class="col s6" onclick="window.open('analytics.php','_blank');" style="margin-top: 45px;">
+								<div class="col s2"></div>
+								<div class="col s4" onclick="window.open('analytics.php','_blank');" style="margin-top: 45px;">
 									<center>
 										<img class="responsive-img" src="chart.svg">
 										<br>
 										<span style="font-size: 22px">Analytics</span>
 									</center>
 								</div>
-								<div class="col s6" onclick="window.open('solution.php','_blank');" style="margin-top: 45px;">
+								<div class="col s4" onclick="window.open('solution.php','_blank');" style="margin-top: 45px;">
 									<center>
 										<img class="responsive-img" src="check.svg">
 										<br>
 										<span style="font-size: 22px">Problems & Solutions</span>
+									</center>
+								</div>
+								<div class="col s4" onclick="$('#reportModal').openModal();" style="margin-top: 45px;">
+									<center>
+										<img class="responsive-img" src="report.svg">
+										<br>
+										<span style="font-size: 22px">Lotwise Reports</span>
 									</center>
 								</div>
 							</div>
@@ -1170,6 +1233,30 @@
 					} 
 				}
 			);
+
+		$('#reportButton').click(function() {
+			if($('#reportSelect :selected').val() == "" || $('#reportFuzeSelect :selected').val() == "" || $('#reportDiaSelect :selected').val() == "" || $('#reportLotNo').val() == "") {
+				Materialize.toast('Please select the required fields',2500,'rounded');
+			}
+			else {
+				$.ajax({
+					url : 'report.php',
+					type: 'post',
+					data: {
+						report: $('#reportSelect :selected').val(),
+						fuze_type: $('#reportFuzeSelect :selected').val(),
+						fuze_diameter: $('#reportDiaSelect :selected').val(),
+						lot_no: $('#reportLotNo').val()
+					},
+					success: function(msg) {
+						console.log(msg);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + "\n\nIs web-server offline?");
+					}
+				});
+			}
+		});
 
 		switch($.cookie('fuzeDia')){
 			case '105':
