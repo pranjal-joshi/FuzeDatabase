@@ -1249,7 +1249,15 @@
 						lot_no: $('#reportLotNo').val()
 					},
 					success: function(msg) {
-						console.log(msg);
+						msg = msg.split("</Workbook>");
+						msg[0] = msg[0]+"</Workbook>";
+						var blob = new Blob([msg[0]], { type: 'data:application/vnd.ms-excel' }); 
+            var downloadUrl = URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            a.href = downloadUrl;
+            a.download = msg[1]+".xls";
+            document.body.appendChild(a);
+            a.click();
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						 alert(errorThrown + "\n\nIs web-server offline?");
