@@ -22,10 +22,10 @@
 					$cnt++;
 				}
 				if($_POST['lot_no'] == "*") {
-					$filename = 'Barcode Record - '.$_POST['fuze_diameter'].' '.$_POST['fuze_type'].' ALL LOTS.xls';
+					$filename = 'Barcode Record - '.$_POST['fuze_diameter'].' '.$_POST['fuze_type'].' ALL LOTS';
 				}
 				else {
-					$filename = 'Barcode Record - '.$_POST['fuze_diameter'].' '.$_POST['fuze_type'].' LOT '.$_POST['lot_no'].'.xls';
+					$filename = 'Barcode Record - '.$_POST['fuze_diameter'].' '.$_POST['fuze_type'].' LOT '.$_POST['lot_no'].'';
 				}
 				$xls = new Excel_XML;
 				$xls->addWorksheet('Barcode Record',$excelArray);
