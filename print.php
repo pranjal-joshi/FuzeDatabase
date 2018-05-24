@@ -192,7 +192,7 @@
 						<tr>
 							<td>".$qaRow['pcb_no']."</td>
 							<td>".($qaRow['result'] == '1' ? 'PASS' : 'FAIL')."</td>
-							<td>".$qaRow['reason']."</td>
+							<td>".($qaRow['reason'] == '0' ? 'N/A' : $qaRow['reason'])."</td>
 							<td>".$qaRow['record_date']."</td>
 							<td>".$qaRow['op_name']."</td>
 						</tr>
