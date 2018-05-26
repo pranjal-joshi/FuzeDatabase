@@ -545,6 +545,42 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="modulesCard" style="display: none;">
+						<div class="row">
+							
+							<center>
+								<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Modules</span>
+							</center>
+							<br>
+							<br>
+
+							<div class="row">
+								<div class="col s4" href="#">
+									<center>
+										<img class="responsive-img" src="qa_logo.svg">
+										<br>
+										<span style="font-size: 22px">Q/A</span>
+									</center>
+								</div>
+								<div class="col s4" href="#">
+									<center>
+										<img class="responsive-img" src="production.svg">
+										<br>
+										<span style="font-size: 22px">Production</span>
+									</center>
+								</div>
+								<div class="col s4" href="#">
+									<center>
+										<img class="responsive-img" src="testing.svg">
+										<br>
+										<span style="font-size: 22px">Testing</span>
+									</center>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
 					<div class="card-panel grey lighten-4" id="batteryCard" style="display: none;">
 						<div class="row">
 							
@@ -2135,6 +2171,7 @@
 		}
 		else if($.cookie('fuzeAccess') == "37BD0D3935B47BE2AB57BCF91B57F499") {
 			$('#mgrsCard').fadeIn();
+			$('#modulesCard').fadeIn();
 			$('#menuDropdown').hide();
 		}
 
