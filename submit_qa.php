@@ -12,9 +12,10 @@
 			die("exist");
 		}
 
-		$sql = "INSERT INTO `qa_table` (`_id`, `pcb_no`, `result`, `reason`, `record_date`, `op_name`) VALUES (
+		$sql = "INSERT INTO `qa_table` (`_id`, `pcb_no`, `stage`, `result`, `reason`, `record_date`, `op_name`) VALUES (
 			NULL, 
 			'".$_POST['qa_pcb_no']."', 
+			'".$_POST['qa_stage']."',
 			'".$_POST['result']."',
 			'".$_POST['reason']."',
 			'".$_POST['qaDatePicker']."',
@@ -125,6 +126,9 @@
 					break;
 				case '31':
 					$reasonToSave = "31 - Crystal pad damaged";
+					break;
+				case '50':
+					$reasonToSave = "50 - Others";
 					break;
 				case '100':
 					$reasonToSave = "100 - MULTIPLE FAULTS";
