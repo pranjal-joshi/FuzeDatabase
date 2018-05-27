@@ -414,6 +414,7 @@
 												<option value="PCB">PCB</option>
 												<option value="HSG">Housing</option>
 											</select>
+										</div>
 									</div>
 
 									<div class="row">
@@ -2155,7 +2156,6 @@
 				break;
 
 			case '14':
-				$('#barcodeCard').fadeIn();
 				/*$('#barcodeCard').keypress(function (e) {
 					var key = e.which || e.keyCode;
 					if(key == 13)  // the enter key code
