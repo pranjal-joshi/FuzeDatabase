@@ -182,7 +182,7 @@
 												<select name="startPoint" required>
 													<option value="" disabled selected>Select your start point</option>
 													<optgroup label="Common">
-														<option value="1">QA/Visual</option>
+														<option value="1">Visual Inspection</option>
 														<option value="2">PCB Testing - ATE</option>
 														<option value="8">PCB Testing - Manual</option>
 														<option value="9">Housing Testing - ATE</option>

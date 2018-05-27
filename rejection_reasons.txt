@@ -30,4 +30,5 @@
 29 - Solder pan on PCB damaged / removed
 30 - Improper barcode printing
 31 - Crystal pad damaged
+50 - Others
 100 - MULTIPLE FAULTS

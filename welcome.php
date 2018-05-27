@@ -459,6 +459,7 @@
 												<option value="29">29 - Solder pad on PCB damaged / removed</option>
 												<option value="30">30 - Improper barcode printing</option>
 												<option value="31">31 - Crystal pad damaged</option>
+												<option value="50">50 - Others</option>
 												<option value="100">100 - MULTIPLE FAULTS</option>
 											</select>
 										</div>

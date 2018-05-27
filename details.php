@@ -122,6 +122,9 @@
 							case '31':
 								$reasonToSave = "31 - Crystal pad damaged";
 								break;
+							case '50':
+								$reasonToSave = "50 - Others";
+								break;
 							case '100':
 								$reasonToSave = "100 - MULTIPLE FAULTS";
 								break;
