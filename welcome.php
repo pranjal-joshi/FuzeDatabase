@@ -493,6 +493,66 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="modulesCard" style="display: none;">
+						<div class="row">
+							
+							<center>
+								<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Modules</span>
+							</center>
+							<br>
+							<br>
+
+							<div class="row">
+								<div class="col s4" id="qa_module">
+									<center>
+										<img class="responsive-img" src="qa_logo.svg">
+										<br>
+										<span style="font-size: 22px">Q/A</span>
+									</center>
+								</div>
+								<div class="col s4" id="production_module">
+									<center>
+										<img class="responsive-img" src="production.svg">
+										<br>
+										<span style="font-size: 22px">Production</span>
+									</center>
+								</div>
+								<div class="col s4" id="testing_module">
+									<center>
+										<img class="responsive-img" src="testing.svg">
+										<br>
+										<span style="font-size: 22px">Testing</span>
+									</center>
+								</div>
+							</div>
+
+							<script type="text/javascript">
+								$('#production_module').click(function() {
+									$("#productionDialog" ).dialog({
+               			autoOpen: false,
+               			modal : true,
+										show : 'blind',
+										hide : 'blind',
+										width: '30%',
+										title: "Production Module"
+       						});
+       						$('#productionDialog').dialog('open');
+									$('.ui-widget-overlay').bind('click', function(){
+										$('#productionDialog').unbind();
+										$('#productionDialog').dialog('close');
+									});
+								});
+							</script>
+
+						</div>
+
+						<div id='productionDialog' style="display: none;">
+							<ul>
+							  <li><a href="vendor.php" target="_blank" style="color: blue;">&#9672; Vendor wise series entry</a></li>
+							</ul>
+						</div>
+					</div>
+
 					<div class="card-panel grey lighten-4" id="mgrsCard" style="display: none;">
 						<div class="row">
 							
@@ -538,42 +598,6 @@
 										<img class="responsive-img" src="report.svg">
 										<br>
 										<span style="font-size: 22px">Lotwise Reports</span>
-									</center>
-								</div>
-							</div>
-
-						</div>
-					</div>
-
-					<div class="card-panel grey lighten-4" id="modulesCard" style="display: none;">
-						<div class="row">
-							
-							<center>
-								<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Modules</span>
-							</center>
-							<br>
-							<br>
-
-							<div class="row">
-								<div class="col s4" href="#">
-									<center>
-										<img class="responsive-img" src="qa_logo.svg">
-										<br>
-										<span style="font-size: 22px">Q/A</span>
-									</center>
-								</div>
-								<div class="col s4" href="#">
-									<center>
-										<img class="responsive-img" src="production.svg">
-										<br>
-										<span style="font-size: 22px">Production</span>
-									</center>
-								</div>
-								<div class="col s4" href="#">
-									<center>
-										<img class="responsive-img" src="testing.svg">
-										<br>
-										<span style="font-size: 22px">Testing</span>
 									</center>
 								</div>
 							</div>
