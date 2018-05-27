@@ -397,23 +397,29 @@
 						<div class="row">
 							
 							<center>
-								<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Enter QA Details</span>
+								<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Visual Inspection Details</span>
 							</center>
 
 							<form class="col s12" method="post" id="qaForm">
 								<div class="row">
 
 									<div class="row">
-										<div class="input-field col s12">
+										<div class="input-field col s6">
 											<input id="qa_pcb_no" name="qa_pcb_no" type="text" required autofocus>
 											<label for="wa_pcb_no"><center>PCB Number</center></label>
 										</div>
+										<div class="input-field col s6">
+											<select name="qa_stage" id="qa_stage">
+												<option value="" disabled selected>-- Select --</option>
+												<option value="PCB">PCB</option>
+												<option value="HSG">Housing</option>
+											</select>
 									</div>
 
 									<div class="row">
 										<center>
 										<div class="col s6">
-											<span class="black-text">QA / Visual inspection results :</span>
+											<span class="black-text">Visual inspection results :</span>
 										</div>
 										<div class="col s6">
 											<input type="radio" name="qaGroup" class="with-gap" id="radioPass" name="radioPass" value="1" onchange="onQaRadioChange()" checked>
@@ -2382,7 +2388,7 @@
 		});
 
 		$('#qaSubmitButton').click(function(){
-			if (($('#qa_pcb_no').val().length == 0) || ($('#qa_op_name').val().length == 0) || ($('#qaDatePicker').val().length == 0)){
+			if (($('#qa_pcb_no').val().length == 0) || ($('#qa_op_name').val().length == 0) || ($('#qaDatePicker').val().length == 0) || $('#qa_stage :selected').val() == ""){
 				Materialize.toast("Can't save with blank fields.",4000,'rounded');
 				Materialize.toast("Check what you have missed.",4000,'rounded');
 			}
@@ -2395,7 +2401,8 @@
 						result: ((radioState == "radioPass") ? '1' : '0'),
 						reason: $('#qaFailReason').val(),
 						qaDatePicker: $('#qaDatePicker').val(),
-						qa_op_name: $('#qa_op_name').val().toUpperCase()
+						qa_op_name: $('#qa_op_name').val().toUpperCase(),
+						qa_stage: $('#qa_stage').val()
 					},
 					success: function(msg) {
 						if(msg.includes("ok")){
