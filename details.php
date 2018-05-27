@@ -135,6 +135,7 @@
 
 				$sql = "UPDATE `qa_table` SET 
 				`pcb_no`='".$pcb_no."',
+				`stage`='".$_POST['stage']."',
 				`result`='".$result."',
 				`reason`='".$reason."',
 				`record_date`='".$timestamp."',
@@ -550,6 +551,16 @@
 									</tr>
 
 									<tr>
+										<td class='center'><span class='center'>Rejection Stage <span></td>
+										<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+										<td class='center'>
+											<div class='input-field col s12 center'>
+												<input type='text' id='qaDetailsRejectionStage'>
+											</div>
+										</td>
+									</tr>
+
+									<tr>
 										<td class='center'><span class='center'>Rejection reason <span></td>
 										<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 										<td class='center'>
@@ -627,114 +638,118 @@
 				$html.= "<script type='text/javascript'>";
 					try {
 					// SCRIPT FOR AFTER_PU CARD
-						switch ($row[3]) {
+						switch ($row[4]) {
 							case '1':
-								$row[3] = "1 - Wire not properly soldered";
+								$row[4] = "1 - Wire not properly soldered";
 								break;
 							case '2':
-								$row[3] = "2 - Broken wire, Damaged Insulation";
+								$row[4] = "2 - Broken wire, Damaged Insulation";
 								break;
 							case '3':
-								$row[3] = "3 - Improper wire length";
+								$row[4] = "3 - Improper wire length";
 								break;
 							case '4':
-								$row[3] = "4 - DET pin not soldered properly";
+								$row[4] = "4 - DET pin not soldered properly";
 								break;
 							case '5':
-								$row[3] = "5 - VIN pin not soldered properly";
+								$row[4] = "5 - VIN pin not soldered properly";
 								break;
 							case '6':
-								$row[3] = "6 - PST pin not soldered properly";
+								$row[4] = "6 - PST pin not soldered properly";
 								break;
 							case '7':
-								$row[3] = "7 - SW1/IMP pin not soldered properly";
+								$row[4] = "7 - SW1/IMP pin not soldered properly";
 								break;
 							case '8':
-								$row[3] = "8 - GND pin not soldered properly";
+								$row[4] = "8 - GND pin not soldered properly";
 								break;
 							case '9':
-								$row[3] = "9 - MOD pin not soldered properly";
+								$row[4] = "9 - MOD pin not soldered properly";
 								break;
 							case '10':
-								$row[3] = "10 - SIG pin not soldered properly";
+								$row[4] = "10 - SIG pin not soldered properly";
 								break;
 							case '11':
-								$row[3] = "11 - VRF pin not soldered properly";
+								$row[4] = "11 - VRF pin not soldered properly";
 								break;
 							case '12':
-								$row[3] = "12 - Pin cross / bend";
+								$row[4] = "12 - Pin cross / bend";
 								break;
 							case '13':
-								$row[3] = "13 - Improper pin length";
+								$row[4] = "13 - Improper pin length";
 								break;
 							case '14':
-								$row[3] = "14 - Pin / test pin cut";
+								$row[4] = "14 - Pin / test pin cut";
 								break;
 							case '15':
-								$row[3] = "15 - Plating of pin / test pin";
+								$row[4] = "15 - Plating of pin / test pin";
 								break;
 							case '16':
-								$row[3] = "16 - Soldering ring not observed (bottom side)";
+								$row[4] = "16 - Soldering ring not observed (bottom side)";
 								break;
 							case '17':
-								$row[3] = "17 - Solder balls seen";
+								$row[4] = "17 - Solder balls seen";
 								break;
 							case '18':
-								$row[3] = "18 - Imapct switch soldering improper";
+								$row[4] = "18 - Imapct switch soldering improper";
 								break;
 							case '19':
-								$row[3] = "19 - Excess solder on impact switch";
+								$row[4] = "19 - Excess solder on impact switch";
 								break;
 							case '20':
-								$row[3] = "20 - Damanged / swollen bush of imapct switch";
+								$row[4] = "20 - Damanged / swollen bush of imapct switch";
 								break;
 							case '21':
-								$row[3] = "21 - Imapct switch tilted";
+								$row[4] = "21 - Imapct switch tilted";
 								break;
 							case '22':
-								$row[3] = "22 - Excess flux";
+								$row[4] = "22 - Excess flux";
 								break;
 							case '23':
-								$row[3] = "23 - Components not properly soldered";
+								$row[4] = "23 - Components not properly soldered";
 								break;
 							case '24':
-								$row[3] = "24 - Soldered components damaged";
+								$row[4] = "24 - Soldered components damaged";
 								break;
 							case '25':
-								$row[3] = "25 - Wrong components soldered";
+								$row[4] = "25 - Wrong components soldered";
 								break;
 							case '26':
-								$row[3] = "26 - Shorting of component pins";
+								$row[4] = "26 - Shorting of component pins";
 								break;
 							case '27':
-								$row[3] = "27 - Component missing";
+								$row[4] = "27 - Component missing";
 								break;
 							case '28':
-								$row[3] = "28 - PCB track cut";
+								$row[4] = "28 - PCB track cut";
 								break;
 							case '29':
-								$row[3] = "29 - Solder pad on PCB damaged / removed";
+								$row[4] = "29 - Solder pad on PCB damaged / removed";
 								break;
 							case '30':
-								$row[3] = "30 - Improper barcode printing";
+								$row[4] = "30 - Improper barcode printing";
 								break;
 							case '31':
-								$row[3] = "31 - Crystal pad damaged";
+								$row[4] = "31 - Crystal pad damaged";
+								break;
+							case '50':
+								$row[4] = "50 - Others";
 								break;
 							case '100':
-								$row[3] = "100 - MULTIPLE FAULTS";
+								$row[4] = "100 - MULTIPLE FAULTS";
 								break;
 							default:
-								$row[3] = "Not Applicable";
+								$row[4] = "Not Applicable";
 								break;
 						}
 
 						$html.= "
 											$('#qaDetailsPcbNo').val('".$row[1]."');
-											$('#qaDetailsResult').val('".($row[2] == '1' ? 'PASS' : 'FAIL')."');
-											$('#qaDetailsReason').val('".$row[3]."');
-											$('#qaDetailsTimestamp').val('".$row[4]."');
-											$('#qaDetailsOperator').val('".$row[5]."');
+											$('#qaDetailsRejectionStage').val('".$row[2]."');
+											$('#qaDetailsResult').val('".($row[3] == '1' ? 'PASS' : 'FAIL')."');
+											$('#qaDetailsReason').val('".$row[4]."');
+											$('#qaDetailsTimestamp').val('".$row[5]."');
+											$('#qaDetailsOperator').val('".$row[6]."');
 											$('#qaDetailsPcbNo').prop('readonly','true');
 											$('#qaDetailsPcbNo').click(function(){
 												alert('PCB number is primary record. You can\'t change it!')
@@ -760,7 +775,8 @@
 													result: $('#qaDetailsResult').val(),
 													reason: $('#qaDetailsReason').val(),
 													timestamp: $('#qaDetailsTimestamp').val(),
-													op_name: $('#qaDetailsOperator').val()
+													op_name: $('#qaDetailsOperator').val(),
+													stage: $('#qaDetailsRejectionStage').val().toUpperCase()
 												},
 												success: function(msg) {
 													if(msg.includes('ok')){
