@@ -180,11 +180,12 @@
 				</div>
 
 				<div id='qaTable' style='float: left;'>
-					<p id='tableInfo'>Q/A Information</p>
+					<p id='tableInfo'>Visual Inspection</p>
 					<table>
 						<tr id='tableHeader'>
 							<td>PCB Number</td>
 							<td>Result</td>
+							<td>Rejection<br>Stage</td>
 							<td>Rejection<br>Code</td>
 							<td>Record Date</td>
 							<td>Operator</td>
@@ -192,6 +193,7 @@
 						<tr>
 							<td>".$qaRow['pcb_no']."</td>
 							<td>".($qaRow['result'] == '1' ? 'PASS' : 'FAIL')."</td>
+							<td>".($qaRow['stage'] == '' ? 'N/A' : $qaRow['stage'])."</td>
 							<td>".($qaRow['reason'] == '0' ? 'N/A' : $qaRow['reason'])."</td>
 							<td>".$qaRow['record_date']."</td>
 							<td>".$qaRow['op_name']."</td>
