@@ -27,8 +27,6 @@
 
 			$results = mysqli_query($db,$sql);
 
-			print_r($_POST);
-
 			if($results === true){
 				echo "ok";
 			}
@@ -141,11 +139,13 @@
 				default:
 					$reasonToSave = "Not Applicable";
 			}
-			print_r($reasonToSave);
 			if($reasonToSave != "Not Applicable") {
 				$pcbRejection = "UPDATE `lot_table` SET `rejection_stage`='Q/A', `rejection_remark`='Rejection Code: ".$reasonToSave."', `rejected`='1' WHERE `pcb_no`='".$_POST['qa_pcb_no']."'";
 				$rejectionResult = mysqli_query($db,$pcbRejection);
-				print_r($pcbRejection);
+			}
+			else {
+				$pcbRejection = "UPDATE `lot_table` SET `rejection_stage`='', `rejection_remark`='', `rejected`='0' WHERE `pcb_no`='".$_POST['qa_pcb_no']."'";
+				$rejectionResult = mysqli_query($db,$pcbRejection);
 			}
 			mysqli_close($db);
 	}
