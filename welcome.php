@@ -537,17 +537,32 @@
 							<script type="text/javascript">
 								$('#production_module').click(function() {
 									$("#productionDialog" ).dialog({
+										autoOpen: false,
+										modal : true,
+										show : 'blind',
+										hide : 'blind',
+										width: '30%',
+										title: "Production Module"
+									});
+									$('#productionDialog').dialog('open');
+									$('.ui-widget-overlay').bind('click', function(){
+										$('#productionDialog').unbind();
+										$('#productionDialog').dialog('close');
+									});
+								});
+								$('#qa_module').click(function() {
+									$("#qaDialog" ).dialog({
                			autoOpen: false,
                			modal : true,
 										show : 'blind',
 										hide : 'blind',
 										width: '30%',
-										title: "Production Module"
+										title: "Q/A Module"
        						});
-       						$('#productionDialog').dialog('open');
+       						$('#qaDialog').dialog('open');
 									$('.ui-widget-overlay').bind('click', function(){
-										$('#productionDialog').unbind();
-										$('#productionDialog').dialog('close');
+										$('#qaDialog').unbind();
+										$('#qaDialog').dialog('close');
 									});
 								});
 							</script>
@@ -556,9 +571,16 @@
 
 						<div id='productionDialog' style="display: none;">
 							<ul>
-							  <li><a href="vendor.php" target="_blank" style="color: blue;">&#9672; Vendor wise series entry</a></li>
+								<li><a href="vendor.php" target="_blank" style="color: blue;">&#9672; Vendor wise PCB Series Entry</a></li>
 							</ul>
 						</div>
+
+						<div id='qaDialog' style="display: none;">
+							<ul>
+								<li><a href="analytics.php" target="_blank" style="color: blue;">&#9672; Vendor wise Rejection</a></li>
+							</ul>
+						</div>
+
 					</div>
 
 					<div class="card-panel grey lighten-4" id="mgrsCard" style="display: none;">
@@ -1320,12 +1342,12 @@
 						msg = msg.split("</Workbook>");
 						msg[0] = msg[0]+"</Workbook>";
 						var blob = new Blob([msg[0]], { type: 'data:application/vnd.ms-excel' }); 
-            var downloadUrl = URL.createObjectURL(blob);
-            var a = document.createElement("a");
-            a.href = downloadUrl;
-            a.download = msg[1]+".xls";
-            document.body.appendChild(a);
-            a.click();
+						var downloadUrl = URL.createObjectURL(blob);
+						var a = document.createElement("a");
+						a.href = downloadUrl;
+						a.download = msg[1]+".xls";
+						document.body.appendChild(a);
+						a.click();
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						 alert(errorThrown + "\n\nIs web-server offline?");

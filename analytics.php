@@ -5,6 +5,21 @@
 	
 	include("db_config.php");
 
+	function vendorToNumeric($alphanumeric) {
+		preg_match_all('/([0-9]+|[a-zA-Z]+)/',$alphanumeric,$arr);
+		$data = $arr[0];
+		for($i=0;$i<sizeof($data);$i++) {
+			if(!is_numeric($data[$i])) {
+				$data[$i] = ord($data[$i]);
+			}
+		}
+		$append = "";
+		for($i=0;$i<sizeof($data);$i++) {
+			$append.=strval($data[$i]);
+		}
+		return $append;
+	}
+
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 		if($_POST['select'] == "rejection") {
@@ -91,7 +106,7 @@
 
 					try {
 						$rejectionData = array(
-						array("label"=>"Q/A","symbol"=>"Q/A","y"=>mysqli_num_rows($qaRejectionGraphResult)),
+						array("label"=>"VISUAL","symbol"=>"VISUAL","y"=>mysqli_num_rows($qaRejectionGraphResult)),
 						array("label"=>"PCB","symbol"=>"PCB","y"=>mysqli_num_rows($pcbRejectionGraphResult)),
 						array("label"=>"HOUSING","symbol"=>"HOUSING","y"=>mysqli_num_rows($housingRejectionGraphResult)),
 						array("label"=>"POTTING","symbol"=>"POTTING","y"=>mysqli_num_rows($pottingRejectionGraphResult)),
@@ -104,8 +119,78 @@
 						die($e);
 					}
 				}
+			}
 		}
+		elseif($_POST['select'] == "vendor_rejection") {
+			$nameArray = array();
+			$startArray = array();
+			$stopArray = array();
+			$startAlphanumericArray = array();
+			$stopAlphanumericArray = array();
 
+			$vendorSeriesSql = "SELECT * FROM `vendor_pcb_series_table` WHERE `fuze_type` = '".$_POST['fuze_type']."'";
+			$vendorResults = mysqli_query($db, $vendorSeriesSql);
+
+			while ($row = mysqli_fetch_assoc($vendorResults)) {
+				array_push($nameArray, $row['vendor_name']);
+				array_push($startArray, $row['series_start']);
+				array_push($stopArray, $row['series_stop']);
+				array_push($startAlphanumericArray, $row['series_start_alphanumeric']);
+				array_push($stopAlphanumericArray, $row['series_stop_alphanumeric']);
+			}
+
+			$counter = sizeof($startArray);
+
+			if($_POST['main_lot'] == "*") {
+				$rejectedSql = "SELECT `pcb_no` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `rejected`='1'";
+			}
+			else {
+				$rejectedSql = "SELECT `pcb_no` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `rejected`='1' AND `main_lot`='".$_POST['main_lot']."'";	
+			}
+			$rejectedResult = mysqli_query($db, $rejectedSql);
+
+			$pcbNos = array();
+			$vendors = array();
+
+			while ($row = mysqli_fetch_assoc($rejectedResult)) {
+				$numeric = vendorToNumeric($row['pcb_no']);
+				array_push($pcbNos, $row['pcb_no']);
+				for($i=0;$i<$counter;$i++) {
+					if(($numeric >= $startArray[$i]) && ($numeric <= $stopArray[$i])) {
+						array_push($vendors, $nameArray[$i]);
+						break;
+					}
+				}
+			}
+
+			$vendorWiseRejection = array_count_values($vendors);
+			$uniqueVendorNames = array_unique($vendors);
+
+			$keysForVendors = array();
+			for($i=0;$i<sizeof(array_keys(array_unique($vendors)));$i++) {
+				array_push($keysForVendors, array_keys(array_unique($vendors))[$i]);
+			}
+
+			//print_r($keysForVendors);
+
+			$vendorNames = array();
+			for($i=0;$i<sizeof($keysForVendors);$i++) {
+				array_push($vendorNames, $uniqueVendorNames[$keysForVendors[$i]]);
+			}
+
+			//print_r($vendorNames);
+			//print_r($vendorWiseRejection);
+
+			try {
+				$rejectionData = array();
+				for ($i=0; $i<sizeof($vendorNames);$i++) { 
+					array_push($rejectionData, array("label"=>$vendorNames[$i],"symbol"=>$vendorNames[$i],"y"=>$vendorWiseRejection[$vendorNames[$i]]));
+				}
+				die(json_encode($rejectionData, JSON_NUMERIC_CHECK));
+			}
+			catch(Exception $e){
+				die($e);
+			}
 		}
 		elseif($_POST['select'] == "production") {
 
@@ -400,6 +485,7 @@
 									<option value="" selected disabled>-- Select --</option>
 									<option value="rejection">Rejection Details</option>
 									<option value="production">Prodution Details</option>
+									<option value="vendor_rejection">Vendor wise Rejection</option>
 									<option value="total_rejection">Total Rejection</option>
 								</select>
 								<label>Select criteria</label>
@@ -435,7 +521,7 @@
 						<div class="input-field col s6" id="analytics_process_div">
 							<select name="analytics_proess" id="analytics_process" required>
 								<option value="" selected disabled>--Select--</option>
-								<option value="Q/A">Q/A</option>
+								<option value="Q/A">Visual (Q/A)</option>
 								<option value="calibration">Calibration</option>
 								<option value="pcb Testing">PCB Testing</option>
 								<option value="housing Testing">Housing Testing</option>
@@ -664,6 +750,56 @@
 					});
 				}
 			}
+			else if($('#analytics_select :selected').val() == "vendor_rejection") {
+
+				if($('#analytics_fuze_diameter :selected').val() == '' || $('#analytics_fuze_type :selected').val() == '' || $('#analytics_main_lot').val() == '') {
+					Materialize.toast("Please select the required fields!",3000,'rounded');
+					$('#analytics_main_lot').focus();
+				}
+				else {
+					$('#analytics_detail_span').html('Click on the pie-chart for more details');
+					$('#analytics_detail_span').fadeIn();
+					$.ajax({
+						type: 'POST',
+						data: {
+							select: $('#analytics_select :selected').val(),
+							fuze_type: $('#analytics_fuze_type :selected').val(),
+							fuze_diameter: $('#analytics_fuze_diameter :selected').val(),
+							main_lot: $('#analytics_main_lot').val()
+						},
+						success: function(msg) {
+							console.log(msg);
+							chart = new CanvasJS.Chart("chartContainer",{
+									theme: 'light2',
+									exportEnabled: true,
+									animationEnabled: 'true',
+									title: {
+										text: 'Vendor Wise Rejection for ' + $('#analytics_fuze_diameter :selected').val() + ' mm ' + $('#analytics_fuze_type :selected').val() + ' Fuze - LOT ' + ($('#analytics_main_lot').val() == "*"? "ALL" : $('#analytics_main_lot').val())
+									},
+									data: [{
+										type: 'doughnut',
+										indexLabelFormatter: function(e) {
+											console.log(e);
+											if (e.percent == 0)
+												return "";
+											else
+												return e.dataPoint.label + " - " + e.percent.toFixed(2) + "%";
+										},
+										showInLegend: true,
+										legendText: "{label} : {y} - #percent%",
+										click: onVendorChartClick,
+										dataPoints: JSON.parse(msg)
+									}]
+							});
+							$('#chartContainer').fadeIn();
+							renderChart(chart, "No Data Available");
+						},
+						error: function(XMLHttpRequest, textStatus, errorThrown) {
+							 alert(errorThrown + 'Is web-server offline?');
+						}
+					});
+				}
+			}
 			else {
 				Materialize.toast("Please select the required fields!",3000,'rounded');
 			}
@@ -682,7 +818,7 @@
 				$('#analytics_detail_span').fadeOut();
 				$('#analytics_main_lot_div').fadeOut();
 			}
-			else if(mode == "rejection"){
+			else if(mode == "rejection" || mode == "vendor_rejection"){
 				$('#analytics_main_lot_div').fadeIn();
 				$('#production_select_row').fadeOut();
 				$('#analytics_detail_span').fadeOut();
@@ -766,6 +902,42 @@
 
 		function onChartClick(e) {
 			$('#analyticsModalHeader').html("Rejection Details of " + e.dataPoint.label + " stage");
+			$('#analyticsModal').openModal({
+				complete: function() {
+					$('#rejection_details_table').show();
+					$('#rejection_details_table_prox_head').hide();
+				}
+			});
+			if(e.dataPoint.label == "ELECTRONIC HEAD" && $('#analytics_fuze_type').val() == "PROX") {
+				$('#rejection_details_table').hide();
+				$('#rejection_details_table_prox_head').show();
+			}
+			$.ajax({
+				type: 'POST',
+				data: {
+					select: 'rejection_details',
+					fuze_type: $('#analytics_fuze_type :selected').val(),
+					fuze_diameter: $('#analytics_fuze_diameter :selected').val(),
+					rejection_stage: e.dataPoint.label,
+					main_lot: $('#analytics_main_lot').val()
+				},
+				success: function(msg) {
+					console.log(msg);
+					if(e.dataPoint.label == "ELECTRONIC HEAD" && $('#analytics_fuze_type').val() == "PROX") {
+						$('#rejection_details_tbody_prox_head').html(msg);
+					}
+					else {
+						$('#rejection_details_tbody').html(msg);
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+				 alert(errorThrown + 'Is web-server offline?');
+				}
+			});
+		}
+
+		function onVendorChartClick(e) {
+			$('#analyticsModalHeader').html("Rejection Details of " + e.dataPoint.label);
 			$('#analyticsModal').openModal({
 				complete: function() {
 					$('#rejection_details_table').show();
