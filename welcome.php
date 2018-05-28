@@ -2428,6 +2428,7 @@
 						qa_stage: $('#qa_stage').val()
 					},
 					success: function(msg) {
+						console.log(msg);
 						if(msg.includes("ok")){
 							Materialize.toast("Record Saved",1000,'rounded');
 							$('#qa_pcb_no').val('');

@@ -8,11 +8,14 @@
 		$sqlCheck = "SELECT * from `qa_table` WHERE `pcb_no`='".$_POST['qa_pcb_no']."';";
 		$checkResult = mysqli_query($db, $sqlCheck);
 
+		// Disabled record exist searc due to DB-REPLACE query
+		/*
 		if($checkResult->num_rows > 0){
 			die("exist");
 		}
+		*/
 
-		$sql = "INSERT INTO `qa_table` (`_id`, `pcb_no`, `stage`, `result`, `reason`, `record_date`, `op_name`) VALUES (
+		$sql = "REPLACE INTO `qa_table` (`_id`, `pcb_no`, `stage`, `result`, `reason`, `record_date`, `op_name`) VALUES (
 			NULL, 
 			'".$_POST['qa_pcb_no']."', 
 			'".$_POST['qa_stage']."',
@@ -24,6 +27,8 @@
 
 			$results = mysqli_query($db,$sql);
 
+			print_r($_POST);
+
 			if($results === true){
 				echo "ok";
 			}
@@ -31,7 +36,7 @@
 				echo "fail";
 			}
 
-			$reasonToSave = $_POST['reason'];
+			$reasonToSave = strval($_POST['reason']);
 
 			switch ($reasonToSave) {
 				case '1':
@@ -135,12 +140,13 @@
 					break;
 				default:
 					$reasonToSave = "Not Applicable";
-					break;
 			}
-
-			$pcbRejection = "UPDATE `lot_table` SET `rejection_stage`='Q/A', `rejection_remark`='Rejection Code: ".$reasonToSave."' WHERE `pcb_no`='".$_POST['qa_pcb_no']."';";
-			$rejectionResult = mysqli_query($db,$pcbRejection);
-
+			print_r($reasonToSave);
+			if($reasonToSave != "Not Applicable") {
+				$pcbRejection = "UPDATE `lot_table` SET `rejection_stage`='Q/A', `rejection_remark`='Rejection Code: ".$reasonToSave."', `rejected`='1' WHERE `pcb_no`='".$_POST['qa_pcb_no']."'";
+				$rejectionResult = mysqli_query($db,$pcbRejection);
+				print_r($pcbRejection);
+			}
 			mysqli_close($db);
 	}
 ?>
