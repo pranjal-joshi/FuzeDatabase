@@ -45,7 +45,7 @@
 
 					try {
 						$rejectionData = array(
-						array("label"=>"Q/A","symbol"=>"Q/A","y"=>mysqli_num_rows($qaRejectionGraphResult)),
+						array("label"=>"VISUAL","symbol"=>"VISUAL","y"=>mysqli_num_rows($qaRejectionGraphResult)),
 						array("label"=>"PCB","symbol"=>"PCB","y"=>mysqli_num_rows($pcbRejectionGraphResult)),
 						array("label"=>"HOUSING","symbol"=>"HOUSING","y"=>mysqli_num_rows($housingRejectionGraphResult)),
 						array("label"=>"POTTING","symbol"=>"POTTING","y"=>mysqli_num_rows($pottingRejectionGraphResult)),

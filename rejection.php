@@ -205,7 +205,7 @@
 							<div class="input-field col s4">
 								<select name="rejection_stage" id="rejection_stage" required>
 									<option value="" disabled selected>-- Please select --</option>
-									<option value="Q/A">Q/A Visual</option>
+									<option value="Q/A">Visual (Q/A)</option>
 									<option value="PCB">PCB</option>
 									<option value="HOUSING">HOUSING</option>
 									<option value="POTTING">ASSEMBLY ELECTRONICS (EPOXY POTTING)</option>
