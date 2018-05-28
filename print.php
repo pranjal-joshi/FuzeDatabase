@@ -100,6 +100,113 @@
 		$barcodeResult = mysqli_query($db, $barcodeQuery);
 		$barcodeRow = mysqli_fetch_assoc($barcodeResult);
 
+		$reasonToShow = "";
+
+		switch ($qaRow['reason']) {
+			case '1':
+				$reasonToShow = "1 - Wire not properly soldered";
+				break;
+			case '2':
+				$reasonToShow = "2 - Broken wire, Damaged Insulation";
+				break;
+			case '3':
+				$reasonToShow = "3 - Improper wire length";
+				break;
+			case '4':
+				$reasonToShow = "4 - DET pin not soldered properly";
+				break;
+			case '5':
+				$reasonToShow = "5 - VIN pin not soldered properly";
+				break;
+			case '6':
+				$reasonToShow = "6 - PST pin not soldered properly";
+				break;
+			case '7':
+				$reasonToShow = "7 - SW1/IMP pin not soldered properly";
+				break;
+			case '8':
+				$reasonToShow = "8 - GND pin not soldered properly";
+				break;
+			case '9':
+				$reasonToShow = "9 - MOD pin not soldered properly";
+				break;
+			case '10':
+				$reasonToShow = "10 - SIG pin not soldered properly";
+				break;
+			case '11':
+				$reasonToShow = "11 - VRF pin not soldered properly";
+				break;
+			case '12':
+				$reasonToShow = "12 - Pin cross / bend";
+				break;
+			case '13':
+				$reasonToShow = "13 - Improper pin length";
+				break;
+			case '14':
+				$reasonToShow = "14 - Pin / test pin cut";
+				break;
+			case '15':
+				$reasonToShow = "15 - Plating of pin / test pin";
+				break;
+			case '16':
+				$reasonToShow = "16 - Soldering ring not observed (bottom side)";
+				break;
+			case '17':
+				$reasonToShow = "17 - Solder balls seen";
+				break;
+			case '18':
+				$reasonToShow = "18 - Imapct switch soldering improper";
+				break;
+			case '19':
+				$reasonToShow = "19 - Excess solder on impact switch";
+				break;
+			case '20':
+				$reasonToShow = "20 - Damanged / swollen bush of imapct switch";
+				break;
+			case '21':
+				$reasonToShow = "21 - Imapct switch tilted";
+				break;
+			case '22':
+				$reasonToShow = "22 - Excess flux";
+				break;
+			case '23':
+				$reasonToShow = "23 - Components not properly soldered";
+				break;
+			case '24':
+				$reasonToShow = "24 - Soldered components damaged";
+				break;
+			case '25':
+				$reasonToShow = "25 - Wrong components soldered";
+				break;
+			case '26':
+				$reasonToShow = "26 - Shorting of component pins";
+				break;
+			case '27':
+				$reasonToShow = "27 - Component missing";
+				break;
+			case '28':
+				$reasonToShow = "28 - PCB track cut";
+				break;
+			case '29':
+				$reasonToShow = "29 - Solder pad on PCB damaged / removed";
+				break;
+			case '30':
+				$reasonToShow = "30 - Improper barcode printing";
+				break;
+			case '31':
+				$reasonToShow = "31 - Crystal pad damaged";
+				break;
+			case '50':
+				$reasonToShow = "50 - Others";
+				break;
+			case '100':
+				$reasonToShow = "100 - MULTIPLE FAULTS";
+				break;
+			default:
+				$reasonToShow = "N/A";
+				break;
+		}
+
 		$html = "
 		<html>
 			<head>
@@ -197,7 +304,15 @@
 							<td>".($qaRow['reason'] == '0' ? 'N/A' : $qaRow['reason'])."</td>
 							<td>".$qaRow['record_date']."</td>
 							<td>".$qaRow['op_name']."</td>
-						</tr>
+						</tr>";
+						if($qaRow['reason'] != '0') {
+							$html.= "<tr>
+							<td colspan='2'>Rejection Reason</td>
+							<td colspan='4'>".$reasonToShow."</td>
+						</tr>";
+						}
+						
+			$html.="
 					</table>
 					<br>
 				</div>
