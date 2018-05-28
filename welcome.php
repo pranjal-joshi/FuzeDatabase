@@ -179,7 +179,7 @@
 										<select name="searchTableSelect" id="searchTableSelect">
 											<option value="1" selected>After PU</option>
 											<option value="2">Calibration</option>
-											<option value="3">QA</option>
+											<option value="3">Visual</option>
 											<option value="4">PCB Testing</option>
 											<option value="5">Housing Testing</option>
 											<option value="6">Potted Housing</option>
@@ -565,7 +565,7 @@
 						<div class="row">
 							
 							<center>
-								<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Welcome to Management panel</span>
+								<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Tools</span>
 							</center>
 							<br>
 							<br>
