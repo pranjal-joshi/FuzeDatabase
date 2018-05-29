@@ -108,6 +108,7 @@
 										<option value='' disabled selected>--Select--</option>
 										<option value='INTERFAB'>Interfab</option>
 										<option value='FRONTLINE'>Frontline</option>
+										<option value='SGS'>SGS</option>
 									</select>
 									<label>Vendor Name</label>
 								</div>
