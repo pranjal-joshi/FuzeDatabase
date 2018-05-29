@@ -142,10 +142,10 @@
 			$counter = sizeof($startArray);
 
 			if($_POST['main_lot'] == "*") {
-				$rejectedSql = "SELECT `pcb_no` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `rejected`='1'";
+				$rejectedSql = "SELECT `pcb_no` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `rejected`='1' AND `fuze_diameter`='".$_POST['fuze_diameter']."'";
 			}
 			else {
-				$rejectedSql = "SELECT `pcb_no` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `rejected`='1' AND `main_lot`='".$_POST['main_lot']."'";	
+				$rejectedSql = "SELECT `pcb_no` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `rejected`='1' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `main_lot`='".$_POST['main_lot']."'";	
 			}
 			$rejectedResult = mysqli_query($db, $rejectedSql);
 
@@ -171,15 +171,11 @@
 				array_push($keysForVendors, array_keys(array_unique($vendors))[$i]);
 			}
 
-			//print_r($keysForVendors);
 
 			$vendorNames = array();
 			for($i=0;$i<sizeof($keysForVendors);$i++) {
 				array_push($vendorNames, $uniqueVendorNames[$keysForVendors[$i]]);
 			}
-
-			//print_r($vendorNames);
-			//print_r($vendorWiseRejection);
 
 			try {
 				$rejectionData = array();
@@ -255,6 +251,62 @@
 
 			die(json_encode($finalChartData, JSON_NUMERIC_CHECK));
 		}
+		elseif($_POST['select'] == "vendor_rejection_details") {
+			
+			$nameArray = array();
+			$startArray = array();
+			$stopArray = array();
+			$startAlphanumericArray = array();
+			$stopAlphanumericArray = array();
+			$pcbArray = array();
+
+			$vendorSeriesSql = "SELECT * FROM `vendor_pcb_series_table` WHERE `fuze_type` = '".$_POST['fuze_type']."' AND `vendor_name`='".$_POST['vendor_name']."'";
+			$vendorResults = mysqli_query($db, $vendorSeriesSql);
+
+			while ($row = mysqli_fetch_assoc($vendorResults)) {
+				//array_push($nameArray, $row['vendor_name']);
+				array_push($startArray, $row['series_start']);
+				array_push($stopArray, $row['series_stop']);
+				array_push($startAlphanumericArray, $row['series_start_alphanumeric']);
+				array_push($stopAlphanumericArray, $row['series_stop_alphanumeric']);
+			}
+
+			$counter = sizeof($startArray);
+
+			if($_POST['main_lot'] == "*") {
+				$rejectedSql = "SELECT `pcb_no`,`rejection_remark` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `rejected`='1' AND `fuze_diameter`='".$_POST['fuze_diameter']."'";
+			}
+			else {
+				$rejectedSql = "SELECT `pcb_no`,`rejection_remark` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `rejected`='1' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `main_lot`='".$_POST['main_lot']."'";	
+			}
+			$rejectedResult = mysqli_query($db, $rejectedSql);
+
+			$pcbNos = array();
+			$rejectionRemark = array();
+			$vendors = array();
+
+			while ($row = mysqli_fetch_assoc($rejectedResult)) {
+				$numeric = vendorToNumeric($row['pcb_no']);
+				for($i=0;$i<$counter;$i++) {
+					if(($numeric >= $startArray[$i]) && ($numeric <= $stopArray[$i])) {
+						array_push($pcbNos, $row['pcb_no']);
+						array_push($rejectionRemark, $row['rejection_remark']);
+						break;
+					}
+				}
+			}
+			///////////////////////////////////////////////// THINK ABOUT ABOVE LOGIC - JOIN CAN'T HELP -----
+
+			$htmlTable = "";
+			for ($i=0; $i<sizeof($pcbNos);$i++) { 
+				$htmlTable.="<tr>";
+				$htmlTable.="<td>".$pcbNos[$i]."</td>";
+				$htmlTable.="<td>".$rejectionRemark[$i]."</td>";
+				$htmlTable.="</tr>";
+			}
+			die($htmlTable);
+		}
+
 		elseif($_POST['select'] == "rejection_details") {
 
 			if($_POST['main_lot'] != "*") {
@@ -467,6 +519,34 @@
 				<div class="modal-footer">
 					<center>
 						<a href="#" class="btn-flat waves-light waves-red waves-effect" onclick="$('#analyticsModal').closeModal();$('#rejection_details_table').show();$('#rejection_details_table_prox_head').hide();">BACK</a>
+						<a href="rejection.php" target="_blank" class="btn-flat waves-light waves-red waves-effect">Go to rejection</a>
+					</center>
+				</div>
+			</div>
+
+			<!-- Vendor wise Rejection Modal -->
+			<div id="vendorWiseRejectionModal" class="modal">
+				<div class="modal-content">
+					<center>
+						<span class="teal-text text-darken-2" id="vendorWiseRejectionHeader" style="font-weight: bold; font-size: 24px;">Rejection Details</span>
+						<br>
+						<br>
+						<div class="row">
+							<table class="striped center" id="vendor_rejection_details_table">
+								<thead>
+									<tr>
+										<th>PCB Number</th>
+										<th>Rejection Remark</th>
+									</tr>
+								</thead>
+								<tbody id="vendor_rejection_details_tbody"></tbody>
+							</table>
+						</div>
+					</center>
+				</div>
+				<div class="modal-footer">
+					<center>
+						<a href="#" class="btn-flat waves-light waves-red waves-effect" onclick="$('#vendorWiseRejectionModal').closeModal();$('#vendor_rejection_details_table').show();">BACK</a>
 						<a href="rejection.php" target="_blank" class="btn-flat waves-light waves-red waves-effect">Go to rejection</a>
 					</center>
 				</div>
@@ -937,34 +1017,24 @@
 		}
 
 		function onVendorChartClick(e) {
-			$('#analyticsModalHeader').html("Rejection Details of " + e.dataPoint.label);
-			$('#analyticsModal').openModal({
+			$('#vendorWiseRejectionHeader').html("Rejection Details of " + e.dataPoint.label);
+			$('#vendorWiseRejectionModal').openModal({
 				complete: function() {
-					$('#rejection_details_table').show();
-					$('#rejection_details_table_prox_head').hide();
+					$('#vendor_rejection_details_table').show();
 				}
 			});
-			if(e.dataPoint.label == "ELECTRONIC HEAD" && $('#analytics_fuze_type').val() == "PROX") {
-				$('#rejection_details_table').hide();
-				$('#rejection_details_table_prox_head').show();
-			}
 			$.ajax({
 				type: 'POST',
 				data: {
-					select: 'rejection_details',
+					select: 'vendor_rejection_details',
 					fuze_type: $('#analytics_fuze_type :selected').val(),
 					fuze_diameter: $('#analytics_fuze_diameter :selected').val(),
-					rejection_stage: e.dataPoint.label,
+					vendor_name: e.dataPoint.label,
 					main_lot: $('#analytics_main_lot').val()
 				},
 				success: function(msg) {
 					console.log(msg);
-					if(e.dataPoint.label == "ELECTRONIC HEAD" && $('#analytics_fuze_type').val() == "PROX") {
-						$('#rejection_details_tbody_prox_head').html(msg);
-					}
-					else {
-						$('#rejection_details_tbody').html(msg);
-					}
+					$('#vendor_rejection_details_tbody').html(msg);
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
 				 alert(errorThrown + 'Is web-server offline?');
