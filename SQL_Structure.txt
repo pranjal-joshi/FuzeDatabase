@@ -22,32 +22,31 @@
 +--------------+------------------+------+-----+---------+----------------+
 | _id          | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
 | pcb_no       | varchar(32)      | YES  | UNI | NULL    |                |
-| i            | float            | NO   |     | NULL    |                |
+| i_1.5        | float            | NO   |     | NULL    |                |
+| i_4.5        | float            | NO   |     | NULL    |                |
 | vee          | float            | NO   |     | NULL    |                |
 | vbat_pst     | float            | NO   |     | NULL    |                |
 | pst_amp      | float            | NO   |     | NULL    |                |
 | pst_wid      | float            | NO   |     | NULL    |                |
-| mod_freq     | float            | NO   |     | NULL    |                |
-| mod_dc       | float            | NO   |     | NULL    |                |
-| mod_ac       | float            | NO   |     | NULL    |                |
-| cap_charge   | float            | NO   |     | NULL    |                |
-| vrf_amp      | float            | NO   |     | NULL    |                |
-| vbat_vrf     | float            | NO   |     | NULL    |                |
+| freq         | float            | NO   |     | NULL    |                |
+| span         | float            | NO   |     | NULL    |                |
+| bpf_ac_cal   | float            | NO   |     | NULL    |                |
 | vbat_sil     | float            | NO   |     | NULL    |                |
 | det_wid      | float            | NO   |     | NULL    |                |
 | det_amp      | float            | NO   |     | NULL    |                |
-| cycles       | int(11)          | NO   |     | NULL    |                |
+| cycles       | smallint(6)      | NO   |     | NULL    |                |
 | bpf_dc       | float            | NO   |     | NULL    |                |
 | bpf_ac       | float            | NO   |     | NULL    |                |
 | bpf_noise_ac | float            | NO   |     | NULL    |                |
+| bpf_noise_dc | float            | NO   |     | NULL    |                |
 | sil          | float            | NO   |     | NULL    |                |
+| sil_at_0     | int(11)          | NO   |     | NULL    |                |
 | lvp          | float            | NO   |     | NULL    |                |
 | pd_delay     | float            | NO   |     | NULL    |                |
-| pd_det       | float            | NO   |     | NULL    |                |
-| safe         | varchar(4)       | NO   |     | NULL    |                |
+| pd_det_amp   | float            | NO   |     | NULL    |                |
+| pd_det_width | float            | NO   |     | NULL    |                |
 | result       | varchar(4)       | NO   |     | NULL    |                |
 | record_date  | text             | NO   |     | NULL    |                |
-| op_name      | text             | NO   |     | NULL    |                |
 +--------------+------------------+------+-----+---------+----------------+
 
 * calibration_table:

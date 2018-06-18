@@ -295,7 +295,6 @@
 					}
 				}
 			}
-			///////////////////////////////////////////////// THINK ABOUT ABOVE LOGIC - JOIN CAN'T HELP -----
 
 			$htmlTable = "";
 			for ($i=0; $i<sizeof($pcbNos);$i++) { 
