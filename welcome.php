@@ -856,7 +856,7 @@
 								<br>
 								<br>
 								<center>
-									<a href="LogToExcel.exe">Download Log to Excel converter application</a>
+									<a href="PROX UNIT HEAD - LogToExcel.exe">Download PROX UNIT HEAD - Log to Excel converter application</a>
 								</center>
 							</div>
 
