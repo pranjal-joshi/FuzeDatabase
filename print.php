@@ -226,7 +226,7 @@
 
 				<style>
 					th, td {
-						padding: 6px;
+						padding: 3px;
 					}
 
 					table, th, td {
@@ -235,7 +235,7 @@
 					}
 
 					body {
-						margin-left: 12px;
+						margin-left: 6px;
 					}
 
 					tr {
@@ -283,7 +283,7 @@
 							<td>".$lotRow['kit_lot']."</td>
 						</tr>
 					</table>
-					<br>
+					
 				</div>
 
 				<div id='qaTable' style='float: left;'>
@@ -314,7 +314,6 @@
 						
 			$html.="
 					</table>
-					<br>
 				</div>
 			";
 
@@ -344,7 +343,6 @@
 					$html.=
 					"
 					<div id='calibrationTable' style='clear: both;'>
-					<br>
 						<p id='tableInfo'>Calibration Report</p>
 						<table>
 							<tr id='tableHeader'>
@@ -372,7 +370,6 @@
 								<td>".$calRow['op_name']."</td>
 							</tr>
 						</table>
-						<br>
 					</div>
 
 					<div id='pcbTable' style='float: left; margin-right: 30px;'>
@@ -384,14 +381,10 @@
 								<td>PCB Testing</td>
 								<td>Housing</td>
 								<td>Potting</td>
-								<td>After PU</td>
 							</tr>
 							<tr>
 								<td>PCB Number</td>
-								<td colspan='4'>".$pcbRow['pcb_no']."</td>
-								<!--<td>".$housingRow['pcb_no']."</td>
-								<td>".$pottingRow['pcb_no']."</td>
-								<td>".$afterPuRow['pcb_no']."</td>-->
+								<td colspan='3'>".$pcbRow['pcb_no']."</td>
 							</tr>
 							<tr>
 								<td rowspan='2'>VIN</td>
@@ -399,14 +392,12 @@
 								<td>".$pcbRow['i']." mA</td>
 								<td>".$housingRow['i']." mA</td>
 								<td>".$pottingRow['i']." mA</td>
-								<td>".$afterPuRow['i']." mA</td>
 							</tr>
 							<tr>
 								<td>VEE</td>
 								<td>".$pcbRow['vee']." V</td>
 								<td>".$housingRow['vee']." V</td>
 								<td>".$pottingRow['vee']." V</td>
-								<td>".$afterPuRow['vee']." V</td>
 							</tr>
 							<tr>
 								<td rowspan='3'>PST Test</td>
@@ -414,21 +405,18 @@
 								<td>".$pcbRow['vbat_pst']." mS</td>
 								<td>".$housingRow['vbat_pst']." mS</td>
 								<td>".$pottingRow['vbat_pst']." mS</td>
-								<td>".$afterPuRow['vbat_pst']." mS</td>
 							</tr>
 							<tr>
 								<td>PST Amplitude</td>
 								<td>".$pcbRow['pst_amp']." V</td>
 								<td>".$housingRow['pst_amp']." V</td>
 								<td>".$pottingRow['pst_amp']." V</td>
-								<td>".$afterPuRow['pst_amp']." V</td>
 							</tr>
 							<tr>
 								<td>PST Width</td>
 								<td>".$pcbRow['pst_wid']." uS</td>
 								<td>".$housingRow['pst_wid']." uS</td>
 								<td>".$pottingRow['pst_wid']." uS</td>
-								<td>".$afterPuRow['pst_wid']." uS</td>
 							</tr>
 							<tr>
 								<td rowspan='3'>MOD Test</td>
@@ -436,21 +424,18 @@
 								<td>".$pcbRow['mod_freq']." KHz</td>
 								<td>".$housingRow['mod_freq']." KHz</td>
 								<td>".$pottingRow['mod_freq']." KHz</td>
-								<td>".$afterPuRow['mod_freq']." KHz</td>
 							</tr>
 							<tr>
 								<td>DC</td>
 								<td>".$pcbRow['mod_dc']." V</td>
 								<td>".$housingRow['mod_dc']." V</td>
 								<td>".$pottingRow['mod_dc']." V</td>
-								<td>".$afterPuRow['mod_dc']." V</td>
 							</tr>
 							<tr>
 								<td>AC</td>
 								<td>".$pcbRow['mod_ac']." V</td>
 								<td>".$housingRow['mod_ac']." V</td>
 								<td>".$pottingRow['mod_ac']." V</td>
-								<td>".$afterPuRow['mod_ac']." V</td>
 							</tr>
 							<tr>
 								<td>DET CAP<br>Charge T</td>
@@ -458,7 +443,19 @@
 								<td>".$pcbRow['cap_charge']." mS</td>
 								<td>".$housingRow['cap_charge']." mS</td>
 								<td>".$pottingRow['cap_charge']." mS</td>
-								<td>".$afterPuRow['cap_charge']." mS</td>
+							</tr>
+							<tr>
+								<td rowspan='2'>BPF<br>Noise</td>
+								<td>DC</td>
+								<td>".$pcbRow['bpf_noise_dc']." V</td>
+								<td>--</td>
+								<td>--</td>
+							</tr>
+							<tr>
+								<td>AC</td>
+								<td>".$pcbRow['bpf_noise_ac']." V</td>
+								<td>--</td>
+								<td>--</td>
 							</tr>
 							<tr>
 								<td rowspan='2'>VRF</td>
@@ -466,14 +463,12 @@
 								<td>".$pcbRow['vrf_amp']." V</td>
 								<td>".$housingRow['vrf_amp']." V</td>
 								<td>".$pottingRow['vrf_amp']." V</td>
-								<td>".$afterPuRow['vrf_amp']." V</td>
 							</tr>
 							<tr>
 								<td>VBAT-VRF Delay</td>
 								<td>".$pcbRow['vbat_vrf']." Sec</td>
 								<td>".$housingRow['vbat_vrf']." Sec</td>
 								<td>".$pottingRow['vbat_vrf']." Sec</td>
-								<td>".$afterPuRow['vbat_vrf']." Sec</td>
 							</tr>
 							<tr>
 								<td>Silence</td>
@@ -481,7 +476,6 @@
 								<td>".$pcbRow['vbat_sil']." Sec</td>
 								<td>".$housingRow['vbat_sil']." Sec</td>
 								<td>".$pottingRow['vbat_sil']." Sec</td>
-								<td>".$afterPuRow['vbat_sil']." Sec</td>
 							</tr>
 							<tr>
 								<td  rowspan='5'>PROX</td>
@@ -489,35 +483,30 @@
 								<td>".$pcbRow['det_wid']." uS</td>
 								<td>".$housingRow['det_wid']." uS</td>
 								<td>".$pottingRow['det_wid']." uS</td>
-								<td>".$afterPuRow['det_wid']." uS</td>
 							</tr>
 							<tr>
 								<td>DET Amplitude</td>
 								<td>".$pcbRow['det_amp']." V</td>
 								<td>".$housingRow['det_amp']." V</td>
 								<td>".$pottingRow['det_amp']." V</td>
-								<td>".$afterPuRow['det_amp']." V</td>
 							</tr>
 							<tr>
 								<td>Cycles</td>
 								<td>".$pcbRow['cycles']." </td>
 								<td>".$housingRow['cycles']."</td>
 								<td>".$pottingRow['cycles']."</td>
-								<td>".$afterPuRow['cycles']." </td>
 							</tr>
 							<tr>
 								<td>BPF DC</td>
 								<td>".$pcbRow['bpf_dc']." V</td>
 								<td>".$housingRow['bpf_dc']." V</td>
 								<td>".$pottingRow['bpf_dc']." V</td>
-								<td>".$afterPuRow['bpf_dc']." V</td>
 							</tr>
 							<tr>
 								<td>BPF AC</td>
 								<td>".$pcbRow['bpf_ac']." V</td>
 								<td>".$housingRow['bpf_ac']." V</td>
 								<td>".$pottingRow['bpf_ac']." V</td>
-								<td>".$afterPuRow['bpf_ac']." V</td>
 							</tr>
 							<tr>
 								<td>Noise</td>
@@ -525,7 +514,6 @@
 								<td>".$pcbRow['sil']." mS</td>
 								<td>".$housingRow['sil']." mS</td>
 								<td>".$pottingRow['sil']." mS</td>
-								<td>".$afterPuRow['sil']." mS</td>
 							</tr>
 							<tr>
 								<td>LVP</td>
@@ -533,7 +521,6 @@
 								<td>".$pcbRow['lvp']." V</td>
 								<td>".$housingRow['lvp']." V</td>
 								<td>".$pottingRow['lvp']." V</td>
-								<td>".$afterPuRow['lvp']." V</td>
 							</tr>
 							<tr>
 								<td rowspan='2'>PD</td>
@@ -541,14 +528,12 @@
 								<td>".$pcbRow['pd_delay']." uS</td>
 								<td>".$housingRow['pd_delay']." uS</td>
 								<td>".$pottingRow['pd_delay']." uS</td>
-								<td>".$afterPuRow['pd_delay']." uS</td>
 							</tr>
 							<tr>
 								<td>DET Amplitude</td>
 								<td>".$pcbRow['pd_det']." V</td>
 								<td>".$housingRow['pd_det']." V</td>
 								<td>".$pottingRow['pd_det']." V</td>
-								<td>".$afterPuRow['pd_det']." V</td>
 							</tr>
 							<tr>
 								<td>SAFE</td>
@@ -556,7 +541,6 @@
 								<td>".$pcbRow['safe']." </td>
 								<td>".$housingRow['safe']." </td>
 								<td>".$pottingRow['safe']." </td>
-								<td>".$afterPuRow['safe']." </td>
 							</tr>
 							<tr>
 								<td>RESULT</td>
@@ -564,18 +548,140 @@
 								<td>".$pcbRow['result']." </td>
 								<td>".$housingRow['result']." </td>
 								<td>".$pottingRow['result']." </td>
-								<td>".$afterPuRow['result']." </td>
 							</tr>
 							<tr>
 								<td colspan='2'>Operator Name</td>
 								<td>".($pcbRow['op_name'] == "" ? "*ATE*" : $pcbRow['op_name'])."</td>
 								<td>".($housingRow['op_name'] == "" ? "*ATE*" : $housingRow['op_name'])."</td>
 								<td>".($pottingRow['op_name'] == "" ? "*ATE*" : $pottingRow['op_name'])."</td>
-								<td>".($afterPuRow['op_name'] == "" ? "*ATE*" : $afterPuRow['op_name'])."</td>
 							</tr>
 						</table>
 						<br>
-					</div>";
+					</div>
+
+					<div id='afterPuTable' style='float: left; margin-right: 30px;'>
+					<p id='tableInfo'>Final Report</p>
+						<table style='font-size: 15px;'>
+							<tr id='tableHeader'>
+								<td rowspan='2'>Test</td>
+								<td>Parameter</td>
+								<td>After PU</td>
+							</tr>
+							<tr>
+								<td>PCB Number</td>
+								<td>".$afterPuRow['pcb_no']."</td>
+							</tr>
+							<tr>
+								<td rowspan='10'>Mode<br>TIMER_5<br>Sec</td>
+								<td>VBAT-PST</td>
+								<td>".$afterPuRow['vbat_pst']." mS</td>
+							</tr>
+							<tr>
+								<td>PST Width</td>
+								<td>".$afterPuRow['pst_wid']." uS</td>
+							</tr>
+							<tr>
+								<td>PST Amp</td>
+								<td>".$afterPuRow['pst_amp']." V</td>
+							</tr>
+							<tr>
+								<td>VEE</td>
+								<td>".$afterPuRow['vee']." V</td>
+							</tr>
+							<tr>
+								<td>I @<br>1.5 Sec</td>
+								<td>".$afterPuRow['i_1.5']." mA</td>
+							</tr>
+							<tr>
+								<td>I @<br>4.5 Sec</td>
+								<td>".$afterPuRow['i_4.5']." mA</td>
+							</tr>
+							<tr>
+								<td>BPF DC<br>Noise</td>
+								<td>".$afterPuRow['bpf_noise_dc']." V</td>
+							</tr>
+							<tr>
+								<td>BPF AC<br>Noise</td>
+								<td>".$afterPuRow['bpf_noise_ac']." V</td>
+							</tr>
+							<tr>
+								<td>Frequency</td>
+								<td>".$afterPuRow['freq']." MHz</td>
+							</tr>
+							<tr>
+								<td>Span</td>
+								<td>".$afterPuRow['span']." MHz</td>
+							</tr>
+							<tr>
+								<td rowspan='6'>Calibration<br>Pulse<br>DET</td>
+								<td>BPF Cal<br>After PU</td>
+								<td>".$afterPuRow['bpf_ac_cal']." V</td>
+							</tr>
+							<tr>
+								<td>Cycles</td>
+								<td>".$afterPuRow['cycles']."</td>
+							</tr>
+							<tr>
+								<td>BPF DC</td>
+								<td>".$afterPuRow['bpf_dc']." V</td>
+							</tr>
+							<tr>
+								<td>BPF AC</td>
+								<td>".$afterPuRow['bpf_ac']." V</td>
+							</tr>
+							<tr>
+								<td>DET Width</td>
+								<td>".$afterPuRow['det_wid']." uS</td>
+							</tr>
+							<tr>
+								<td>DET Amp</td>
+								<td>".$afterPuRow['det_amp']." V</td>
+							</tr>
+							<tr>
+								<td rowspan='2'>Silence</td>
+								<td>SIL at 0</td>
+								<td>".$afterPuRow['sil_at_0']."</td>
+							</tr>
+							<tr>
+								<td>SIL</td>
+								<td>".$afterPuRow['sil']." mS</td>
+							</tr>
+							<tr>
+								<td rowspan='2'>LVP</td>
+								<td>VBAT</td>
+								<td>".$afterPuRow['lvp']." V</td>
+							</tr>
+							<tr>
+								<td>VBAT-SIL</td>
+								<td>".$afterPuRow['vbat_sil']." S</td>
+							</tr>
+							<tr>
+								<td rowspan='3'>Mode<br>PD</td>
+								<td>DET Delay</td>
+								<td>".$afterPuRow['pd_delay']." uS</td>
+							</tr>
+							<tr>
+								<td>DET width</td>
+								<td>".$afterPuRow['pd_det_width']." uS</td>
+							</tr>
+							<tr>
+								<td>DET Amp</td>
+								<td>".$afterPuRow['pd_det_amp']." V</td>
+							</tr>
+							<tr>
+								<td>RESULT</td>
+								<td>PASS/FAIL</td>
+								<td>".$afterPuRow['result']."</td>
+							</tr>
+							<tr>
+								<td colspan='2'>Operator</td>
+								<td>*ATE*</td>
+							</tr>
+						</table>
+						<br>
+					</div>
+
+					";
 					
 					break;
 			}
