@@ -236,6 +236,7 @@
 
 					body {
 						margin-left: 6px;
+						background-color: #d0d0d0;
 					}
 
 					tr {
