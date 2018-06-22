@@ -91,29 +91,29 @@
 					<tr>
 						<th>Sr No.</th>
 						<th>PCB No.</th>
-						<th>I</th>
-						<th>VEE</th>
 						<th>Vbat-PST</th>
-						<th>PST Amp</th>
 						<th>PST Wid</th>
+						<th>PST Amp</th>
+						<th>VEE</th>
+						<th>I(1.5S)</th>
+						<th>I(4.5S)</th>
+						<th>BPF Noise DC</th>
+						<th>BPF Noise AC</th>
 						<th>Freq</th>
-						<th>MOD DC</th>
-						<th>MOD AC</th>
-						<th>Cap Charge</th>
-						<th>VRF Amp</th>
-						<th>Vbat-VRF</th>
-						<th>Vbat-SIL</th>
+						<th>Span</th>
+						<th>BPF AC cal</th>
+						<th>Cycles</th>
+						<th>BPF DC</th>
+						<th>BPF AC</th>
 						<th>DET Wid</th>
 						<th>DET Amp</th>
-						<th>Cycles</th>
-						<th>BPF AC</th>
-						<th>BPF Noise AC</th>
-						<th>BPF DC</th>
+						<th>SIL at 0</th>
 						<th>SIL</th>
 						<th>LVP</th>
+						<th>Vbat-SIL</th>
 						<th>PD-Delay</th>
+						<th>PD-DET Width</th>
 						<th>PD-DET Amp</th>
-						<th>SAFE</th>
 						<th>RESULT</th>
 						<th>DATE</th>
 					</tr>
@@ -124,7 +124,7 @@
 
 
 			/* For Loop for all sheets */
-			$sql = "CREATE TABLE IF NOT EXISTS`fuze_database`.`after_pu` ( `_id` INT NOT NULL AUTO_INCREMENT , `pcb_no` TEXT NULL DEFAULT NULL , `i` FLOAT NOT NULL , `vee` FLOAT NOT NULL , `vbat_pst` FLOAT NOT NULL , `pst_amp` FLOAT NOT NULL , `pst_wid` FLOAT NOT NULL , `mod_freq` FLOAT NOT NULL , `mod_dc` FLOAT NOT NULL , `mod_ac` FLOAT NOT NULL , `cap_charge` FLOAT NOT NULL , `vrf_amp` FLOAT NOT NULL , `vbat_vrf` FLOAT NOT NULL , `vbat_sil` FLOAT NOT NULL , `det_wid` FLOAT NOT NULL , `det_amp` FLOAT NOT NULL , `cycles` INT NOT NULL , `bpf_dc` FLOAT NOT NULL , `bpf_ac` FLOAT NOT NULL , `bpf_noise_ac` FLOAT NOT NULL , `sil` FLOAT NOT NULL , `lvp` FLOAT NOT NULL , `pd_delay` FLOAT NOT NULL , `pd_det` FLOAT NOT NULL , `safe` VARCHAR(4) NOT NULL , `result` VARCHAR(4) NOT NULL , `record_date` TEXT NOT NULL , `op_name` TEXT NOT NULL , PRIMARY KEY (`_id`)) ENGINE = InnoDB";
+			$sql = "CREATE TABLE IF NOT EXISTS`fuze_database`.`after_pu` ( `_id` INT NOT NULL AUTO_INCREMENT , `pcb_no` TEXT NULL DEFAULT NULL , `i_1.5` FLOAT NOT NULL, `i_4.5` FLOAT NOT NULL , `vee` FLOAT NOT NULL , `vbat_pst` FLOAT NOT NULL , `pst_amp` FLOAT NOT NULL , `pst_wid` FLOAT NOT NULL , `freq` FLOAT NOT NULL , `span` FLOAT NOT NULL , `vbat_sil` FLOAT NOT NULL , `det_wid` FLOAT NOT NULL , `det_amp` FLOAT NOT NULL , `cycles` INT NOT NULL , `bpf_dc` FLOAT NOT NULL , `bpf_ac` FLOAT NOT NULL , `bpf_noise_ac` FLOAT NOT NULL, `bpf_noise_dc` FLOAT NOT NULL , `sil` FLOAT NOT NULL , `sil_at_0` INT NOT NULL , `lvp` FLOAT NOT NULL , `pd_delay` FLOAT NOT NULL , `pd_det_amp` FLOAT NOT NULL , `pd_det_wid` FLOAT NOT NULL , `safe` VARCHAR(4) NOT NULL , `result` VARCHAR(4) NOT NULL , `record_date` TEXT NOT NULL , PRIMARY KEY (`_id`)) ENGINE = InnoDB";
 
 
 			$sqlResult = mysqli_query($db,$sql);
@@ -154,95 +154,97 @@
 				$sqlAutoIncReset = "ALTER TABLE `after_pu` DROP `_id`;";
 				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
 
-				$sqlAdd = "REPLACE INTO `after_pu` (`pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`, `op_name`, `bpf_noise_ac`, `record_date`) VALUES ";
+				$sqlAdd = "REPLACE INTO `after_pu` (`pcb_no`, `vbat_pst`, `pst_wid`, `pst_amp`, `vee`, `i_1.5`, `i_4.5`, `bpf_noise_dc`, `bpf_noise_ac`, `freq`, `span`, `bpf_ac_cal`, `cycles`, `bpf_dc`, `bpf_ac`, `det_wid`, `det_amp`, `sil_at_0`, `sil`, `lvp`, `vbat_sil`, `pd_delay`, `pd_det_width`, `pd_det_amp`, `result`,  `record_date`) VALUES ";
 
 				foreach ($Reader as $Row)
 				{
 					$cnt++;
-					if($cnt > 4)
+					if($cnt > 5)
 					{
 						$html.="<tr>";
 						$pcb_no = isset($Row[0]) ? $Row[0] : '';
-						$current = isset($Row[1]) ? $Row[1] : '';
-						$vee = isset($Row[2]) ? $Row[2] : '';
-						$vbat_pst = isset($Row[3]) ? $Row[3] : '';
-						$pst_amp = isset($Row[4]) ? $Row[4] : '';
-						$pst_wid = isset($Row[5]) ? $Row[5] : '';
-						$freq = isset($Row[6]) ? $Row[6] : '';
-						$dc = isset($Row[7]) ? $Row[7] : '';
-						$ac = isset($Row[8]) ? $Row[8] : '';
-						$cap_charge = isset($Row[9]) ? $Row[9] : '';
-						$vrf_amp = isset($Row[10]) ? $Row[10] : '';
-						$vbat_vrf = isset($Row[11]) ? $Row[11] : '';
-						$vbat_sil = isset($Row[12]) ? $Row[12] : '';
-						$det_wid = isset($Row[13]) ? $Row[13] : '';
-						$det_amp = isset($Row[14]) ? $Row[14] : '';
-						$cycles = isset($Row[15]) ? $Row[15] : '';
-						$bpf_dc = isset($Row[16]) ? $Row[16] : '';
-						$bpf_ac = isset($Row[17]) ? $Row[17] : '';
+						$vbat_pst = isset($Row[1]) ? $Row[1] : '';
+						$pst_wid = isset($Row[2]) ? $Row[2] : '';
+						$pst_amp = isset($Row[3]) ? $Row[3] : '';
+						$vee = isset($Row[4]) ? $Row[4] : '';
+						$current_15 = isset($Row[5]) ? $Row[5] : '';
+						$current_45 = isset($Row[6]) ? $Row[6] : '';
+						$bpf_noise_dc = isset($Row[7]) ? $Row[7] : 0;
+						$bpf_noise_ac = isset($Row[8]) ? $Row[8] : 0;
+						$freq = isset($Row[9]) ? $Row[9] : '';
+						$span = isset($Row[10]) ? $Row[10] : '';
+						$bpf_ac_cal = isset($Row[11]) ? $Row[11] : '';
+						$cycles = isset($Row[12]) ? $Row[12] : '';
+						$bpf_dc = isset($Row[13]) ? $Row[13] : '';
+						$bpf_ac = isset($Row[14]) ? $Row[14] : '';
+						$det_wid = isset($Row[15]) ? $Row[15] : '';
+						$det_amp = isset($Row[16]) ? $Row[16] : '';
+						$sil_at_0 = isset($Row[17]) ? $Row[17] : '';
 						$sil = isset($Row[18]) ? $Row[18] : '';
 						$lvp = isset($Row[19]) ? $Row[19] : '';
-						$delay = isset($Row[20]) ? $Row[20] : '';
-						$det_pd = isset($Row[21]) ? $Row[21] : '';
-						$safe = isset($Row[22]) ? $Row[22] : '';
-						$result = isset($Row[23]) ? $Row[23] : '';
-						$bpf_noise_ac = isset($Row[24]) ? $Row[24] : 0;
+						$vbat_sil = isset($Row[20]) ? $Row[20] : '';
+						$pd_delay = isset($Row[21]) ? $Row[21] : '';
+						$pd_det_width = isset($Row[22]) ? $Row[22] : '';
+						$pd_det_amp = isset($Row[23]) ? $Row[23] : '';		
+						$result = isset($Row[24]) ? $Row[24] : '';
 						$record_date = isset($Row[25]) ? $Row[25] : 0;
 
-						$html.="<td>".($cnt-4)."</td>";
+						$html.="<td>".($cnt-5)."</td>";
 						$html.="<td>".$pcb_no."</td>";
-						$html.="<td>".$current."</td>";
-						$html.="<td>".$vee."</td>";
 						$html.="<td>".$vbat_pst."</td>";
-						$html.="<td>".$pst_amp."</td>";
 						$html.="<td>".$pst_wid."</td>";
+						$html.="<td>".$pst_amp."</td>";
+						$html.="<td>".$vee."</td>";
+						$html.="<td>".$current_15."</td>";
+						$html.="<td>".$current_45."</td>";
+						$html.="<td>".$bpf_noise_dc."</td>";
+						$html.="<td>".$bpf_noise_ac."</td>";
 						$html.="<td>".$freq."</td>";
-						$html.="<td>".$dc."</td>";
-						$html.="<td>".$ac."</td>";
-						$html.="<td>".$cap_charge."</td>";
-						$html.="<td>".$vrf_amp."</td>";
-						$html.="<td>".$vbat_vrf."</td>";
-						$html.="<td>".$vbat_pst."</td>";
+						$html.="<td>".$span."</td>";
+						$html.="<td>".$bpf_ac_cal."</td>";
+						$html.="<td>".$cycles."</td>";
+						$html.="<td>".$bpf_dc."</td>";
+						$html.="<td>".$bpf_ac."</td>";
 						$html.="<td>".$det_wid."</td>";
 						$html.="<td>".$det_amp."</td>";
-						$html.="<td>".$cycles."</td>";
-						$html.="<td>".$bpf_ac."</td>";
-						$html.="<td>".$bpf_noise_ac."</td>";
-						$html.="<td>".$bpf_dc."</td>";
+						$html.="<td>".$sil_at_0."</td>";
 						$html.="<td>".$sil."</td>";
 						$html.="<td>".$lvp."</td>";
-						$html.="<td>".$delay."</td>";
-						$html.="<td>".$det_pd."</td>";
-						$html.="<td>".$safe."</td>";
+						$html.="<td>".$vbat_sil."</td>";
+						$html.="<td>".$pd_delay."</td>";
+						$html.="<td>".$pd_det_width."</td>";
+						$html.="<td>".$pd_det_amp."</td>";
 						$html.="<td>".$result."</td>";
 						$html.="<td>".$record_date."</td>";
 						$html.="</tr>";
 
 						$sqlAdd.= "(
 							'".$pcb_no."', 
-							'".$current."', 
-							'".$vee."', 
-							'".$vbat_pst."',
+							'".$vbat_pst."', 
+							'".$pst_wid."', 
 							'".$pst_amp."',
-							'".$pst_wid."',
-							'".$freq."',
-							'".$dc."', 
-							'".$ac."', 
-							'".$cap_charge."', 
-							'".$vrf_amp."', 
-							'".$vbat_vrf."', 
-							'".$vbat_sil."', 
-							'".$det_wid."', 
-							'".$det_amp."', 
+							'".$vee."',
+							'".$current_15."',
+							'".$current_45."',
+							'".$bpf_noise_dc."', 
+							'".$bpf_noise_ac."', 
+							'".$freq."', 
+							'".$span."', 
+							'".$bpf_ac_cal."', 
 							'".$cycles."', 
 							'".$bpf_dc."', 
 							'".$bpf_ac."', 
+							'".$det_wid."', 
+							'".$det_amp."', 
+							'".$sil_at_0."', 
 							'".$sil."', 
 							'".$lvp."', 
-							'".$delay."', 
-							'".$det_pd."', 
-							'".$safe."', 
-							'".$result."','',".$bpf_noise_ac.", '".$record_date."'),";	// keep op_name blank for ATE
+							'".$vbat_sil."', 
+							'".$pd_delay."', 
+							'".$pd_det_width."', 
+							'".$pd_det_amp."', 
+							'".$result."',
+							'".$record_date."'),";
 					}
 				 }
 
