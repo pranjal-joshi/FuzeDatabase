@@ -154,17 +154,16 @@
 			case 'afterPuUpdate':
 				$sql = "UPDATE `after_pu` SET 
 				`pcb_no`='".$_POST['pcb_no']."',
-				`i`='".$_POST['current']."',
+				`i_1.5`='".$_POST['current15']."',
+				`i_4.5`='".$_POST['current45']."',
 				`vee`='".$_POST['vee']."',
 				`vbat_pst`='".$_POST['vbat_pst']."',
 				`pst_amp`='".$_POST['pst_ampl']."',
 				`pst_wid`='".$_POST['pst_wid']."',
-				`mod_freq`='".$_POST['mod_freq']."',
-				`mod_dc`='".$_POST['mod_dc']."',
-				`mod_ac`='".$_POST['mod_ac']."',
-				`cap_charge`='".$_POST['cap_charge']."',
-				`vrf_amp`='".$_POST['vrf_ampl']."',
-				`vbat_vrf`='".$_POST['vbat_vrf']."',
+				`freq`='".$_POST['freq']."',
+				`span`='".$_POST['span']."',
+				`bpf_noise_dc`='".$_POST['bpf_noise_dc']."',
+				`bpf_noise_ac`='".$_POST['bpf_noise_ac']."',
 				`vbat_sil`='".$_POST['vbat_sil']."',
 				`det_wid`='".$_POST['det_wid']."',
 				`det_amp`='".$_POST['det_ampl']."',
@@ -172,10 +171,11 @@
 				`bpf_dc`='".$_POST['bpf_dc']."',
 				`bpf_ac`='".$_POST['bpf_ac']."',
 				`sil`='".$_POST['sil']."',
+				`sil_at_0`='".$_POST['sil0']."',
 				`lvp`='".$_POST['lvp']."',
 				`pd_delay`='".$_POST['pd_delay']."',
-				`pd_det`='".$_POST['pd_det']."',
-				`safe`='".$_POST['safe']."',
+				`pd_det_amp`='".$_POST['pd_det']."',
+				`pd_det_width`='".$_POST['pd_width']."',
 				`result`='".$_POST['result']."' WHERE `pcb_no`='".$_POST['pcb_no']."'";
 
 				$results = mysqli_query($db,$sql);
@@ -828,7 +828,7 @@
 							<br>
 								<table id='afterPuDetailsTable'>
 									<tbody>
-
+										<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Mode_TIMER_5 Test</span></center>
 										<tr>
 										<td class='center'><span class='center'>PCB Number <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
@@ -837,11 +837,18 @@
 													<input type='text' id='AfterPuDetailsPcbNo'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>Supply Current (I) <span></td>
+											<td class='center'><span class='center'>Current @ 1.5S <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
-													<input type='text' id='AfterPuDetailsCurrent' data-position='bottom' data-delay='500' data-tooltip='7 to 14 mA' class='tooltipped'>
+													<input type='text' id='AfterPuDetailsCurrent15' data-position='bottom' data-delay='500' data-tooltip='6 to 14 mA' class='tooltipped'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Current @ 4.5S <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='AfterPuDetailsCurrent45' data-position='bottom' data-delay='500' data-tooltip='18.5 to 32 mA' class='tooltipped'>
 												</div>
 											</td>
 											<td class='center'><span class='center'>Supply Voltage (VEE) <span></td>
@@ -855,8 +862,6 @@
 
 									</tbody>
 								</table>
-
-								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PST Test</span></center>
 
 								<table>
 									<tbody>
@@ -888,8 +893,6 @@
 									</tbody>
 								</table>
 
-								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>MOD Test</span></center>
-
 								<table>
 									<tbody>
 
@@ -898,21 +901,28 @@
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
-													<input type='text' id='AfterPuDetailsFreq' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='46 to 55 KHz'>
+													<input type='text' id='AfterPuDetailsFreq' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='765 to 830 MHz'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>DC <span></td>
+											<td class='center'><span class='center'>Span <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
-													<input type='text' id='AfterPuDetailsModDC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='7 to 8.1 V'>
+													<input type='text' id='AfterPuDetailsSpan' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4 to 7 MHz'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>AC <span></td>
+											<td class='center'><span class='center'>BPF Noise DC <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
-													<input type='text' id='AfterPuDetailsModAC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0.95 to 1.35 V'>
+													<input type='text' id='AfterPuDetailsBPFNoiseDC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5 to 6.5 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>BPF Noise AC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='AfterPuDetailsBPFNoiseAC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 0.25 V'>
 												</div>
 											</td>
 										</tr>
@@ -920,44 +930,19 @@
 									</tbody>
 								</table>
 
-								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>VRF Test</span></center>
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Calibration_Pulse DET Test</span></center>
 
 								<table>
 									<tbody>
 
 										<tr>
-											<td class='center'><span class='center'>VRF Ampl <span></td>
+										<td class='center'><span class='center'>BPF Cal after PU<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
-													<input type='text' id='AfterPuDetailsVrfAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='15.3 to 16.7 V'>
+													<input type='text' id='AfterPuDetailsBPFCal' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0.85 to 1.15 V'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>VBAT-VRF Delay <span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='AfterPuDetailsVbatVrf' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.08 to 2.30 Sec'>
-												</div>
-											</td>
-											<td class='center'><span class='center'>VBAT-Cap Charge T <span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='AfterPuDetailsCapCharge' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='695 to 730 mS'>
-												</div>
-											</td>
-										</tr>
-
-									</tbody>
-								</table>
-
-								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PROX Test</span></center>
-
-								<table>
-									<tbody>
-
-										<tr>
 											<td class='center'><span class='center'>DET Width <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
@@ -1004,11 +989,35 @@
 									<tbody>
 
 										<tr>
+										<td class='center'><span class='center'>SIL at 0<br> Log for<br>3 Sec<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='AfterPuDetailsSil0' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='Yes/No'>
+												</div>
+											</td>
 											<td class='center'><span class='center'>SIL <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='AfterPuDetailsSil' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='480 to 650 mS'>
+												</div>
+											</td>											
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>LVP Test</span></center>
+
+								<table>
+									<tbody>
+										<tr>
+											<td class='center'><span class='center'>LVP <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='AfterPuDetailsLvp' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='18.8 to 21 V'>
 												</div>
 											</td>
 											<td class='center'><span class='center'>VBAT-SIL Delay <span></td>
@@ -1016,13 +1025,6 @@
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='AfterPuDetailsVbatSil' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.7 to 3.2 Sec'>
-												</div>
-											</td>
-											<td class='center'><span class='center'>LVP <span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='AfterPuDetailsLvp' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='18.8 to 21 V'>
 												</div>
 											</td>
 										</tr>
@@ -1042,6 +1044,13 @@
 													<input type='text' id='AfterPuDetailsPDDelay' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 10 uS'>
 												</div>
 											</td>
+											<td class='center'><span class='center'>DET Width <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='AfterPuDetailsPDWidth' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='30 to 180 uS'>
+												</div>
+											</td>
 											<td class='center'><span class='center'>DET Ampl <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
@@ -1058,14 +1067,7 @@
 
 								<table>
 									<tbody>
-
-											<td class='center'><span class='center'>SAFE Test <span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='AfterPuDetailsSafe'>
-												</div>
-											</td>
+										<tr>
 											<td class='center'><span class='center'>Result <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
@@ -1092,28 +1094,29 @@
 					try {
 					// SCRIPT FOR AFTER_PU CARD
 						$html.= "	$('#AfterPuDetailsPcbNo').val('".$row[1]."');
-											$('#AfterPuDetailsCurrent').val('".$row[2]." mA');
-											$('#AfterPuDetailsVee').val('".$row[3]." V');
-											$('#AfterPuDetailsVbatPst').val('".$row[4]." mS');
-											$('#AfterPuDetailsPstAmpl').val('".$row[5]." V');
-											$('#AfterPuDetailsPstWid').val('".$row[6]." uS');
-											$('#AfterPuDetailsFreq').val('".$row[7]." KHz');
-											$('#AfterPuDetailsModDC').val('".$row[8]." V');
-											$('#AfterPuDetailsModAC').val('".$row[9]." V');
-											$('#AfterPuDetailsCapCharge').val('".$row[10]." mS');
-											$('#AfterPuDetailsVrfAmpl').val('".$row[11]." V');
-											$('#AfterPuDetailsVbatVrf').val('".$row[12]." Sec');
-											$('#AfterPuDetailsVbatSil').val('".$row[13]." Sec');
-											$('#AfterPuDetailsDetWidth').val('".$row[14]." uS');
-											$('#AfterPuDetailsDetAmpl').val('".$row[15]." V');
-											$('#AfterPuDetailsCycles').val('".$row[16]."');
-											$('#AfterPuDetailsBpfAC').val('".$row[17]." V');
-											$('#AfterPuDetailsBpfDC').val('".$row[19]." V');
-											$('#AfterPuDetailsSil').val('".$row[20]." mS');
+											$('#AfterPuDetailsCurrent15').val('".$row[2]." mA');
+											$('#AfterPuDetailsCurrent45').val('".$row[3]." mA');
+											$('#AfterPuDetailsVee').val('".$row[4]." V');
+											$('#AfterPuDetailsVbatPst').val('".$row[5]." mS');
+											$('#AfterPuDetailsPstAmpl').val('".$row[6]." V');
+											$('#AfterPuDetailsPstWid').val('".$row[7]." uS');
+											$('#AfterPuDetailsFreq').val('".$row[8]." MHz');
+											$('#AfterPuDetailsSpan').val('".$row[9]." MHz');
+											$('#AfterPuDetailsBPFCal').val('".$row[10]." V');
+											$('#AfterPuDetailsVbatSil').val('".$row[11]." Sec');
+											$('#AfterPuDetailsDetWidth').val('".$row[12]." uS');
+											$('#AfterPuDetailsDetAmpl').val('".$row[13]." V');
+											$('#AfterPuDetailsCycles').val('".$row[14]."');
+											$('#AfterPuDetailsBpfDC').val('".$row[15]." V');
+											$('#AfterPuDetailsBpfAC').val('".$row[16]." V');
+											$('#AfterPuDetailsBPFNoiseDC').val('".$row[18]." V');
+											$('#AfterPuDetailsBPFNoiseAC').val('".$row[17]." V');
+											$('#AfterPuDetailsSil0').val('".$row[20]." ');
+											$('#AfterPuDetailsSil').val('".$row[19]." mS');
 											$('#AfterPuDetailsLvp').val('".$row[21]." V');
 											$('#AfterPuDetailsPDDelay').val('".$row[22]." uS');
 											$('#AfterPuDetailsPDDet').val('".$row[23]." V');
-											$('#AfterPuDetailsSafe').val('".$row[24]."');
+											$('#AfterPuDetailsPDWidth').val('".$row[24]." uS');
 											$('#AfterPuDetailsResult').val('".$row[25]."');
 
 											$('#AfterPuDetailsPcbNo').prop('readonly','true');
@@ -1138,28 +1141,28 @@
 												data: {
 													form: 'afterPuUpdate',
 													pcb_no: $('#AfterPuDetailsPcbNo').val(),
-													current: $('#AfterPuDetailsCurrent').val().replace(/[^\d.-]/g, ''),
+													current15: $('#AfterPuDetailsCurrent15').val().replace(/[^\d.-]/g, ''),
+													current45: $('#AfterPuDetailsCurrent45').val().replace(/[^\d.-]/g, ''),
 													vee: $('#AfterPuDetailsVee').val().replace(/[^\d.-]/g, ''),
 													vbat_pst: $('#AfterPuDetailsVbatPst').val().replace(/[^\d.-]/g, ''),
 													pst_ampl: $('#AfterPuDetailsPstAmpl').val().replace(/[^\d.-]/g, ''),
 													pst_wid: $('#AfterPuDetailsPstWid').val().replace(/[^\d.-]/g, ''),
-													mod_freq: $('#AfterPuDetailsFreq').val().replace(/[^\d.-]/g, ''),
-													mod_dc: $('#AfterPuDetailsModDC').val().replace(/[^\d.-]/g, ''),
-													mod_ac: $('#AfterPuDetailsModAC').val().replace(/[^\d.-]/g, ''),
-													vrf_ampl: $('#AfterPuDetailsVrfAmpl').val().replace(/[^\d.-]/g, ''),
-													vbat_vrf: $('#AfterPuDetailsVbatVrf').val().replace(/[^\d.-]/g, ''),
-													cap_charge: $('#AfterPuDetailsCapCharge').val().replace(/[^\d.-]/g, ''),
+													freq: $('#AfterPuDetailsFreq').val().replace(/[^\d.-]/g, ''),
+													span: $('#AfterPuDetailsSpan').val().replace(/[^\d.-]/g, ''),
+													bpf_noise_dc: $('#AfterPuDetailsBPFNoiseDC').val().replace(/[^\d.-]/g, ''),
+													bpf_noise_ac: $('#AfterPuDetailsBPFNoiseAC').val().replace(/[^\d.-]/g, ''),
 													det_wid: $('#AfterPuDetailsDetWidth').val().replace(/[^\d.-]/g, ''),
 													det_ampl: $('#AfterPuDetailsDetAmpl').val().replace(/[^\d.-]/g, ''),
 													cycles: $('#AfterPuDetailsCycles').val().replace(/[^\d.-]/g, ''),
 													bpf_dc: $('#AfterPuDetailsBpfDC').val().replace(/[^\d.-]/g, ''),
 													bpf_ac: $('#AfterPuDetailsBpfAC').val().replace(/[^\d.-]/g, ''),
 													sil: $('#AfterPuDetailsSil').val().replace(/[^\d.-]/g, ''),
+													sil0: $('#AfterPuDetailsSil0').val().toUpperCase(),
 													vbat_sil: $('#AfterPuDetailsVbatSil').val().replace(/[^\d.-]/g, ''),
 													lvp: $('#AfterPuDetailsLvp').val().replace(/[^\d.-]/g, ''),
 													pd_delay: $('#AfterPuDetailsPDDelay').val().replace(/[^\d.-]/g, ''),
 													pd_det: $('#AfterPuDetailsPDDet').val().replace(/[^\d.-]/g, ''),
-													safe: $('#AfterPuDetailsSafe').val().toUpperCase(),
+													pd_width: $('#AfterPuDetailsPDWidth').val().replace(/[^\d.-]/g, ''),
 													result: $('#AfterPuDetailsResult').val().toUpperCase()
 												},
 												success: function(msg) {
