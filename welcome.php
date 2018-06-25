@@ -1121,6 +1121,23 @@
 											</td>
 										</tr>
 
+										<tr>
+											<td class='center'><span class='center'>BPF Noise DC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsBpfNoiseDc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5 to 6.5 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>BPF Noise AC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsBpfNoiseAc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 0.25 V'>
+												</div>
+											</td>
+										</tr>
+
 									</tbody>
 								</table>
 

@@ -305,6 +305,8 @@
 				`cycles`='".$_POST['cycles']."',
 				`bpf_dc`='".$_POST['bpf_dc']."',
 				`bpf_ac`='".$_POST['bpf_ac']."',
+				`bpf_noise_dc`='".$_POST['bpf_noise_dc']."',
+				`bpf_noise_ac`='".$_POST['bpf_noise_ac']."',
 				`sil`='".$_POST['sil']."',
 				`lvp`='".$_POST['lvp']."',
 				`pd_delay`='".$_POST['pd_delay']."',
@@ -1417,6 +1419,23 @@
 											</td>
 										</tr>
 
+										<tr>
+											<td class='center'><span class='center'>BPF Noise DC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsBpfNoiseDc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5 to 6.5 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>BPF Noise AC <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsBpfNoiseAc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 0.25 V'>
+												</div>
+											</td>
+										</tr>
+
 									</tbody>
 								</table>
 
@@ -1497,14 +1516,16 @@
 											$('#PcbTestingDetailsDetWidth').val('".$row[14]." uS');
 											$('#PcbTestingDetailsDetAmpl').val('".$row[15]." V');
 											$('#PcbTestingDetailsCycles').val('".$row[16]."');
-											$('#PcbTestingDetailsBpfAC').val('".$row[17]." V');
-											$('#PcbTestingDetailsBpfDC').val('".$row[18]." V');
-											$('#PcbTestingDetailsSil').val('".$row[19]." mS');
-											$('#PcbTestingDetailsLvp').val('".$row[20]." V');
-											$('#PcbTestingDetailsPDDelay').val('".$row[21]." uS');
-											$('#PcbTestingDetailsPDDet').val('".$row[22]." V');
-											$('#PcbTestingDetailsSafe').val('".$row[23]."');
-											$('#PcbTestingDetailsResult').val('".$row[24]."');
+											$('#PcbTestingDetailsBpfDC').val('".$row[17]." V');
+											$('#PcbTestingDetailsBpfAC').val('".$row[18]." V');
+											$('#PcbTestingDetailsBpfNoiseDc').val('".$row[19]." V');
+											$('#PcbTestingDetailsBpfNoiseAc').val('".$row[20]." V');
+											$('#PcbTestingDetailsSil').val('".$row[21]." mS');
+											$('#PcbTestingDetailsLvp').val('".$row[22]." V');
+											$('#PcbTestingDetailsPDDelay').val('".$row[23]." uS');
+											$('#PcbTestingDetailsPDDet').val('".$row[24]." V');
+											$('#PcbTestingDetailsSafe').val('".$row[25]."');
+											$('#PcbTestingDetailsResult').val('".$row[26]."');
 
 											$('#PcbTestingDetailsPcbNo').prop('readonly','true');
 											$('#PcbTestingDetailsPcbNo').click(function(){
@@ -1544,6 +1565,8 @@
 													cycles: $('#PcbTestingDetailsCycles').val().replace(/[^\d.-]/g, ''),
 													bpf_dc: $('#PcbTestingDetailsBpfDC').val().replace(/[^\d.-]/g, ''),
 													bpf_ac: $('#PcbTestingDetailsBpfAC').val().replace(/[^\d.-]/g, ''),
+													bpf_noise_dc: $('#PcbTestingDetailsBpfNoiseDc').val().replace(/[^\d.-]/g, ''),
+													bpf_noise_ac: $('#PcbTestingDetailsBpfNoiseAc').val().replace(/[^\d.-]/g, ''),
 													sil: $('#PcbTestingDetailsSil').val().replace(/[^\d.-]/g, ''),
 													vbat_sil: $('#PcbTestingDetailsVbatSil').val().replace(/[^\d.-]/g, ''),
 													lvp: $('#PcbTestingDetailsLvp').val().replace(/[^\d.-]/g, ''),
