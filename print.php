@@ -59,7 +59,7 @@
 								<div class='row'>
 									<center>
 										<br>
-										<h5 style='color: red'>We can't let you search!</h5>
+										<h5 style='color: red'>We can't let you print this!</h5>
 										<br>
 										<h5 style='color: red'>Until you're authorized to do this!</h5>
 										<br>

@@ -420,9 +420,9 @@
 								<div class='row'>
 									<center>
 										<br>
-										<h5 style='color: red'>We can't let you search!</h5>
+										<h5 style='color: red'>We can't show you the details!</h5>
 										<br>
-										<h5 style='color: red'>Until you're authorized to do this!</h5>
+										<h5 style='color: red'>Until you're authorized to see!</h5>
 										<br>
 										<br>
 										<a href='/FuzeDatabase/index.php'>Go Back to login page</a>
