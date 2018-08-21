@@ -88,6 +88,7 @@
 			$tableQuery = "SELECT * FROM `lot_table` WHERE 
 					`fuze_type` = '".$_POST['fuze']."' AND 
 					`main_lot` = '".$_POST['main_lot']."' AND 
+					`fuze_diameter` = '".$_POST['fuze_diameter']."' AND 
 					`kit_lot` = '".$_POST['kit_lot']."' ORDER BY `_id` DESC";
 
 					$tableResult = mysqli_query($db,$tableQuery);

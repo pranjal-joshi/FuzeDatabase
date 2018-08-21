@@ -776,7 +776,7 @@
 								<br>
 
 								<div class="row">
-									<div class="input-field col s2">
+									<!--<div class="input-field col s2">
 										<select name="lotFuzeType" id="lotFuzeType" required>
 											<option value="" disabled selected>-- Please select --</option>
 											<option value="EPD">EPD</option>
@@ -792,17 +792,17 @@
 											<option value="60">60</option>
 										</select>
 										<label>Select Kit-Lot size</label>
-									</div>
-									<div class="input-field col s3">
+									</div>-->
+									<div class="input-field col s4">
 										<input id="mainLotNoText" name="mainLotNoText" type="text">
 										<label for="mainLotNoText"><center>Enter Main Lot Number</center></label>
 									</div>
-									<div class="input-field col s3">
+									<div class="input-field col s4">
 										<input id="kitLotNoText" name="kitLotNoText" type="text">
 										<label for="kitLotNoText"><center>Enter Kit Lot Number</center></label>
 									</div>
 									<br>
-									<a class="btn waves-effect waves-light col s2 center" id='lotViewButton'>VIEW LOT</a>
+									<a class="btn waves-effect waves-light col s4 center" id='lotViewButton'>VIEW LOT</a>
 								</div>
 
 								<div class="row">
@@ -2566,8 +2566,8 @@
 					type: 'POST',
 					data: {
 						pcb_no: ($('#lotScanPcb').val().length == 0 ? $('#lotManualPcb').val() : $('#lotScanPcb').val()),
-						fuze: $('#lotFuzeType :selected').val(),
-						size: $('#lotSize :selected').val(),
+						fuze: $.cookie('fuzeType'),		//$('#lotFuzeType :selected').val(),	--- CHANGED ---
+						size: "60",										//$('#lotSize :selected').val(),			--- CHANGED ---
 						main_lot: $('#mainLotNoText').val(),
 						kit_lot: $('#kitLotNoText').val(),
 						fuze_diameter: $.cookie('fuzeDia'),
@@ -2579,7 +2579,8 @@
 						if(msg.includes('</table>')){
 							Materialize.toast('Record created',1500,'rounded');
 							var cnt = occurrences(msg,"</tr>").toString();
-							document.getElementById('lotRecordCountTitle').innerHTML = cnt + "/" + $('#lotSize :selected').val() + " Records found in this Kit Lot";
+							//document.getElementById('lotRecordCountTitle').innerHTML = cnt + "/" + $('#lotSize :selected').val() + " Records found in this Kit Lot";  --- CHANGED ---
+							document.getElementById('lotRecordCountTitle').innerHTML = cnt + "/60 Records found in this Kit Lot";
 							setTimeout(function(){
 								$('#lotScanPcb').val('');
 								$('#lotManualPcb').val('');
@@ -2619,10 +2620,11 @@
 					type: 'POST',
 					data: {
 						pcb_no: ($('#lotScanPcb').val().length == 0 ? $('#lotManualPcb').val() : $('#lotScanPcb').val()),
-						fuze: $('#lotFuzeType :selected').val(),
-						size: $('#lotSize :selected').val(),
+						fuze: $.cookie('fuzeType'),		//$('#lotFuzeType :selected').val(),	--- CHANGED ---
+						size: "60",										//$('#lotSize :selected').val(),			--- CHANGED ---
 						main_lot: $('#mainLotNoText').val(),
 						kit_lot: $('#kitLotNoText').val(),
+						fuze_diameter: $.cookie('fuzeDia'),
 						task: 'view'
 					},
 					success: function(msg) {
@@ -2630,7 +2632,8 @@
 						if(msg.includes('</table>')){
 							var cnt = occurrences(msg,"</tr>").toString();
 							console.log(cnt);
-							document.getElementById('lotRecordCountTitle').innerHTML = cnt + "/" + $('#lotSize :selected').val() + " Records found in this Kit Lot";
+							//document.getElementById('lotRecordCountTitle').innerHTML = cnt + "/" + $('#lotSize :selected').val() + " Records found in this Kit Lot"; --- CHANGED ---
+							document.getElementById('lotRecordCountTitle').innerHTML = cnt + "/60 Records found in this Kit Lot";
 						}
 						else{
 							Materialize.toast('Failed to save record!',3000,'rounded');
