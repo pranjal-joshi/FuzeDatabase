@@ -821,6 +821,8 @@
 								<div class="row">
 									<center>
 										<span style="font-weight: bold; font-size: 18px" id='lotRecordCountTitle'class="teal-text text-darken-2"># Records found in this Kit Lot</span>
+										<br>
+										<span style="font-size: 12px" class="grey-text text-darken-2">Note: Entries with Red colour are rejected in testing.</span>
 									</center>
 								</div>
 
