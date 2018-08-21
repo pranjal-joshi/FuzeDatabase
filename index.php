@@ -274,7 +274,7 @@
 		});
 
 		function openModal() {
-				$('#troubleModal').html('Please contact the system administrator.\n\nE-mail: pranjaljoshi@bel.co.in\nContact: 3919\n\nPranjal P. Joshi\nFuze department.');
+				$('#troubleModal').html('Please contact the system administrator.\n\nE-mail: pranjaljoshi@bel.co.in\nContact: 3919\n\nPranjal P. Joshi\nDy.Engr. - Fuze');
 				$('#troubleModal').dialog({
 					autoOpen : false,
 					modal : true,

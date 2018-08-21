@@ -208,9 +208,9 @@
 									<option value="Q/A">Visual (Q/A)</option>
 									<option value="PCB">PCB</option>
 									<option value="HOUSING">HOUSING</option>
-									<option value="POTTING">ASSEMBLY ELECTRONICS (EPOXY POTTING)</option>
-									<option value="PU POTTING">CALIBRATION (BEFORE PU)</option>
-									<option value="ELECTRONIC HEAD">ELECTRONIC HEAD (AFTER PU)</option>
+									<option value="POTTING">ASSEMBLY ELECTRONICS (POTTED)</option>
+									<option value="PU POTTING">CALIBRATION (PROX ONLY)</option>
+									<option value="ELECTRONIC HEAD">ELECTRONIC HEAD</option>
 								</select>
 								<label>* Rejection Stage</label>
 							</div>
