@@ -197,7 +197,7 @@
 														<option value="6">Soldering</option>
 													</optgroup>
 													<optgroup label="For supervisors">
-														<option value="7">Lotwise Entry</option>
+														<option value="7">Create Lot</option>
 													</optgroup>
 													<optgroup label="Mechanical">
 														<option value="13">Battery linking</option>
