@@ -163,7 +163,7 @@ $html = "
 							<thead>
 								<tr>
 									<th>Material</th>
-									<th width='100'>Quantity</th>
+									<th width='100' style='text-align:right;'>Quantity</th>
 								</tr>
 							</thead>
 							<tbody id='mtrlmgmtTbody'>";
