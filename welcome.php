@@ -593,7 +593,6 @@
 							<br>
 
 							<div class="row">
-								<div class="col s2"></div>
 								<div class="col s4 modal-trigger" href="#searchModal">
 									<center>
 										<img class="responsive-img" src="search.svg">
@@ -608,7 +607,13 @@
 										<span style="font-size: 22px">Rejections</span>
 									</center>
 								</div>
-								<div class="col s2"></div>
+								<div class="col s4" onclick="window.open('mtrlmgmt.php','_blank');">
+									<center>
+										<img class="responsive-img" src="cart.svg">
+										<br>
+										<span style="font-size: 22px">Shopfloor Material Management</span>
+									</center>
+								</div>
 								<div class="col s4" onclick="window.open('analytics.php','_blank');" style="margin-top: 45px;">
 									<center>
 										<img class="responsive-img" src="chart.svg">
@@ -2240,6 +2245,9 @@
 					}
 				});
 				break;
+
+			case '15':
+				window.location = "mtrlmgmt.php";
 			}
 		}
 		else if($.cookie('fuzeAccess') == "37BD0D3935B47BE2AB57BCF91B57F499") {

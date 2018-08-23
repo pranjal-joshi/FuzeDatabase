@@ -198,6 +198,7 @@
 													</optgroup>
 													<optgroup label="For supervisors">
 														<option value="7">Create Lot</option>
+														<option value="15">Shopfloor Material Management</option>
 													</optgroup>
 													<optgroup label="Mechanical">
 														<option value="13">Battery linking</option>
