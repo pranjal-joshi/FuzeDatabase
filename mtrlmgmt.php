@@ -18,6 +18,17 @@
 			}
 			mysqli_close($db);
 		}
+		elseif($_POST['task'] == 'update') {
+			$size = sizeof($_POST['array']['data']);
+			for($i=0;$i<$size;$i++) {
+				$name = $_POST['array']['data'][$i]['name'];
+				$qty = $_POST['array']['data'][$i]['qty'];
+				print_r($name);
+				$sql = "UPDATE `mtrl_mgmt` SET `mtrl_qty`='".$qty."' WHERE `mtrl_name`='".$name."'";
+				$dateRes = mysqli_query($db, $sql);
+			}
+			die("ok");
+		}
 	}
 	else {
 
@@ -56,7 +67,7 @@
 			</head>
 		";
 
-		if(!isset($_COOKIE['fuzeAccess']) || $_COOKIE["fuzeAccess"] == "EFB2A684E4AFB7D55E6147FBE5A332EE"){
+		if(!isset($_COOKIE['fuzeAccess'])) {		// TO DENY ACCESS WITH WRITE PERMSN, ADD --> || $_COOKIE["fuzeAccess"] == "EFB2A684E4AFB7D55E6147FBE5A332EE"
 			die("
 					<body class='mtrlmgmtBody'>
 					<main class='contents'>
@@ -207,14 +218,41 @@ $html = "
 				mtrlName = $(this).html();
 				mtrlName = mtrlName.split('</td>')[0];
 				mtrlName = mtrlName.split('>')[1];
-				//console.log(mtrlName);
 
 				colName = 'qtyCol' + rc.toString();
 				mtrlQty = document.getElementById(colName).value;
-				console.log(mtrlQty);
+				
+				jsonMaterial.data.push({
+					'name': mtrlName,
+					'qty': mtrlQty
+				});
+
+
 			}
 			rc += 1;
 		});
+
+		console.log(jsonMaterial);
+
+		$.ajax({
+				type: 'POST',
+				data: {
+					array: jsonMaterial,
+					task: 'update'
+				},
+				success: function(msg) {
+					if(msg.includes('ok')) {
+						Materialize.toast('Record updated',2000,'rounded');
+						setTimeout(function(){location.reload(true)},2000);
+					}
+					else {
+						console.log(msg);
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert(errorThrown + ' Is web-server offline?');
+				}
+			});
 	}
 
 	function onAdd() {
