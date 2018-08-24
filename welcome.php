@@ -300,7 +300,7 @@
 
 								<div class="row">
 									<div class="input-field col s6">
-										<input id="before_freq" name="before_freq" type="text">
+										<input id="before_freq" name="before_freq" type="text" disabled>
 										<label for="before_freq"><center>Before Calibration - Freq (MHz)</center></label>
 									</div>
 									<div class="input-field col s6">
@@ -2403,7 +2403,8 @@
 					resChange: $('#resChange').val(),
 					changed: (($('#resChange').val().length > 0) ? '1' : '0'),
 					datePicker: $('#datePicker').val(),
-					op_name: $('#op_name').val().toUpperCase()
+					op_name: $('#op_name').val().toUpperCase(),
+					task: 'add'
 				},
 				success: function(msg) {
 					if(msg.includes("ok")){
@@ -2436,6 +2437,55 @@
 			});
 			}
 		});
+
+		$('#pcb_no').bind('keyup', function(e){
+				if($(this).val().length > 3){
+					setTimeout(function(){
+						$.ajax({
+							url: 'submit_cal.php',
+							type: 'POST',
+							data: {
+								task: 'load',
+								pcb_no: $('#pcb_no').val()
+							},
+							success: function(msg) {
+								try {
+									msg = JSON.parse(msg);
+									if(msg['0']['changed'] == "1") {
+										$("#radioYes").prop("checked", true);
+										$("#radioNo").prop("checked", false);
+									}
+									else {
+										$("#radioNo").prop("checked", true);
+										$("#radioYes").prop("checked", false);
+									}
+									onRadioChange();
+									$('#rf_no').focus();
+									$('#rf_no').val(msg['0']['rf_no']);
+									$('#before_bpf').focus();
+									$('#before_bpf').val(msg['0']['before_bpf']);
+									$('#resChange').focus();
+									$('#resChange').val(msg['0']['res_val'] == "0" ? "" : msg['0']['res_val']);
+									$('#after_freq').focus();
+									$('#after_freq').val(msg['0']['after_freq']);
+									$('#after_bpf').focus();
+									$('#after_bpf').val(msg['0']['after_bpf']);
+									$('#op_name').focus();
+									$('#op_name').val(msg['0']['op_name']);
+									$('#pcb_no').focus();
+									$('#datePicker').val(msg['0']['timestamp']);
+								}
+								catch(err) { // do nothing
+									console.log(err);
+								}
+							},
+							error: function(XMLHttpRequest, textStatus, errorThrown) {
+								alert(errorThrown + ' Is web-server offline?');
+							}
+						});
+					}, 300);
+				}
+			});
 
 		$('#qaSubmitButton').click(function(){
 			if (($('#qa_pcb_no').val().length == 0) || ($('#qa_op_name').val().length == 0) || ($('#qaDatePicker').val().length == 0) || $('#qa_stage :selected').val() == ""){
