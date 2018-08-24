@@ -84,6 +84,9 @@
 					<nav>
 						<div class='nav-wrapper teal lighten-2' id='vendorNav'>
 							<a href='#!' class='brand-logo center'>Vendor wise series entry</a>
+							<span class='white-text text-darken-5 left' style='font-size: 18px; padding-left: 20px; font-weight: bold' onclick='self.close();'>
+								Back
+							</span>
 						</div>
 					</nav>
 				</div>
