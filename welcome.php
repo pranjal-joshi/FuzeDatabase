@@ -799,7 +799,7 @@
 										<label>Select Kit-Lot size</label>
 									</div>-->
 									<div class="input-field col s4">
-										<input id="mainLotNoText" name="mainLotNoText" type="text">
+										<input id="mainLotNoText" name="mainLotNoText" type="text" autofocus>
 										<label for="mainLotNoText"><center>Enter Main Lot Number</center></label>
 									</div>
 									<div class="input-field col s4">
@@ -812,7 +812,7 @@
 
 								<div class="row">
 									<div class="input-field col s4">
-										<input id="lotScanPcb" name="lotScanPcb" type="text" autofocus>
+										<input id="lotScanPcb" name="lotScanPcb" type="text">
 										<label for="lotScanPcb"><center>Scan PCB Number</center></label>
 									</div>
 									<div class="input-field col s4">
