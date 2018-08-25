@@ -3,7 +3,8 @@
 
 	if($_SERVER['REQUEST_METHOD'] == "POST") {
 		if($_POST['mode'] == 'new') {
-			$sqlNew = "INSERT INTO `forum_table` (`message`) VALUE ('".$_POST['msg']."')";
+			$sqlNew = "INSERT INTO `forum_table` (`message`,`message_by`) VALUE ('".$_POST['msg']."','".$_POST['by']."')";
+			print_r($sqlNew);
 			$newRes = mysqli_query($db, $sqlNew);
 			if($newRes) {
 				die("ok");
@@ -21,6 +22,7 @@
 				$tbody.="<tr>";
 				$tbody.="<td class='left'>".$row['thread_id']."</td>";
 				$tbody.="<td class='center'>".$row['message']."</td>";
+				$tbody.="<td class='center'>".$row['message_by']."</td>";
 				$tbody.="</tr>";
 			}
 			die($tbody);
@@ -144,9 +146,13 @@
 							<center>
 								<span class="teal-text text-darken-2" style="font-size: 18px; font-weight: bold;">.: Create a new thread :.</span>
 							</center>
-							<div class="input-field col s12">
+							<div class="input-field col s9">
 								<textarea id="new_msg" class="materialize-textarea"></textarea>
 								<label for="new_msg">What's on your mind?</label>
+							</div>
+							<div class="input-field col s3">
+								<textarea id="msg_by" class="materialize-textarea"></textarea>
+								<label for="msg_by">Your Name</label>
 							</div>
 							<br>
 							<center><a href="#!" class="btn waves-light" id="forumSubmit" onclick="submitForum()">SUBMIT</a></center>
@@ -161,6 +167,7 @@
 									<tr>
 										<th class="left" width="10px">Th. No.</th>
 										<th class="center">Messages</th>
+										<th class="center" width="30px">By</th>
 									</tr>
 								</thead>
 								<tbody id="forumTableBody">
@@ -187,21 +194,23 @@
 		reloadTable();
 
 		function submitForum() {
-			if($('#new_msg').val() != "") {
+			if($('#new_msg').val() != "" || $('#msg_by').val() != "") {
 				$.ajax({
 					type: "POST",
 					data: {
 						msg: $('#new_msg').val(),
+						by: $('#msg_by').val(),
 						mode: 'new'
 					},
 					success: function(msg) {
-						if(msg == "ok") {
+						if(msg.includes("ok")) {
 							Materialize.toast("New thread created",3000,'rounded');
 							$('#new_msg').val('');
 							reloadTable();
 						}
 						else if(msg == "fail") {
 							Materialize.toast("Failed to create thread!",3000,'rounded');
+
 						}
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
