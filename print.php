@@ -680,10 +680,6 @@
 								<td>PASS/FAIL</td>
 								<td>".$afterPuRow['result']."</td>
 							</tr>
-							<tr>
-								<td colspan='2'>Operator</td>
-								<td>*ATE*</td>
-							</tr>
 						</table>
 						<br>
 					</div>
