@@ -160,7 +160,7 @@
 			</nav>
 		</div>
 
-		<div class="row">
+		<!--<div class="row">
 			<div class="col m2"></div>
 				<div class="col s12 m8">
 					<br>
@@ -200,7 +200,6 @@
 							</div>
 						</div>
 
-						<!-- Value and process name will be mismatch. Remember to use the values for further processing -->
 						<div class="row">
 							<div class="input-field col s4">
 								<select name="rejection_stage" id="rejection_stage" required>
@@ -277,6 +276,124 @@
 
 					</div>
 				</div>
+			</div>
+		-->
+
+		<div class="row">
+			<div class="col s1"></div>
+				<div class="col s5">
+					<br>
+					<br>
+					<div class="card-panel grey lighten-4" id="rejectionCard">
+						<br>
+
+						<center>
+							<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Add to Rejection / Edit Rejection</span>
+							<p class="red-text text-lighten-1" style="font-size: 12px;">Fields indicated by (*) are mandatory.</p>
+							<br>
+						</center>
+
+						<div class="row">
+							<div class="input-field col s2">
+								<select name="rejection_fuze_type" id="rejection_fuze_type" required>
+									<option value="" disabled selected>--Select--</option>
+									<option value="EPD">EPD</option>
+									<option value="TIME">TIME</option>
+									<option value="PROX">PROX</option>
+								</select>
+								<label>* Fuze Type</label>
+							</div>
+
+							<div class="input-field col s2">
+								<select name="rejection_fuze_diameter" id="rejection_fuze_diameter" required>
+									<option value="" selected disabled>--Select--</option>
+									<option value="105">105 mm</option>
+									<option value="155">155 mm</option>
+								</select>
+								<label>* Gun Type</label>
+							</div>
+
+							<div class="input-field col s8">
+								<input id="rejection_scan_pcb" name="rejection_scan_pcb" type="text" autofocus>
+								<label for="rejection_scan_pcb"><center>* Scan PCB Number</center></label>
+							</div>
+						</div>
+
+						<!-- Value and process name will be mismatch. Remember to use the values for further processing -->
+						<div class="row">
+							<div class="input-field col s4">
+								<select name="rejection_stage" id="rejection_stage" required>
+									<option value="" disabled selected>-- Please select --</option>
+									<option value="Q/A">Visual (Q/A)</option>
+									<option value="PCB">PCB</option>
+									<option value="HOUSING">HOUSING</option>
+									<option value="POTTING">ASSEMBLY ELECTRONICS (POTTED)</option>
+									<option value="PU POTTING">CALIBRATION (PROX ONLY)</option>
+									<option value="ELECTRONIC HEAD">ELECTRONIC HEAD</option>
+								</select>
+								<label>* Rejection Stage</label>
+							</div>
+							<div class="input-field col s8" required>
+								<input type="text" id="rejection_remark">
+								<label for="rejection_remark">* Rejection Remark</label>
+							</div>
+						</div>
+						<center>
+							<a class="waves-effect waves-light btn red" id="rejection_submit">ADD TO REJECTION</a>
+							<a class="btn waves-effect teal lighten-1" id="rejection_clear">CLEAR</a>
+						</center>
+
+					</div>
+				</div>
+
+				<div class="col s5">
+					<br><br>
+					<div class="card-panel grey lighten-4" id="acceptionCard">
+						<center>
+							<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Re-accept Rejected Fuze</span>
+							<p class="red-text text-lighten-1" style="font-size: 12px;">Fields indicated by (*) are mandatory.</p>
+							<br>
+							<br>
+						</center>
+
+						<div class="row">
+							<div class="input-field col s2">
+								<select name="acception_fuze_type" id="acception_fuze_type">
+									<option value="" disabled selected>--Select--</option>
+									<option value="EPD">EPD</option>
+									<option value="TIME">TIME</option>
+									<option value="PROX">PROX</option>
+								</select>
+								<label>* Fuze Type</label>
+							</div>
+
+							<div class="input-field col s2">
+								<select name="acception_fuze_diameter" id="acception_fuze_diameter" required>
+									<option value="" selected disabled>--Select--</option>
+									<option value="105">105 mm</option>
+									<option value="155">155 mm</option>
+								</select>
+								<label>* Gun Type</label>
+							</div>
+
+							<div class="input-field col s8">
+								<input id="acception_scan_pcb" name="acception_scan_pcb" type="text">
+								<label for="acception_scan_pcb"><center>* Scan PCB Number</center></label>
+							</div>
+						</div>
+
+						<div class="input-field col s12">
+							<input class="tooltipped" id="acception_remark" name="acception_remark" type="text" data-position="top" data-delay="50" data-tooltip="Help us knowing how you solved this problem">
+							<label for="acception_remark"><center>Remark</center></label>
+						</div>
+						<center style="margin-top: 120px;">
+							<a class="waves-effect waves-light btn green" id="acception_submit">ACCEPT FROM REJECTION</a>
+							<a class="btn waves-effect teal lighten-1" id="acception_clear">CLEAR</a>
+						</center>
+
+					</div>
+				</div>
+				<div class="col s1"></div>
 			</div>
 
 		</main>
