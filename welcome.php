@@ -565,6 +565,21 @@
 										$('#qaDialog').dialog('close');
 									});
 								});
+								$('#testing_module').click(function() {
+									$("#testingDialog" ).dialog({
+               			autoOpen: false,
+               			modal : true,
+										show : 'blind',
+										hide : 'blind',
+										width: '30%',
+										title: "Testing Module"
+       						});
+       						$('#testingDialog').dialog('open');
+									$('.ui-widget-overlay').bind('click', function(){
+										$('#testtingDialog').unbind();
+										$('#testtingDialog').dialog('close');
+									});
+								});
 							</script>
 
 						</div>
@@ -578,6 +593,12 @@
 						<div id='qaDialog' style="display: none;">
 							<ul>
 								<li><a href="analytics.php" target="_blank" style="color: blue;">&#9672; Vendor wise Rejection</a></li>
+							</ul>
+						</div>
+
+						<div id='testingDialog' style="display: none;">
+							<ul>
+								<li><a href="analytics.php" target="_blank" style="color: blue;">&#9672; Testing Count</a></li>
 							</ul>
 						</div>
 
