@@ -175,7 +175,7 @@
 													<option value="105">105 mm</option>
 													<option value="155">155 mm</option>
 												</select>
-												<label>Fuze Diameter</label>
+												<label>Gun Type</label>
 											</div>
 
 											<div class="input-field col s8" id="startPointDiv">
