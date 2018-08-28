@@ -811,6 +811,9 @@
 									title: {
 										text: ($('#analytics_process :selected').val().charAt(0).toUpperCase() + $('#analytics_process :selected').val().slice(1)) + " of " + $('#analytics_fuze_diameter :selected').val() + " mm " + $('#analytics_fuze_type :selected').val() + " Fuze in " + selectedMonth
 									},
+									toolTip:{   
+										content: "{name} - Date {x} : Count {y}" 
+									},
 									axisX: {
 										title: "Days",
 									},
@@ -822,30 +825,35 @@
 									{
 										type: "line",
 										legendText: "Q/A",
+										name: "Q/A",
 										showInLegend: true,
 										dataPoints: JSON.parse(msg)[0]
 									},
 									{
 										type: "line",
 										legendText: "PCB",
+										name: "PCB",
 										showInLegend: true,
 										dataPoints: JSON.parse(msg)[1]
 									},
 									{
 										type: "line",
 										legendText: "Housing",
+										name: "Housing",
 										showInLegend: true,
 										dataPoints: JSON.parse(msg)[2]
 									},
 									{
 										type: "line",
 										legendText: "Potting",
+										name: "Potting",
 										showInLegend: true,
 										dataPoints: JSON.parse(msg)[3]
 									},
 									{
 										type: "line",
 										legendText: "Calibration",
+										name: "Calibration",
 										showInLegend: true,
 										dataPoints: JSON.parse(msg)[4]
 									},
