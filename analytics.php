@@ -190,39 +190,118 @@
 		}
 		elseif($_POST['select'] == "production") {
 
-			$table_name = "";
-			$column_name = "record_date";
-			$sql = "";
+			if($_POST['process'] != 'all' && $_POST['fuze_type'] == "PROX") {
 
-			if($_POST['process'] == "calibration" && $_POST['fuze_type'] == "PROX") {
+				$table_name = "";
+				$column_name = "record_date";
+				$sql = "";
+
+				if($_POST['process'] == "calibration" && $_POST['fuze_type'] == "PROX") {
+					$table_name = "calibration_table";
+					$column_name = "timestamp";
+				}
+				elseif ($_POST['process'] == "Q/A") {
+					$table_name = "qa_table";
+				}
+				elseif ($_POST['process'] == "pcb Testing") {
+					$table_name = "pcb_testing";
+				}
+				elseif ($_POST['process'] == "housing Testing") {
+					$table_name = "housing_table";
+				}
+				elseif ($_POST['process'] == "potted Housing Testing") {
+					$table_name = "potting_table";
+				}
+
+				$productionData = array();
+
+				for($i=1;$i<=$_POST['days_in_month'];$i++) {
+
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+
+					$productionResult = mysqli_query($db, $productionSql);
+					array_push($productionData, 
+						array("x"=>$i, "y"=>mysqli_num_rows($productionResult))
+					);
+				}
+				die(json_encode($productionData, JSON_NUMERIC_CHECK));
+			}
+			else {
+				$sql = "";
+				$productionDataAll = array();
+				$productionCalibrationData = array();
+				$productionQaData = array();
+				$productionPcbData = array();
+				$productionHousingData = array();
+				$productionPottingData = array();
+
 				$table_name = "calibration_table";
 				$column_name = "timestamp";
-			}
-			elseif ($_POST['process'] == "Q/A") {
+
+				for($i=1;$i<=$_POST['days_in_month'];$i++) {
+
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+
+					$productionResult = mysqli_query($db, $productionSql);
+					array_push($productionCalibrationData, 
+						array("x"=>$i, "y"=>mysqli_num_rows($productionResult))
+					);
+				}
+
+				$column_name = "record_date";
+
 				$table_name = "qa_table";
-			}
-			elseif ($_POST['process'] == "pcb Testing") {
+				for($i=1;$i<=$_POST['days_in_month'];$i++) {
+
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+
+					$productionResult = mysqli_query($db, $productionSql);
+					array_push($productionQaData, 
+						array("x"=>$i, "y"=>mysqli_num_rows($productionResult))
+					);
+				}
+
 				$table_name = "pcb_testing";
-			}
-			elseif ($_POST['process'] == "housing Testing") {
+				for($i=1;$i<=$_POST['days_in_month'];$i++) {
+
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+
+					$productionResult = mysqli_query($db, $productionSql);
+					array_push($productionPcbData, 
+						array("x"=>$i, "y"=>mysqli_num_rows($productionResult))
+					);
+				}
+
 				$table_name = "housing_table";
-			}
-			elseif ($_POST['process'] == "potted Housing Testing") {
+				for($i=1;$i<=$_POST['days_in_month'];$i++) {
+
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+
+					$productionResult = mysqli_query($db, $productionSql);
+					array_push($productionHousingData, 
+						array("x"=>$i, "y"=>mysqli_num_rows($productionResult))
+					);
+				}
+
 				$table_name = "potting_table";
+				for($i=1;$i<=$_POST['days_in_month'];$i++) {
+
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+
+					$productionResult = mysqli_query($db, $productionSql);
+					array_push($productionPottingData, 
+						array("x"=>$i, "y"=>mysqli_num_rows($productionResult))
+					);
+				}
+
+				$productionData = array();
+				array_push($productionData, $productionQaData);
+				array_push($productionData, $productionPcbData);
+				array_push($productionData, $productionHousingData);
+				array_push($productionData, $productionPottingData);
+				array_push($productionData, $productionCalibrationData);
+				die(json_encode($productionData, JSON_NUMERIC_CHECK));
 			}
-
-			$productionData = array();
-
-			for($i=1;$i<=$_POST['days_in_month'];$i++) {
-
-				$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
-
-				$productionResult = mysqli_query($db, $productionSql);
-				array_push($productionData, 
-					array("x"=>$i, "y"=>mysqli_num_rows($productionResult))
-				);
-			}
-			die(json_encode($productionData, JSON_NUMERIC_CHECK));
 		}
 		elseif($_POST['select'] == "total_rejection") {
 
@@ -586,7 +665,7 @@
 								<option value="105">105 mm</option>
 								<option value="155">155 mm</option>
 							</select>
-							<label>Fuze Diameter</label>
+							<label>Gun Type</label>
 						</div>
 
 						<div class='input-field col s2' style="display: none;" id='analytics_main_lot_div'>
@@ -600,6 +679,7 @@
 						<div class="input-field col s6" id="analytics_process_div">
 							<select name="analytics_proess" id="analytics_process" required>
 								<option value="" selected disabled>--Select--</option>
+								<option value="all">All</option>
 								<option value="Q/A">Visual (Q/A)</option>
 								<option value="calibration">Calibration</option>
 								<option value="pcb Testing">PCB Testing</option>
@@ -717,37 +797,97 @@
 							days_in_month: daysInMonth
 						},
 						success: function(msg) {
-							monthlyCount = JSON.parse(msg);
-							for(var i=0;i<monthlyCount.length;i++) {
-								finalMonthlyCount += monthlyCount[i]['y'];
+							if(JSON.parse(msg).length < 27) {			// only valid if 'all' selected from UI
+								jsonMsg = JSON.stringify(JSON.parse(msg)[0]);
+								var monthlyCount = JSON.parse(jsonMsg);
+								for(var i=0;i<monthlyCount.length;i++) {
+									finalMonthlyCount += monthlyCount[i]['y'];
+								}
+								finalMonthlyCount = 0;
+								var chart = new CanvasJS.Chart("chartContainer", {
+									animationEnabled: true,
+									exportEnabled: true,
+									theme: "light2",
+									title: {
+										text: ($('#analytics_process :selected').val().charAt(0).toUpperCase() + $('#analytics_process :selected').val().slice(1)) + " of " + $('#analytics_fuze_diameter :selected').val() + " mm " + $('#analytics_fuze_type :selected').val() + " Fuze in " + selectedMonth
+									},
+									axisX: {
+										title: "Days",
+									},
+									axisY: {
+										title: "Prodution rate",
+										includeZero: false
+									},
+									data: [
+									{
+										type: "line",
+										legendText: "Q/A",
+										showInLegend: true,
+										dataPoints: JSON.parse(msg)[0]
+									},
+									{
+										type: "line",
+										legendText: "PCB",
+										showInLegend: true,
+										dataPoints: JSON.parse(msg)[1]
+									},
+									{
+										type: "line",
+										legendText: "Housing",
+										showInLegend: true,
+										dataPoints: JSON.parse(msg)[2]
+									},
+									{
+										type: "line",
+										legendText: "Potting",
+										showInLegend: true,
+										dataPoints: JSON.parse(msg)[3]
+									},
+									{
+										type: "line",
+										legendText: "Calibration",
+										showInLegend: true,
+										dataPoints: JSON.parse(msg)[4]
+									},
+									]
+								});
+								$('#chartContainer').fadeIn();
+								chart.render();
+								$('#chartContainer').css({"margin-bottom":"100px"});
 							}
-							$('#analytics_detail_span').html('Total count for ' + selectedMonth + " is " + finalMonthlyCount.toString());
-							$('#analytics_detail_span').fadeIn();
-							finalMonthlyCount = 0;
-							var chart = new CanvasJS.Chart("chartContainer", {
-								animationEnabled: true,
-								exportEnabled: true,
-								theme: "light2",
-								title: {
-									text: ($('#analytics_process :selected').val().charAt(0).toUpperCase() + $('#analytics_process :selected').val().slice(1)) + " of " + $('#analytics_fuze_diameter :selected').val() + " mm " + $('#analytics_fuze_type :selected').val() + " Fuze in " + selectedMonth
-								},
-								axisX: {
-									title: "Days",
-								},
-								axisY: {
-									title: "Prodution rate",
-									includeZero: false
-								},
-								data: [{
-									type: "line",
-									lineColor: "#009688",
-									color: "#00897b",
-									dataPoints: JSON.parse(msg)
-								}]
-							});
-							$('#chartContainer').fadeIn();
-							chart.render();
-							$('#chartContainer').css({"margin-bottom":"100px"});
+							else {
+								var monthlyCount = JSON.parse(msg);
+								for(var i=0;i<monthlyCount.length;i++) {
+									finalMonthlyCount += monthlyCount[i]['y'];
+								}
+								$('#analytics_detail_span').html('Total count for ' + selectedMonth + " is " + finalMonthlyCount.toString());
+								$('#analytics_detail_span').fadeIn();
+								finalMonthlyCount = 0;
+								var chart = new CanvasJS.Chart("chartContainer", {
+									animationEnabled: true,
+									exportEnabled: true,
+									theme: "light2",
+									title: {
+										text: ($('#analytics_process :selected').val().charAt(0).toUpperCase() + $('#analytics_process :selected').val().slice(1)) + " of " + $('#analytics_fuze_diameter :selected').val() + " mm " + $('#analytics_fuze_type :selected').val() + " Fuze in " + selectedMonth
+									},
+									axisX: {
+										title: "Days",
+									},
+									axisY: {
+										title: "Prodution rate",
+										includeZero: false
+									},
+									data: [{
+										type: "line",
+										lineColor: "#009688",
+										color: "#00897b",
+										dataPoints: JSON.parse(msg)
+									}]
+								});
+								$('#chartContainer').fadeIn();
+								chart.render();
+								$('#chartContainer').css({"margin-bottom":"100px"});
+								}
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
 							 alert(errorThrown + 'Is web-server offline?');
