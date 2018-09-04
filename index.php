@@ -219,6 +219,8 @@
 							<center>
 								<a href="mgrlogin.php" style="color: teal; font-size: 16px;">&#10596; Management login &#10594;</a>
 								<br><br>
+								<a href="SOP_FDEK.pdf" >Download SOP</a>
+								<br><br>
 								<a href="#" style="color: #ef5350;" onclick="openModal()">Trouble logging in?</a>
 							</center>
 
