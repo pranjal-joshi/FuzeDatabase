@@ -2734,7 +2734,7 @@
 			var isEmpty = false;
 			if($.cookie('fuzeStart') == "8") {
 				$('#pcbTestingManualCard input[type="text"]').each(function(){
-					if($(this).val() == "" && this.id != "PcbTestingDetailsBpfNoiseDc" && this.id != "PcbTestingDetailsBpfNoiseAc") {
+					if($(this).val() == "") {
 						isEmpty = true;
 					}
 					if($(this).attr('id') != "pcbTestingManualRecordDate") {	// field name remains same - DOM manipulted
@@ -2747,7 +2747,7 @@
 			}
 			else if($.cookie('fuzeStart') == "10") {
 				$('#HousingTestingManualCard input[type="text"]').each(function(){
-					if($(this).val() == "") {
+					if($(this).val() == "" && $(this).attr('id') != "PcbTestingDetailsBpfNoiseAc" && $(this).attr('id') != "PcbTestingDetailsBpfNoiseDc") {
 						isEmpty = true;
 					}
 					if($(this).attr('id') != "pcbTestingManualRecordDate") {		// field name remains same - DOM manipulted
@@ -2760,7 +2760,8 @@
 			}
 			else if($.cookie('fuzeStart') == "12") {
 				$('#PottingTestingManualCard input[type="text"]').each(function(){
-					if($(this).val() == "") {
+					console.log(this);
+					if($(this).val() == "" && t&& $(this).attr('id') != "PcbTestingDetailsBpfNoiseAc" && $(this).attr('id') != "PcbTestingDetailsBpfNoiseDc") {
 						isEmpty = true;
 					}
 					if($(this).attr('id') != "pcbTestingManualRecordDate") {		// field name remains same - DOM manipulted
