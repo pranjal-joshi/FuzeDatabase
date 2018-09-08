@@ -1907,12 +1907,12 @@
 											$('#HousingTableDetailsCycles').val('".$row[16]."');
 											$('#HousingTableDetailsBpfAC').val('".$row[17]." V');
 											$('#HousingTableDetailsBpfDC').val('".$row[18]." V');
-											$('#HousingTableDetailsSil').val('".$row[19]." mS');
-											$('#HousingTableDetailsLvp').val('".$row[20]." V');
-											$('#HousingTableDetailsPDDelay').val('".$row[21]." uS');
-											$('#HousingTableDetailsPDDet').val('".$row[22]." V');
-											$('#HousingTableDetailsSafe').val('".$row[23]."');
-											$('#HousingTableDetailsResult').val('".$row[24]."');
+											$('#HousingTableDetailsSil').val('".$row[21]." mS');
+											$('#HousingTableDetailsLvp').val('".$row[22]." V');
+											$('#HousingTableDetailsPDDelay').val('".$row[23]." uS');
+											$('#HousingTableDetailsPDDet').val('".$row[24]." V');
+											$('#HousingTableDetailsSafe').val('".$row[25]."');
+											$('#HousingTableDetailsResult').val('".$row[26]."');
 
 											$('#HousingTableDetailsPcbNo').prop('readonly','true');
 											$('#HousingTableDetailsPcbNo').click(function(){
@@ -2291,14 +2291,14 @@
 											$('#PottingTableDetailsDetWidth').val('".$row[14]." uS');
 											$('#PottingTableDetailsDetAmpl').val('".$row[15]." V');
 											$('#PottingTableDetailsCycles').val('".$row[16]."');
-											$('#PottingTableDetailsBpfAC').val('".$row[17]." V');
-											$('#PottingTableDetailsBpfDC').val('".$row[18]." V');
-											$('#PottingTableDetailsSil').val('".$row[19]." mS');
-											$('#PottingTableDetailsLvp').val('".$row[20]." V');
-											$('#PottingTableDetailsPDDelay').val('".$row[21]." uS');
-											$('#PottingTableDetailsPDDet').val('".$row[22]." V');
-											$('#PottingTableDetailsSafe').val('".$row[23]."');
-											$('#PottingTableDetailsResult').val('".$row[24]."');
+											$('#PottingTableDetailsBpfDC').val('".$row[17]." V');
+											$('#PottingTableDetailsBpfAC').val('".$row[18]." V');
+											$('#PottingTableDetailsSil').val('".$row[21]." mS');
+											$('#PottingTableDetailsLvp').val('".$row[22]." V');
+											$('#PottingTableDetailsPDDelay').val('".$row[23]." uS');
+											$('#PottingTableDetailsPDDet').val('".$row[24]." V');
+											$('#PottingTableDetailsSafe').val('".$row[25]."');
+											$('#PottingTableDetailsResult').val('".$row[26]."');
 
 											$('#PottingTableDetailsPcbNo').prop('readonly','true');
 											$('#PottingTableDetailsPcbNo').click(function(){
