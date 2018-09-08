@@ -923,6 +923,70 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="HousingTestingCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Upload Excel file of results After HOUSING testing</span>
+								</center>
+							</div>
+
+							<div class="row">
+								<br>
+								<form action="housing_testing_upload.php" method="POST" enctype="multipart/form-data">
+								
+									<center>
+										<input type="file"  name="file" >
+										<button type="submit" value="submit" class="btn">Upload</button>
+									</center>
+
+								</form>
+							</div>
+
+							<div class="row">
+								<br>
+								<br>
+								<center>
+									<a href="LogToExcel.exe">Download Log to Excel converter application</a>
+								</center>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="card-panel grey lighten-4" id="PottedHousingTestingCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Upload Excel file of results After testing POTTED HOUSING</span>
+								</center>
+							</div>
+
+							<div class="row">
+								<br>
+								<form action="potting_testing_upload.php" method="POST" enctype="multipart/form-data">
+								
+									<center>
+										<input type="file"  name="file" >
+										<button type="submit" value="submit" class="btn">Upload</button>
+									</center>
+
+								</form>
+							</div>
+
+							<div class="row">
+								<br>
+								<br>
+								<center>
+									<a href="LogToExcel.exe">Download Log to Excel converter application</a>
+								</center>
+							</div>
+
+						</div>
+					</div>
+
 					<div class="card-panel grey lighten-4" id="reworkCard" style="display: none;">
 						<div class="row">
 							<center>
@@ -1723,6 +1787,9 @@
 					}
 				});
 				break;
+			case '9':
+				$('#HousingTestingCard').fadeIn();
+				break;
 			case '10':
 				$('#manualTestingClone').clone().appendTo("#HousingTestingManualCard");
 				$('#pcbTestingManualRecordDate').val(getTodaysDate());
@@ -1961,6 +2028,9 @@
 						return false;  
 					}
 				});
+				break;
+			case '11':
+				$('#PottedHousingTestingCard').fadeIn();
 				break;
 			case '12':
 				$('#manualTestingClone').clone().appendTo("#PottingTestingManualCard");
