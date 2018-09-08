@@ -2734,7 +2734,7 @@
 			var isEmpty = false;
 			if($.cookie('fuzeStart') == "8") {
 				$('#pcbTestingManualCard input[type="text"]').each(function(){
-					if($(this).val() == "") {
+					if($(this).val() == "" && this.id != "PcbTestingDetailsBpfNoiseDc" && this.id != "PcbTestingDetailsBpfNoiseAc") {
 						isEmpty = true;
 					}
 					if($(this).attr('id') != "pcbTestingManualRecordDate") {	// field name remains same - DOM manipulted
@@ -2803,6 +2803,7 @@
 							$('#pcbTestingManualClearButton').trigger('click');
 						}
 						else {
+							console.log(msg);
 							Materialize.toast('Failed to save the record!',2000,'rounded');
 							Materialize.toast('Server says - ' + msg,2000,'rounded');
 						}
