@@ -2761,7 +2761,7 @@
 			else if($.cookie('fuzeStart') == "12") {
 				$('#PottingTestingManualCard input[type="text"]').each(function(){
 					console.log(this);
-					if($(this).val() == "" && t&& $(this).attr('id') != "PcbTestingDetailsBpfNoiseAc" && $(this).attr('id') != "PcbTestingDetailsBpfNoiseDc") {
+					if($(this).val() == "" && $(this).attr('id') != "PcbTestingDetailsBpfNoiseAc" && $(this).attr('id') != "PcbTestingDetailsBpfNoiseDc") {
 						isEmpty = true;
 					}
 					if($(this).attr('id') != "pcbTestingManualRecordDate") {		// field name remains same - DOM manipulted
