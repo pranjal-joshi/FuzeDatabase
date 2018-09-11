@@ -211,6 +211,7 @@
 								</div>
 
 								<center>
+									
 									<button class="waves-effect waves-light btn" type="submit" name="action" id="loginButton">LOGIN</button>
 								</center>
 							</form>
