@@ -159,7 +159,7 @@
 				foreach ($Reader as $Row)
 				{
 					$cnt++;
-					if($cnt > 5)
+					if($cnt > 7)	//5 for old chambers - 7 for optimized chamber -- compatible with new prox head - logToExcel
 					{
 						$html.="<tr>";
 						$pcb_no = isset($Row[0]) ? $Row[0] : '';
@@ -189,7 +189,8 @@
 						$result = isset($Row[24]) ? $Row[24] : '';
 						$record_date = isset($Row[25]) ? $Row[25] : 0;
 
-						$html.="<td>".($cnt-5)."</td>";
+						//$html.="<td>".($cnt-5)."</td>";
+						$html.="<td>".($cnt-7)."</td>";
 						$html.="<td>".$pcb_no."</td>";
 						$html.="<td>".$vbat_pst."</td>";
 						$html.="<td>".$pst_wid."</td>";
