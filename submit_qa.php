@@ -15,14 +15,15 @@
 		}
 		*/
 
-		$sql = "REPLACE INTO `qa_table` (`_id`, `pcb_no`, `stage`, `result`, `reason`, `record_date`, `op_name`) VALUES (
+		$sql = "REPLACE INTO `qa_table` (`_id`, `pcb_no`, `stage`, `result`, `reason`, `record_date`, `op_name`, `comment`) VALUES (
 			NULL, 
 			'".substr($_POST['qa_pcb_no'],0,12)."', 
 			'".$_POST['qa_stage']."',
 			'".$_POST['result']."',
 			'".$_POST['reason']."',
 			'".$_POST['qaDatePicker']."',
-			'".$_POST['qa_op_name']."'
+			'".$_POST['qa_op_name']."',
+			'".$_POST['qa_comment']."'
 				);";
 
 			$results = mysqli_query($db,$sql);

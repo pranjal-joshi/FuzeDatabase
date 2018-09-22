@@ -472,6 +472,13 @@
 										</div>
 									</div>
 
+									<div class="row" style="display: none;" id="qaFailCommentRow">
+										<div class="input-field">
+											<input id="qaFailComment" type="text">
+											<label for="qaFailComment">Enter Description</label>
+										</div>
+									</div>
+
 									<div class="row">
 										<center>
 											<span style="font-weight: bold; font-size: 16px" class="teal-text text-darken-2">Additional Information</span>
@@ -2593,7 +2600,8 @@
 						reason: $('#qaFailReason').val(),
 						qaDatePicker: $('#qaDatePicker').val(),
 						qa_op_name: $('#qa_op_name').val().toUpperCase(),
-						qa_stage: $('#qa_stage').val()
+						qa_stage: $('#qa_stage').val(),
+						qa_comment: $('#qaFailComment').val()
 					},
 					success: function(msg) {
 						console.log(msg);
@@ -2605,6 +2613,7 @@
 							$('#qaFailRow').fadeOut();
 							$('#qa_pcb_no').focus();
 							radioState = "radioPass";
+							$('#qaFailCommentRow').fadeOut();
 						}
 						else if(msg.includes("exist")) {
 							Materialize.toast("Record already exist!",3000,'rounded');
@@ -2630,6 +2639,17 @@
 			$('#qaFailRow').fadeOut();
 			$('#qa_pcb_no').focus();
 			radioState = "radioPass";
+			$('#qaFailCommentRow').fadeOut();
+		});
+
+		$('#qaFailReason').on('change', function() {
+			if($('#qaFailReason').val() == 100) {
+				// show comment textbox
+				$('#qaFailCommentRow').fadeIn();
+			}
+			else {
+				$('#qaFailCommentRow').fadeOut();
+			}
 		});
 
 		var timeOutLock = false;
