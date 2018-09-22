@@ -36,7 +36,7 @@
 
 			$sql = "REPLACE INTO `calibration_table` (`_id`, `pcb_no`, `rf_no`, `before_freq`, `before_bpf`, `changed`, `res_val`, `after_freq`, `after_bpf`, `timestamp`, `op_name`) VALUES (
 				NULL, 
-				'".$_POST['pcb_no']."', 
+				'".substr($_POST['pcb_no'],0,12)."', 
 				'".$_POST['rf_no']."', 
 				'".$_POST['before_freq']."', 
 				'".$_POST['before_bpf']."',

@@ -7,7 +7,7 @@
 		$_POST['pcb_no'] = strtoupper($_POST['pcb_no']);
 		$_POST['barcode_no'] = strtoupper($_POST['barcode_no']);
 
-		$sql = "REPLACE INTO `barcode_table` (`pcb_no`,`barcode_no`) VALUES ('".$_POST['pcb_no']."', '".$_POST['barcode_no']."')";
+		$sql = "REPLACE INTO `barcode_table` (`pcb_no`,`barcode_no`) VALUES ('".substr($_POST['pcb_no'],0,12)."', '".$_POST['barcode_no']."')";
 
 		$res = mysqli_query($db, $sql);
 

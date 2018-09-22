@@ -17,7 +17,7 @@
 
 		$sql = "REPLACE INTO `qa_table` (`_id`, `pcb_no`, `stage`, `result`, `reason`, `record_date`, `op_name`) VALUES (
 			NULL, 
-			'".$_POST['qa_pcb_no']."', 
+			'".substr($_POST['qa_pcb_no'],0,12)."', 
 			'".$_POST['qa_stage']."',
 			'".$_POST['result']."',
 			'".$_POST['reason']."',

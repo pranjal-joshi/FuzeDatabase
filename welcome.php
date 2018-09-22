@@ -2808,7 +2808,12 @@
 						isEmpty = true;
 					}
 					if($(this).attr('id') != "pcbTestingManualRecordDate") {	// field name remains same - DOM manipulted
-						manualTestingData.push($(this).val());
+						if($(this).attr('id') == "pcbTestingManualPcbNo") {
+							manualTestingData.push($(this).val().substring(0,12));
+						}
+						else {
+							manualTestingData.push($(this).val());
+						}
 					}
 				});
 				if($('#pcbTestingManualRecordDate').val() == "") {
@@ -2821,7 +2826,12 @@
 						isEmpty = true;
 					}
 					if($(this).attr('id') != "pcbTestingManualRecordDate") {		// field name remains same - DOM manipulted
-						manualTestingData.push($(this).val());
+						if($(this).attr('id') == "pcbTestingManualPcbNo") {
+							manualTestingData.push($(this).val().substring(0,12));
+						}
+						else {
+							manualTestingData.push($(this).val());
+						}
 					}
 				});
 				if($('#pcbTestingManualRecordDate').val() == "") {
@@ -2835,7 +2845,12 @@
 						isEmpty = true;
 					}
 					if($(this).attr('id') != "pcbTestingManualRecordDate") {		// field name remains same - DOM manipulted
-						manualTestingData.push($(this).val());
+						if($(this).attr('id') == "pcbTestingManualPcbNo") {
+							manualTestingData.push($(this).val().substring(0,12));
+						}
+						else {
+							manualTestingData.push($(this).val());
+						}
 					}
 				});
 				if($('#pcbTestingManualRecordDate').val() == "") {
@@ -2888,7 +2903,7 @@
 
 		$('#pcbTestingManualClearButton').click(function(){
 			$('input[type="text"]').each(function(){
-				if($(this).attr('id') != "pcbTestingManualOperatorName" || $(this).attr('id') != "pcbTestingManualRecordDate") {
+				if($(this).attr('id') != "pcbTestingManualOperatorName" && $(this).attr('id') != "pcbTestingManualRecordDate") {
 					$(this).val('');
 				}
 			});
