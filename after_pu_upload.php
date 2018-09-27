@@ -162,7 +162,7 @@
 					if($cnt > 7)	//5 for old chambers - 7 for optimized chamber -- compatible with new prox head - logToExcel
 					{
 						$html.="<tr>";
-						$pcb_no = isset($Row[0]) ? $Row[0] : '';
+						$pcb_no = isset($Row[0]) ? strtoupper($Row[0]) : '';
 						$vbat_pst = isset($Row[1]) ? $Row[1] : '';
 						$pst_wid = isset($Row[2]) ? $Row[2] : '';
 						$pst_amp = isset($Row[3]) ? $Row[3] : '';
