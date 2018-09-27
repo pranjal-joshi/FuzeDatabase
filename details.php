@@ -1316,8 +1316,14 @@
 
 								<table>
 									<tbody>
-
 										<tr>
+											<td class='center'><span class='center'>VBAT-Cap Charge T <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsCapCharge' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='695 to 730 mS'>
+												</div>
+											</td>
 											<td class='center'><span class='center'>VRF Ampl <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
@@ -1332,11 +1338,28 @@
 													<input type='text' id='PcbTestingDetailsVbatVrf' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.08 to 2.30 Sec'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>VBAT-Cap Charge T <span></td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>BPF (Background Noise)</span></center>
+
+								<table>
+									<tbody>										
+										<tr>
+											<td class='center'><span class='center'>BPF Noise DC <br>(V)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
-													<input type='text' id='PcbTestingDetailsCapCharge' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='695 to 730 mS'>
+													<input type='text' id='PcbTestingDetailsBpfNoiseDc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5 to 6.5 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>BPF Noise AC <br>(V)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsBpfNoiseAc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 0.25 V'>
 												</div>
 											</td>
 										</tr>
@@ -1418,24 +1441,6 @@
 												</div>
 											</td>
 										</tr>
-
-										<tr>
-											<td class='center'><span class='center'>BPF Noise DC <span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='PcbTestingDetailsBpfNoiseDc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5 to 6.5 V'>
-												</div>
-											</td>
-											<td class='center'><span class='center'>BPF Noise AC <span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='PcbTestingDetailsBpfNoiseAc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 0.25 V'>
-												</div>
-											</td>
-										</tr>
-
 									</tbody>
 								</table>
 
@@ -1725,6 +1730,13 @@
 									<tbody>
 
 										<tr>
+											<td class='center'><span class='center'>VBAT-Cap Charge T <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='HousingTableDetailsCapCharge' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='695 to 730 mS'>
+												</div>
+											</td>
 											<td class='center'><span class='center'>VRF Ampl <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
@@ -1737,13 +1749,6 @@
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='HousingTableDetailsVbatVrf' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.08 to 2.30 Sec'>
-												</div>
-											</td>
-											<td class='center'><span class='center'>VBAT-Cap Charge T <span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='HousingTableDetailsCapCharge' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='695 to 730 mS'>
 												</div>
 											</td>
 										</tr>
@@ -2111,6 +2116,13 @@
 									<tbody>
 
 										<tr>
+											<td class='center'><span class='center'>VBAT-Cap Charge T <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PottingTableDetailsCapCharge' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='695 to 730 mS'>
+												</div>
+											</td>
 											<td class='center'><span class='center'>VRF Ampl <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
@@ -2123,13 +2135,6 @@
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='PottingTableDetailsVbatVrf' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.08 to 2.30 Sec'>
-												</div>
-											</td>
-											<td class='center'><span class='center'>VBAT-Cap Charge T <span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='PottingTableDetailsCapCharge' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='695 to 730 mS'>
 												</div>
 											</td>
 										</tr>
