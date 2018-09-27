@@ -32,31 +32,14 @@
 			case '6':
 				$searchInTable = "potting_table";
 				break;
+			case '7':
+				$searchInTable = "after_pu";
+				break;
 		}
 
 		switch ($_POST['select']) {
 			case '1':
 				$searchIn = "pcb_no";
-				$table_head.= "
-				<thead>
-					<tr>
-						<th class='center'>S.N.</th>
-						<th class='center'>PCB NO.</th>
-						<!--<th class='center'>TABLE</th>-->
-						<th class='center'>TYPE</th>
-						<th class='center'>MAIN LOT</th>
-						<th class='center'>KIT LOT</th>
-						<th class='center'>ACTION</th>
-						<!--
-						<center><th>Before BPF AC</th></center>
-						<center><th>RES</th></center>
-						<center><th>After Freq</th></center>
-						<center><th>After BPF</th></center>
-						<center><th>Time</th></center>
-						<center><th>OP</th></center>
-						-->
-					</tr>
-				</thead>";
 				break;
 			case '2':
 				$searchIn = "rf_no";
@@ -96,6 +79,34 @@
 				break;
 		}
 
+		if($_POST['select'] == '1') {
+			$table_head.= "
+				<thead>
+					<tr>
+						<th class='center'>S.N.</th>
+						<th class='center'>PCB NO.</th>
+						<th class='center'>TYPE</th>
+						<th class='center'>MAIN LOT</th>
+						<th class='center'>KIT LOT</th>
+						<th class='center'>ACTION</th>
+					</tr>
+				</thead>";
+		}
+		else {
+			$table_head.= "
+				<thead>
+					<tr>
+						<th class='center'>S.N.</th>
+						<th class='center'>Value</th>
+						<th class='center'>PCB NO.</th>
+						<th class='center'>TYPE</th>
+						<th class='center'>MAIN LOT</th>
+						<th class='center'>KIT LOT</th>
+						<th class='center'>ACTION</th>
+					</tr>
+				</thead>";
+		}
+
 		//$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE '".$query."%'";
 
 		$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE '".$query."%'";
@@ -126,17 +137,21 @@
 					$value.="<td class='center'>".$row[$searchIn]."</td>";
 				}
 				//$value.="<td class='center'>".strtoupper($searchInTable)."</td>";
+				if($_POST['select'] != '1') {
+					$value.="<td class='center'>".$lotRow['pcb_no']."</td>";
+				}
 				$value.="<td class='center'>".$lotRow['fuze_type']."</td>";
 				$value.="<td class='center'>".$lotRow['main_lot']."</td>";
 				$value.="<td class='center'>".$lotRow['kit_lot']."</td>";
-				$value.="<td class='center'><a href='details.php/?q=".$row[$searchIn]."&s=".$searchIn."&t=".$searchInTable."' class='btn waves-effect waves-light' target='_blank'>VIEW details</a></td>";
+				//$value.="<td class='center'><a href='details.php/?q=".$row[$searchIn]."&s=".$searchIn."&t=".$searchInTable."' class='btn waves-effect waves-light' target='_blank'>VIEW details</a></td>";
+				$value.="<td class='center'><a href='details.php/?q=".$lotRow['pcb_no']."&t=".$searchInTable."' class='btn waves-effect waves-light' target='_blank'>VIEW details</a></td>";
 				$value.="<td class='center'><a href='print.php/?q=".$row['pcb_no']."' class='btn waves-effect waves-light blue-grey' target='_blank'>PRINT</a></td>";
 				$value.="</tr></center>";
 			}
 			echo $value."</table>";
 		}
 		else {
-			//echo($sql);
+			echo($sql);
 			die("<br><p style='color: red; font-weight: bold;'>Failed to search!</p>");
 		}
 	}

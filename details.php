@@ -358,17 +358,18 @@
 			$splitUrl = explode("&", $url['query']);
 
 			$toSearch = explode("=", $splitUrl[0])[1];
-			$searchIn = explode("=", $splitUrl[1])[1];
-			$searchTable = explode("=", $splitUrl[2])[1];
+			//$searchIn = explode("=", $splitUrl[1])[1];
+			//$searchTable = explode("=", $splitUrl[2])[1];
+			$searchTable = explode("=", $splitUrl[1])[1];
 
 			setcookie('toSearch',$toSearch,0,"/");
-			setcookie('searchIn',$searchIn,0,"/");
+			//setcookie('searchIn',$searchIn,0,"/");
 			setcookie('searchTable',$searchTable,0,"/");
 		}
 		catch(Exception $e)
 		{
 			$toSearch = $_COOKIE['toSearch'];
-			$searchIn = $_COOKIE['searchIn'];
+			//$searchIn = $_COOKIE['searchIn'];
 			$searchTable = $_COOKIE['searchTable'];
 		}
 	}
@@ -505,7 +506,8 @@
 		switch ($searchTable) {
 
 			case 'qa_table':
-				$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				//$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				$sql = "SELECT * FROM `".$searchTable."` WHERE `pcb_no` = '".$toSearch."'";
 				$results = mysqli_query($db,$sql);
 
 				if(!$results){
@@ -807,7 +809,8 @@
 				break;
 
 			case 'after_pu':
-				$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				//$sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				$sql = "SELECT * FROM `".$searchTable."` WHERE `pcb_no` = '".$toSearch."'";
 				$results = mysqli_query($db,$sql);
 
 				if(!$results){
@@ -1197,7 +1200,8 @@
 				break;
 
 			case 'pcb_testing':
-				$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				//$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				$sql = "SELECT * FROM `".$searchTable."` WHERE `pcb_no` = '".$toSearch."'";
 				$results = mysqli_query($db,$sql);
 
 				if(!$results){
@@ -1609,7 +1613,8 @@
 				break;
 
 		case 'housing_table':
-				$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				//$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				$sql = "SELECT * FROM `".$searchTable."` WHERE `pcb_no` = '".$toSearch."'";
 				$results = mysqli_query($db,$sql);
 
 				if(!$results){
@@ -1995,7 +2000,8 @@
 				break;
 
 			case 'potting_table':
-				$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				//$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				$sql = "SELECT * FROM `".$searchTable."` WHERE `pcb_no` = '".$toSearch."'";
 				$results = mysqli_query($db,$sql);
 
 				if(!$results){
@@ -2381,7 +2387,8 @@
 				break;
 
 			case 'calibration_table':
-				$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				//$sql = $sql = "SELECT * FROM `".$searchTable."` WHERE `".$searchIn."` = '".$toSearch."'";
+				$sql = "SELECT * FROM `".$searchTable."` WHERE `pcb_no` = '".$toSearch."'";
 				$results = mysqli_query($db,$sql);
 
 				if(!$results){
