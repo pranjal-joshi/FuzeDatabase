@@ -153,7 +153,7 @@
 		<div class="navbar-fixed">
 			<nav>
 				<div class="nav-wrapper teal lighten-2">
-					<a href="#!" class="brand-logo center" id="loginNavTitle">Fuze Database Home-Page</a>
+					<a href="#!" class="brand-logo center" id="loginNavTitle">Fuze - Rejection Control</a>
 
 					<a><span class='white-text text-darken-5 left' style='font-size: 18px; padding-left: 20px; font-weight: bold' onclick='self.close();'>Back</span></a>
 				</div>
