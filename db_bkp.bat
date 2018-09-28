@@ -32,11 +32,13 @@ ECHO Backing up on FTP Server for extra backup..
 ECHO user FuzeDatabaseAdmin> ftpcmd.dat
 ECHO >> ftpcmd.dat
 ECHO bin>> ftpcmd.dat
+ECHO hash>> ftpcmd.dat
 REM ECHO hash>> ftpcmd.dat
 ECHO put E:\FuzeDatabase_backups\fuze_database.%TIMESTAMP%.zip>> ftpcmd.dat
 ECHO quit>> ftpcmd.dat
-ftp -n -s:ftpcmd.dat 192.168.100.225
-ftp -n -s:ftpcmd.dat 192.168.100.146
+REM ftp -n -s:ftpcmd.dat 192.168.100.225
+REM ftp -n -s:ftpcmd.dat 192.168.100.146
+ftp -n -s:ftpcmd.dat 172.243.14.59			REM GauravTarkas-IP
 REM Change this IP to intranet FTP Server later.. It should be on diffrent machine than the webserver!
 DEL ftpcmd.dat
 
