@@ -39,6 +39,7 @@ ECHO quit>> ftpcmd.dat
 REM ftp -n -s:ftpcmd.dat 192.168.100.225
 REM ftp -n -s:ftpcmd.dat 192.168.100.146
 ftp -n -s:ftpcmd.dat 172.243.14.59			REM GauravTarkas-IP
+ftp -n -s:ftpcmd.dat 172.243.21.105			REM SanjayKhaire-IP
 REM Change this IP to intranet FTP Server later.. It should be on diffrent machine than the webserver!
 DEL ftpcmd.dat
 
