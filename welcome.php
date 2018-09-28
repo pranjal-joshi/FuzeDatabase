@@ -170,6 +170,7 @@
 										<option value="7">After BPF AC</option>
 										<option value="8">Date</option>
 										<option value="9">Operator Name</option>
+										<option value="10">Result(Pass/Fail)</option>
 									</select>
 									<label>Search by</label>
 								</div>
@@ -1364,6 +1365,7 @@
 										<option value="7">After BPF AC</option>
 										<option value="8">Date</option>
 										<option value="9">Operator Name</option>
+										<option value="10">Result(Pass/Fail)</option>
 									</select>
 									<label>Search by</label>
 								</div>

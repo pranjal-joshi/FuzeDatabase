@@ -77,6 +77,10 @@
 				$searchIn = "op_name";
 				$query = strtoupper($query);
 				break;
+			case '10':
+				$searchIn = "result";
+				$query = strtoupper($query);
+				break;
 		}
 
 		if($_POST['select'] == '1') {
