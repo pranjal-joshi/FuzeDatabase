@@ -21,19 +21,21 @@
 
 		if($_POST['task'] == "add") {
 
-			$sql = "INSERT INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
+			$sql = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
 			(NULL,
 			'".$_POST['fuze']."',
 			'".$_POST['fuze_diameter']."',
 			'".$_POST['main_lot']."',
-			'".$_POST['kit_lot']."',
+			'".strtoupper($_POST['kit_lot'])."',
 			'".$_POST['pcb_no']."',
 			'".$_POST['size']."')";
 
 			$sqlCheck = "SELECT * FROM `lot_table` WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type` = '".$_POST['fuze']."'";
 
 			$checkResult = mysqli_query($db,$sqlCheck);
-			if($checkResult->num_rows)
+			$checkResultRow = mysqli_fetch_assoc($checkResult);
+			//if($checkResult->num_rows)
+			if(($checkResult->num_rows) && (strtoupper($checkResultRow['kit_lot']) != "PCB"))
 			{
 				die("<center><p style='color: red; font-weight: bold;'>Already entered in the lot. Search this PCB Number for more information. (Menu -> Search)</p><center>");
 			}
