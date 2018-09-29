@@ -102,6 +102,8 @@
 						<th>Cap Charge</th>
 						<th>VRF Amp</th>
 						<th>Vbat-VRF</th>
+						<th>BPF Noise DC</th>
+						<th>BPF Noise AC</th>
 						<th>Vbat-SIL</th>
 						<th>DET Wid</th>
 						<th>DET Amp</th>
@@ -153,7 +155,7 @@
 				$sqlAutoIncReset = "ALTER TABLE `pcb_testing` DROP `_id`;";
 				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
 
-				$sqlAdd = "REPLACE INTO `pcb_testing` (`pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`, `op_name`, `record_date`) VALUES ";
+				$sqlAdd = "REPLACE INTO `pcb_testing` (`pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `bpf_noise_dc`, `bpf_noise_ac`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`, `op_name`, `record_date`) VALUES ";
 
 				$sqlDummyLot = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES ";
 
@@ -187,8 +189,11 @@
 						$det_pd = isset($Row[21]) ? $Row[21] : '';
 						$safe = isset($Row[22]) ? $Row[22] : '';
 						$result = isset($Row[23]) ? $Row[23] : '';
-						// index 24 contains bpf ac noise which is required only for after_pu stage
-						$record_date = isset($Row[25]) ? $Row[25] : '';
+						// index 24 contains bpf ac noise which is required only for after_pu stage - wrong
+						// index 25 contains bpf dc noise which is required only for after_pu stage - wrong
+						$bpf_noise_ac = isset($Row[24]) ? $Row[24] : '';
+						$bpf_noise_dc = isset($Row[25]) ? $Row[25] : '';
+						$record_date = isset($Row[26]) ? $Row[26] : '';
 
 						$html.="<td>".($cnt-4)."</td>";
 						$html.="<td>".$pcb_no."</td>";
@@ -203,7 +208,9 @@
 						$html.="<td>".$cap_charge."</td>";
 						$html.="<td>".$vrf_amp."</td>";
 						$html.="<td>".$vbat_vrf."</td>";
-						$html.="<td>".$vbat_pst."</td>";
+						$html.="<td>".$bpf_noise_dc."</td>";
+						$html.="<td>".$bpf_noise_ac."</td>";
+						$html.="<td>".$vbat_sil."</td>";
 						$html.="<td>".$det_wid."</td>";
 						$html.="<td>".$det_amp."</td>";
 						$html.="<td>".$cycles."</td>";
@@ -217,6 +224,7 @@
 						$html.="<td>".$result."</td>";
 						$html.="<td>".$record_date."</td>";
 						$html.="</tr>";
+
 
 						$sqlDummyLot.="(
 							NULL,
@@ -241,6 +249,8 @@
 							'".$cap_charge."', 
 							'".$vrf_amp."', 
 							'".$vbat_vrf."', 
+							'".$bpf_noise_dc."',
+							'".$bpf_noise_ac."',
 							'".$vbat_sil."', 
 							'".$det_wid."', 
 							'".$det_amp."', 
