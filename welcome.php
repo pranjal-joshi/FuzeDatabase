@@ -178,10 +178,10 @@
 								<div class="row" id="searchTableSelect">
 									<div class="input-field col s2">
 										<select name="searchTableSelect" id="searchTableSelect">
-											<option value="1" selected>After PU</option>
+											<option value="1">After PU</option>
 											<option value="2">Calibration</option>
 											<option value="3">Visual</option>
-											<option value="4">PCB Testing</option>
+											<option value="4" selected>PCB Testing</option>
 											<option value="5">Housing Testing</option>
 											<option value="6">Potted Housing</option>
 											<option value="7">Electronic Head</option>
