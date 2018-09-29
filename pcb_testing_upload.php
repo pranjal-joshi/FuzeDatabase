@@ -155,6 +155,8 @@
 
 				$sqlAdd = "REPLACE INTO `pcb_testing` (`pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`, `op_name`, `record_date`) VALUES ";
 
+				$sqlDummyLot = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES ";
+
 				foreach ($Reader as $Row)
 				{
 					$cnt++;
@@ -216,6 +218,16 @@
 						$html.="<td>".$record_date."</td>";
 						$html.="</tr>";
 
+						$sqlDummyLot.="(
+							NULL,
+							'".$_COOKIE['fuzeType']."',
+							'".$_COOKIE['fuzeDia']."',
+							'0',
+							'PCB',
+							'".$pcb_no."',
+							'60'
+						),";
+
 						$sqlAdd.= "(
 							'".$pcb_no."', 
 							'".$current."', 
@@ -248,6 +260,11 @@
 				$sqlAdd = rtrim($sqlAdd,", ");
 				$sqlAdd.=";";
 				$res = mysqli_query($db,$sqlAdd);
+
+				$sqlDummyLot = rtrim($sqlDummyLot,",");
+				$sqlDummyLot = rtrim($sqlDummyLot,", ");
+				$sqlDummyLot.=";";
+				$dummyRes = mysqli_query($db,$sqlDummyLot);
 
 				$sqlAutoIncReset = "ALTER TABLE `pcb_testing` ADD `_id` INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`_id`);";
 				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
