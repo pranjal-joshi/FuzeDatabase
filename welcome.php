@@ -189,13 +189,25 @@
 										<label>Search In</label>
 									</div>
 
-								<div class="input-field col s5">
+								<div class="input-field col s5" id="search_box_div">
 									<input type="text" name="search_box" id="search_box" autofocus class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='For partial search, use wildcard (%__%) like %234%'>
 									<label for="search_box">What to search?</label>
 								</div>
 
 								<br>
 								<a class="btn col s2" href="#" id="searchButton" name="searchButton">SEARCH</a>
+
+								<div class="row" id="searchModalDatePickerRow" style="display: none;">
+									<div class='input-field col s6' id="searchModalDatePicker1">
+										<input type='text' id='searchModalRecordDate1' class="datepicker">
+										<label for="searchModalRecordDate1">* From</label>
+									</div>
+
+									<div class='input-field col s6' id="searchModalDatePicker2">
+										<input type='text' id='searchModalRecordDate2' class="datepicker">
+										<label for="searchModalRecordDate2">To</label>
+									</div>
+								</div>
 
 							</div>
 
@@ -1410,6 +1422,18 @@
 					startingTop: '4%', // Starting top style attribute
 					endingTop: '10%', // Ending top style attribute
 					ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+
+						$('#searchSelect').on('change',function() { 				// show datepicker if date is selected
+							if($('#searchSelect :selected').val() == '8') {
+								$('#searchModalDatePickerRow').fadeIn();
+								$('#search_box_div').animate({ opacity:0 });
+							}
+							else {
+								$('#searchModalDatePickerRow').fadeOut();
+								$('#search_box_div').animate({ opacity:1 });
+							}
+						});
+
 						$('#search_box').focus();
 						if(!isBound) {
 							$('#search_box').keypress(function (e) {
