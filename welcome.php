@@ -1452,7 +1452,7 @@
 								var text = $('#search_box').val();
 								var select = $('#searchSelect :selected').val();
 								var tableSelect = $('#searchTableSelect :selected').val();
-								if(text === ""){
+								if(text === "" && select != '8'){
 									Materialize.toast("Search box can't be kept blank",2500,'rounded');
 									$('#search_box').focus();
 									return false;
@@ -1463,22 +1463,44 @@
 									$('#searchPreloader').fadeOut();
 									return false;
 								}
-								$.ajax({
-									url : 'search.php',
-									type: 'post',
-									data: {
-										query: text,
-										select: select,
-										tableSelect: tableSelect
-									},
-									success: function(msg) {
-										$('#searchPreloader').fadeOut();
-										document.getElementById('searchDynamicTable').innerHTML = msg;
-									},
-									error: function(XMLHttpRequest, textStatus, errorThrown) {
-										 alert(errorThrown + "\n\nIs web-server offline?");
-									}
-								});
+								if(select != '8') {
+									$.ajax({
+										url : 'search.php',
+										type: 'post',
+										data: {
+											query: text,
+											select: select,
+											tableSelect: tableSelect
+										},
+										success: function(msg) {
+											$('#searchPreloader').fadeOut();
+											document.getElementById('searchDynamicTable').innerHTML = msg;
+										},
+										error: function(XMLHttpRequest, textStatus, errorThrown) {
+											 alert(errorThrown + "\n\nIs web-server offline?");
+										}
+									});
+								}
+								else {
+									$.ajax({
+										url : 'search.php',
+										type: 'post',
+										data: {
+											query: text,
+											select: select,
+											tableSelect: tableSelect,
+											datepicker1: $('#searchModalRecordDate1').val(),
+											datepicker2: $('#searchModalRecordDate2').val()
+										},
+										success: function(msg) {
+											$('#searchPreloader').fadeOut();
+											document.getElementById('searchDynamicTable').innerHTML = msg;
+										},
+										error: function(XMLHttpRequest, textStatus, errorThrown) {
+											 alert(errorThrown + "\n\nIs web-server offline?");
+										}
+									});
+								}
 							});
 							isBound = true;
 						}
