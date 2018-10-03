@@ -29,19 +29,19 @@ PowerShell -NoProfile -ExecutionPolicy Bypass -Command "Compress-Archive -Path '
 
 ECHO Backing up on FTP Server for extra backup..
 @ECHO OFF
-ECHO user FuzeDatabaseAdmin> ftpcmd.dat
-ECHO >> ftpcmd.dat
-ECHO bin>> ftpcmd.dat
-ECHO hash>> ftpcmd.dat
-REM ECHO hash>> ftpcmd.dat
-ECHO put E:\FuzeDatabase_backups\fuze_database.%TIMESTAMP%.zip>> ftpcmd.dat
-ECHO quit>> ftpcmd.dat
-REM ftp -n -s:ftpcmd.dat 192.168.100.225
-REM ftp -n -s:ftpcmd.dat 192.168.100.146
-ftp -n -s:ftpcmd.dat 172.243.14.59			REM GauravTarkas-IP
-ftp -n -s:ftpcmd.dat 172.243.21.105			REM SanjayKhaire-IP
+ECHO user FuzeDatabaseAdmin> E:\FuzeDatabase_backups\E:\FuzeDatabase_backups\ftpcmd.dat
+ECHO >> E:\FuzeDatabase_backups\ftpcmd.dat
+ECHO bin>> E:\FuzeDatabase_backups\ftpcmd.dat
+ECHO hash>> E:\FuzeDatabase_backups\ftpcmd.dat
+REM ECHO hash>> E:\FuzeDatabase_backups\ftpcmd.dat
+ECHO put E:\FuzeDatabase_backups\fuze_database.%TIMESTAMP%.zip>> E:\FuzeDatabase_backups\ftpcmd.dat
+ECHO quit>> E:\FuzeDatabase_backups\ftpcmd.dat
+REM ftp -n -s:E:\FuzeDatabase_backups\ftpcmd.dat 192.168.100.225
+REM ftp -n -s:E:\FuzeDatabase_backups\ftpcmd.dat 192.168.100.146
+ftp -n -s:E:\FuzeDatabase_backups\ftpcmd.dat 172.243.14.59			REM GauravTarkas-IP
+ftp -n -s:E:\FuzeDatabase_backups\ftpcmd.dat 172.243.21.105			REM SanjayKhaire-IP
 REM Change this IP to intranet FTP Server later.. It should be on diffrent machine than the webserver!
-DEL ftpcmd.dat
+DEL E:\FuzeDatabase_backups\ftpcmd.dat
 
 REM Delete uncompressed DB dump file.
 ECHO Deleting uncompressed database file...
