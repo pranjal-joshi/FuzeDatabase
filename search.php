@@ -6,6 +6,81 @@
 
 	include('db_config.php');
 
+	function dateRangeQuery($startDate, $endDate, $searchInTable, $searchIn) {
+		$monthArray = array("January","February","March","April","May","June","July","August","September","October","November","December");
+		if($endDate == "") {
+			$endDate = $startDate;
+		}
+		$d1 = (int)explode(" ", $startDate)[0];
+		$m1 = rtrim(explode(" ", $startDate)[1],",");
+		$y1 = (int)explode(" ", $startDate)[2];
+		$d2 = (int)explode(" ", $endDate)[0];
+		$m2 = rtrim(explode(" ", $endDate)[1],",");
+		$y2 = (int)explode(" ", $endDate)[2];
+		$sameYear = 0;
+		$sameMonth = 0;
+		$tempYear = 0;
+		$tempMonth = 0;
+		$m1key = array_search($m1, $monthArray);
+		$m2key = array_search($m2, $monthArray);
+
+		//$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE ";
+		$sql = "SELECT * FROM `".$searchInTable."` WHERE ";
+
+		if($y2 - $y1 < 0) {								// From > To
+			die("<br><p style='color: red; font-weight: bold;'>'From' date should not be ahead of 'To' date!</p>");
+		}
+		else {
+			for($i=$y1;$i<=$y2;$i++) {
+				if($y2 - $y1 == 0) {					// same year
+					$sameYear = 1;
+					if($m2key - $m1key < 0) {		// From > To
+						die("<br><p style='color: red; font-weight: bold;'>'From' date should not be ahead of 'To' date!</p>");
+					}
+				}
+				if($sameYear) {
+					for($k=$m1key;$k<=$m2key;$k++) {
+						// code date looper here
+						if($m2key - $m1key == 0) {
+							$sameMonth = 1;
+							if($d2 - $d1 < 0) {
+								die("<br><p style='color: red; font-weight: bold;'>'From' date should not be ahead of 'To' date!</p>");
+							}
+						}
+						if($sameMonth) {
+							for($j=$d1;$j<=$d2;$j++) {
+								$sql.="`".$searchIn."` LIKE '".strval($j)." ".strval($monthArray[$m1key]).", ".strval($y1)."' OR ";
+							}
+							$sql = rtrim($sql," OR ");
+						}
+						else {
+							$tempMonth = $m1key;
+							for($j=$d1;$j<=31;$j++) {
+								$sql.="`".$searchIn."` LIKE '".strval($j)." ".strval($monthArray[$m1key]).", ".strval($y1)."' OR ";
+							}
+							$tempMonth++;
+							for($h=$tempMonth;$h<$m2key;$h++) {
+								for($j=1;$j<=31;$j++) {
+									$sql.="`".$searchIn."` LIKE '".strval($j)." ".strval($monthArray[$h]).", ".strval($y1)."' OR ";
+								}
+							}
+							for($j=1;$j<=$d2;$j++) {
+								$sql.="`".$searchIn."` LIKE '".strval($j)." ".strval($monthArray[$m2key]).", ".strval($y1)."' OR ";
+							}
+							$sql = rtrim($sql," OR ");
+							break;
+						}
+					}
+				}
+				else {
+					die("<br><p style='color: red; font-weight: bold;'>Search is available only for duration of 1 year. Split the dates in multiple searches to obtain results for multiple years!<br><br>Example: 25 Dec - 5 Jan => 25 Dec - 31 Dec & 1 Jan - 5 Jan</p>");
+				}
+			}
+		}
+		unset($monthArray);
+		return $sql;
+	}
+
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 		$searchIn = "";
@@ -115,6 +190,10 @@
 
 		$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE '".$query."%'";
 
+		if($_POST['select'] == '8') {
+			$sql = dateRangeQuery($_POST['datepicker1'],$_POST['datepicker2'],$searchInTable,$searchIn);
+		}
+
 		$results = mysqli_query($db,$sql);
 
 		$value = "<center><table class='centered striped' style='left: 0px; right: 0px; top: 0px; bottom: 0px;'>".$table_head;
@@ -155,7 +234,7 @@
 			echo $value."</table>";
 		}
 		else {
-			echo($sql);
+			echo($sql);		// UNCOMMENT THIS LATER
 			die("<br><p style='color: red; font-weight: bold;'>Failed to search!</p>");
 		}
 	}
