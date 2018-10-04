@@ -349,7 +349,7 @@
 				break;
 		}
 		$toSearch = $_COOKIE['toSearch'];
-		$searchIn = $_COOKIE['searchIn'];
+		//$searchIn = $_COOKIE['searchIn'];
 		$searchTable = $_COOKIE['searchTable'];
 	}
 	else {
