@@ -889,7 +889,6 @@
 							}
 							else {
 								var monthlyCount = JSON.parse(msg);
-								console.log(JSON.parse(msg));
 								for(var i=0;i<monthlyCount.length;i++) {
 									finalMonthlyCount += monthlyCount[i]['y'];
 								}
