@@ -212,6 +212,9 @@
 				elseif ($_POST['process'] == "potted Housing Testing") {
 					$table_name = "potting_table";
 				}
+				elseif ($_POST['process'] == "electronic head") {
+					$table_name = "after_pu";
+				}
 
 				$productionData = array();
 
@@ -234,6 +237,7 @@
 				$productionPcbData = array();
 				$productionHousingData = array();
 				$productionPottingData = array();
+				$productionAfterPuData = array();
 
 				$table_name = "calibration_table";
 				$column_name = "timestamp";
@@ -294,12 +298,24 @@
 					);
 				}
 
+				$table_name = "after_pu";
+				for($i=1;$i<=$_POST['days_in_month'];$i++) {
+
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+
+					$productionResult = mysqli_query($db, $productionSql);
+					array_push($productionAfterPuData, 
+						array("x"=>$i, "y"=>mysqli_num_rows($productionResult))
+					);
+				}
+
 				$productionData = array();
 				array_push($productionData, $productionQaData);
 				array_push($productionData, $productionPcbData);
 				array_push($productionData, $productionHousingData);
 				array_push($productionData, $productionPottingData);
 				array_push($productionData, $productionCalibrationData);
+				array_push($productionData, $productionAfterPuData);
 				die(json_encode($productionData, JSON_NUMERIC_CHECK));
 			}
 		}
@@ -685,6 +701,7 @@
 								<option value="pcb Testing">PCB Testing</option>
 								<option value="housing Testing">Housing Testing</option>
 								<option value="potted Housing Testing">Potted Housing Testing</option>
+								<option value="electronic head">Electronic Head</option>
 							</select>
 							<label>Process</label>
 						</div>
@@ -699,7 +716,7 @@
 							<a class="btn waves-effect waves-light" id="analyticsShowButton">SHOW</a>
 							<br>
 							<br>
-							<span class="grey-text text-darken-1" id="analytics_detail_span" style="display: none;">Click on the pie-chart for more details</span>
+							<span class="red-text text-darken-3" id="analytics_detail_span" style="display: none;">Click on the pie-chart for more details</span>
 						</center>
 					</div>
 
@@ -857,6 +874,13 @@
 										showInLegend: true,
 										dataPoints: JSON.parse(msg)[4]
 									},
+									{
+										type: "line",
+										legendText: "Elec. Head",
+										name: "Elec. Head",
+										showInLegend: true,
+										dataPoints: JSON.parse(msg)[5]
+									}
 									]
 								});
 								$('#chartContainer').fadeIn();
@@ -865,10 +889,11 @@
 							}
 							else {
 								var monthlyCount = JSON.parse(msg);
+								console.log(JSON.parse(msg));
 								for(var i=0;i<monthlyCount.length;i++) {
 									finalMonthlyCount += monthlyCount[i]['y'];
 								}
-								$('#analytics_detail_span').html('Total count for ' + selectedMonth + " is " + finalMonthlyCount.toString());
+								$('#analytics_detail_span').html('Cumulative count for ' + selectedMonth + " is " + finalMonthlyCount.toString());
 								$('#analytics_detail_span').fadeIn();
 								finalMonthlyCount = 0;
 								var chart = new CanvasJS.Chart("chartContainer", {
