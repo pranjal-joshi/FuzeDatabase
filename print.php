@@ -558,9 +558,9 @@
 							</tr>
 							<tr>
 								<td colspan='2'>Operator Name</td>
-								<td>".($pcbRow['op_name'] == "" ? "*ATE*" : $pcbRow['op_name'])."</td>
-								<td>".($housingRow['op_name'] == "" ? "*ATE*" : $housingRow['op_name'])."</td>
-								<td>".($pottingRow['op_name'] == "" ? "*ATE*" : $pottingRow['op_name'])."</td>
+								<td>".($pcbRow['op_name'] == "" ? "*ATE*" : explode("&", $pcbRow['op_name'])[0]."<br>".explode("&", $pcbRow['op_name'])[1])."</td>
+								<td>".($housingRow['op_name'] == "" ? "*ATE*" : explode("&", $housingRow['op_name'])[0]."<br>".explode("&", $housingRow['op_name'])[1])."</td>
+								<td>".($pottingRow['op_name'] == "" ? "*ATE*" : explode("&", $pottingRow['op_name'])[0]."<br>".explode("&", $pottingRow['op_name'])[1])."</td>
 							</tr>
 						</table>
 						<br>
