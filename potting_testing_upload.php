@@ -186,7 +186,7 @@
 						$safe = isset($Row[22]) ? $Row[22] : '';
 						$result = isset($Row[23]) ? $Row[23] : '';
 						// index 24 contains bpf ac noise which is required only for after_pu stage
-						$record_date = isset($Row[25]) ? $Row[25] : '';
+						$record_date = isset($Row[25]) ? ltrim($Row[25],"0") : '';
 
 						$html.="<td>".($cnt-4)."</td>";
 						$html.="<td>".$pcb_no."</td>";

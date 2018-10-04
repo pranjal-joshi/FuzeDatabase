@@ -187,7 +187,7 @@
 						$pd_det_width = isset($Row[22]) ? $Row[22] : '';
 						$pd_det_amp = isset($Row[23]) ? $Row[23] : '';		
 						$result = isset($Row[24]) ? $Row[24] : '';
-						$record_date = isset($Row[25]) ? $Row[25] : 0;
+						$record_date = isset($Row[25]) ? ltrim($Row[25],"0") : 0;
 
 						//$html.="<td>".($cnt-5)."</td>";
 						$html.="<td>".($cnt-7)."</td>";

@@ -193,7 +193,7 @@
 						// index 25 contains bpf dc noise which is required only for after_pu stage - wrong
 						$bpf_noise_ac = isset($Row[24]) ? $Row[24] : '';
 						$bpf_noise_dc = isset($Row[25]) ? $Row[25] : '';
-						$record_date = isset($Row[26]) ? $Row[26] : '';
+						$record_date = isset($Row[26]) ? ltrim($Row[26],"0") : '';
 
 						$html.="<td>".($cnt-4)."</td>";
 						$html.="<td>".$pcb_no."</td>";
