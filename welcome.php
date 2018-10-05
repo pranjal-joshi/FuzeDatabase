@@ -2831,6 +2831,10 @@
 							Materialize.toast('Record already exists!',3000,'rounded');
 							$('#lotScanPcb').val('');
 						}
+						else if(msg.toLowerCase().includes('failed housing')) {
+							Materialize.toast('Can not add!',3000,'rounded');
+							$('#lotScanPcb').val('');
+						}
 						else{
 							Materialize.toast('Failed to save record!',3000,'rounded');
 							Materialize.toast('Database server is offline!',3000,'rounded');
