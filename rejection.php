@@ -3,9 +3,38 @@
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-		print_r($_POST);
+		$table_name = "pcb_testing";
 
 		if($_POST['type'] == 'reject') {
+
+			switch ($_POST['stage']) {
+				case 'Q/A':
+					$table_name = "qa_table";
+					break;
+				case 'PCB':
+					$table_name = "pcb_testing";
+					break;
+				case 'HOUSING':
+					$table_name = "housing_table";
+					break;
+				case 'POTTING':
+					$table_name = "potting_table";
+					break;
+				case 'PU POTTING':
+					$table_name = "calibration_table";
+					break;
+				case 'ELECTRONIC HEAD':
+					$table_name = "after_pu";
+					break;
+			}
+
+			$checkSql = "SELECT * FROM `".$table_name."` WHERE `pcb_no`='".$_POST['pcb_no']."'";
+			$checkRes = mysqli_query($db, $checkSql);
+
+			if($checkRes->num_rows < 1) {
+				die("no record found!");
+			}
+
 			$sql = "UPDATE `lot_table` SET `rejected`='1',
 			`rejection_stage`='".$_POST['stage']."',
 			`rejection_remark`='".$_POST['remark']."' 
@@ -437,14 +466,7 @@
 					Materialize.toast("Please fill-up the required fields!",4000,'rounded');
 					}
 				else {
-					confirmStatus = confirm("Are you sure about rejecting this fuze?");
-					if(confirmStatus == true) {
-						addToRejection();
-						$('#rejection_clear').trigger('click');
-					}
-					else{
-						// do nothing
-					}
+					addToRejection();
 				}
 		});
 
@@ -501,10 +523,15 @@
 						if(msg.includes("ok")){
 							Materialize.toast('Added to rejection',3000,'rounded');
 						}
+						else if(msg.includes("no record found")) {
+							alert("No record found for "+ $('#rejection_scan_pcb').val() +" at "+ $('#rejection_stage :selected').val() +" rejection stage!\n\nPlease enter data manually or Upload ATE result for "+ $('#rejection_scan_pcb').val() +" to continue..");
+							Materialize.toast('Data Not Submitted!',3000,'rounded');
+						}
 						else{
 							Materialize.toast('Failed to reject!',3000,'rounded');
 							Materialize.toast('Server says: ' + msg.toString(),3000,'rounded');
 						}
+						$('#rejection_clear').trigger('click');
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						 alert(errorThrown + 'Is web-server offline?');
