@@ -1036,21 +1036,21 @@
 									<tbody>
 
 										<tr>
-										<td class='center'><span class='center'>PCB Number <span></td>
+										<td class='center'><span class='center'>PCB Number <br>(12 digits)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualPcbNo'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>Supply Current (mA) <span></td>
+											<td class='center'><span class='center'>Supply Current<br>(7-14 mA) <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualCurrent' data-position='bottom' data-delay='500' data-tooltip='7 to 14 mA' class='tooltipped'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>Supply Voltage (V) <span></td>
+											<td class='center'><span class='center'>Supply Voltage<br>(5.3-6.15 V) <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
@@ -1068,21 +1068,21 @@
 									<tbody>
 
 										<tr>
-											<td class='center'><span class='center'>VBAT-PST Delay <br>(mS) <span></td>
+											<td class='center'><span class='center'>VBAT-PST Delay <br>(600-700 mS) <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualVbatPst' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='600 to 700 mS'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>PST Ampl <br>(V)<span></td>
+											<td class='center'><span class='center'>PST Ampl <br>(12-21 V)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualPstAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='12 to 21 V'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>PST Width <br>(uS)<span></td>
+											<td class='center'><span class='center'>PST Width <br>(30-120 uS)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
@@ -1100,21 +1100,21 @@
 									<tbody>
 
 										<tr>
-											<td class='center'><span class='center'>Frequency <br>(KHz)<span></td>
+											<td class='center'><span class='center'>Frequency <br>(46-55 KHz)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualFreq' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='46 to 55 KHz'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>DC <br>(V)<span></td>
+											<td class='center'><span class='center'>DC <br>(7-8.1 V)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualModDC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='7 to 8.1 V'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>AC <br>(V)<span></td>
+											<td class='center'><span class='center'>AC <br>(0.95-1.35 V)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
@@ -1132,49 +1132,32 @@
 									<tbody>
 
 										<tr>
-											<td class='center'><span class='center'>VBAT-Cap Charge T <br>(mS)<span></td>
+											<td class='center'><span class='center'>VBAT-Cap Charge T <br>(695-730 mS)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualCapCharge' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='695 to 730 mS'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>VRF Ampl <br>(V) <span></td>
+											<td class='center'><span class='center'>VRF Ampl <br>(15.3-16.7 V) <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualVrfAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='15.3 to 16.7 V'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>VBAT-VRF Delay <br>(Sec)<span></td>
+											<td class='center'><span class='center'>VBAT-VRF Delay <br>(2.08-2.3 Sec)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualVbatVrf' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.08 to 2.30 Sec'>
 												</div>
 											</td>
-										</tr>
-
-									</tbody>
-								</table>
-
-								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>BPF (Background Noise)</span></center>
-
-								<table>
-									<tbody>										
-										<tr>
-											<td class='center'><span class='center'>BPF Noise DC <br>(V)<span></td>
+											<td class='center'><span class='center'>VBAT-SIL Delay <br>(2.7-3.2 Sec)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
-													<input type='text' id='PcbTestingDetailsBpfNoiseDc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5 to 6.5 V'>
-												</div>
-											</td>
-											<td class='center'><span class='center'>BPF Noise AC <br>(V)<span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='PcbTestingDetailsBpfNoiseAc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 0.25 V'>
+													<input type='text' id='pcbTestingManualVbatSil' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.7 to 3.2 Sec'>
 												</div>
 											</td>
 										</tr>
@@ -1188,35 +1171,35 @@
 									<tbody>
 
 										<tr>
-											<td class='center'><span class='center'>DET Width <br>(uS)<span></td>
+											<td class='center'><span class='center'>DET Width <br>(30-120 uS)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualDetWidth' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='30 to 120 uS'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>DET Ampl <br>(V)<span></td>
+											<td class='center'><span class='center'>DET Ampl <br>(-12 to -21 V)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualDetAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='-12 to -21 V'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>Cycles <span></td>
+											<td class='center'><span class='center'>Cycles <br>(4-6)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualCycles' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4 to 6'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>BPF DC <br>(V)<span></td>
+											<td class='center'><span class='center'>BPF DC <br>(5.2-6.4 V)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualBpfDC' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5.2 to 6.4 V'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>BPF AC <br>(V)<span></td>
+											<td class='center'><span class='center'>BPF AC <br>(2.5-3.6 V)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
@@ -1228,27 +1211,44 @@
 									</tbody>
 								</table>
 
-								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Noise Test</span></center>
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>BPF (Background Noise)</span></center>
+
+								<table>
+									<tbody>										
+										<tr>
+											<td class='center'><span class='center'>BPF Noise DC <br>(5.2-6.4 V)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsBpfNoiseDc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5 to 6.5 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>BPF Noise AC <br>(0-0.2 V)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsBpfNoiseAc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 0.25 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Noise & LVP Test</span></center>
 
 								<table>
 									<tbody>
 
 										<tr>
-											<td class='center'><span class='center'>SIL <br>(mS)<span></td>
+											<td class='center'><span class='center'>SIL <br>(480-650 mS)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualSil' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='480 to 650 mS'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>VBAT-SIL Delay <br>(Sec)<span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='pcbTestingManualVbatSil' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='2.7 to 3.2 Sec'>
-												</div>
-											</td>
-											<td class='center'><span class='center'>LVP <br>(V)<span></td>
+											<td class='center'><span class='center'>LVP <br>(18.8-21 V)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
@@ -1264,14 +1264,14 @@
 								<table>
 									<tbody>
 
-											<td class='center'><span class='center'>Delay <br>(uS)<span></td>
+											<td class='center'><span class='center'>Delay <br>(0-10 uS)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualPDDelay' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 10 uS'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>DET Ampl <br>(V)<span></td>
+											<td class='center'><span class='center'>DET Ampl <br>(-12 to -21 V)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
