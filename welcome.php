@@ -1256,25 +1256,6 @@
 												</div>
 											</td>
 										</tr>
-
-										<!--
-										<tr>
-											<td class='center'><span class='center'>BPF Noise DC <span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='PcbTestingDetailsBpfNoiseDc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5 to 6.5 V'>
-												</div>
-											</td>
-											<td class='center'><span class='center'>BPF Noise AC <span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='PcbTestingDetailsBpfNoiseAc' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='0 to 0.25 V'>
-												</div>
-											</td>
-										</tr>
-										-->
 									</tbody>
 								</table>
 
@@ -1310,16 +1291,24 @@
 											<td class='center'><span class='center'>SAFE Test <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='pcbTestingManualSafe' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='PASS or FAIL'>
+												<div class='input-field col s12 center' style="display: none;">
+													<input type='text' id='pcbTestingManualSafe' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='PASS or FAIL' value="PASS">
 												</div>
+												<input class="with-gap" name="safeTestRadio" type="radio" id="safePass" value="PASS" checked />
+  											<label for="safePass">Pass</label>
+  											<input class="with-gap" name="safeTestRadio" type="radio" id="safeFail" value="FAIL"/>
+  											<label for="safeFail">Fail</label>
 											</td>
 											<td class='center'><span class='center'>Result <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='pcbTestingManualResult' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='PASS or FAIL'>
+												<div class='input-field col s12 center' style="display: none;">
+													<input type='text' id='pcbTestingManualResult' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='PASS or FAIL' value="PASS">
 												</div>
+												<input class="with-gap" name="resultRadio" type="radio" id="resultPass" value="PASS" checked />
+  											<label for="resultPass">Pass</label>
+  											<input class="with-gap" name="resultRadio" type="radio" id="resultFail" value="FAIL"/>
+  											<label for="resultFail">Fail</label>
 											</td>
 										</tr>
 
@@ -1412,6 +1401,14 @@
 	</body>
 
 	<script type="text/javascript">
+
+		$('input:radio[name=safeTestRadio]').change(function(){
+			$('#pcbTestingManualSafe').val($('input:radio[name=safeTestRadio]:checked').val());
+		});
+
+		$('input:radio[name=resultRadio]').change(function(){
+			$('#pcbTestingManualResult').val($('input:radio[name=resultRadio]:checked').val());
+		});
 
 		var isBound = false;
 		$('.modal-trigger').leanModal({
@@ -3000,6 +2997,10 @@
 					$(this).val('');
 				}
 			});
+			$('#pcbTestingManualSafe').val('PASS');
+			$('#pcbTestingManualResult').val('PASS');
+			$('#safePass').prop('checked',true);
+			$('#resultPass').prop('checked',true);
 			$('#pcbTestingManualPcbNo').focus();
 		});
 
