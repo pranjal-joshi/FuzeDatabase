@@ -5,8 +5,8 @@
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-		$sqlCheck = "SELECT * from `qa_table` WHERE `pcb_no`='".$_POST['qa_pcb_no']."';";
-		$checkResult = mysqli_query($db, $sqlCheck);
+		//$sqlCheck = "SELECT * from `qa_table` WHERE `pcb_no`='".$_POST['qa_pcb_no']."';";
+		//$checkResult = mysqli_query($db, $sqlCheck);
 
 		// Disabled record exist searc due to DB-REPLACE query
 		/*
@@ -27,6 +27,18 @@
 				);";
 
 			$results = mysqli_query($db,$sql);
+
+			// create dummy lot entry on visual - for analytics and lot linking purpose.
+			$sql = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
+			(NULL,
+			'".$_COOKIE['fuzeType']."',
+			'".$_COOKIE['fuzeDia']."',
+			'0',
+			'QA',
+			'".substr($_POST['qa_pcb_no'],0,12)."',
+			'60')";
+
+			$res = mysqli_query($db, $sql);
 
 			if($results === true){
 				echo "ok";
