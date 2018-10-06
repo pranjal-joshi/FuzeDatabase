@@ -1211,9 +1211,9 @@
 									</tbody>
 								</table>
 
-								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>BPF (Background Noise)</span></center>
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;' id="bgNoiseHeader">BPF (Background Noise)</span></center>
 
-								<table>
+								<table id="bgNoiseTable">
 									<tbody>										
 										<tr>
 											<td class='center'><span class='center'>BPF Noise DC <br>(5.2-6.4 V)<span></td>
@@ -1408,6 +1408,13 @@
 
 		$('input:radio[name=resultRadio]').change(function(){
 			$('#pcbTestingManualResult').val($('input:radio[name=resultRadio]:checked').val());
+		});
+
+		$(document).ready(function(){
+			if($.cookie('fuzeStart') == "10" || $.cookie('fuzeStart') == "12") {
+				$('#bgNoiseTable').fadeOut();
+				$('#bgNoiseHeader').fadeOut();
+			}
 		});
 
 		var isBound = false;
