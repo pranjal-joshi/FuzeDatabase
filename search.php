@@ -221,11 +221,23 @@
 				}
 				//$value.="<td class='center'>".strtoupper($searchInTable)."</td>";
 				if($_POST['select'] != '1') {
-					$value.="<td class='center'>".$row['pcb_no']."</td>";
+					if($row['result'] == "FAIL") {
+						$value.="<td class='center' style='color: red'>".$row['pcb_no']."</td>";
+					}
+					else {
+						$value.="<td class='center'>".$row['pcb_no']."</td>";	
+					}
 				}
-				$value.="<td class='center'>".$lotRow['fuze_type']."</td>";
-				$value.="<td class='center'>".$lotRow['main_lot']."</td>";
-				$value.="<td class='center'>".$lotRow['kit_lot']."</td>";
+				if($row['result'] == "FAIL") {
+					$value.="<td class='center' style='color: red;'>".$lotRow['fuze_type']."</td>";
+					$value.="<td class='center' style='color: red;'>".$lotRow['main_lot']."</td>";
+					$value.="<td class='center' style='color: red;'>".$lotRow['kit_lot']."</td>";
+				}
+				else {
+					$value.="<td class='center'>".$lotRow['fuze_type']."</td>";
+					$value.="<td class='center'>".$lotRow['main_lot']."</td>";
+					$value.="<td class='center'>".$lotRow['kit_lot']."</td>";
+				}
 				//$value.="<td class='center'><a href='details.php/?q=".$row[$searchIn]."&s=".$searchIn."&t=".$searchInTable."' class='btn waves-effect waves-light' target='_blank'>VIEW details</a></td>";
 				$value.="<td class='center'><a href='details.php/?q=".$row['pcb_no']."&t=".$searchInTable."' class='btn waves-effect waves-light' target='_blank'>VIEW details</a></td>";
 				$value.="<td class='center'><a href='print.php/?q=".$row['pcb_no']."' class='btn waves-effect waves-light blue-grey' target='_blank'>PRINT</a></td>";
