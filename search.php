@@ -222,7 +222,7 @@
 				//$value.="<td class='center'>".strtoupper($searchInTable)."</td>";
 				if($_POST['select'] != '1') {
 					if($row['result'] == "FAIL") {
-						$value.="<td class='center' style='color: red'>".$row['pcb_no']."</td>";
+						$value.="<td class='center' style='color: red; font-weight: bold'>".$row['pcb_no']."</td>";
 					}
 					else {
 						$value.="<td class='center'>".$row['pcb_no']."</td>";	
