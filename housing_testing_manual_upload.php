@@ -31,6 +31,19 @@
 			die("fail");
 		}
 		else{
+
+			// assign new dummy lot to added HSG - MainLot=0, KitLot=HSG
+			$sql = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
+			(NULL,
+			'".$_COOKIE['fuzeType']."',
+			'".$_COOKIE['fuzeDia']."',
+			'0',
+			'HSG',
+			'".$dataArray[0]."',
+			'60')";
+
+			$res = mysqli_query($db, $sql);
+
 			die("ok");
 		}
 	}

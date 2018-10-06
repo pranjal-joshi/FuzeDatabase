@@ -216,6 +216,16 @@
 						$html.="<td>".$record_date."</td>";
 						$html.="</tr>";
 
+						$sqlDummyLot.="(
+							NULL,
+							'".$_COOKIE['fuzeType']."',
+							'".$_COOKIE['fuzeDia']."',
+							'0',
+							'HSG',
+							'".$pcb_no."',
+							'60'
+						),";
+
 						$sqlAdd.= "(
 							'".$pcb_no."', 
 							'".$current."', 
@@ -248,6 +258,11 @@
 				$sqlAdd = rtrim($sqlAdd,", ");
 				$sqlAdd.=";";
 				$res = mysqli_query($db,$sqlAdd);
+
+				$sqlDummyLot = rtrim($sqlDummyLot,",");
+				$sqlDummyLot = rtrim($sqlDummyLot,", ");
+				$sqlDummyLot.=";";
+				$dummyRes = mysqli_query($db,$sqlDummyLot);
 
 				$sqlAutoIncReset = "ALTER TABLE `housing_table` ADD `_id` INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`_id`);";
 				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
