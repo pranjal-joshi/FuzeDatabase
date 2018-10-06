@@ -1,6 +1,9 @@
 <?php
 	include('db_config.php');
 
+	// disable error reporting
+	error_reporting(0);
+
 	function curPageURL() {
 		$pageURL = "http://".$_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI'];
 		return urldecode($pageURL);
