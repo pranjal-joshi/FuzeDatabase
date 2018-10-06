@@ -35,20 +35,22 @@
 			$checkResult = mysqli_query($db,$sqlCheck);
 			$checkResultRow = mysqli_fetch_assoc($checkResult);
 			//if($checkResult->num_rows)
-			if(($checkResult->num_rows) && (strtoupper($checkResultRow['kit_lot']) != "PCB"))
+			if(($checkResult->num_rows) && ((strtoupper($checkResultRow['kit_lot']) != "PCB") && (strtoupper($checkResultRow['kit_lot']) != "HSG")))
 			{
 				die("<center><p style='color: red; font-weight: bold;'>Entry already exists. Search this PCB Number for more information. (Menu -> Search)</p><center>");
 			}
-			else if($_POST['fuze'] == "PROX") {			// only add to lot if passed in HSG
+			$hsgRes = "";
+			$hsgResRow = "";
+			if($_POST['fuze'] == "PROX") {			// only add to lot if passed in HSG
 				$hsgSql = "SELECT `result` FROM `housing_table` WHERE `pcb_no`='".$_POST['pcb_no']."'";
 				$hsgRes = mysqli_query($db, $hsgSql);
 				$hsgResRow = mysqli_fetch_assoc($hsgRes);
-				if(strtoupper($hsgResRow['result']) == "FAIL") {
-					die("<center><p style='color: red; font-weight: bold;'>Can't add failed housing to the lot.<br><br>Rework or Replace with a passed housing!</p><center>");
-				}
-				elseif($hsgRes->num_rows < 1) {
-					die("<center><p style='color: red; font-weight: bold;'>No testing data found for this housing!<br><br>Only tested OK housing can be added to lot.</p><center>");
-				}
+			}
+			if(strtoupper($hsgResRow['result']) == "FAIL") {
+				die("<center><p style='color: red; font-weight: bold;'>Can't add failed housing to the lot.<br><br>Rework or Replace with a passed housing!</p><center>");
+			}
+			elseif($hsgRes->num_rows < 1) {
+				die("<center><p style='color: red; font-weight: bold;'>No testing data found for this housing!<br><br>Only tested OK housing can be added to lot.</p><center>");
 			}
 			else{
 				$result = mysqli_query($db,$sql);
