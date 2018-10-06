@@ -288,8 +288,8 @@
 			</div>
 
 			<div class="row">
-				<div class="col m2"></div>
-				<div class="col m8 s12">
+				<div class="col m1"></div>
+				<div class="col m10 s12">
 
 					<br>
 					<div class="card-panel grey lighten-4" id="calibrationCard" style="display: none;">
