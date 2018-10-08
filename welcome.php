@@ -960,11 +960,11 @@
 										<div class="col s4"></div>
 										<div class="input-field col s2">
 											<input id="mainLotNoText" name="mainLotNoText" type="text" autofocus>
-											<label for="mainLotNoText"><center>Enter Main Lot Number</center></label>
+											<label for="mainLotNoText"><center>Main Lot</center></label>
 										</div>
 										<div class="input-field col s2">
 											<input id="kitLotNoText" name="kitLotNoText" type="text">
-											<label for="kitLotNoText"><center>Enter Kit Lot Number</center></label>
+											<label for="kitLotNoText"><center>Kit Lot</center></label>
 										</div>
 									</div>
 								
