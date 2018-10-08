@@ -6,9 +6,6 @@
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-		print_r($_POST);
-		print_r($_COOKIE);
-
 		$mimes = ['application/vnd.ms-excel','text/xls','text/xlsx','application/vnd.oasis.opendocument.spreadsheet'];
 
 		if($_FILES['file']['type'] == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
