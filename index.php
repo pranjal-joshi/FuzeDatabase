@@ -15,7 +15,7 @@
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-		$mypassword = mysqli_real_escape_string($db,$_POST['password']);
+		$mypassword = strtolower(mysqli_real_escape_string($db,$_POST['password']));
 		$mypassword = md5($mypassword);
 
 		$sql = "SELECT * FROM password WHERE passwd = '$mypassword'";
