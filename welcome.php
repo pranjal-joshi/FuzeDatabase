@@ -955,10 +955,22 @@
 							<div class="row">
 								<br>
 								<form action="housing_testing_upload.php" method="POST" enctype="multipart/form-data">
+
+									<div class="row" id="housingLotRow">
+										<div class="col s4"></div>
+										<div class="input-field col s2">
+											<input id="mainLotNoText" name="mainLotNoText" type="text" autofocus>
+											<label for="mainLotNoText"><center>Enter Main Lot Number</center></label>
+										</div>
+										<div class="input-field col s2">
+											<input id="kitLotNoText" name="kitLotNoText" type="text">
+											<label for="kitLotNoText"><center>Enter Kit Lot Number</center></label>
+										</div>
+									</div>
 								
 									<center>
 										<input type="file"  name="file" >
-										<button type="submit" value="submit" class="btn">Upload</button>
+										<button type="submit" value="submit" class="btn" id="housingAteUpload">Upload</button>
 									</center>
 
 								</form>
@@ -1415,7 +1427,15 @@
 				$('#bgNoiseTable').fadeOut();
 				$('#bgNoiseHeader').fadeOut();
 			}
+			if($.cookie('fuzeType') != 'PROX' && $.cookie('fuzeStart') == "9") {		// hide lot info for EPD & TIME Fuzes
+				$('#housingLotRow').fadeOut();
+			}
 		});
+
+		$('#housingAteUpload').click(function() {
+			console.log("Triggered!!!");
+		});
+
 
 		var isBound = false;
 		$('.modal-trigger').leanModal({

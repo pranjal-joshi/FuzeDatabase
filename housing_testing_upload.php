@@ -6,6 +6,9 @@
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
+		print_r($_POST);
+		print_r($_COOKIE);
+
 		$mimes = ['application/vnd.ms-excel','text/xls','text/xlsx','application/vnd.oasis.opendocument.spreadsheet'];
 
 		if($_FILES['file']['type'] == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
@@ -157,6 +160,8 @@
 
 				$sqlDummyLot = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES ";
 
+				$addToLotSql = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES ";
+
 				foreach ($Reader as $Row)
 				{
 					$cnt++;
@@ -253,6 +258,18 @@
 							'".$det_pd."', 
 							'".$safe."', 
 							'".$result."', '', '".$record_date."','0','0'),";	// keep op_name blank for ATE),";
+
+						if($result == "PASS") {
+							$addToLotSql.="(
+										NULL,
+										'".$_COOKIE['fuzeType']."',
+										'".$_COOKIE['fuzeDia']."',
+										'".$_POST['mainLotNoText']."',
+										'".$_POST['kitLotNoText']."',
+										'".$pcb_no."',
+										'60'
+									),";
+						}
 					}
 				 }
 
@@ -264,7 +281,14 @@
 				$sqlDummyLot = rtrim($sqlDummyLot,",");
 				$sqlDummyLot = rtrim($sqlDummyLot,", ");
 				$sqlDummyLot.=";";
-				$dummyRes = mysqli_query($db,$sqlDummyLot);
+
+				// DISABLED DUMMY LOT CREATETION - CREATE TRUE LOT INSTEAD with addToLotSql
+				//$dummyRes = mysqli_query($db,$sqlDummyLot);
+
+				$addToLotSql = rtrim($addToLotSql,",");
+				$addToLotSql = rtrim($addToLotSql,", ");
+				$addToLotSql.=";";
+				$dummyRes = mysqli_query($db,$addToLotSql);
 
 				$sqlAutoIncReset = "ALTER TABLE `housing_table` ADD `_id` INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`_id`);";
 				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
