@@ -4,6 +4,8 @@
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
+		print_r($_POST);
+
 		$s = str_replace("\"", "", strtoupper($_POST['jsonData']));
 		$s = trim($s,"[]");
 		$s = str_replace(" ", "", $s);
@@ -15,12 +17,19 @@
 
 		$sqlAdd = "REPLACE INTO `housing_table` (`pcb_no`, `i`, `vee`, `vbat_pst`, `pst_amp`, `pst_wid`, `mod_freq`, `mod_dc`, `mod_ac`, `cap_charge`, `vrf_amp`, `vbat_vrf`, `vbat_sil`, `det_wid`, `det_amp`, `cycles`, `bpf_dc`, `bpf_ac`, `bpf_noise_dc`, `bpf_noise_ac`, `sil`, `lvp`, `pd_delay`, `pd_det`, `safe`, `result`, `op_name`) VALUES (";
 
+		$cnt = 0;
 		foreach ($dataArray as $value) {
-			$sqlAdd.= "'".$value."',";
+			if($cnt<27) {									// don't read main lot n kit lot from form to make query
+				$sqlAdd.= "'".$value."',";
+			}
+			$cnt++;
 		}
+		$cnt = 0;
 
 		$sqlAdd = trim($sqlAdd,",");
 		$sqlAdd.=");";
+
+		print_r($sqlAdd);
 
 		$res = mysqli_query($db,$sqlAdd);
 
@@ -33,6 +42,7 @@
 		else{
 
 			// assign new dummy lot to added HSG - MainLot=0, KitLot=HSG
+			/*
 			$sql = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
 			(NULL,
 			'".$_COOKIE['fuzeType']."',
@@ -41,8 +51,22 @@
 			'HSG',
 			'".$dataArray[0]."',
 			'60')";
+			*/
+			if($dataArray[25] == "PASS") 				// ADD to lot only if passed
+			{
+				$sql = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
+				(NULL,
+				'".$_COOKIE['fuzeType']."',
+				'".$_COOKIE['fuzeDia']."',
+				'".$_POST['main_lot']."',
+				'".$_POST['kit_lot']."',
+				'".$dataArray[0]."',
+				'60')";
 
-			$res = mysqli_query($db, $sql);
+				print_r($sql);
+
+				$res = mysqli_query($db, $sql);
+			}
 
 			die("ok");
 		}
