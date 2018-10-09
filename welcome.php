@@ -1299,7 +1299,7 @@
 
 								<table>
 									<tbody>
-
+										<tr>
 											<td class='center'><span class='center'>SAFE Test <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
@@ -1344,6 +1344,22 @@
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='pcbTestingManualOperatorName'>
+												</div>
+											</td>
+										</tr>
+										<tr id="pcbTestingManualLotInfo">
+											<td class='center'><span class='center'>Main Lot<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='pcbTestingManualMainLot'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Kit Lot<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type="text" id='pcbTestingManualKitLot'>
 												</div>
 											</td>
 										</tr>
@@ -1414,21 +1430,25 @@
 
 	<script type="text/javascript">
 
-		$('input:radio[name=safeTestRadio]').change(function(){
-			$('#pcbTestingManualSafe').val($('input:radio[name=safeTestRadio]:checked').val());
-		});
-
-		$('input:radio[name=resultRadio]').change(function(){
-			$('#pcbTestingManualResult').val($('input:radio[name=resultRadio]:checked').val());
-		});
-
 		$(document).ready(function(){
+			$('input:radio[name=safeTestRadio]').change(function(){
+			$('#pcbTestingManualSafe').val($('input:radio[name=safeTestRadio]:checked').val());
+				console.log($('input:radio[name=safeTestRadio]:checked').val());
+			});
+
+			$('input:radio[name=resultRadio]').change(function(){
+				$('#pcbTestingManualResult').val($('input:radio[name=resultRadio]:checked').val());
+				console.log($('input:radio[name=resultRadio]:checked').val());
+			});
 			if($.cookie('fuzeStart') == "10" || $.cookie('fuzeStart') == "12") {
 				$('#bgNoiseTable').fadeOut();
 				$('#bgNoiseHeader').fadeOut();
 			}
 			if($.cookie('fuzeType') != 'PROX' && $.cookie('fuzeStart') == "9") {		// hide lot info for EPD & TIME Fuzes
 				$('#housingLotRow').fadeOut();
+			}
+			if($.cookie('fuzeType') == "PROX" && ($.cookie('fuzeStart') == "8" || $.cookie('fuzeStart') == "12")) {
+				$('#pcbTestingManualLotInfo').remove();
 			}
 		});
 
@@ -2923,6 +2943,8 @@
 		$('#pcbTestingManualSubmitButton').click(function(){
 			manualTestingData = new Array();
 			var isEmpty = false;
+			var ajaxMainLotNo = 0;
+			var ajaxKitLotNo = "HSG";
 			if($.cookie('fuzeStart') == "8") {
 				$('#pcbTestingManualCard input[type="text"]').each(function(){
 					if($(this).val() == "") {
@@ -2958,6 +2980,8 @@
 				if($('#pcbTestingManualRecordDate').val() == "") {
 					isEmpty = true;
 				}
+				ajaxMainLotNo = $('#pcbTestingManualMainLot').val();
+				ajaxKitLotNo = $('#pcbTestingManualKitLot').val();
 			}
 			else if($.cookie('fuzeStart') == "12") {
 				$('#PottingTestingManualCard input[type="text"]').each(function(){
@@ -2979,7 +3003,7 @@
 				}
 			}
 			
-			if(isEmpty) { /////////////////////////// CHANGE ! LATER - DONE ////////////////////////////////////////
+			if(!isEmpty) { /////////////////////////// CHANGE ! LATER - DONE ////////////////////////////////////////
 				Materialize.toast("Please fill up all fields.",3000,'rounded');
 			}
 			else {
@@ -3000,7 +3024,9 @@
 					type: 'POST',
 					data: {
 						jsonData: JSON.stringify(manualTestingData),
-						record_date: $('#pcbTestingManualRecordDate').val()
+						record_date: $('#pcbTestingManualRecordDate').val(),
+						main_lot: ajaxMainLotNo,
+						kit_lot: ajaxKitLotNo
 					},
 					success: function(msg) {
 						console.log(manualTestingData);
@@ -3024,7 +3050,7 @@
 
 		$('#pcbTestingManualClearButton').click(function(){
 			$('input[type="text"]').each(function(){
-				if($(this).attr('id') != "pcbTestingManualOperatorName" && $(this).attr('id') != "pcbTestingManualRecordDate") {
+				if($(this).attr('id') != "pcbTestingManualOperatorName" && $(this).attr('id') != "pcbTestingManualRecordDate" && $(this).attr('id') != "pcbTestingManualMainLot" && $(this).attr('id') != "pcbTestingManualKitLot") {
 					$(this).val('');
 				}
 			});
