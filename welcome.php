@@ -3096,6 +3096,13 @@
 			closeOnSelect: false // Close upon selecting a date,
 		});
 
+		alert("Update For Manual Housing Testing Operator:\n*************************\nEnter Main Lot & Kit lot number details below operator name while submitting.\nIf the housing is passed, it will be added to given lot number.\nIf faild, only report will be stored instead of adding failed housing to the lot.\nNo need to open 'Create Lot' in new window anymore!\n*************************");
+		$(window).load(function() {
+			if($.cookie('fuzeStart') == '10') {
+		  	$("html, body").animate({ scrollTop: $(document).height() }, 1000);
+			}
+		});
+
 	</script>
 
 </html>
