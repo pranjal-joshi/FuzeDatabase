@@ -3003,7 +3003,7 @@
 				}
 			}
 			
-			if(!isEmpty) { /////////////////////////// CHANGE ! LATER - DONE ////////////////////////////////////////
+			if(isEmpty) { /////////////////////////// CHANGE ! LATER - DONE ////////////////////////////////////////
 				Materialize.toast("Please fill up all fields.",3000,'rounded');
 			}
 			else {
