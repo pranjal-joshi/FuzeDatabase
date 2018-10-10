@@ -267,6 +267,17 @@
 										'60'
 									),";
 						}
+						else {
+							$addToLotSql.="(
+										NULL,
+										'".$_COOKIE['fuzeType']."',
+										'".$_COOKIE['fuzeDia']."',
+										'0',
+										'HSG',
+										'".$pcb_no."',
+										'0'
+									),";
+						}
 					}
 				 }
 
