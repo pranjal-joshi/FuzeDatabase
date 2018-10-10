@@ -63,7 +63,17 @@
 				'".$dataArray[0]."',
 				'60')";
 
-				print_r($sql);
+				$res = mysqli_query($db, $sql);
+			}
+			else {
+				$sql = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
+				(NULL,
+				'".$_COOKIE['fuzeType']."',
+				'".$_COOKIE['fuzeDia']."',
+				'0',
+				'HSG',
+				'".$dataArray[0]."',
+				'0')";
 
 				$res = mysqli_query($db, $sql);
 			}
