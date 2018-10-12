@@ -161,7 +161,7 @@
 					if($cnt > 4)
 					{
 						$html.="<tr>";
-						$pcb_no = isset($Row[0]) ? strtoupper($Row[0]) : '';
+						$pcb_no = str_replace("O", "0", (isset($Row[0]) ? strtoupper($Row[0]) : '')) ;
 						$current = isset($Row[1]) ? $Row[1] : '';
 						$vee = isset($Row[2]) ? $Row[2] : '';
 						$vbat_pst = isset($Row[3]) ? $Row[3] : '';
