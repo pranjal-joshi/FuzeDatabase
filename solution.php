@@ -80,10 +80,10 @@
 		if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 			if($_POST['rejection_stage'] == 'All') {
-				$sql = "SELECT `rejection_remark`,`acception_remark`,`pcb_no` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND`fuze_diameter`='".$_POST['fuze_diameter']."' AND`rejection_remark` != '' AND `acception_remark` != ''";
+				$sql = "SELECT `rejection_remark`,`acception_remark`,`pcb_no`,`rejection_stage` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND`fuze_diameter`='".$_POST['fuze_diameter']."' AND`rejection_remark` != '' AND `acception_remark` != ''";
 			}
 			else {
-				$sql = "SELECT `rejection_remark`,`acception_remark`,`pcb_no` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND`rejection_remark` != '' AND `acception_remark` != '' AND `rejection_stage`='".$_POST['rejection_stage']."'";
+				$sql = "SELECT `rejection_remark`,`acception_remark`,`pcb_no`,`rejection_stage` FROM `lot_table` WHERE `fuze_type`='".$_POST['fuze_type']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND`rejection_remark` != '' AND `acception_remark` != '' AND `rejection_stage`='".$_POST['rejection_stage']."'";
 			}
 
 			$results = mysqli_query($db,$sql);
@@ -99,6 +99,7 @@
 					$tableVar.= "<tr>";
 					$tableVar.= "<td class='left'>".strval($cnt).".</td>";
 					$tableVar.= "<td class='center'><span>".$row['pcb_no']."</span></td>";
+					$tableVar.= "<td class='center'><span>".$row['rejection_stage']."</span></td>";
 					$tableVar.= "<td class='center'><span class='red-text text-darken-3'>".$row['rejection_remark']."</span></td>";
 					$tableVar.= "<td class='center'><span class='green-text text-darken-3'>".$row['acception_remark']."</span></td>";
 					$tableVar.= "</tr>";
@@ -214,6 +215,7 @@
 									<tr>
 										<th class="left">S.N.</th>
 										<th class="center">PCB No.</th>
+										<th class="center">Stage</th>
 										<th class="center">Problem</th>
 										<th class="center">Solution</th>
 									</tr>
