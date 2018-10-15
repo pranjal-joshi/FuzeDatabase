@@ -6,7 +6,8 @@
 
 	include('db_config.php');
 
-	function dateRangeQuery($startDate, $endDate, $searchInTable, $searchIn) {
+	// This functions maps string input dates into a large query for search
+	/*function dateRangeQuery($startDate, $endDate, $searchInTable, $searchIn) {
 		$monthArray = array("January","February","March","April","May","June","July","August","September","October","November","December");
 		if($endDate == "") {
 			$endDate = $startDate;
@@ -79,7 +80,16 @@
 		}
 		unset($monthArray);
 		return $sql;
+	}*/
+
+	// New - this function uses SQL date datatype with between query
+	function dateRangeQuery($startDate, $endDate, $searchInTable, $searchIn) {
+		//$sql = "SELECT * FROM ".$searchInTable." WHERE ".$searchIn." BETWEEN STR_TO_DATE('".$startDate."','%e %M, %Y') AND STR_TO_DATE('".$endDate"','%e %M, %Y')";
+		$sql = "SELECT * FROM ".$searchInTable." WHERE ".$searchIn." BETWEEN STR_TO_DATE('".$startDate."','%e %M, %Y') AND STR_TO_DATE('".$endDate."','%e %M, %Y')";
+		return $sql;
 	}
+
+
 
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 
