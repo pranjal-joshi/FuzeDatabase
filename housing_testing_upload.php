@@ -254,7 +254,8 @@
 							'".$delay."', 
 							'".$det_pd."', 
 							'".$safe."', 
-							'".$result."', '', '".$record_date."','0','0'),";	// keep op_name blank for ATE),";
+							'".$result."', '', STR_TO_DATE('".$record_date."','%e %M, %Y'),'0','0'),";
+							// keep op_name blank for ATE),";
 
 						if($result == "PASS") {
 							$addToLotSql.="(

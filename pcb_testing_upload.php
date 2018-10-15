@@ -262,7 +262,8 @@
 							'".$delay."', 
 							'".$det_pd."', 
 							'".$safe."', 
-							'".$result."', '', '".$record_date."'),";	// keep op_name blank for ATE),";
+							'".$result."', '', STR_TO_DATE('".$record_date."','%e %M, %Y')),";
+							// keep op_name blank for ATE),";
 					}
 				 }
 

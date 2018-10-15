@@ -245,7 +245,7 @@
 							'".$pd_det_width."', 
 							'".$pd_det_amp."', 
 							'".$result."',
-							'".$record_date."'),";
+							STR_TO_DATE('".$record_date."','%e %M, %Y')),";
 					}
 				 }
 
