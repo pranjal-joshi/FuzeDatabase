@@ -194,6 +194,15 @@
 									<label for="search_box">What to search?</label>
 								</div>
 
+					      <div class="switch">
+							    <label>
+							      Deep
+							      <input type="checkbox" id="QuickSearchSwitch" checked="checked">
+							      <span class="lever"></span>
+							      Quick
+							    </label>
+							  </div>
+
 								<br>
 								<a class="btn col s2" href="#" id="searchButton" name="searchButton">SEARCH</a>
 
@@ -1491,6 +1500,13 @@
 							});
 
 							$('#searchButton').click(function(){
+								var quickSearch = 1;
+								if($('#QuickSearchSwitch').prop('checked')) {
+									quickSearch = 1;
+								}
+								else {
+									quickSearch = 0;
+								}
 								document.getElementById('searchDynamicTable').innerHTML = "";
 								$('#searchPreloader').fadeIn();
 								var text = $('#search_box').val();
@@ -1514,7 +1530,8 @@
 										data: {
 											query: text,
 											select: select,
-											tableSelect: tableSelect
+											tableSelect: tableSelect,
+											quickSearch: quickSearch
 										},
 										success: function(msg) {
 											$('#searchPreloader').fadeOut();
@@ -1534,7 +1551,8 @@
 											select: select,
 											tableSelect: tableSelect,
 											datepicker1: $('#searchModalRecordDate1').val(),
-											datepicker2: $('#searchModalRecordDate2').val()
+											datepicker2: $('#searchModalRecordDate2').val(),
+											quickSearch: 0
 										},
 										success: function(msg) {
 											$('#searchPreloader').fadeOut();
