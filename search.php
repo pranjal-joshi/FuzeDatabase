@@ -84,7 +84,11 @@
 
 	// New - this function uses SQL date datatype with between query
 	function dateRangeQuery($startDate, $endDate, $searchInTable, $searchIn) {
-		//$sql = "SELECT * FROM ".$searchInTable." WHERE ".$searchIn." BETWEEN STR_TO_DATE('".$startDate."','%e %M, %Y') AND STR_TO_DATE('".$endDate"','%e %M, %Y')";
+		$start = new DateTime($startDate);
+		$end = new DateTime($endDate);
+		if($start > $end) {
+			die("<br><p style='color: red; font-weight: bold;'>'From' date should not be ahead of 'To' date!</p>");
+		}
 		$sql = "SELECT * FROM ".$searchInTable." WHERE ".$searchIn." BETWEEN STR_TO_DATE('".$startDate."','%e %M, %Y') AND STR_TO_DATE('".$endDate."','%e %M, %Y')";
 		return $sql;
 	}
@@ -198,7 +202,21 @@
 
 		//$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE '".$query."%'";
 
-		$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE '".$query."%'";
+		// Switch between quick & deep search
+		$sql = "";
+		if($_POST['quickSearch'] == '0') {
+			$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE '".$query."%'";
+		}
+		else {
+			$today = date("Y-m-d",strtotime("today"));
+			$past = date("Y-m-d",strtotime("-3 Months"));
+			if($searchInTable != 'calibration_table') {
+				$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE '".$query."%' AND `record_date` BETWEEN '".$past."' AND '".$today."'";
+			}
+			else {
+				$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE '".$query."%' AND `timestamp` BETWEEN '".$past."' AND '".$today."'";
+			}
+		}
 
 		if($_POST['select'] == '8') {
 			$sql = dateRangeQuery($_POST['datepicker1'],$_POST['datepicker2'],$searchInTable,$searchIn);
