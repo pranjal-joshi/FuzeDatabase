@@ -26,7 +26,10 @@
 
 		$res = mysqli_query($db,$sqlAdd);
 
-		$recordDateSql = "UPDATE `pcb_testing` SET `record_date` = '".$_POST['record_date']."' WHERE `pcb_no` = '".$dataArray[0]."'";
+		//$recordDateSql = "UPDATE `pcb_testing` SET `record_date` = '".$_POST['record_date']."' WHERE `pcb_no` = '".$dataArray[0]."'";
+
+		$recordDateSql = "UPDATE `pcb_testing` SET `record_date` = STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y') WHERE `pcb_no` = '".$dataArray[0]."'";
+
 		$dateRes = mysqli_query($db, $recordDateSql);
 
 		if(!$res || !$dateRes) {
