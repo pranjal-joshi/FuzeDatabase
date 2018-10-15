@@ -220,7 +220,9 @@
 
 				for($i=1;$i<=$_POST['days_in_month'];$i++) {
 
-					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = STR_TO_DATE('".strval($i)." ".$_POST['month']."','%e %M, %Y') AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+
+					//print_r($productionSql);
 
 					$productionResult = mysqli_query($db, $productionSql);
 					array_push($productionData, 
@@ -244,7 +246,7 @@
 
 				for($i=1;$i<=$_POST['days_in_month'];$i++) {
 
-					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = STR_TO_DATE('".strval($i)." ".$_POST['month']."','%e %M, %Y') AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
 
 					$productionResult = mysqli_query($db, $productionSql);
 					array_push($productionCalibrationData, 
@@ -257,7 +259,7 @@
 				$table_name = "qa_table";
 				for($i=1;$i<=$_POST['days_in_month'];$i++) {
 
-					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = STR_TO_DATE('".strval($i)." ".$_POST['month']."','%e %M, %Y') AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
 
 					$productionResult = mysqli_query($db, $productionSql);
 					array_push($productionQaData, 
@@ -268,7 +270,7 @@
 				$table_name = "pcb_testing";
 				for($i=1;$i<=$_POST['days_in_month'];$i++) {
 
-					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = STR_TO_DATE('".strval($i)." ".$_POST['month']."','%e %M, %Y') AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
 
 					$productionResult = mysqli_query($db, $productionSql);
 					array_push($productionPcbData, 
@@ -279,7 +281,7 @@
 				$table_name = "housing_table";
 				for($i=1;$i<=$_POST['days_in_month'];$i++) {
 
-					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = STR_TO_DATE('".strval($i)." ".$_POST['month']."','%e %M, %Y') AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
 
 					$productionResult = mysqli_query($db, $productionSql);
 					array_push($productionHousingData, 
@@ -290,7 +292,7 @@
 				$table_name = "potting_table";
 				for($i=1;$i<=$_POST['days_in_month'];$i++) {
 
-					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = STR_TO_DATE('".strval($i)." ".$_POST['month']."','%e %M, %Y') AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
 
 					$productionResult = mysqli_query($db, $productionSql);
 					array_push($productionPottingData, 
@@ -301,7 +303,7 @@
 				$table_name = "after_pu";
 				for($i=1;$i<=$_POST['days_in_month'];$i++) {
 
-					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = '".strval($i)." ".$_POST['month']."' AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = STR_TO_DATE('".strval($i)." ".$_POST['month']."','%e %M, %Y') AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
 
 					$productionResult = mysqli_query($db, $productionSql);
 					array_push($productionAfterPuData, 
@@ -814,6 +816,7 @@
 							days_in_month: daysInMonth
 						},
 						success: function(msg) {
+							console.log(msg);
 							if(JSON.parse(msg).length < 27) {			// only valid if 'all' selected from UI
 								jsonMsg = JSON.stringify(JSON.parse(msg)[0]);
 								var monthlyCount = JSON.parse(jsonMsg);
