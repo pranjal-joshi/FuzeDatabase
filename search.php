@@ -84,6 +84,9 @@
 
 	// New - this function uses SQL date datatype with between query
 	function dateRangeQuery($startDate, $endDate, $searchInTable, $searchIn) {
+		if($endDate == "") {
+			$endDate = $startDate;
+		}
 		$start = new DateTime($startDate);
 		$end = new DateTime($endDate);
 		if($start > $end) {
