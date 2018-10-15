@@ -194,13 +194,9 @@
 									<label for="search_box">What to search?</label>
 								</div>
 
-					      <div class="switch">
-							    <label>
-							      Deep
-							      <input type="checkbox" id="QuickSearchSwitch" checked="checked">
-							      <span class="lever"></span>
-							      Quick
-							    </label>
+								<div id="quickSearchDiv">
+							  	<input type="checkbox" class="filled-in" id="QuickSearchSwitch" checked="checked">
+							  	<label for="QuickSearchSwitch">Quick Search</label>
 							  </div>
 
 								<br>
@@ -1461,11 +1457,6 @@
 			}
 		});
 
-		$('#housingAteUpload').click(function() {
-			console.log("Triggered!!!");
-		});
-
-
 		var isBound = false;
 		$('.modal-trigger').leanModal({
 					dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -1479,10 +1470,12 @@
 						$('#searchSelect').on('change',function() { 				// show datepicker if date is selected
 							if($('#searchSelect :selected').val() == '8') {
 								$('#searchModalDatePickerRow').fadeIn();
+								$('#quickSearchDiv').fadeOut();
 								$('#search_box_div').animate({ opacity:0 });
 							}
 							else {
 								$('#searchModalDatePickerRow').fadeOut();
+								$('#quickSearchDiv').fadeIn();
 								$('#search_box_div').animate({ opacity:1 });
 							}
 						});
@@ -1515,6 +1508,7 @@
 								if(text === "" && select != '8'){
 									Materialize.toast("Search box can't be kept blank",2500,'rounded');
 									$('#search_box').focus();
+									$('#searchPreloader').fadeOut();
 									return false;
 								}
 								else if(text === "%" || text.includes("%%") || text === "*" || text.includes("**") || text.includes("%*") || text.includes("*%")) {
