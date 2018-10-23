@@ -296,6 +296,8 @@
 				<div class="col m1"></div>
 				<div class="col m10 s12">
 
+					<!----------------------- PROX Cards ----------------------------------->
+
 					<br>
 					<div class="card-panel grey lighten-4" id="calibrationCard" style="display: none;">
 						<div class="row">
@@ -1380,6 +1382,34 @@
 							</form>
 						</div>
 					</div>
+
+					<!----------------------- EPD Cards ----------------------------------->
+
+					<div class="card-panel grey lighten-4" id="epdAteCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Upload CSV file from Dot-Sys EPD ATE</span>
+								</center>
+							</div>
+
+							<div class="row">
+								<br>
+								<form action="epd_ate_csv.php" method="POST" enctype="multipart/form-data">
+								
+									<center>
+										<input type="file"  name="file" >
+										<button type="submit" value="submit" class="btn">Upload</button>
+									</center>
+
+								</form>
+							</div>
+
+						</div>
+					</div>
+
+					<!--------------------------------------------------------------------->
 
 					<div class="card-panel grey lighten-4" id="searchCard" style="display: none;">
 						<div class="row">
@@ -2477,6 +2507,22 @@
 				window.location = "mtrlmgmt.php";
 			}
 		}
+		else if($.cookie('fuzeType') == "EPD" && $.cookie('fuzeAccess') != "37BD0D3935B47BE2AB57BCF91B57F499") {
+			switch($.cookie('fuzeStart')){
+				case '2':
+					$('#epdAteCard').fadeIn();
+					break;
+				case '9':
+					$('#epdAteCard').fadeIn();
+					break;
+				case '11':
+					$('#epdAteCard').fadeIn();
+					break;
+				case '16':
+					$('#epdAteCard').fadeIn();
+					break;
+			}
+		}
 		else if($.cookie('fuzeAccess') == "37BD0D3935B47BE2AB57BCF91B57F499") {
 			$('#mgrsCard').fadeIn();
 			$('#modulesCard').fadeIn();
@@ -3106,13 +3152,6 @@
 			clear: 'Clear',
 			close: 'Ok',
 			closeOnSelect: false // Close upon selecting a date,
-		});
-
-		alert("Update For Manual Housing Testing Operator:\n*************************\nEnter Main Lot & Kit lot number details below operator name while submitting.\nIf the housing is passed, it will be added to given lot number.\nIf faild, only report will be stored instead of adding failed housing to the lot.\nNo need to open 'Create Lot' in new window anymore!\n*************************");
-		$(window).load(function() {
-			if($.cookie('fuzeStart') == '10') {
-		  	$("html, body").animate({ scrollTop: $(document).height() }, 1000);
-			}
 		});
 
 	</script>
