@@ -190,6 +190,10 @@
 														<option value="11">Potted Housing Testing - ATE</option>
 														<option value="12">Potted Housing Testing - Manual</option>
 													</optgroup>
+													<optgroup label="EPD / TIME">
+														<option value="16">Electronic Head Testing - ATE</option>
+														<option value="17">Electronic Head Testing - Manual</option>
+													</optgroup>
 													<optgroup label="For Proximity">
 														<option value="3">Calibration</option>
 														<option value="4">After PU - ATE</option>
