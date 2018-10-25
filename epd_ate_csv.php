@@ -141,13 +141,15 @@
 				}
 
 				$csvArray = array_map('str_getcsv', file($uploadFilePath));
+				print_r($csvArray);echo "<br><br>";
 
 				$addSql = "REPLACE INTO `epd_csv` (`_id`, `pcb_no`, `op_id`, `tester_id`, `record_date`, `record_time`, `partial_test`, `vbat_v`, `vbat_i`, `vdd`, `tpcd_delay`, `pst_delay`, `pst_amp`, `pst_width`, `pd_delay`, `pd_amp`, `pd_width`, `delay_delay`, `delay_amp`, `delay_width`, `si_mode`, `si_delay`, `si_amp`, `si_width`, `safe_pst`, `safe_det`, `result`) VALUES ";
 
 				for($cnt=2;$cnt<=count($csvArray)-2;$cnt++) {
 					$dataArray = explode("\t", $csvArray[$cnt][0]);
 					$dataArray = array_map('trim', $dataArray);
-					$z = mysqli_real_escape_string($db,explode("\t", $dataArray[2])[0]);
+					$dataArray = array_map('utf8_encode', $dataArray);
+					$z = explode("\t", $dataArray[2])[0];
 					$pcb_no = substr($z,12);										// change these indexes later
 					$tempStr = substr($z,0,12);										// change these indexes later
 					$op_id = substr($tempStr,0,6);										// change these indexes later
@@ -160,25 +162,25 @@
 										."STR_TO_DATE('".$dataArray[1]."','%e/%m/%Y'), "
 										."Cast('".$dataArray[0]."' as TIME), '"
 										.($dataArray[3] == "1" ? "YES" : "NO")."', '"
-										.mysqli_real_escape_string($db,$dataArray[4])."', '"
-										.mysqli_real_escape_string($db,$dataArray[5])."', '"
-										.mysqli_real_escape_string($db,$dataArray[6])."', '"
-										.mysqli_real_escape_string($db,$dataArray[7])."', '"
-										.mysqli_real_escape_string($db,$dataArray[8])."', '"
-										.mysqli_real_escape_string($db,$dataArray[9])."', '"
-										.mysqli_real_escape_string($db,$dataArray[10])."', '"
-										.mysqli_real_escape_string($db,$dataArray[11])."', '"
-										.mysqli_real_escape_string($db,$dataArray[12])."', '"
-										.mysqli_real_escape_string($db,$dataArray[13])."', '"
-										.mysqli_real_escape_string($db,$dataArray[14])."', '"
-										.mysqli_real_escape_string($db,$dataArray[15])."', '"
-										.mysqli_real_escape_string($db,$dataArray[16])."', '"
-										.mysqli_real_escape_string($db,$dataArray[17])."', '"
-										.mysqli_real_escape_string($db,$dataArray[18])."', '"
-										.mysqli_real_escape_string($db,$dataArray[19])."', '"
-										.mysqli_real_escape_string($db,$dataArray[20])."', '"
-										.mysqli_real_escape_string($db,$dataArray[21])."', '"
-										.mysqli_real_escape_string($db,$dataArray[22])."', '"
+										.$dataArray[4]."', '"
+										.$dataArray[5]."', '"
+										.$dataArray[6]."', '"
+										.$dataArray[7]."', '"
+										.$dataArray[8]."', '"
+										.$dataArray[9]."', '"
+										.$dataArray[10]."', '"
+										.$dataArray[11]."', '"
+										.$dataArray[12]."', '"
+										.$dataArray[13]."', '"
+										.$dataArray[14]."', '"
+										.$dataArray[15]."', '"
+										.$dataArray[16]."', '"
+										.$dataArray[17]."', '"
+										.$dataArray[18]."', '"
+										.$dataArray[19]."', '"
+										.$dataArray[20]."', '"
+										.$dataArray[21]."', '"
+										.$dataArray[22]."', '"
 										.($dataArray[23] == "1" ? "PASS" : "FAIL")."'),");
 
 				}
@@ -187,6 +189,10 @@
 				$res = mysqli_query($db,$addSql);
 
 				print_r($addSql);
+				echo "<br><br>";
+				print_r(mysqli_info($db));
+				echo "<br><br>";
+				print_r(mysqli_get_warnings($db));
 	}
 	else {
 		die("
