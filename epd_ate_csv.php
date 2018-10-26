@@ -165,7 +165,7 @@
 					$addSql.= trim("(NULL, '"
 										.$pcb_no."', '"
 										.$op_id."', '"
-										.$tester_id."', "
+										.$tester_id."', '"
 										.$assy_stage."', "
 										."STR_TO_DATE('".$dataArray[1]."','%e/%m/%Y'), "
 										."Cast('".$dataArray[0]."' as TIME), '"
