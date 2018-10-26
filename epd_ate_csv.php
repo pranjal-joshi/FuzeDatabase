@@ -122,7 +122,7 @@
 				<script text='text/javascript'>$('#uploadTable').hide();</script>
 				";
 
-				$sql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`epd_csv` ( `_id` INT NOT NULL AUTO_INCREMENT , `pcb_no` VARCHAR(6) NOT NULL , `op_id` SMALLINT NOT NULL , `tester_id` SMALLINT NOT NULL , `record_date` DATE NOT NULL , `record_time` TIME NOT NULL , `partial_test` VARCHAR(3) NOT NULL DEFAULT 'NO' , `vbat_v` FLOAT NOT NULL , `vbat_i` FLOAT NOT NULL , `vdd` FLOAT NOT NULL , `tpcd_delay` INT NOT NULL , `pst_delay` INT NOT NULL , `pst_amp` FLOAT NOT NULL , `pst_width` INT NOT NULL , `pd_delay` INT NOT NULL , `pd_amp` FLOAT NOT NULL , `pd_width` INT NOT NULL , `delay_delay` INT NOT NULL , `delay_amp` FLOAT NOT NULL , `delay_width` INT NOT NULL , `si_mode` TINYINT NOT NULL , `si_delay` INT NOT NULL , `si_amp` FLOAT NOT NULL , `si_width` INT NOT NULL , `safe_pst` FLOAT NOT NULL , `safe_det` FLOAT NOT NULL , `result` VARCHAR(4) NOT NULL DEFAULT 'PASS' , PRIMARY KEY (`_id`), UNIQUE (`pcb_no`)) ENGINE = InnoDB COMMENT = 'EPD table to store CSV files from Dot-Sys ATEs';";
+				$sql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`epd_csv` ( `_id` INT NOT NULL AUTO_INCREMENT , `pcb_no` VARCHAR(6) NOT NULL , `op_id` SMALLINT NOT NULL , `tester_id` SMALLINT NOT NULL , `assy_stage` VARCHAR(2) NOT NULL , `record_date` DATE NOT NULL , `record_time` TIME NOT NULL , `partial_test` VARCHAR(3) NOT NULL DEFAULT 'NO' , `vbat_v` FLOAT NOT NULL , `vbat_i` FLOAT NOT NULL , `vdd` FLOAT NOT NULL , `tpcd_delay` INT NOT NULL , `pst_delay` INT NOT NULL , `pst_amp` FLOAT NOT NULL , `pst_width` INT NOT NULL , `pd_delay` INT NOT NULL , `pd_amp` FLOAT NOT NULL , `pd_width` INT NOT NULL , `delay_delay` INT NOT NULL , `delay_amp` FLOAT NOT NULL , `delay_width` INT NOT NULL , `si_mode` TINYINT NOT NULL , `si_delay` INT NOT NULL , `si_amp` FLOAT NOT NULL , `si_width` INT NOT NULL , `safe_pst` FLOAT NOT NULL , `safe_det` FLOAT NOT NULL , `result` VARCHAR(4) NOT NULL DEFAULT 'PASS' , PRIMARY KEY (`_id`), UNIQUE (`pcb_no`)) ENGINE = InnoDB COMMENT = 'EPD table to store CSV files from Dot-Sys ATEs';";
 
 				$sqlResult = mysqli_query($db,$sql);
 
@@ -141,24 +141,32 @@
 				}
 
 				$csvArray = array_map('str_getcsv', file($uploadFilePath));
-				print_r($csvArray);echo "<br><br>";
 
-				$addSql = "REPLACE INTO `epd_csv` (`_id`, `pcb_no`, `op_id`, `tester_id`, `record_date`, `record_time`, `partial_test`, `vbat_v`, `vbat_i`, `vdd`, `tpcd_delay`, `pst_delay`, `pst_amp`, `pst_width`, `pd_delay`, `pd_amp`, `pd_width`, `delay_delay`, `delay_amp`, `delay_width`, `si_mode`, `si_delay`, `si_amp`, `si_width`, `safe_pst`, `safe_det`, `result`) VALUES ";
+				$addSql = "REPLACE INTO `epd_csv` (`_id`, `pcb_no`, `op_id`, `tester_id`, `assy_stage`, `record_date`, `record_time`, `partial_test`, `vbat_v`, `vbat_i`, `vdd`, `tpcd_delay`, `pst_delay`, `pst_amp`, `pst_width`, `pd_delay`, `pd_amp`, `pd_width`, `delay_delay`, `delay_amp`, `delay_width`, `si_mode`, `si_delay`, `si_amp`, `si_width`, `safe_pst`, `safe_det`, `result`) VALUES ";
 
 				for($cnt=2;$cnt<=count($csvArray)-2;$cnt++) {
 					$dataArray = explode("\t", $csvArray[$cnt][0]);
 					$dataArray = array_map('trim', $dataArray);
-					$dataArray = array_map('utf8_encode', $dataArray);
 					$z = explode("\t", $dataArray[2])[0];
 					$pcb_no = substr($z,12);										// change these indexes later
 					$tempStr = substr($z,0,12);										// change these indexes later
 					$op_id = substr($tempStr,0,6);										// change these indexes later
-					$tester_id = substr($tempStr,6);										// change these indexes later
+					//$tester_id = substr($tempStr,6);										// change these indexes later
+					$assy_stage = substr($tempStr,4,4);
+					$assy_stage = substr($assy_stage,2);
+					$tester_id = substr($tempStr,8);										// change these indexes later
+
+					print_r($pcb_no);echo "<br>";
+					print_r($tempStr);echo "<br>";
+					print_r($op_id);echo "<br>";
+					print_r($tester_id);echo "<br>";
+					print_r($assy_stage);echo "<br><br>";
 
 					$addSql.= trim("(NULL, '"
 										.$pcb_no."', '"
 										.$op_id."', '"
 										.$tester_id."', "
+										.$assy_stage."', "
 										."STR_TO_DATE('".$dataArray[1]."','%e/%m/%Y'), "
 										."Cast('".$dataArray[0]."' as TIME), '"
 										.($dataArray[3] == "1" ? "YES" : "NO")."', '"
@@ -186,6 +194,7 @@
 				}
 				$addSql = rtrim($addSql,",");
 				$addSql.=";";
+				$addSql = preg_replace('/[\x00-\x1F\x7F]/', '', $addSql);			// removes all non-printable chars.. MUST FOR SQL
 				$res = mysqli_query($db,$addSql);
 
 				print_r($addSql);
