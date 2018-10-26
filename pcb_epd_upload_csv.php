@@ -2,6 +2,17 @@
 
 	include('db_config.php');
 
+	function addEpdCsvRejection($arr,$db) {
+
+	}
+
+	function between($val,$min,$max) {
+		if(($val >= $min) && ($val <= $max)) {
+			return true;
+		}
+		return false;
+	}
+
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		if($_FILES['file']['type'] != "application/vnd.ms-excel") {
@@ -92,6 +103,7 @@
 						<th>Sr No.</th>
 						<th>PCB No.</th>
 						<th>Op. ID</th>
+						<th>Assy St.</th>
 						<th>Tester ID</th>
 						<th>Date</th>
 						<th>Time</th>
@@ -122,7 +134,7 @@
 				<script text='text/javascript'>$('#uploadTable').hide();</script>
 				";
 
-				$sql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`epd_csv` ( `_id` INT NOT NULL AUTO_INCREMENT , `pcb_no` VARCHAR(6) NOT NULL , `op_id` SMALLINT NOT NULL , `tester_id` SMALLINT NOT NULL , `assy_stage` VARCHAR(2) NOT NULL , `record_date` DATE NOT NULL , `record_time` TIME NOT NULL , `partial_test` VARCHAR(3) NOT NULL DEFAULT 'NO' , `vbat_v` FLOAT NOT NULL , `vbat_i` FLOAT NOT NULL , `vdd` FLOAT NOT NULL , `tpcd_delay` INT NOT NULL , `pst_delay` INT NOT NULL , `pst_amp` FLOAT NOT NULL , `pst_width` INT NOT NULL , `pd_delay` INT NOT NULL , `pd_amp` FLOAT NOT NULL , `pd_width` INT NOT NULL , `delay_delay` INT NOT NULL , `delay_amp` FLOAT NOT NULL , `delay_width` INT NOT NULL , `si_mode` TINYINT NOT NULL , `si_delay` INT NOT NULL , `si_amp` FLOAT NOT NULL , `si_width` INT NOT NULL , `safe_pst` FLOAT NOT NULL , `safe_det` FLOAT NOT NULL , `result` VARCHAR(4) NOT NULL DEFAULT 'PASS' , PRIMARY KEY (`_id`), UNIQUE (`pcb_no`)) ENGINE = InnoDB COMMENT = 'EPD table to store CSV files from Dot-Sys ATEs';";
+				$sql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`pcb_epd_csv` ( `_id` INT NOT NULL AUTO_INCREMENT , `pcb_no` VARCHAR(6) NOT NULL , `op_id` SMALLINT NOT NULL , `tester_id` SMALLINT NOT NULL , `assy_stage` VARCHAR(2) NOT NULL , `record_date` DATE NOT NULL , `record_time` TIME NOT NULL , `partial_test` VARCHAR(3) NOT NULL DEFAULT 'NO' , `vbat_v` FLOAT NOT NULL , `vbat_i` FLOAT NOT NULL , `vdd` FLOAT NOT NULL , `tpcd_delay` INT NOT NULL , `pst_delay` INT NOT NULL , `pst_amp` FLOAT NOT NULL , `pst_width` INT NOT NULL , `pd_delay` INT NOT NULL , `pd_amp` FLOAT NOT NULL , `pd_width` INT NOT NULL , `delay_delay` INT NOT NULL , `delay_amp` FLOAT NOT NULL , `delay_width` INT NOT NULL , `si_mode` TINYINT NOT NULL , `si_delay` INT NOT NULL , `si_amp` FLOAT NOT NULL , `si_width` INT NOT NULL , `safe_pst` FLOAT NOT NULL , `safe_det` FLOAT NOT NULL , `result` VARCHAR(4) NOT NULL DEFAULT 'PASS' , PRIMARY KEY (`_id`), UNIQUE (`pcb_no`)) ENGINE = InnoDB COMMENT = 'EPD table to store CSV files from Dot-Sys ATEs';";
 
 				$sqlResult = mysqli_query($db,$sql);
 
@@ -142,7 +154,7 @@
 
 				$csvArray = array_map('str_getcsv', file($uploadFilePath));
 
-				$addSql = "REPLACE INTO `epd_csv` (`_id`, `pcb_no`, `op_id`, `tester_id`, `assy_stage`, `record_date`, `record_time`, `partial_test`, `vbat_v`, `vbat_i`, `vdd`, `tpcd_delay`, `pst_delay`, `pst_amp`, `pst_width`, `pd_delay`, `pd_amp`, `pd_width`, `delay_delay`, `delay_amp`, `delay_width`, `si_mode`, `si_delay`, `si_amp`, `si_width`, `safe_pst`, `safe_det`, `result`) VALUES ";
+				$addSql = "REPLACE INTO `pcb_epd_csv` (`_id`, `pcb_no`, `op_id`, `tester_id`, `assy_stage`, `record_date`, `record_time`, `partial_test`, `vbat_v`, `vbat_i`, `vdd`, `tpcd_delay`, `pst_delay`, `pst_amp`, `pst_width`, `pd_delay`, `pd_amp`, `pd_width`, `delay_delay`, `delay_amp`, `delay_width`, `si_mode`, `si_delay`, `si_amp`, `si_width`, `safe_pst`, `safe_det`, `result`) VALUES ";
 
 				for($cnt=2;$cnt<=count($csvArray)-2;$cnt++) {
 					$dataArray = explode("\t", $csvArray[$cnt][0]);
@@ -155,12 +167,6 @@
 					$assy_stage = substr($tempStr,4,4);
 					$assy_stage = substr($assy_stage,2);
 					$tester_id = substr($tempStr,8);										// change these indexes later
-
-					print_r($pcb_no);echo "<br>";
-					print_r($tempStr);echo "<br>";
-					print_r($op_id);echo "<br>";
-					print_r($tester_id);echo "<br>";
-					print_r($assy_stage);echo "<br><br>";
 
 					$addSql.= trim("(NULL, '"
 										.$pcb_no."', '"
@@ -191,17 +197,73 @@
 										.$dataArray[22]."', '"
 										.($dataArray[23] == "1" ? "PASS" : "FAIL")."'),");
 
+					$html.= "<tr>";
+					$html.="<td>".($cnt-1)."</td>";
+					$html.="<td>".$pcb_no."</td>";
+					$html.="<td>".$op_id."</td>";
+					$html.="<td>".$assy_stage."</td>";
+					$html.="<td>".$tester_id."</td>";
+					$html.="<td>".$dataArray[1]."</td>";
+					$html.="<td>".$dataArray[0]."</td>";
+					$html.="<td>".($dataArray[3] == "1" ? "YES" : "NO")."</td>";
+					$html.="<td>".$dataArray[4]."</td>";
+					$html.="<td>".$dataArray[5]."</td>";
+					$html.="<td>".$dataArray[6]."</td>";
+					$html.="<td>".$dataArray[7]."</td>";
+					$html.="<td>".$dataArray[8]."</td>";
+					$html.="<td>".$dataArray[9]."</td>";
+					$html.="<td>".$dataArray[10]."</td>";
+					$html.="<td>".$dataArray[11]."</td>";
+					$html.="<td>".$dataArray[12]."</td>";
+					$html.="<td>".$dataArray[13]."</td>";
+					$html.="<td>".$dataArray[14]."</td>";
+					$html.="<td>".$dataArray[15]."</td>";
+					$html.="<td>".$dataArray[16]."</td>";
+					$html.="<td>".$dataArray[17]."</td>";
+					$html.="<td>".$dataArray[18]."</td>";
+					$html.="<td>".$dataArray[19]."</td>";
+					$html.="<td>".$dataArray[20]."</td>";
+					$html.="<td>".$dataArray[21]."</td>";
+					$html.="<td>".$dataArray[22]."</td>";
+					$html.="<td>".($dataArray[23] == "1" ? "PASS" : "FAIL")."</td>";
+
+
 				}
 				$addSql = rtrim($addSql,",");
 				$addSql.=";";
 				$addSql = preg_replace('/[\x00-\x1F\x7F]/', '', $addSql);			// removes all non-printable chars.. MUST FOR SQL
 				$res = mysqli_query($db,$addSql);
 
-				print_r($addSql);
-				echo "<br><br>";
-				print_r(mysqli_info($db));
-				echo "<br><br>";
-				print_r(mysqli_get_warnings($db));
+				$html.="</table></main>
+
+				<footer class='page-footer teal lighten-2'>
+							<div class='footer-copyright'>
+								<div class='container'>
+									<center>&copy; Bharat Electronics Ltd. (2018), All rights reserved.</center>
+								</div>
+							</div>
+				</footer>
+				</body>
+
+				<script type='text/javascript'>
+					document.getElementById('uploadSpan').textContent = 'Following details are added to the database.';
+					$('#uploadPreloader').hide();
+					$('#uploadTable').show();
+				</script>
+
+				</html>";
+
+				if($res) {
+					echo $html;
+				}
+
+				$sqlAutoIncReset = "ALTER TABLE `pcb_epd_csv` DROP `_id`;";
+				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
+
+				$sqlAutoIncReset = "ALTER TABLE `pcb_epd_csv` ADD `_id` INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`_id`);";
+				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
+
+				mysqli_close($db);
 	}
 	else {
 		die("

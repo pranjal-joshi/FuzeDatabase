@@ -1396,7 +1396,7 @@
 
 							<div class="row">
 								<br>
-								<form action="epd_ate_csv.php" method="POST" enctype="multipart/form-data">
+								<form action="pcb_epd_upload_csv.php" method="POST" enctype="multipart/form-data">
 								
 									<center>
 										<input type="file"  name="file" >
