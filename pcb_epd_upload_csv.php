@@ -2,8 +2,67 @@
 
 	include('db_config.php');
 
-	function addEpdCsvRejection($arr,$db) {
+	function addEpdCsvRejection($pcb_no,$array,$rejStage,$db) {
+		if(strtoupper($array[23]) == "0") {		// go inside only if failed
+			$rejReason = "";
+			if(!between($array[5],1.3,7)) {
+				$rejReason.="Current, ";
+			}
+			if(!between($array[9],5,9)) {
+				$rejReason.="PST Amp, ";
+			}
+			if(!between($array[10],200,1000)) {
+				$rejReason.="PST Width, ";
+			}
+			if(!between($array[9],590,700)) {
+				$rejReason.="VBAT-PST Delay, ";
+			}
+			if(!between($array[12],4.8,8.5)) {
+				$rejReason.="DET Amp in PD, ";
+			}
+			if(!between($array[13],200,1000)) {
+				$rejReason.="DET Width in PD, ";
+			}
+			if(!between($array[10],1,40)) {
+				$rejReason.="DET Delay in PD, ";
+			}
+			if(!between($array[15],4.8,8.5)) {
+				$rejReason.="DET Amp in Delay, ";
+			}
+			if(!between($array[16],200,1000)) {
+				$rejReason.="DET Width in Delay, ";
+			}
+			if(!between($array[14],40,80)) {
+				$rejReason.="DET Delay in Delay, ";
+			}
+			if(!between($array[19],4.8,8.5)) {
+				$rejReason.="DET Amp in SI, ";
+			}
+			if(!between($array[20],200,1000)) {
+				$rejReason.="DET Width in SI, ";
+			}
+			if(!between($array[18],1,40)) {
+				$rejReason.="DET Delay in SI, ";
+			}
+			if(!between($array[21],0,0)) {
+				$rejReason.="PST in SAFE, ";
+			}
+			if(!between($array[22],0,0)) {
+				$rejReason.="DET in SAFE, ";
+			}
 
+			$rejReason = rtrim($rejReason,", ");
+			$rejReason.=";";
+			
+			$sql = "UPDATE `lot_table` SET `rejected`='1',
+			`rejection_stage`='".$rejStage."',
+			`rejection_remark`='".$rejReason."' 
+			WHERE `pcb_no`='EPD".$pcb_no."' AND `fuze_type` = '".$_COOKIE['fuzeType']."' AND `fuze_diameter` = '".$_COOKIE['fuzeDia']."'";
+
+			$sql = preg_replace('/[\x00-\x1F\x7F]/', '', $sql);
+
+			$res = mysqli_query($db,$sql);
+		}
 	}
 
 	function between($val,$min,$max) {
@@ -156,6 +215,8 @@
 
 				$addSql = "REPLACE INTO `pcb_epd_csv` (`_id`, `pcb_no`, `op_id`, `tester_id`, `assy_stage`, `record_date`, `record_time`, `partial_test`, `vbat_v`, `vbat_i`, `vdd`, `tpcd_delay`, `pst_delay`, `pst_amp`, `pst_width`, `pd_delay`, `pd_amp`, `pd_width`, `delay_delay`, `delay_amp`, `delay_width`, `si_mode`, `si_delay`, `si_amp`, `si_width`, `safe_pst`, `safe_det`, `result`) VALUES ";
 
+				$sqlDummyLot = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES ";
+
 				for($cnt=2;$cnt<=count($csvArray)-2;$cnt++) {
 					$dataArray = explode("\t", $csvArray[$cnt][0]);
 					$dataArray = array_map('trim', $dataArray);
@@ -227,12 +288,27 @@
 					$html.="<td>".$dataArray[22]."</td>";
 					$html.="<td>".($dataArray[23] == "1" ? "PASS" : "FAIL")."</td>";
 
+					$sqlDummyLot.="(
+							NULL,
+							'".$_COOKIE['fuzeType']."',
+							'".$_COOKIE['fuzeDia']."',
+							'0',
+							'PCB',
+							'EPD".$pcb_no."',
+							'60'
+						),";
+
 
 				}
 				$addSql = rtrim($addSql,",");
 				$addSql.=";";
 				$addSql = preg_replace('/[\x00-\x1F\x7F]/', '', $addSql);			// removes all non-printable chars.. MUST FOR SQL
 				$res = mysqli_query($db,$addSql);
+
+				$sqlDummyLot = rtrim($sqlDummyLot,",");
+				$sqlDummyLot.=";";
+				$sqlDummyLot = preg_replace('/[\x00-\x1F\x7F]/', '', $sqlDummyLot);			// removes all non-printable chars.. MUST FOR SQL
+				$lotRes = mysqli_query($db, $sqlDummyLot);
 
 				$html.="</table></main>
 
@@ -255,6 +331,14 @@
 
 				if($res) {
 					echo $html;
+				}
+
+				for($cnt=2;$cnt<=count($csvArray)-2;$cnt++) {					// auto add to rejection while uploading CSV
+					$dataArray = explode("\t", $csvArray[$cnt][0]);
+					$dataArray = array_map('trim', $dataArray);
+					$z = explode("\t", $dataArray[2])[0];
+					$pcb_no = substr($z,12);
+					addEpdCsvRejection($pcb_no,$dataArray,"PCB",$db);
 				}
 
 				$sqlAutoIncReset = "ALTER TABLE `pcb_epd_csv` DROP `_id`;";
