@@ -193,7 +193,7 @@
 				<script text='text/javascript'>$('#uploadTable').hide();</script>
 				";
 
-				$sql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`pcb_epd_csv` ( `_id` INT NOT NULL AUTO_INCREMENT , `pcb_no` VARCHAR(6) NOT NULL , `op_id` SMALLINT NOT NULL , `tester_id` SMALLINT NOT NULL , `assy_stage` VARCHAR(2) NOT NULL , `record_date` DATE NOT NULL , `record_time` TIME NOT NULL , `partial_test` VARCHAR(3) NOT NULL DEFAULT 'NO' , `vbat_v` FLOAT NOT NULL , `vbat_i` FLOAT NOT NULL , `vdd` FLOAT NOT NULL , `tpcd_delay` INT NOT NULL , `pst_delay` INT NOT NULL , `pst_amp` FLOAT NOT NULL , `pst_width` INT NOT NULL , `pd_delay` INT NOT NULL , `pd_amp` FLOAT NOT NULL , `pd_width` INT NOT NULL , `delay_delay` INT NOT NULL , `delay_amp` FLOAT NOT NULL , `delay_width` INT NOT NULL , `si_mode` TINYINT NOT NULL , `si_delay` INT NOT NULL , `si_amp` FLOAT NOT NULL , `si_width` INT NOT NULL , `safe_pst` FLOAT NOT NULL , `safe_det` FLOAT NOT NULL , `result` VARCHAR(4) NOT NULL DEFAULT 'PASS' , PRIMARY KEY (`_id`), UNIQUE (`pcb_no`)) ENGINE = InnoDB COMMENT = 'EPD table to store CSV files from Dot-Sys ATEs';";
+				$sql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`pcb_epd_csv` ( `_id` INT NULL DEFAULT NULL AUTO_INCREMENT , `pcb_no` VARCHAR(6) NULL DEFAULT NULL , `op_id` SMALLINT NULL DEFAULT NULL , `tester_id` SMALLINT NULL DEFAULT NULL , `assy_stage` VARCHAR(2) NULL DEFAULT NULL , `record_date` DATE NULL DEFAULT NULL , `record_time` TIME NULL DEFAULT NULL , `partial_test` VARCHAR(3) NULL DEFAULT NULL DEFAULT 'NO' , `vbat_v` FLOAT NULL DEFAULT NULL , `vbat_i` FLOAT NULL DEFAULT NULL , `vdd` FLOAT NULL DEFAULT NULL , `tpcd_delay` INT NULL DEFAULT NULL , `pst_delay` INT NULL DEFAULT NULL , `pst_amp` FLOAT NULL DEFAULT NULL , `pst_width` INT NULL DEFAULT NULL , `pd_delay` INT NULL DEFAULT NULL , `pd_amp` FLOAT NULL DEFAULT NULL , `pd_width` INT NULL DEFAULT NULL , `delay_delay` INT NULL DEFAULT NULL , `delay_amp` FLOAT NULL DEFAULT NULL , `delay_width` INT NULL DEFAULT NULL , `si_mode` TINYINT NULL DEFAULT NULL , `si_delay` INT NULL DEFAULT NULL , `si_amp` FLOAT NULL DEFAULT NULL , `si_width` INT NULL DEFAULT NULL , `safe_pst` FLOAT NULL DEFAULT NULL , `safe_det` FLOAT NULL DEFAULT NULL , `result` VARCHAR(4) NULL DEFAULT NULL DEFAULT 'PASS' , PRIMARY KEY (`_id`), UNIQUE (`pcb_no`)) ENGINE = InnoDB COMMENT = 'EPD table to store CSV files from Dot-Sys ATEs';";
 
 				$sqlResult = mysqli_query($db,$sql);
 
@@ -344,7 +344,7 @@
 				$sqlAutoIncReset = "ALTER TABLE `pcb_epd_csv` DROP `_id`;";
 				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
 
-				$sqlAutoIncReset = "ALTER TABLE `pcb_epd_csv` ADD `_id` INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`_id`);";
+				$sqlAutoIncReset = "ALTER TABLE `pcb_epd_csv` ADD `_id` INT NULL DEFAULT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`_id`);";
 				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
 
 				mysqli_close($db);
