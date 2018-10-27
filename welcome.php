@@ -1498,10 +1498,10 @@
 				$('#pcbTestingManualLotInfo').remove();
 			}
 
-			if($.cookie('searchFuzeType') == "EPD") {
+			if($.cookie('searchFuzeType') == "EPD" || $.cookie('fuzeType') == "EPD") {
 				$('#radioEPD').prop('checked',true);
 			}
-			else if($.cookie('searchFuzeType') == "TIME") {
+			else if($.cookie('searchFuzeType') == "TIME" || $.cookie('fuzeType') == "TIME") {
 				$('#radioTIME').prop('checked',true);
 			}
 		});
