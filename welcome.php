@@ -157,6 +157,18 @@
 					<center>
 						<span class="teal-text text-darken-2" style="font-weight: bold; font-size: 24px;">Search the record</span>
 						<div class="row">
+
+							<div class="row">
+								<br>
+								<div class="col s12">
+									<input type="radio" name="searchGroup" class="with-gap" id="radioEPD" name="radioEPD" value="1" onchange="onSearchRadioChange()">
+									<label for="radioEPD">EPD</label>
+									<input type="radio" name="searchGroup" class="with-gap" id="radioTIME" name="radioTIME" value="2" onchange="onSearchRadioChange()">
+									<label for="radioTIME">TIME</label>
+									<input type="radio" name="searchGroup" class="with-gap" id="radioPROX" name="radioPROX" value="3" onchange="onSearchRadioChange()" checked>
+									<label for="radioPROX">PROX</label>
+								</div>
+							</div>
 							
 							<div class="row" id="searchSelect" style="min-height: 300px;">
 								<div class="input-field col s3">
@@ -1485,6 +1497,13 @@
 			if($.cookie('fuzeType') == "PROX" && ($.cookie('fuzeStart') == "8" || $.cookie('fuzeStart') == "12")) {
 				$('#pcbTestingManualLotInfo').remove();
 			}
+
+			if($.cookie('searchFuzeType') == "EPD") {
+				$('#radioEPD').prop('checked',true);
+			}
+			else if($.cookie('searchFuzeType') == "TIME") {
+				$('#radioTIME').prop('checked',true);
+			}
 		});
 
 		var isBound = false;
@@ -2566,6 +2585,19 @@
 			else {
 				$('select').material_select();
 				$('#qaFailRow').fadeIn();
+			}
+		}
+
+		function onSearchRadioChange() {
+			radioState = $('input[name=searchGroup]:checked').attr('id');
+			if(radioState == "radioEPD") {
+				document.cookie = "searchFuzeType=EPD; expires=Mon, 31 Dec 2040 00:00:00 GMT; path=/";
+			}
+			else if(radioState == "radioTIME") {
+				document.cookie = "searchFuzeType=TIME; expires=Mon, 31 Dec 2040 00:00:00 GMT; path=/";
+			}
+			else {
+				document.cookie = "searchFuzeType=PROX; expires=Mon, 31 Dec 2040 00:00:00 GMT; path=/";
 			}
 		}
 
