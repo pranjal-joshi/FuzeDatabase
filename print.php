@@ -87,21 +87,40 @@
 				");
 		}
 
-		$lotQuery = "SELECT * FROM `lot_table` WHERE `pcb_no` = '".$pcb_no."'";
-		$lotResult = mysqli_query($db, $lotQuery);
-		$lotRow = mysqli_fetch_assoc($lotResult);
+		if($_COOKIE['searchFuzeType'] == "PROX") {
+			$lotQuery = "SELECT * FROM `lot_table` WHERE `pcb_no` = '".$pcb_no."'";
+			$lotResult = mysqli_query($db, $lotQuery);
+			$lotRow = mysqli_fetch_assoc($lotResult);
 
-		$qaQuery =  "SELECT * FROM `qa_table` WHERE `pcb_no` = '".$pcb_no."'";
-		$qaResult = mysqli_query($db, $qaQuery);
-		$qaRow = mysqli_fetch_assoc($qaResult);
+			$qaQuery =  "SELECT * FROM `qa_table` WHERE `pcb_no` = '".$pcb_no."'";
+			$qaResult = mysqli_query($db, $qaQuery);
+			$qaRow = mysqli_fetch_assoc($qaResult);
 
-		$batteryQuery = "SELECT * FROM `battery_table` WHERE `pcb_no` = '".$pcb_no."'";
-		$batteryResult = mysqli_query($db, $batteryQuery);
-		$batteryRow = mysqli_fetch_assoc($batteryResult);
+			$batteryQuery = "SELECT * FROM `battery_table` WHERE `pcb_no` = '".$pcb_no."'";
+			$batteryResult = mysqli_query($db, $batteryQuery);
+			$batteryRow = mysqli_fetch_assoc($batteryResult);
 
-		$barcodeQuery = "SELECT * FROM `barcode_table` WHERE `pcb_no` = '".$pcb_no."'";
-		$barcodeResult = mysqli_query($db, $barcodeQuery);
-		$barcodeRow = mysqli_fetch_assoc($barcodeResult);
+			$barcodeQuery = "SELECT * FROM `barcode_table` WHERE `pcb_no` = '".$pcb_no."'";
+			$barcodeResult = mysqli_query($db, $barcodeQuery);
+			$barcodeRow = mysqli_fetch_assoc($barcodeResult);
+		}
+		elseif ($_COOKIE['searchFuzeType'] == "EPD") {
+			$lotQuery = "SELECT * FROM `lot_table` WHERE `pcb_no` = 'EPD".$pcb_no."'";
+			$lotResult = mysqli_query($db, $lotQuery);
+			$lotRow = mysqli_fetch_assoc($lotResult);
+
+			$qaQuery =  "SELECT * FROM `qa_table` WHERE `pcb_no` = 'EPD".$pcb_no."'";
+			$qaResult = mysqli_query($db, $qaQuery);
+			$qaRow = mysqli_fetch_assoc($qaResult);
+
+			$batteryQuery = "SELECT * FROM `battery_table` WHERE `pcb_no` = 'EPD".$pcb_no."'";
+			$batteryResult = mysqli_query($db, $batteryQuery);
+			$batteryRow = mysqli_fetch_assoc($batteryResult);
+
+			$barcodeQuery = "SELECT * FROM `barcode_table` WHERE `pcb_no` = 'EPD".$pcb_no."'";
+			$barcodeResult = mysqli_query($db, $barcodeQuery);
+			$barcodeRow = mysqli_fetch_assoc($barcodeResult);
+		}
 
 		$reasonToShow = "";
 
@@ -288,7 +307,7 @@
 						</tr>
 						<tr>
 							<td>".$lotRow['fuze_diameter']."mm ".$lotRow['fuze_type']."</td>
-							<td>".$lotRow['pcb_no']."</td>
+							<td>".str_replace("EPD", "", $lotRow['pcb_no'])."</td>
 							<td>".$lotRow['main_lot']."</td>
 							<td>".$lotRow['kit_lot']."</td>
 						</tr>
@@ -308,7 +327,7 @@
 							<td>Operator</td>
 						</tr>
 						<tr>
-							<td>".$qaRow['pcb_no']."</td>
+							<td>".str_replace("EPD", "", $lotRow['pcb_no'])."</td>
 							<td>".($qaRow['result'] == '1' ? 'PASS' : 'FAIL')."</td>
 							<td>".($qaRow['stage'] == '' ? 'N/A' : $qaRow['stage'])."</td>
 							<td>".($qaRow['reason'] == '0' ? 'N/A' : $qaRow['reason'])."</td>
@@ -328,6 +347,7 @@
 			";
 
 			switch ($lotRow['fuze_type']) {
+
 				case 'PROX':
 
 					$calQuery =  "SELECT * FROM `calibration_table` WHERE `pcb_no` = '".$pcb_no."'";
@@ -690,6 +710,106 @@
 					";
 					
 					break;
+
+				case "EPD":
+
+					$pcbQuery =  "SELECT * FROM `pcb_epd_csv` WHERE `pcb_no` = '".$pcb_no."'";
+					$pcbResult = mysqli_query($db, $pcbQuery);
+					$pcbRow = mysqli_fetch_assoc($pcbResult);
+
+					$html.= "
+						<div id='epdPcbTable' style='clear: both;'>
+						<p id='tableInfo'>Test Reports</p>
+						<table style='font-size: 15px;'>
+							<tr id='tableHeader'>
+								<td rowspan='2'>Test</td>
+								<td>Parameter</td>
+								<td>PCB Testing</td>
+								<td>Housing</td>
+								<td>Potting</td>
+								<td>Electronic<br>Head</td>
+							</tr>
+							<tr>
+								<td>PCB Number</td>
+								<td colspan='4'>".str_replace("EPD", "", $pcbRow['pcb_no'])."</td>
+							</tr>
+							<tr>
+								<td rowspan='2'>VIN</td>
+								<td>Current (I)</td>
+								<td>".$pcbRow['vbat_i']." mA</td>
+							</tr>
+							<tr>
+								<td>VDD</td>
+								<td>".$pcbRow['vdd']." V</td>
+							</tr>
+							<tr>
+								<td rowspan='3'>PST<br>Test</td>
+								<td>PST Amplitude</td>
+								<td>".$pcbRow['pst_amp']." V</td>
+							</tr>
+							<tr>
+								<td>PST Width</td>
+								<td>".$pcbRow['pst_width']." uS</td>
+							<tr>
+								<td>VBAT-PST Delay</td>
+								<td>".$pcbRow['pst_delay']." mS</td>
+							</tr>
+							<tr>
+								<td rowspan='3'>PD<br>Test</td>
+								<td>DET Amplitude</td>
+								<td>".$pcbRow['pd_amp']." V</td>
+							</tr>
+							<tr>
+								<td>DET Width</td>
+								<td>".$pcbRow['pd_width']." uS</td>
+							<tr>
+								<td>DET Delay</td>
+								<td>".$pcbRow['pd_delay']." uS</td>
+							</tr>
+							<tr>
+								<td rowspan='3'>Delay<br>Test</td>
+								<td>DET Amplitude</td>
+								<td>".$pcbRow['delay_amp']." V</td>
+							</tr>
+							<tr>
+								<td>DET Width</td>
+								<td>".$pcbRow['delay_width']." uS</td>
+							<tr>
+								<td>DET Delay</td>
+								<td>".$pcbRow['delay_delay']." mS</td>
+							</tr>
+							<tr>
+								<td rowspan='3'>Switch<br>Integrity<br>Test</td>
+								<td>DET Amplitude</td>
+								<td>".$pcbRow['si_amp']." V</td>
+							</tr>
+							<tr>
+								<td>DET Width</td>
+								<td>".$pcbRow['si_width']." uS</td>
+							<tr>
+								<td>DET Delay</td>
+								<td>".$pcbRow['si_delay']." mS</td>
+							</tr>
+							<tr>
+								<td>SAFE</td>
+								<td>No PST/No DET</td>
+								<td>PST Amp = ".$pcbRow['safe_pst']."V<br>DET Amp = ".$pcbRow['safe_det']."V</td>
+							</tr>
+							<tr>
+								<td>RESULT</td>
+								<td>PASS/FAIL</td>
+								<td>".$pcbRow['result']." </td>
+							</tr>
+							<!--<tr>		//disabled
+								<td colspan='2'>Operator Name</td>
+								<td>".($pcbRow['op_name'] == "" ? "*ATE*" : explode("&", $pcbRow['op_name'])[0]."<br>".explode("&", $pcbRow['op_name'])[1])."</td>
+								<td>".($housingRow['op_name'] == "" ? "*ATE*" : explode("&", $housingRow['op_name'])[0]."<br>".explode("&", $housingRow['op_name'])[1])."</td>
+								<td>".($pottingRow['op_name'] == "" ? "*ATE*" : explode("&", $pottingRow['op_name'])[0]."<br>".explode("&", $pottingRow['op_name'])[1])."</td>
+							</tr>-->
+						</table>
+						<br>
+					</div>
+					";
 			}
 
 			$html.=	"
