@@ -105,28 +105,37 @@
 		$query = str_replace("*", "%", $_POST['query']);
 		$table_head = "";
 
-		switch ($searchInTable) {
-			case '1':
-				$searchInTable = "after_pu";
-				break;
-			case '2':
-				$searchInTable = "calibration_table";
-				break;
-			case '3':
-				$searchInTable = "qa_table";
-				break;
-			case '4':
-				$searchInTable = "pcb_testing";
-				break;
-			case '5':
-				$searchInTable = "housing_table";
-				break;
-			case '6':
-				$searchInTable = "potting_table";
-				break;
-			case '7':
-				$searchInTable = "after_pu";
-				break;
+		if($_COOKIE['searchFuzeType'] == "PROX") {
+			switch ($searchInTable) {
+				case '1':
+					$searchInTable = "after_pu";
+					break;
+				case '2':
+					$searchInTable = "calibration_table";
+					break;
+				case '3':
+					$searchInTable = "qa_table";
+					break;
+				case '4':
+					$searchInTable = "pcb_testing";
+					break;
+				case '5':
+					$searchInTable = "housing_table";
+					break;
+				case '6':
+					$searchInTable = "potting_table";
+					break;
+				case '7':
+					$searchInTable = "after_pu";
+					break;
+			}
+		}
+		elseif($_COOKIE['searchFuzeType'] == "EPD") {
+			switch ($searchInTable) {
+				case '4':
+					$searchInTable = "pcb_epd_csv";
+					break;
+			}
 		}
 
 		switch ($_POST['select']) {
@@ -232,7 +241,7 @@
 		$cnt = 0;
 		if($results) {
 			while ($row = mysqli_fetch_assoc($results)) {
-				$sqlLot = "SELECT * FROM `lot_table` WHERE `pcb_no` = '".$row['pcb_no']."'";
+				$sqlLot = "SELECT * FROM `lot_table` WHERE `pcb_no` LIKE '%".$row['pcb_no']."'";
 				$lotResult = mysqli_query($db,$sqlLot);
 				$lotRow = mysqli_fetch_assoc($lotResult);
 				$value.="<tr>";
