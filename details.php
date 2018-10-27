@@ -347,6 +347,45 @@
 
 				$results = mysqli_query($db,$sql);
 				break;
+
+			case 'epdPcbTestingUpdate':
+
+				$sql = "UPDATE `pcb_epd_csv` SET
+				`pcb_no`='".$_POST['pcb_no']."',
+				`vbat_i`='".$_POST['current']."',
+				`vdd`='".$_POST['vee']."',
+				`pst_delay`='".$_POST['vbat_pst']."',
+				`pst_amp`='".$_POST['pst_ampl']."',
+				`pst_width`='".$_POST['pst_wid']."',
+				`pd_delay`='".$_POST['pd_delay']."',
+				`pd_amp`='".$_POST['pd_amp']."',
+				`pd_width`='".$_POST['pd_wid']."',
+				`delay_delay`='".$_POST['delay_delay']."',
+				`delay_amp`='".$_POST['delay_amp']."',
+				`delay_width`='".$_POST['delay_wid']."',
+				`si_delay`='".$_POST['si_delay']."',
+				`si_amp`='".$_POST['si_amp']."',
+				`si_width`='".$_POST['si_wid']."',
+				`safe_pst`='".$_POST['safe_pst']."',
+				`safe_det`='".$_POST['safe_det']."',
+				`result`='".$_POST['result']."' WHERE `pcb_no`='".$_POST['pcb_no']."'
+				";
+
+				$sqlLotUpdate = "";
+				if(strtoupper($_POST['result']) == "PASS") {
+					$sqlLotUpdate = "UPDATE `lot_table` SET
+					`rejected` = '0' 
+					WHERE `pcb_no`='EPD".$_POST['pcb_no']."'";
+				}
+				else {
+					$sqlLotUpdate = "UPDATE `lot_table` SET
+					`rejected` = '1' 
+					WHERE `pcb_no`='EPD".$_POST['pcb_no']."'";
+				}
+
+				$results = mysqli_query($db,$sql);
+				$res = mysqli_query($db,$sqlLotUpdate);
+				break;
 		}
 		$toSearch = $_COOKIE['toSearch'];
 		//$searchIn = $_COOKIE['searchIn'];
@@ -2619,7 +2658,7 @@
 					<div class='card-panel grey lighten-4' id='pcbTestingDetailsCard'>
 						<div class='row'>
 							<center>
-								<span style='font-weight: bold; font-size: 22px' class='teal-text text-darken-2' id='pcbTestingDetailsTitle'>PCB Test Report</span>
+								<span style='font-weight: bold; font-size: 22px' class='teal-text text-darken-2' id='pcbTestingDetailsTitle'>EPD - PCB Test Report</span>
 							</center>
 
 							<form id='pcbTestingDetailsForm'>
@@ -2660,13 +2699,6 @@
 									<tbody>
 
 										<tr>
-											<td class='center'><span class='center'>VBAT-PST Delay <span></td>
-											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
-											<td class='center'>
-												<div class='input-field col s12 center'>
-													<input type='text' id='PcbTestingDetailsVbatPst' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='590 to 700 mS'>
-												</div>
-											</td>
 											<td class='center'><span class='center'>PST Ampl <span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
@@ -2679,6 +2711,13 @@
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='PcbTestingDetailsPstWid' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='200 uS (min)'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>VBAT-PST Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsVbatPst' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='590 to 700 mS'>
 												</div>
 											</td>
 										</tr>
@@ -2866,32 +2905,24 @@
 											$.ajax({
 												type: 'POST',
 												data: {
-													form: 'pcbTestingUpdate',
+													form: 'epdPcbTestingUpdate',
 													pcb_no: $('#PcbTestingDetailsPcbNo').val(),
 													current: $('#PcbTestingDetailsCurrent').val().replace(/[^\d.-]/g, ''),
 													vee: $('#PcbTestingDetailsVee').val().replace(/[^\d.-]/g, ''),
 													vbat_pst: $('#PcbTestingDetailsVbatPst').val().replace(/[^\d.-]/g, ''),
 													pst_ampl: $('#PcbTestingDetailsPstAmpl').val().replace(/[^\d.-]/g, ''),
 													pst_wid: $('#PcbTestingDetailsPstWid').val().replace(/[^\d.-]/g, ''),
-													mod_freq: $('#PcbTestingDetailsFreq').val().replace(/[^\d.-]/g, ''),
-													mod_dc: $('#PcbTestingDetailsModDC').val().replace(/[^\d.-]/g, ''),
-													mod_ac: $('#PcbTestingDetailsModAC').val().replace(/[^\d.-]/g, ''),
-													vrf_ampl: $('#PcbTestingDetailsVrfAmpl').val().replace(/[^\d.-]/g, ''),
-													vbat_vrf: $('#PcbTestingDetailsVbatVrf').val().replace(/[^\d.-]/g, ''),
-													cap_charge: $('#PcbTestingDetailsCapCharge').val().replace(/[^\d.-]/g, ''),
-													det_wid: $('#PcbTestingDetailsDetWidth').val().replace(/[^\d.-]/g, ''),
-													det_ampl: $('#PcbTestingDetailsDetAmpl').val().replace(/[^\d.-]/g, ''),
-													cycles: $('#PcbTestingDetailsCycles').val().replace(/[^\d.-]/g, ''),
-													bpf_dc: $('#PcbTestingDetailsBpfDC').val().replace(/[^\d.-]/g, ''),
-													bpf_ac: $('#PcbTestingDetailsBpfAC').val().replace(/[^\d.-]/g, ''),
-													bpf_noise_dc: $('#PcbTestingDetailsBpfNoiseDc').val().replace(/[^\d.-]/g, ''),
-													bpf_noise_ac: $('#PcbTestingDetailsBpfNoiseAc').val().replace(/[^\d.-]/g, ''),
-													sil: $('#PcbTestingDetailsSil').val().replace(/[^\d.-]/g, ''),
-													vbat_sil: $('#PcbTestingDetailsVbatSil').val().replace(/[^\d.-]/g, ''),
-													lvp: $('#PcbTestingDetailsLvp').val().replace(/[^\d.-]/g, ''),
-													pd_delay: $('#PcbTestingDetailsPDDelay').val().replace(/[^\d.-]/g, ''),
-													pd_det: $('#PcbTestingDetailsPDDet').val().replace(/[^\d.-]/g, ''),
-													safe: $('#PcbTestingDetailsSafe').val().toUpperCase(),
+													pd_delay: $('#PcbTestingDetailsPDDetDelay').val().replace(/[^\d.-]/g, ''),
+													pd_amp: $('#PcbTestingDetailsPDDetAmpl').val().replace(/[^\d.-]/g, ''),
+													pd_wid: $('#PcbTestingDetailsPDDetWidth').val().replace(/[^\d.-]/g, ''),
+													delay_delay: $('#PcbTestingDetailsDelayDetDelay').val().replace(/[^\d.-]/g, ''),
+													delay_amp: $('#PcbTestingDetailsDelayDetAmpl').val().replace(/[^\d.-]/g, ''),
+													delay_wid: $('#PcbTestingDetailsDelayDetWidth').val().replace(/[^\d.-]/g, ''),
+													si_delay: $('#PcbTestingDetailsSIDetDelay').val().replace(/[^\d.-]/g, ''),
+													si_amp: $('#PcbTestingDetailsSIDetAmpl').val().replace(/[^\d.-]/g, ''),
+													si_wid: $('#PcbTestingDetailsSIDetWidth').val().replace(/[^\d.-]/g, ''),
+													safe_pst: $('#PcbTestingDetailsSafePst').val(),
+													safe_det: $('#PcbTestingDetailsSafeDet').val(),
 													result: $('#PcbTestingDetailsResult').val().toUpperCase()
 												},
 												success: function(msg) {
