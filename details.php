@@ -2601,6 +2601,326 @@
 				$html.= "</script>";
 
 				break;
+
+			case "pcb_epd_csv":
+				$sql = "SELECT * FROM `".$searchTable."` WHERE `pcb_no` = '".$toSearch."'";
+				$results = mysqli_query($db,$sql);
+
+				if(!$results){
+					die("
+							<center>
+								<span style='font-weight: bold; font-size: 22px' class='red-text text-darken-2'>Search Failure!</span>
+							</center>
+						");
+				}
+				else {
+					$row = mysqli_fetch_row($results);
+					$html.="
+					<div class='card-panel grey lighten-4' id='pcbTestingDetailsCard'>
+						<div class='row'>
+							<center>
+								<span style='font-weight: bold; font-size: 22px' class='teal-text text-darken-2' id='pcbTestingDetailsTitle'>PCB Test Report</span>
+							</center>
+
+							<form id='pcbTestingDetailsForm'>
+							<br>
+								<table id='pcbTestingDetailsTable'>
+									<tbody>
+
+										<tr>
+										<td class='center'><span class='center'>PCB Number <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsPcbNo'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Supply Current (I) <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsCurrent' data-position='bottom' data-delay='500' data-tooltip='1.3 to 7 mA' class='tooltipped'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Supply Voltage (VDD) <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsVee' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4.4 to 5.5 V'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PST Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>VBAT-PST Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsVbatPst' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='590 to 700 mS'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>PST Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsPstAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5 to 9 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>PST Width <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsPstWid' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='200 uS (min)'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PD Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+										<td class='center'><span class='center'>DET Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsPDDetAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4.8 to 8.5 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Width <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsPDDetWidth' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='250 uS (min)'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsPDDetDelay' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='1 to 40 uS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Delay Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+										<td class='center'><span class='center'>DET Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsDelayDetAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4.8 to 8.5 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Width <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsDelayDetWidth' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='250 uS (min)'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsDelayDetDelay' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='40 to 80 mS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Switch Integrity Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+										<td class='center'><span class='center'>DET Ampl <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsSIDetAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4.8 to 8.5 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Width <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsSIDetWidth' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='250 uS (min)'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Delay <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsSIDetDelay' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='40 to 80 mS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Results</span></center>
+
+								<table>
+									<tbody>
+
+											<td class='center'><span class='center'>SAFE Test - PST Amp<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsSafePst'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>SAFE Test - DET Amp<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsSafeDet'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Result <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='PcbTestingDetailsResult'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center>
+									<a class='btn waves-light waves-effect' id='pcbTestingUpdateButton'>UPDATE</a>
+								</center>
+
+							</form>
+
+						</div>
+					</div>
+
+					";
+					$html.= "<script type='text/javascript'>";
+					try {
+					// SCRIPT FOR PCB_TESTING CARD
+						$html.= "	$('#PcbTestingDetailsPcbNo').val('".$row[1]."');
+											$('#PcbTestingDetailsCurrent').val('".$row[9]." mA');
+											$('#PcbTestingDetailsVee').val('".$row[10]." V');
+											$('#PcbTestingDetailsVbatPst').val('".$row[12]." mS');
+											$('#PcbTestingDetailsPstAmpl').val('".$row[13]." V');
+											$('#PcbTestingDetailsPstWid').val('".$row[14]." uS');
+											$('#PcbTestingDetailsPDDetWidth').val('".$row[17]." uS');
+											$('#PcbTestingDetailsPDDetAmpl').val('".$row[16]." V');
+											$('#PcbTestingDetailsPDDetDelay').val('".$row[15]." uS');
+											$('#PcbTestingDetailsDelayDetWidth').val('".$row[20]." uS');
+											$('#PcbTestingDetailsDelayDetAmpl').val('".$row[19]." V');
+											$('#PcbTestingDetailsDelayDetDelay').val('".$row[18]." mS');
+											$('#PcbTestingDetailsSIDetWidth').val('".$row[24]." uS');
+											$('#PcbTestingDetailsSIDetAmpl').val('".$row[23]." V');
+											$('#PcbTestingDetailsSIDetDelay').val('".$row[22]." mS');
+											$('#PcbTestingDetailsSafePst').val('".$row[25]."');
+											$('#PcbTestingDetailsSafeDet').val('".$row[26]."');
+											$('#PcbTestingDetailsResult').val('".$row[27]."');
+
+											$('#PcbTestingDetailsPcbNo').prop('readonly','true');
+											$('#PcbTestingDetailsPcbNo').click(function(){
+												alert('PCB number is primary record. You can\'t change it!')
+											});
+											";
+
+						// ### Control record modification based on login access
+						if(isset($_COOKIE["fuzeAccess"]) && (strcmp($_COOKIE["fuzeAccess"], "EFB2A684E4AFB7D55E6147FBE5A332EE") == 0)){
+							$html.= "
+											$('input[type=text]').prop('readonly','true');
+											$('#pcbTestingUpdateButton').hide();
+											$('#PcbTestingDetailsPcbNo').unbind('click');
+											";
+						}
+						else {
+							$html.="
+										$('#pcbTestingUpdateButton').click(function(){
+											$.ajax({
+												type: 'POST',
+												data: {
+													form: 'pcbTestingUpdate',
+													pcb_no: $('#PcbTestingDetailsPcbNo').val(),
+													current: $('#PcbTestingDetailsCurrent').val().replace(/[^\d.-]/g, ''),
+													vee: $('#PcbTestingDetailsVee').val().replace(/[^\d.-]/g, ''),
+													vbat_pst: $('#PcbTestingDetailsVbatPst').val().replace(/[^\d.-]/g, ''),
+													pst_ampl: $('#PcbTestingDetailsPstAmpl').val().replace(/[^\d.-]/g, ''),
+													pst_wid: $('#PcbTestingDetailsPstWid').val().replace(/[^\d.-]/g, ''),
+													mod_freq: $('#PcbTestingDetailsFreq').val().replace(/[^\d.-]/g, ''),
+													mod_dc: $('#PcbTestingDetailsModDC').val().replace(/[^\d.-]/g, ''),
+													mod_ac: $('#PcbTestingDetailsModAC').val().replace(/[^\d.-]/g, ''),
+													vrf_ampl: $('#PcbTestingDetailsVrfAmpl').val().replace(/[^\d.-]/g, ''),
+													vbat_vrf: $('#PcbTestingDetailsVbatVrf').val().replace(/[^\d.-]/g, ''),
+													cap_charge: $('#PcbTestingDetailsCapCharge').val().replace(/[^\d.-]/g, ''),
+													det_wid: $('#PcbTestingDetailsDetWidth').val().replace(/[^\d.-]/g, ''),
+													det_ampl: $('#PcbTestingDetailsDetAmpl').val().replace(/[^\d.-]/g, ''),
+													cycles: $('#PcbTestingDetailsCycles').val().replace(/[^\d.-]/g, ''),
+													bpf_dc: $('#PcbTestingDetailsBpfDC').val().replace(/[^\d.-]/g, ''),
+													bpf_ac: $('#PcbTestingDetailsBpfAC').val().replace(/[^\d.-]/g, ''),
+													bpf_noise_dc: $('#PcbTestingDetailsBpfNoiseDc').val().replace(/[^\d.-]/g, ''),
+													bpf_noise_ac: $('#PcbTestingDetailsBpfNoiseAc').val().replace(/[^\d.-]/g, ''),
+													sil: $('#PcbTestingDetailsSil').val().replace(/[^\d.-]/g, ''),
+													vbat_sil: $('#PcbTestingDetailsVbatSil').val().replace(/[^\d.-]/g, ''),
+													lvp: $('#PcbTestingDetailsLvp').val().replace(/[^\d.-]/g, ''),
+													pd_delay: $('#PcbTestingDetailsPDDelay').val().replace(/[^\d.-]/g, ''),
+													pd_det: $('#PcbTestingDetailsPDDet').val().replace(/[^\d.-]/g, ''),
+													safe: $('#PcbTestingDetailsSafe').val().toUpperCase(),
+													result: $('#PcbTestingDetailsResult').val().toUpperCase()
+												},
+												success: function(msg) {
+													console.log(msg);
+													if(msg.includes('ok')){
+														Materialize.toast('Record Updated',1500,'rounded');
+													}
+													else{
+														Materialize.toast('Failed to save record!',3000,'rounded');
+														Materialize.toast('Database server is offline!',3000,'rounded');
+													}
+												},
+												error: function(XMLHttpRequest, textStatus, errorThrown) {
+													 alert(errorThrown + 'Is web-server offline?');
+												}
+											});
+										});
+							";
+						}
+					}
+					catch(Exception $e){
+							$html.="
+								$('#pcbTestingDetailsForm').hide();
+								document.getElementById('pcbTestingDetailsTitle').innerHTML = 'Failed to search the given parameter!';
+							";
+					}
+					$html.= "</script>";
+				}
+				break;
 		}
 
 		$html.="
