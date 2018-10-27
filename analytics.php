@@ -203,7 +203,7 @@
 				elseif ($_POST['process'] == "Q/A") {
 					$table_name = "qa_table";
 				}
-				elseif ($_POST['process'] == "pcb Testing") {
+				elseif ($_POST['process'] == "pcb Testing") {		// edit like this for other tables-EPD
 					if($_POST['fuze_type'] == "PROX") {
 						$table_name = "pcb_testing";
 					}
@@ -229,7 +229,7 @@
 					if($_POST['fuze_type'] == "PROX") {
 						$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = STR_TO_DATE('".strval($i)." ".$_POST['month']."','%e %M, %Y') AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
 					}
-					else if($_POST['fuze_type'] == "EPD") {
+					else if($_POST['fuze_type'] == "EPD") {	// modified query for EPD
 						$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `lot_table`.`pcb_no` LIKE CONCAT('%',`".$table_name."`.`pcb_no`) WHERE `".$column_name."` = STR_TO_DATE('".strval($i)." ".$_POST['month']."','%e %M, %Y') AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
 					}
 
