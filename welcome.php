@@ -2552,6 +2552,17 @@
 				case '2':
 					$('#epdAteCard').fadeIn();
 					break;
+				case '7':
+					$('#lotCard').fadeIn();
+					$('#lotManualPcb').keypress(function (e) {
+						var key = e.which;
+						if(key == 13)  // the enter key code
+						{
+							$('#lotManualButton').trigger('click');
+							return false;  
+						}
+					});
+					break;
 				case '9':
 					$('#epdAteCard').fadeIn();
 					break;
