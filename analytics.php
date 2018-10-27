@@ -24,7 +24,7 @@
 
 		if($_POST['select'] == "rejection") {
 
-			if($_POST['fuze_type'] == "PROX") {
+			if($_POST['fuze_type'] == "PROX" || $_POST['fuze_type'] == "EPD") {
 
 				if($_POST['main_lot'] != "*") {
 
@@ -190,7 +190,7 @@
 		}
 		elseif($_POST['select'] == "production") {
 
-			if($_POST['process'] != 'all' && $_POST['fuze_type'] == "PROX") {
+			if($_POST['process'] != 'all') {
 
 				$table_name = "";
 				$column_name = "record_date";
@@ -204,7 +204,12 @@
 					$table_name = "qa_table";
 				}
 				elseif ($_POST['process'] == "pcb Testing") {
-					$table_name = "pcb_testing";
+					if($_POST['fuze_type'] == "PROX") {
+						$table_name = "pcb_testing";
+					}
+					elseif ($_POST['fuze_type'] == "EPD") {
+						$table_name = "pcb_epd_csv";
+					}
 				}
 				elseif ($_POST['process'] == "housing Testing") {
 					$table_name = "housing_table";
@@ -217,10 +222,16 @@
 				}
 
 				$productionData = array();
+				$productionSql = "";
 
 				for($i=1;$i<=$_POST['days_in_month'];$i++) {
 
-					$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = STR_TO_DATE('".strval($i)." ".$_POST['month']."','%e %M, %Y') AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+					if($_POST['fuze_type'] == "PROX") {
+						$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `".$table_name."`.`pcb_no` = `lot_table`.`pcb_no` WHERE `".$column_name."` = STR_TO_DATE('".strval($i)." ".$_POST['month']."','%e %M, %Y') AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+					}
+					else if($_POST['fuze_type'] == "EPD") {
+						$productionSql = "SELECT `".$table_name."`.`_id` FROM `".$table_name."` JOIN `lot_table` ON `lot_table`.`pcb_no` LIKE CONCAT('%',`".$table_name."`.`pcb_no`) WHERE `".$column_name."` = STR_TO_DATE('".strval($i)." ".$_POST['month']."','%e %M, %Y') AND `fuze_diameter`='".$_POST['fuze_diameter']."' AND `fuze_type`='".$_POST['fuze_type']."'";
+					}
 
 					//print_r($productionSql);
 
