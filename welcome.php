@@ -1661,7 +1661,7 @@
 
 		var validationArray = new Array();
 
-		if($.cookie('fuzeType') == "PROX" && $.cookie('fuzeAccess') != "37BD0D3935B47BE2AB57BCF91B57F499") {
+				if($.cookie('fuzeType') == "PROX" && $.cookie('fuzeAccess') != "37BD0D3935B47BE2AB57BCF91B57F499") {
 			switch($.cookie('fuzeStart')){
 			case '1':
 				$('select').material_select();
@@ -2528,6 +2528,27 @@
 		}
 		else if($.cookie('fuzeType') == "EPD" && $.cookie('fuzeAccess') != "37BD0D3935B47BE2AB57BCF91B57F499") {
 			switch($.cookie('fuzeStart')){
+				case '1':
+					$('select').material_select();
+					$('#qaCard').fadeIn();
+					$('#qaCard').keypress(function (e) {
+						var key = e.which || e.keyCode;
+						if(key == 13)  // the enter key code
+						{
+							$('#qaSubmitButton').trigger('click');
+							return false;  
+						}
+					});
+					$('#qaCard').keydown(function (e) {
+						var key = e.which || e.keyCode;
+						if(key == 27)  // the esc key code
+						{
+							$('#qaClearButton').trigger('click');
+							return false;  
+						}
+					});
+					$('#qaDatePicker').val(getTodaysDate());
+					break;
 				case '2':
 					$('#epdAteCard').fadeIn();
 					break;

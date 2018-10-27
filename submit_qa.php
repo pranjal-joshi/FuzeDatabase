@@ -15,6 +15,10 @@
 		}
 		*/
 
+		if($_COOKIE['fuzeType'] == "EPD") {
+			$_POST['qa_pcb_no'] = "EPD".$_POST['qa_pcb_no'];
+		}
+
 		$sql = "REPLACE INTO `qa_table` (`_id`, `pcb_no`, `stage`, `result`, `reason`, `record_date`, `op_name`, `comment`) VALUES (
 			NULL, 
 			'".substr($_POST['qa_pcb_no'],0,12)."', 
