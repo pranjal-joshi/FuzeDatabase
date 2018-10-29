@@ -335,7 +335,7 @@
 					$dataArray = array_map('trim', $dataArray);
 					$z = explode("\t", $dataArray[2])[0];
 					$pcb_no = substr($z,12);
-					addEpdCsvRejection($pcb_no,$dataArray,"PCB",$db);
+					addEpdCsvRejection($pcb_no,$dataArray,"HSG",$db);
 				}
 
 				$sqlAutoIncReset = "ALTER TABLE `housing_epd_csv` DROP `_id`;";
