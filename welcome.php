@@ -1445,6 +1445,12 @@
 									<center>
 										<input type="file"  name="file" >
 										<button type="submit" value="submit" class="btn">Upload</button>
+										<br><br>
+										<div class="col s4"></div>
+										<div class='input-field col s4 center'>
+											<input type="number" name="main_lot">
+											<label for="main_lot">*Enter Main Lot No</label>
+										</div>
 									</center>
 
 								</form>

@@ -289,7 +289,7 @@
 							NULL,
 							'".$_COOKIE['fuzeType']."',
 							'".$_COOKIE['fuzeDia']."',
-							'0',
+							'".$_POST['main_lot']."',
 							'HSG',
 							'EPD".$pcb_no."',
 							'60'
