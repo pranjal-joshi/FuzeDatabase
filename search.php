@@ -135,6 +135,9 @@
 				case '4':
 					$searchInTable = "pcb_epd_csv";
 					break;
+				case '5':
+					$searchInTable = "housing_epd_csv";
+					break;
 			}
 		}
 
@@ -286,7 +289,7 @@
 			echo $value."</table>";
 		}
 		else {
-			echo($sql);		// UNCOMMENT THIS LATER
+			//echo($sql);		// UNCOMMENT THIS LATER
 			die("<br><p style='color: red; font-weight: bold;'>Failed to search!</p>");
 		}
 	}
