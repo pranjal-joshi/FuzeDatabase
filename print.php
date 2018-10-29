@@ -717,6 +717,10 @@
 					$pcbResult = mysqli_query($db, $pcbQuery);
 					$pcbRow = mysqli_fetch_assoc($pcbResult);
 
+					$hsgQuery =  "SELECT * FROM `housing_epd_csv` WHERE `pcb_no` = '".$pcb_no."'";
+					$hsgResult = mysqli_query($db, $hsgQuery);
+					$hsgRow = mysqli_fetch_assoc($hsgResult);
+
 					$html.= "
 						<div id='epdPcbTable' style='clear: both;'>
 						<p id='tableInfo'>Test Reports</p>
@@ -737,68 +741,84 @@
 								<td rowspan='2'>VIN</td>
 								<td>Current (I)</td>
 								<td>".$pcbRow['vbat_i']." mA</td>
+								<td>".$hsgRow['vbat_i']." mA</td>
 							</tr>
 							<tr>
 								<td>VDD</td>
 								<td>".$pcbRow['vdd']." V</td>
+								<td>".$hsgRow['vdd']." V</td>
 							</tr>
 							<tr>
 								<td rowspan='3'>PST<br>Test</td>
 								<td>PST Amplitude</td>
 								<td>".$pcbRow['pst_amp']." V</td>
+								<td>".$hsgRow['pst_amp']." V</td>
 							</tr>
 							<tr>
 								<td>PST Width</td>
 								<td>".$pcbRow['pst_width']." uS</td>
+								<td>".$hsgRow['pst_width']." uS</td>
 							<tr>
 								<td>VBAT-PST Delay</td>
 								<td>".$pcbRow['pst_delay']." mS</td>
+								<td>".$hsgRow['pst_delay']." mS</td>
 							</tr>
 							<tr>
 								<td rowspan='3'>PD<br>Test</td>
 								<td>DET Amplitude</td>
 								<td>".$pcbRow['pd_amp']." V</td>
+								<td>".$hsgRow['pd_amp']." V</td>
 							</tr>
 							<tr>
 								<td>DET Width</td>
 								<td>".$pcbRow['pd_width']." uS</td>
+								<td>".$hsgRow['pd_width']." uS</td>
 							<tr>
 								<td>DET Delay</td>
 								<td>".$pcbRow['pd_delay']." uS</td>
+								<td>".$hsgRow['pd_delay']." uS</td>
 							</tr>
 							<tr>
 								<td rowspan='3'>Delay<br>Test</td>
 								<td>DET Amplitude</td>
 								<td>".$pcbRow['delay_amp']." V</td>
+								<td>".$hsgRow['delay_amp']." V</td>
 							</tr>
 							<tr>
 								<td>DET Width</td>
 								<td>".$pcbRow['delay_width']." uS</td>
+								<td>".$hsgRow['delay_width']." uS</td>
 							<tr>
 								<td>DET Delay</td>
 								<td>".$pcbRow['delay_delay']." mS</td>
+								<td>".$hsgRow['delay_delay']." mS</td>
 							</tr>
 							<tr>
 								<td rowspan='3'>Switch<br>Integrity<br>Test</td>
 								<td>DET Amplitude</td>
 								<td>".$pcbRow['si_amp']." V</td>
+								<td>".$hsgRow['si_amp']." V</td>
 							</tr>
 							<tr>
 								<td>DET Width</td>
 								<td>".$pcbRow['si_width']." uS</td>
+								<td>".$hsgRow['si_width']." uS</td>
 							<tr>
 								<td>DET Delay</td>
 								<td>".$pcbRow['si_delay']." mS</td>
+								<td>".$hsgRow['si_delay']." mS</td>
 							</tr>
 							<tr>
 								<td>SAFE</td>
 								<td>No PST/No DET</td>
 								<td>PST Amp = ".$pcbRow['safe_pst']."V<br>DET Amp = ".$pcbRow['safe_det']."V</td>
+								<td>PST Amp = ".$hsgRow['safe_pst']."V<br>DET Amp = ".$hsgRow['safe_det']."V</td>
 							</tr>
 							<tr>
 								<td>RESULT</td>
 								<td>PASS/FAIL</td>
 								<td>".$pcbRow['result']." </td>
+								<td>".$hsgRow['result']." </td>
 							</tr>
 							<!--<tr>		//disabled
 								<td colspan='2'>Operator Name</td>
