@@ -220,14 +220,11 @@
 				for($cnt=2;$cnt<=count($csvArray)-2;$cnt++) {
 					$dataArray = explode("\t", $csvArray[$cnt][0]);
 					$dataArray = array_map('trim', $dataArray);
-					$z = explode("\t", $dataArray[2])[0];
-					$pcb_no = substr($z,12);										// change these indexes later
-					$tempStr = substr($z,0,12);										// change these indexes later
-					$op_id = substr($tempStr,0,6);										// change these indexes later
-					//$tester_id = substr($tempStr,6);										// change these indexes later
-					$assy_stage = substr($tempStr,4,4);
-					$assy_stage = substr($assy_stage,2);
-					$tester_id = substr($tempStr,8);										// change these indexes later
+					$z = preg_replace('/[\x00-\x1F\x7F]/', '', explode("\t", $dataArray[2])[0]);	// filter non-printable chars
+					$pcb_no = substr($z,6);										// change these indexes later
+					$op_id = substr($z,0,3);										// change these indexes later
+					$tester_id = substr($z,3,2);										// change these indexes later
+					$assy_stage = substr($z,5,1);
 
 					$addSql.= trim("(NULL, '"
 										.$pcb_no."', '"
