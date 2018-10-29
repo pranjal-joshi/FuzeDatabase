@@ -1459,6 +1459,54 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="epdAtePottingCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">POTTED HSG - Upload CSV file from Dot-Sys EPD ATE</span>
+								</center>
+							</div>
+
+							<div class="row">
+								<br>
+								<form action="potted_epd_upload_csv.php" method="POST" enctype="multipart/form-data">
+								
+									<center>
+										<input type="file"  name="file" >
+										<button type="submit" value="submit" class="btn">Upload</button>
+									</center>
+
+								</form>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="card-panel grey lighten-4" id="epdAteHeadCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">ELECTRONIC HEAD - Upload CSV file from Dot-Sys EPD ATE</span>
+								</center>
+							</div>
+
+							<div class="row">
+								<br>
+								<form action="head_epd_upload_csv.php" method="POST" enctype="multipart/form-data">
+								
+									<center>
+										<input type="file"  name="file" >
+										<button type="submit" value="submit" class="btn">Upload</button>
+									</center>
+
+								</form>
+							</div>
+
+						</div>
+					</div>
+
 					<!--------------------------------------------------------------------->
 
 					<div class="card-panel grey lighten-4" id="searchCard" style="display: none;">
@@ -2609,10 +2657,10 @@
 					$('#epdAteHousingCard').fadeIn();
 					break;
 				case '11':
-					$('#epdAtePcbCard').fadeIn();
+					$('#epdAtePottingCard').fadeIn();
 					break;
 				case '16':
-					$('#epdAtePcbCard').fadeIn();
+					$('#epdAteHeadCard').fadeIn();
 					break;
 				default:
 					$('#unavailableCard').fadeIn();
