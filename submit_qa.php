@@ -25,7 +25,7 @@
 			'".$_POST['qa_stage']."',
 			'".$_POST['result']."',
 			'".$_POST['reason']."',
-			'".$_POST['qaDatePicker']."',
+			STR_TO_DATE('".$_POST['qaDatePicker']."','%e %M, %Y'),
 			'".$_POST['qa_op_name']."',
 			'".$_POST['qa_comment']."'
 				);";
