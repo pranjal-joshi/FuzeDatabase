@@ -721,6 +721,14 @@
 					$hsgResult = mysqli_query($db, $hsgQuery);
 					$hsgRow = mysqli_fetch_assoc($hsgResult);
 
+					$pottingQuery =  "SELECT * FROM `potted_epd_csv` WHERE `pcb_no` = '".$pcb_no."'";
+					$pottingResult = mysqli_query($db, $pottingQuery);
+					$pottingRow = mysqli_fetch_assoc($pottingResult);
+
+					$headQuery =  "SELECT * FROM `head_epd_csv` WHERE `pcb_no` = '".$pcb_no."'";
+					$headResult = mysqli_query($db, $headQuery);
+					$headRow = mysqli_fetch_assoc($headResult);
+
 					$html.= "
 						<div id='epdPcbTable' style='clear: both;'>
 						<p id='tableInfo'>Test Reports</p>
@@ -742,83 +750,115 @@
 								<td>Current (I)</td>
 								<td>".$pcbRow['vbat_i']." mA</td>
 								<td>".$hsgRow['vbat_i']." mA</td>
+								<td>".$pottingRow['vbat_i']." mA</td>
+								<td>".$headRow['vbat_i']." mA</td>
 							</tr>
 							<tr>
 								<td>VDD</td>
 								<td>".$pcbRow['vdd']." V</td>
 								<td>".$hsgRow['vdd']." V</td>
+								<td>".$pottingRow['vdd']." V</td>
+								<td>".$headRow['vdd']." V</td>
 							</tr>
 							<tr>
 								<td rowspan='3'>PST<br>Test</td>
 								<td>PST Amplitude</td>
 								<td>".$pcbRow['pst_amp']." V</td>
 								<td>".$hsgRow['pst_amp']." V</td>
+								<td>".$pottingRow['pst_amp']." V</td>
+								<td>".$headRow['pst_amp']." V</td>
 							</tr>
 							<tr>
 								<td>PST Width</td>
 								<td>".$pcbRow['pst_width']." uS</td>
 								<td>".$hsgRow['pst_width']." uS</td>
+								<td>".$pottingRow['pst_width']." uS</td>
+								<td>".$headRow['pst_width']." uS</td>
 							<tr>
 								<td>VBAT-PST Delay</td>
 								<td>".$pcbRow['pst_delay']." mS</td>
 								<td>".$hsgRow['pst_delay']." mS</td>
+								<td>".$pottingRow['pst_delay']." mS</td>
+								<td>".$headRow['pst_delay']." mS</td>
 							</tr>
 							<tr>
 								<td rowspan='3'>PD<br>Test</td>
 								<td>DET Amplitude</td>
 								<td>".$pcbRow['pd_amp']." V</td>
 								<td>".$hsgRow['pd_amp']." V</td>
+								<td>".$pottingRow['pd_amp']." V</td>
+								<td>".$headRow['pd_amp']." V</td>
 							</tr>
 							<tr>
 								<td>DET Width</td>
 								<td>".$pcbRow['pd_width']." uS</td>
 								<td>".$hsgRow['pd_width']." uS</td>
+								<td>".$pottingRow['pd_width']." uS</td>
+								<td>".$headRow['pd_width']." uS</td>
 							<tr>
 								<td>DET Delay</td>
 								<td>".$pcbRow['pd_delay']." uS</td>
 								<td>".$hsgRow['pd_delay']." uS</td>
+								<td>".$pottingRow['pd_delay']." uS</td>
+								<td>".$headRow['pd_delay']." uS</td>
 							</tr>
 							<tr>
 								<td rowspan='3'>Delay<br>Test</td>
 								<td>DET Amplitude</td>
 								<td>".$pcbRow['delay_amp']." V</td>
 								<td>".$hsgRow['delay_amp']." V</td>
+								<td>".$pottingRow['delay_amp']." V</td>
+								<td>".$headRow['delay_amp']." V</td>
 							</tr>
 							<tr>
 								<td>DET Width</td>
 								<td>".$pcbRow['delay_width']." uS</td>
 								<td>".$hsgRow['delay_width']." uS</td>
+								<td>".$pottingRow['delay_width']." uS</td>
+								<td>".$headRow['delay_width']." uS</td>
 							<tr>
 								<td>DET Delay</td>
 								<td>".$pcbRow['delay_delay']." mS</td>
 								<td>".$hsgRow['delay_delay']." mS</td>
+								<td>".$pottingRow['delay_delay']." mS</td>
+								<td>".$headRow['delay_delay']." mS</td>
 							</tr>
 							<tr>
 								<td rowspan='3'>Switch<br>Integrity<br>Test</td>
 								<td>DET Amplitude</td>
 								<td>".$pcbRow['si_amp']." V</td>
 								<td>".$hsgRow['si_amp']." V</td>
+								<td>".$pottingRow['si_amp']." V</td>
+								<td>".$headRow['si_amp']." V</td>
 							</tr>
 							<tr>
 								<td>DET Width</td>
 								<td>".$pcbRow['si_width']." uS</td>
 								<td>".$hsgRow['si_width']." uS</td>
+								<td>".$pottingRow['si_width']." uS</td>
+								<td>".$headRow['si_width']." uS</td>
 							<tr>
 								<td>DET Delay</td>
 								<td>".$pcbRow['si_delay']." mS</td>
 								<td>".$hsgRow['si_delay']." mS</td>
+								<td>".$pottingRow['si_delay']." mS</td>
+								<td>".$headRow['si_delay']." mS</td>
 							</tr>
 							<tr>
 								<td>SAFE</td>
 								<td>No PST/No DET</td>
 								<td>PST Amp = ".$pcbRow['safe_pst']."V<br>DET Amp = ".$pcbRow['safe_det']."V</td>
 								<td>PST Amp = ".$hsgRow['safe_pst']."V<br>DET Amp = ".$hsgRow['safe_det']."V</td>
+								<td>PST Amp = ".$pottingRow['safe_pst']."V<br>DET Amp = ".$pottingRow['safe_det']."V</td>
+								<td>PST Amp = ".$headRow['safe_pst']."V<br>DET Amp = ".$headRow['safe_det']."V</td>
 							</tr>
 							<tr>
 								<td>RESULT</td>
 								<td>PASS/FAIL</td>
 								<td>".$pcbRow['result']." </td>
 								<td>".$hsgRow['result']." </td>
+								<td>".$pottingRow['result']." </td>
+								<td>".$headRow['result']." </td>
 							</tr>
 							<!--<tr>		//disabled
 								<td colspan='2'>Operator Name</td>
