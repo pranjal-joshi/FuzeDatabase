@@ -138,6 +138,12 @@
 				case '5':
 					$searchInTable = "housing_epd_csv";
 					break;
+				case '6':
+					$searchInTable = "potted_epd_csv";
+					break;
+				case '7':
+					$searchInTable = "head_epd_csv";
+					break;
 			}
 		}
 
