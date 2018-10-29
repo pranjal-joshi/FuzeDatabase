@@ -1395,20 +1395,52 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="unavailableCard" style="display: none;">
+						<div class="row">
+							<center>
+								<span style="font-weight: bold; font-size: 20px" class="red-text text-darken-1">Requested resource is currently unavailable.</span>
+							</center>
+						</div>
+					</div>
+
 					<!----------------------- EPD Cards ----------------------------------->
 
-					<div class="card-panel grey lighten-4" id="epdAteCard" style="display: none;">
+					<div class="card-panel grey lighten-4" id="epdAtePcbCard" style="display: none;">
 						<div class="row">
 							
 							<div class="row">
 								<center>
-									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Upload CSV file from Dot-Sys EPD ATE</span>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">PCB - Upload CSV file from Dot-Sys EPD ATE</span>
 								</center>
 							</div>
 
 							<div class="row">
 								<br>
 								<form action="pcb_epd_upload_csv.php" method="POST" enctype="multipart/form-data">
+								
+									<center>
+										<input type="file"  name="file" >
+										<button type="submit" value="submit" class="btn">Upload</button>
+									</center>
+
+								</form>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="card-panel grey lighten-4" id="epdAteHousingCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">HOUSING - Upload CSV file from Dot-Sys EPD ATE</span>
+								</center>
+							</div>
+
+							<div class="row">
+								<br>
+								<form action="housing_epd_upload_csv.php" method="POST" enctype="multipart/form-data">
 								
 									<center>
 										<input type="file"  name="file" >
@@ -2524,6 +2556,10 @@
 
 			case '15':
 				window.location = "mtrlmgmt.php";
+				break;
+
+			default:
+				$('#unavailableCard').fadeIn();
 			}
 		}
 		else if($.cookie('fuzeType') == "EPD" && $.cookie('fuzeAccess') != "37BD0D3935B47BE2AB57BCF91B57F499") {
@@ -2550,7 +2586,7 @@
 					$('#qaDatePicker').val(getTodaysDate());
 					break;
 				case '2':
-					$('#epdAteCard').fadeIn();
+					$('#epdAtePcbCard').fadeIn();
 					break;
 				case '7':
 					$('#lotCard').fadeIn();
@@ -2564,14 +2600,16 @@
 					});
 					break;
 				case '9':
-					$('#epdAteCard').fadeIn();
+					$('#epdAteHousingCard').fadeIn();
 					break;
 				case '11':
-					$('#epdAteCard').fadeIn();
+					$('#epdAtePcbCard').fadeIn();
 					break;
 				case '16':
-					$('#epdAteCard').fadeIn();
+					$('#epdAtePcbCard').fadeIn();
 					break;
+				default:
+					$('#unavailableCard').fadeIn();
 			}
 		}
 		else if($.cookie('fuzeAccess') == "37BD0D3935B47BE2AB57BCF91B57F499") {
