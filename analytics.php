@@ -212,7 +212,12 @@
 					}
 				}
 				elseif ($_POST['process'] == "housing Testing") {
-					$table_name = "housing_table";
+					if($_POST['fuze_type'] == "PROX") {
+						$table_name = "housing_table";
+					}
+					elseif($_POST['fuze_type'] == "EPD") {
+						$table_name = "housing_epd_csv";
+					}
 				}
 				elseif ($_POST['process'] == "potted Housing Testing") {
 					$table_name = "potting_table";
