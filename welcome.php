@@ -1507,6 +1507,244 @@
 						</div>
 					</div>
 
+					<div class='card-panel grey lighten-4' id='epdPcbTestingDetailsCard'>
+						<div class='row'>
+							<center>
+								<span style='font-weight: bold; font-size: 22px' class='teal-text text-darken-2' id='epdPcbTestingDetailsTitle'>EPD - PCB Test Report</span>
+							</center>
+
+							<br>
+								<table id='epdPcbTestingDetailsTable'>
+									<tbody>
+
+										<tr>
+										<td class='center'><span class='center'>PCB Number <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsPcbNo'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Supply Current (I)<br>(1.3 to 7 mA) <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsCurrent' data-position='bottom' data-delay='500' data-tooltip='1.3 to 7 mA' class='tooltipped'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Supply Voltage (VDD)<br>(4.4 to 5.8 V) <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsVee' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4.4 to 5.5 V'>
+												</div>
+											</td>
+											<div id="tpcdField" style="display: none;">
+											<td class='center'><span class='center'>TPCD Delay<br>(1 to 80 mS)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsTpcd' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='1 to 80 mS'>
+												</div>
+											</td>
+										</div>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PST Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+											<td class='center'><span class='center'>PST Ampl<br>(5 to 9 V) <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsPstAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='5 to 9 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>PST Width<br>(200 uS min) <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsPstWid' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='200 uS (min)'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>VBAT-PST Delay<br>(500 to 700 mS)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsVbatPst' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='590 to 700 mS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>PD Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+										<td class='center'><span class='center'>DET Ampl<br>(4.8 to 8.5 V)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsPDDetAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4.8 to 8.5 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Width<br>(250 uS min)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsPDDetWidth' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='250 uS (min)'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Delay<br>(1 to 40 uS)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsPDDetDelay' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='1 to 40 uS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Delay Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+										<td class='center'><span class='center'>DET Ampl<br>(4.8 to 8.5 V)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsDelayDetAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4.8 to 8.5 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Width<br>(250 uS min)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsDelayDetWidth' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='250 uS (min)'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Delay<br>(40 to 80 mS)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsDelayDetDelay' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='40 to 80 mS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Switch Integrity Test</span></center>
+
+								<table>
+									<tbody>
+
+										<tr>
+										<td class='center'><span class='center'>DET Ampl<br>(4.8 to 8.5 V)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsSIDetAmpl' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4.8 to 8.5 V'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Width<br>(250 uS min)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsSIDetWidth' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='250 uS (min)'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>DET Delay<br>(40 to 80 mS)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsSIDetDelay' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='40 to 80 mS'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Results</span></center>
+
+								<table>
+									<tbody>
+
+											<td class='center'><span class='center'>SAFE Test - PST Amp<br>(0V)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsSafePst'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>SAFE Test - DET Amp<br>(0V)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsSafeDet'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Result<br>(PASS/FAIL)<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingDetailsResult'>
+												</div>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+
+								<center><span class='black-text' style='font-weight: bold; font-size:16px;'>Additional Information</span></center>
+
+								<table>
+									<tbody>
+										<tr>
+											<td class='center'><span class='center'>Record Date <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center' id="manualTestingDataDatePicker">
+													<input type='text' id='epdPcbTestingManualRecordDate' class="datepicker">
+												</div>
+											</td>
+											<td class='center'><span class='center'>Operator Name <span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='epdPcbTestingManualOperatorName'>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<center>
+									<a class='btn waves-light waves-effect' id='epdPcbTestingManualSubmitButton'>SUBMIT</a>
+									<a class='btn red waves-effect' id='epdPcbTestingManualClearButton'>CLEAR</a>
+								</center>
+
+
+						</div>
+					</div>
+
 					<!--------------------------------------------------------------------->
 
 					<div class="card-panel grey lighten-4" id="searchCard" style="display: none;">
@@ -2652,6 +2890,10 @@
 							return false;  
 						}
 					});
+					break;
+				case '8':
+					$('#epdPcbTestingDetailsCard').fadeIn();
+					$('#epdPcbTestingDetailsPcbNo').focus();
 					break;
 				case '9':
 					$('#epdAteHousingCard').fadeIn();
