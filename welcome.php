@@ -1507,8 +1507,14 @@
 						</div>
 					</div>
 
-					<div class='card-panel grey lighten-4' id='epdPcbTestingDetailsCard'>
-						<div class='row'>
+					<div class='card-panel grey lighten-4' id='epdHousingTestingDetailsCard' style="display: none;"></div>
+
+					<div class='card-panel grey lighten-4' id='epdPottedTestingDetailsCard' style="display: none;"></div>
+
+					<div class='card-panel grey lighten-4' id='epdHeadTestingDetailsCard' style="display: none;"></div>
+
+					<div class='card-panel grey lighten-4' id='epdPcbTestingDetailsCard' style="display: none;">
+						<div class='row' id="epdTestingClone">
 							<center>
 								<span style='font-weight: bold; font-size: 22px' class='teal-text text-darken-2' id='epdPcbTestingDetailsTitle'>EPD - PCB Test Report</span>
 							</center>
@@ -1539,15 +1545,13 @@
 													<input type='text' id='epdPcbTestingDetailsVee' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='4.4 to 5.5 V'>
 												</div>
 											</td>
-											<div id="tpcdField" style="display: none;">
 											<td class='center'><span class='center'>TPCD Delay<br>(1 to 80 mS)<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
-													<input type='text' id='epdPcbTestingDetailsTpcd' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='1 to 80 mS'>
+													<input type='text' id='epdPcbTestingDetailsTpcd' class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='1 to 80 mS' disabled>
 												</div>
 											</td>
-										</div>
 										</tr>
 
 									</tbody>
@@ -2898,11 +2902,29 @@
 				case '9':
 					$('#epdAteHousingCard').fadeIn();
 					break;
+				case '10':
+					$('#epdTestingClone').clone().appendTo("#epdHousingTestingDetailsCard");
+					$('#epdPcbTestingDetailsTitle').html("EPD - HOUSING Test Report");
+					$('#epdHousingTestingDetailsCard').fadeIn();
+					$('#epdPcbTestingDetailsPcbNo').focus();
+					break;
 				case '11':
 					$('#epdAtePottingCard').fadeIn();
 					break;
+				case '12':
+					$('#epdTestingClone').clone().appendTo("#epdPottedTestingDetailsCard");
+					$('#epdPcbTestingDetailsTitle').html("EPD - POTTED HOUSING Test Report");
+					$('#epdPottedTestingDetailsCard').fadeIn();
+					$('#epdPcbTestingDetailsPcbNo').focus();
+					break;
 				case '16':
 					$('#epdAteHeadCard').fadeIn();
+					break;
+				case '17':
+					$('#epdTestingClone').clone().appendTo("#epdHeadTestingDetailsCard");
+					$('#epdPcbTestingDetailsTitle').html("EPD - ELECTRONIC HEAD Test Report");
+					$('#epdHeadTestingDetailsCard').fadeIn();
+					$('#epdPcbTestingDetailsPcbNo').focus();
 					break;
 				default:
 					$('#unavailableCard').fadeIn();
