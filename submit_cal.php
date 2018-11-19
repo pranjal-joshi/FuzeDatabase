@@ -3,6 +3,27 @@
 
 	// Calibration form upload 
 
+	function checkTimestampType($str) {
+		$flag = false;
+		if(
+			strpos($str, 'Jan') !== false ||
+			strpos($str, 'Feb') !== false ||
+			strpos($str, 'March') !== false ||
+			strpos($str, 'April') !== false ||
+			strpos($str, 'May') !== false ||
+			strpos($str, 'June') !== false ||
+			strpos($str, 'July') !== false ||
+			strpos($str, 'Aug') !== false ||
+			strpos($str, 'Sept') !== false ||
+			strpos($str, 'Oct') !== false ||
+			strpos($str, 'Nov') !== false ||
+			strpos($str, 'Dec') !== false
+		) {
+			$flag = true;
+		}
+		return $flag;
+	}
+
 	include("db_config.php");
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -34,19 +55,41 @@
 
 			// Don't check if already exist.. Just replace!
 
-			$sql = "REPLACE INTO `calibration_table` (`_id`, `pcb_no`, `rf_no`, `before_freq`, `before_bpf`, `changed`, `res_val`, `after_freq`, `after_bpf`, `timestamp`, `op_name`) VALUES (
-				NULL, 
-				'".substr($_POST['pcb_no'],0,12)."', 
-				'".$_POST['rf_no']."', 
-				'".$_POST['before_freq']."', 
-				'".$_POST['before_bpf']."',
-				'".$_POST['changed']."', 
-				'".$_POST['resChange']."', 
-				'".$_POST['after_freq']."', 
-				'".$_POST['after_bpf']."', 
-				'".$_POST['datePicker']."', 
-				'".$_POST['op_name']."'
+			$sql = "";
+			if(checkTimestampType($_POST['datePicker'])) {
+				$sql = "REPLACE INTO `calibration_table` (`_id`, `pcb_no`, `rf_no`, `before_freq`, `before_bpf`, `changed`, `res_val`, `after_freq`, `after_bpf`, `timestamp`, `op_name`) VALUES (
+					NULL, 
+					'".substr($_POST['pcb_no'],0,12)."', 
+					'".$_POST['rf_no']."', 
+					'".$_POST['before_freq']."', 
+					'".$_POST['before_bpf']."',
+					'".$_POST['changed']."', 
+					'".$_POST['resChange']."', 
+					'".$_POST['after_freq']."', 
+					'".$_POST['after_bpf']."', 
+					STR_TO_DATE('".$_POST['datePicker']."', '%e %M, %Y'), 
+					'".$_POST['op_name']."'
 					);";
+			}
+			else {
+				$sql = "REPLACE INTO `calibration_table` (`_id`, `pcb_no`, `rf_no`, `before_freq`, `before_bpf`, `changed`, `res_val`, `after_freq`, `after_bpf`, `timestamp`, `op_name`) VALUES (
+					NULL, 
+					'".substr($_POST['pcb_no'],0,12)."', 
+					'".$_POST['rf_no']."', 
+					'".$_POST['before_freq']."', 
+					'".$_POST['before_bpf']."',
+					'".$_POST['changed']."', 
+					'".$_POST['resChange']."', 
+					'".$_POST['after_freq']."', 
+					'".$_POST['after_bpf']."', 
+					'".$_POST['datePicker']."', 
+					'".$_POST['op_name']."'
+					);";
+			}
+
+				//STR_TO_DATE('".$_POST['datePicker']."', '%e %M, %Y'), 
+				//'".$_POST['datePicker']."', 
+			print_r($sql);
 
 			$results = mysqli_query($db,$sql);
 
