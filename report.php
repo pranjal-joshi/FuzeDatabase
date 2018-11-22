@@ -66,6 +66,82 @@
 				echo $filename;
 				
 				break;
+
+			case 'testing_record':
+				$pcbSql = "";
+				$hsgSql = "";
+				$pottingSql = "";
+				$calSql = "";
+				$headSql = "";
+
+				$excelPcbArray = array();
+				$excelHsgArray = array();
+				$excelPottingArray = array();
+				$excelCalArray = array();
+				$excelHeadArray = array();
+
+				if($_POST['fuze_type'] == 'PROX') {
+					if($_POST['lot_no'] == "*") {
+						die("invalid wildcard");
+					}
+					else {
+						$pcbSql = "SELECT * FROM `pcb_testing` JOIN `lot_table` ON `lot_table`.`pcb_no`=`pcb_testing`.`pcb_no` WHERE `lot_table`.`fuze_type`='PROX' AND `lot_table`.`main_lot`='".$_POST['lot_no']."' AND `lot_table`.`fuze_diameter`='".$_POST['fuze_diameter']."'";
+
+						$hsgSql = "SELECT * FROM `housing_table` JOIN `lot_table` ON `lot_table`.`pcb_no`=`housing_table`.`pcb_no` WHERE `lot_table`.`fuze_type`='PROX' AND `lot_table`.`main_lot`='".$_POST['lot_no']."' AND `lot_table`.`fuze_diameter`='".$_POST['fuze_diameter']."'";
+
+						$pottingSql = "SELECT * FROM `potting_table` JOIN `lot_table` ON `lot_table`.`pcb_no`=`potting_table`.`pcb_no` WHERE `lot_table`.`fuze_type`='PROX' AND `lot_table`.`main_lot`='".$_POST['lot_no']."' AND `lot_table`.`fuze_diameter`='".$_POST['fuze_diameter']."'";
+
+						$calSql = "SELECT * FROM `calibration_table` JOIN `lot_table` ON `lot_table`.`pcb_no`=`calibration_table`.`pcb_no` WHERE `lot_table`.`fuze_type`='PROX' AND `lot_table`.`main_lot`='".$_POST['lot_no']."' AND `lot_table`.`fuze_diameter`='".$_POST['fuze_diameter']."'";
+
+						$headSql = "SELECT * FROM `after_pu` JOIN `lot_table` ON `lot_table`.`pcb_no`=`after_pu`.`pcb_no` WHERE `lot_table`.`fuze_type`='PROX' AND `lot_table`.`main_lot`='".$_POST['lot_no']."' AND `lot_table`.`fuze_diameter`='".$_POST['fuze_diameter']."'";
+					}
+
+					$pcbRes = mysqli_query($db, $pcbSql);
+					array_push($excelPcbArray, array("PCB No", "KIT LOT", "Current", "VEE", "VBAT-PST", "PST-AMP", "PST-WID", "MOD FREQ", "MOD DC", "MOD AC", "CAP CHARGE", "VRF-AMP", "VBAT-VRF", "VBAT-SIL", "DET-WID", "DET-AMP", "CYCLES", "BPF DC", "BPF AC", "BPF NOISE DC", "BPF NOISE AC", "SIL", "LVP", "PD DELAY", "PD DET", "SAFE", "RESULT", "OPERATOR", "DATE"));
+					while ($row = mysqli_fetch_assoc($pcbRes)) {
+						array_push($excelPcbArray, array($row['pcb_no'],$row['kit_lot'],$row['i'],$row['vee'],$row['vbat_pst'],$row['pst_amp'],$row['pst_wid'],$row['mod_freq'],$row['mod_dc'],$row['mod_ac'],$row['cap_charge'],$row['vrf_amp'],$row['vbat_vrf'],$row['vbat_sil'],$row['det_wid'],$row['det_amp'],$row['cycles'],$row['bpf_dc'],$row['bpf_ac'],$row['bpf_noise_ac'],$row['bpf_noise_dc'],$row['sil'],$row['lvp'],$row['pd_delay'],$row['pd_det'],$row['safe'],$row['result'],$row['op_name'],$row['record_date']));
+					}
+
+					$hsgRes = mysqli_query($db, $hsgSql);
+					array_push($excelHsgArray, array("PCB No", "KIT LOT", "Current", "VEE", "VBAT-PST", "PST-AMP", "PST-WID", "MOD FREQ", "MOD DC", "MOD AC", "CAP CHARGE", "VRF-AMP", "VBAT-VRF", "VBAT-SIL", "DET-WID", "DET-AMP", "CYCLES", "BPF DC", "BPF AC", "SIL", "LVP", "PD DELAY", "PD DET", "SAFE", "RESULT", "OPERATOR", "DATE"));
+					while ($row = mysqli_fetch_assoc($hsgRes)) {
+						array_push($excelHsgArray, array($row['pcb_no'],$row['kit_lot'],$row['i'],$row['vee'],$row['vbat_pst'],$row['pst_amp'],$row['pst_wid'],$row['mod_freq'],$row['mod_dc'],$row['mod_ac'],$row['cap_charge'],$row['vrf_amp'],$row['vbat_vrf'],$row['vbat_sil'],$row['det_wid'],$row['det_amp'],$row['cycles'],$row['bpf_dc'],$row['bpf_ac'],$row['sil'],$row['lvp'],$row['pd_delay'],$row['pd_det'],$row['safe'],$row['result'],$row['op_name'],$row['record_date']));
+					}
+
+					$pottingRes = mysqli_query($db, $pottingSql);
+					array_push($excelPottingArray, array("PCB No", "KIT LOT", "Current", "VEE", "VBAT-PST", "PST-AMP", "PST-WID", "MOD FREQ", "MOD DC", "MOD AC", "CAP CHARGE", "VRF-AMP", "VBAT-VRF", "VBAT-SIL", "DET-WID", "DET-AMP", "CYCLES", "BPF DC", "BPF AC", "SIL", "LVP", "PD DELAY", "PD DET", "SAFE", "RESULT", "OPERATOR", "DATE"));
+					while ($row = mysqli_fetch_assoc($pottingRes)) {
+						array_push($excelPottingArray, array($row['pcb_no'],$row['kit_lot'],$row['i'],$row['vee'],$row['vbat_pst'],$row['pst_amp'],$row['pst_wid'],$row['mod_freq'],$row['mod_dc'],$row['mod_ac'],$row['cap_charge'],$row['vrf_amp'],$row['vbat_vrf'],$row['vbat_sil'],$row['det_wid'],$row['det_amp'],$row['cycles'],$row['bpf_dc'],$row['bpf_ac'],$row['sil'],$row['lvp'],$row['pd_delay'],$row['pd_det'],$row['safe'],$row['result'],$row['op_name'],$row['record_date']));
+					}
+
+					$calRes = mysqli_query($db, $calSql);
+					array_push($excelCalArray, array("PCB No", "RF No", "F Before", "BPF Before", "Res changed", "Res Value", "F After", "BPF After", "OPERATOR", "DATE", "KIT LOT"));
+					while ($row = mysqli_fetch_assoc($calRes)) {
+						array_push($excelCalArray, array($row['pcb_no'],$row['rf_no'],$row['before_freq'],$row['before_bpf'],$row['changed'],$row['res_val'],$row['after_freq'],$row['after_bpf'],$row['op_name'],$row['timestamp'],$row['kit_lot']));
+					}
+
+					$headRes = mysqli_query($db, $headSql);
+					array_push($excelHeadArray, array("PCB No", "KIT LOT", "CUrrent 1.5S", "Current 4.5S", "VEE", "VBAT-PST", "PST-AMP", "PST-WID", "FREQ", "SPAN", "BPF AC CAL", "VBAT-SIL", "DET-WID", "DET-AMP", "CYCLES", "BPF DC", "BPF AC", "BPF NOISE AC", "BPF NOISE DC", "SIL", "SIL AT 0", "LVP", "PD DELAY", "PD DET AMP", "PD DET WIDTH", "RESULT", "DATE"));
+					while ($row = mysqli_fetch_assoc($pottingRes)) {
+						array_push($excelheadArray, array($row['pcb_no'],$row['kit_lot'],$row['i_1.5'],$row['i_4.5'],$row['vee'],$row['vbat_pst'],$row['pst_amp'],$row['pst_wid'],$row['freq'],$row['span'],$row['bpf_ac_cal'],$row['vbat_sil'],$row['det_wid'],$row['det_amp'],$row['cycles'],$row['bpf_dc'],$row['bpf_ac'],$row['bpf_noise_ac'],$row['bpf_noise_dc'],$row['sil'],$row['sil_at_0'],$row['lvp'],$row['pd_delay'],$row['pd_det_amp'],$row['pd_det_width'],$row['result'],$row['record_date']));
+					}
+					
+					$filename = 'Testing Record - '.$_POST['fuze_diameter'].' '.$_POST['fuze_type'].' LOT '.$_POST['lot_no'].'.xls';
+					$xls = new Excel_XML;
+
+					$xls->addWorksheet('PCB',$excelPcbArray);
+					$xls->addWorksheet('Housing',$excelHsgArray);
+					$xls->addWorksheet('Potted Hsg',$excelHsgArray);
+					$xls->addWorksheet('Calibration',$excelCalArray);
+					$xls->addWorksheet('Electronic Head',$excelHeadArray);
+
+					header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+ 					header('Content-Disposition: attachment; filename="Testing Record - '.$_POST['fuze_diameter'].' '.$_POST['fuze_type'].' LOT '.$_POST['fuze_diameter'].'.xls"');
+ 					$xls->sendWorkbook('Testing Record - '.$_POST['fuze_type'].' LOT '.$_POST['fuze_diameter'].'.xls');
+					echo $filename;
+				}
+				// write code here for EPD/TIME fuzes
+				break;
 			
 		}
 	}

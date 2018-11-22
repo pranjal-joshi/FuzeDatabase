@@ -260,9 +260,9 @@
 
 							<div class="input-field col s4">
 								<select name="searchSelect" id="reportSelect">
-									<option value="" selected disabled>-- Select --</option>
 									<option value="barcode_record">Barcode Record</option>
 									<option value="battery_record">Battery Record</option>
+									<option value="testing_record" selected>Testing Record</option>
 								</select>
 								<label>Report type</label>
 							</div>
@@ -1951,6 +1951,7 @@
 				Materialize.toast('Please select the required fields',2500,'rounded');
 			}
 			else {
+				Materialize.toast('Generating Report. Please wait..',2500,'rounded');
 				$.ajax({
 					url : 'report.php',
 					type: 'post',
@@ -1961,15 +1962,20 @@
 						lot_no: $('#reportLotNo').val()
 					},
 					success: function(msg) {
-						msg = msg.split("</Workbook>");
-						msg[0] = msg[0]+"</Workbook>";
-						var blob = new Blob([msg[0]], { type: 'data:application/vnd.ms-excel' }); 
-						var downloadUrl = URL.createObjectURL(blob);
-						var a = document.createElement("a");
-						a.href = downloadUrl;
-						a.download = msg[1]+".xls";
-						document.body.appendChild(a);
-						a.click();
+						if(msg.includes("invalid wildcard")) {
+							Materialize.toast("FAILED: You can't use wildcard (*) here!",2500,'rounded');
+						}
+						else {
+							msg = msg.split("</Workbook>");
+							msg[0] = msg[0]+"</Workbook>";
+							var blob = new Blob([msg[0]], { type: 'data:application/vnd.ms-excel' }); 
+							var downloadUrl = URL.createObjectURL(blob);
+							var a = document.createElement("a");
+							a.href = downloadUrl;
+							a.download = msg[1]+".xls";
+							document.body.appendChild(a);
+							a.click();
+						}
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						 alert(errorThrown + "\n\nIs web-server offline?");
