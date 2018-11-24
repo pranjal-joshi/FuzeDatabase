@@ -389,11 +389,11 @@
 										<label for="resChange"><center>Resistor (K&#8486;)</center></label>
 									</div>
 									<div class="input-field col s5">
-										<input type="text" name="after_freq" id="after_freq" disabled>
+										<input type="text" name="after_freq" id="after_freq">
 										<label for="after_freq"><center>After Calibration - Freq (MHz)</center></label>
 									</div>
 									<div class="input-field col s5">
-										<input type="text" name="after_bpf" id="after_bpf" disabled>
+										<input type="text" name="after_bpf" id="after_bpf">
 										<label for="after_bpf"><center>After Calibration - BPF AC (V)</center></label>
 									</div>
 								</div>
@@ -2958,13 +2958,13 @@
 			var formData = $('input[name=group1]:checked').attr('id');
 			if(formData === "radioYes") {
 				document.getElementById("resChange").disabled = false;
-				document.getElementById("after_freq").disabled = false;
-				document.getElementById("after_bpf").disabled = false;
+				//document.getElementById("after_freq").disabled = false;
+				//document.getElementById("after_bpf").disabled = false;
 			}
 			else{
 				document.getElementById("resChange").disabled = true;
-				document.getElementById("after_freq").disabled = true;
-				document.getElementById("after_bpf").disabled = true;
+				//document.getElementById("after_freq").disabled = true;
+				//document.getElementById("after_bpf").disabled = true;
 			}
 		}
 
@@ -3010,8 +3010,8 @@
 			$('#resChange').val('');
 			$('#radioNo').prop('checked',true);
 			document.getElementById("resChange").disabled = true;
-			document.getElementById("after_freq").disabled = true;
-			document.getElementById("after_bpf").disabled = true;
+			//document.getElementById("after_freq").disabled = true;
+			//document.getElementById("after_bpf").disabled = true;
 			$('#pcb_no').focus();
 		});
 
@@ -3117,8 +3117,8 @@
 						$('#resChange').val('');
 						$('#radioNo').prop('checked',true);
 						document.getElementById("resChange").disabled = true;
-						document.getElementById("after_freq").disabled = true;
-						document.getElementById("after_bpf").disabled = true;
+						//document.getElementById("after_freq").disabled = true;
+						//document.getElementById("after_bpf").disabled = true;
 						$('#pcb_no').focus();
 					}
 					else if(msg.includes("exist")) {
