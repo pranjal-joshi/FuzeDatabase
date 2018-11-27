@@ -67,6 +67,86 @@
 				
 				break;
 
+			case 'testing_daily_count':
+				if($_POST['lot_no'] == "*") {
+					die("invalid wildcard");
+				}
+
+				$cnt = 0;
+				$excelDataArray = array();
+
+				array_push($excelDataArray, array("Daily Record - ".$_POST['fuze_diameter']."mm ".$_POST['fuze_type']." - LOT ".$_POST['lot_no']));
+
+				array_push($excelDataArray, array(""));
+
+				array_push($excelDataArray, array("SN.","DATE\n(DD-MM-YY)","PCB Testing","HSG Testing","Potted\nHSG Testing","RF Calibration","Unit Head\nTesting"));
+
+				$startDateSql = "SELECT `lot_table`.`pcb_no`, `lot_table`.`main_lot`, `lot_table`.`kit_lot`,  `pcb_testing`.`record_date` FROM `lot_table` JOIN `housing_table` ON `housing_table`.`pcb_no`=`lot_table`.`pcb_no` JOIN `pcb_testing` ON `pcb_testing`.`pcb_no`=`lot_table`.`pcb_no` WHERE `lot_table`.`main_lot`='".$_POST['lot_no']."' ORDER BY `pcb_testing`.`record_date` ASC";
+
+				$stopDateSql = "SELECT `lot_table`.`pcb_no`, `lot_table`.`main_lot`, `lot_table`.`kit_lot`,  `after_pu`.`record_date` FROM `lot_table` JOIN `housing_table` ON `housing_table`.`pcb_no`=`lot_table`.`pcb_no` JOIN `after_pu` ON `after_pu`.`pcb_no`=`lot_table`.`pcb_no` WHERE `lot_table`.`main_lot`='".$_POST['lot_no']."' ORDER BY `after_pu`.`record_date` DESC";
+
+				$startDateRes = mysqli_query($db,$startDateSql);
+				$startDate = mysqli_fetch_assoc($startDateRes);
+
+				$stopDateRes = mysqli_query($db,$stopDateSql);
+				$stopDate = mysqli_fetch_assoc($stopDateRes);
+
+				if(mysqli_num_rows($startDateRes)==0 && mysqli_num_rows($stopDateRes)==0) {
+					die("data not available");
+				}
+
+				$startDateObj = new DateTime($startDate['record_date']);
+				$startDateObj->modify("-1 day");
+
+				$stopDayObj = new DateTime($stopDate['record_date']);
+				$stopDayObj->modify("1 day");
+
+				$period = new DatePeriod(
+					$startDateObj,
+					new DateInterval('P1D'),
+					$stopDayObj
+				);
+
+				foreach ($period as $key => $value) {
+					$pcbSql = "SELECT `_id` FROM `pcb_testing` WHERE `record_date` = '".$value->format('Y-m-d')."'";
+					$hsgSql = "SELECT `_id` FROM `housing_table` WHERE `record_date` = '".$value->format('Y-m-d')."'";
+					$pottingSql = "SELECT `_id` FROM `potting_table` WHERE `record_date` = '".$value->format('Y-m-d')."'";
+					$calSql = "SELECT `_id` FROM `calibration_table` WHERE `timestamp` = '".$value->format('Y-m-d')."'";
+					$headSql = "SELECT `_id` FROM `after_pu` WHERE `record_date` = '".$value->format('Y-m-d')."'";
+
+					$pcbRes = mysqli_query($db, $pcbSql);
+					$hsgRes = mysqli_query($db, $hsgSql);
+					$pottingRes = mysqli_query($db, $pottingSql);
+					$calRes = mysqli_query($db, $calSql);
+					$headRes = mysqli_query($db, $headSql);
+					$cnt++;
+
+					array_push($excelDataArray, array(
+						strval($cnt),
+						$value->format('d-m-Y'),
+						mysqli_num_rows($pcbRes),
+						mysqli_num_rows($hsgRes),
+						mysqli_num_rows($pottingRes),
+						mysqli_num_rows($calRes),
+						mysqli_num_rows($headRes),
+					));
+
+					//print_r($value->format('d-m-Y'));
+					print_r($period);
+				}
+
+				$filename = 'Testing Daily Count - '.$_POST['fuze_diameter'].' '.$_POST['fuze_type'].' LOT '.$_POST['lot_no'].'.xls';
+				$xls = new Excel_XML;
+
+				$xls->addWorksheet('LOT '.$_POST['lot_no'],$excelDataArray);
+
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				header('Content-Disposition: attachment; filename="Testing Daily Count - '.$_POST['fuze_diameter'].' '.$_POST['fuze_type'].' LOT '.$_POST['fuze_diameter'].'.xls"');
+				$xls->sendWorkbook('Testing Daily Count - '.$_POST['fuze_type'].' LOT '.$_POST['fuze_diameter'].'.xls');
+				echo $filename;
+
+				break;
+
 			case 'testing_record':
 				$pcbSql = "";
 				$hsgSql = "";
