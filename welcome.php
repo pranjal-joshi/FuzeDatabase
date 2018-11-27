@@ -201,7 +201,7 @@
 										<label>Search In</label>
 									</div>
 
-								<div class="input-field col s5" id="search_box_div">
+								<div class="input-field col s4" id="search_box_div">
 									<input type="text" name="search_box" id="search_box" autofocus class='tooltipped' data-position='bottom' data-delay='500' data-tooltip='For partial search, use wildcard (%__%) like %234%'>
 									<label for="search_box">What to search?</label>
 								</div>
