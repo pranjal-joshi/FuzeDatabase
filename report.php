@@ -132,7 +132,6 @@
 					));
 
 					//print_r($value->format('d-m-Y'));
-					print_r($period);
 				}
 
 				$filename = 'Testing Daily Count - '.$_POST['fuze_diameter'].' '.$_POST['fuze_type'].' LOT '.$_POST['lot_no'].'.xls';
@@ -211,7 +210,7 @@
 
 					$xls->addWorksheet('PCB',$excelPcbArray);
 					$xls->addWorksheet('Housing',$excelHsgArray);
-					$xls->addWorksheet('Potted Hsg',$excelHsgArray);
+					$xls->addWorksheet('Potted Hsg',$excelPottingArray);
 					$xls->addWorksheet('Calibration',$excelCalArray);
 					$xls->addWorksheet('Electronic Head',$excelHeadArray);
 
