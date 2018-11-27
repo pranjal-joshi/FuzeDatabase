@@ -688,7 +688,7 @@
 								<option value="" disabled selected>-- select --</option>
 								<option value="EPD">EPD</option>
 								<option value="TIME">TIME</option>
-								<option value="PROX">PROX</option>
+								<option value="PROX" selected>PROX</option>
 							</select>
 							<label>Select Fuze Type</label>
 						</div>
@@ -712,8 +712,8 @@
 					<div class="row" id="production_select_row" style="display: none;">
 						<div class="input-field col s6" id="analytics_process_div">
 							<select name="analytics_proess" id="analytics_process" required>
-								<option value="" selected disabled>--Select--</option>
-								<option value="all">All</option>
+								<option value="" disabled>--Select--</option>
+								<option value="all" selected>All</option>
 								<option value="Q/A">Visual (Q/A)</option>
 								<option value="calibration">Calibration</option>
 								<option value="pcb Testing">PCB Testing</option>
