@@ -676,7 +676,7 @@
 								<select name="analytics_select" id="analytics_select" onchange="whatToShow(this.value)">
 									<option value="" selected disabled>-- Select --</option>
 									<option value="rejection">Rejection Details</option>
-									<option value="production">Prodution Details</option>
+									<option value="production">Monthly Prodution Details</option>
 									<option value="vendor_rejection">Vendor wise Rejection</option>
 									<option value="total_rejection">Total Rejection</option>
 								</select>
