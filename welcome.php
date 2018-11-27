@@ -252,7 +252,7 @@
 
 			<!-- report modal -->
 			<div id="reportModal" class="modal">
-				<div class="modal-content" style="min-height: 250px;">
+				<div class="modal-content" style="min-height: 350px;">
 					<center>
 						<span class="teal-text text-darken-2" style="font-weight: bold; font-size: 24px;">Generate Report</span>
 						<br><br>
@@ -260,9 +260,14 @@
 
 							<div class="input-field col s4">
 								<select name="searchSelect" id="reportSelect">
-									<option value="barcode_record">Barcode Record</option>
-									<option value="battery_record">Battery Record</option>
-									<option value="testing_record" selected>Testing Record</option>
+									<optgroup label="Testing">
+										<option value="testing_record">Testing Record</option>
+										<option value="testing_daily_count" selected>Testing Daily Count</option>
+									</optgroup>
+									<optgroup label="Assembly">
+										<option value="barcode_record">Barcode Record</option>
+										<option value="battery_record">Battery Record</option>
+									</optgroup>
 								</select>
 								<label>Report type</label>
 							</div>
@@ -1962,8 +1967,12 @@
 						lot_no: $('#reportLotNo').val()
 					},
 					success: function(msg) {
+						//console.log(msg);
 						if(msg.includes("invalid wildcard")) {
 							Materialize.toast("FAILED: You can't use wildcard (*) here!",2500,'rounded');
+						}
+						else if(msg.includes("data not available")) {
+							Materialize.toast("FAILED: Data not available!",2500,'rounded');
 						}
 						else {
 							msg = msg.split("</Workbook>");
