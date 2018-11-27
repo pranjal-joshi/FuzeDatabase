@@ -859,42 +859,42 @@
 									},
 									data: [
 									{
-										type: "line",
+										type: "spline",
 										legendText: "Q/A",
 										name: "Q/A",
 										showInLegend: true,
 										dataPoints: JSON.parse(msg)[0]
 									},
 									{
-										type: "line",
+										type: "spline",
 										legendText: "PCB",
 										name: "PCB",
 										showInLegend: true,
 										dataPoints: JSON.parse(msg)[1]
 									},
 									{
-										type: "line",
+										type: "spline",
 										legendText: "Housing",
 										name: "Housing",
 										showInLegend: true,
 										dataPoints: JSON.parse(msg)[2]
 									},
 									{
-										type: "line",
+										type: "spline",
 										legendText: "Potting",
 										name: "Potting",
 										showInLegend: true,
 										dataPoints: JSON.parse(msg)[3]
 									},
 									{
-										type: "line",
+										type: "spline",
 										legendText: "Calibration",
 										name: "Calibration",
 										showInLegend: true,
 										dataPoints: JSON.parse(msg)[4]
 									},
 									{
-										type: "line",
+										type: "spline",
 										legendText: "Elec. Head",
 										name: "Elec. Head",
 										showInLegend: true,
@@ -929,7 +929,7 @@
 										includeZero: false
 									},
 									data: [{
-										type: "line",
+										type: "spline",
 										lineColor: "#009688",
 										color: "#00897b",
 										dataPoints: JSON.parse(msg)
