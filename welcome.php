@@ -462,8 +462,10 @@
 										<div class="col s6">
 											<input type="radio" name="qaGroup" class="with-gap" id="radioPass" name="radioPass" value="1" onchange="onQaRadioChange()" checked>
 											<label for="radioPass">PASS</label>
-											<input type="radio" name="qaGroup" class="with-gap" id="radioFail" name="radioFail" value="0" onchange="onQaRadioChange()">
-											<label for="radioFail">FAIL</label>
+											<input type="radio" name="qaGroup" class="with-gap" id="radioRework" name="radioRework" value="0" onchange="onQaRadioChange()">
+											<label for="radioRework">REWORK</label>
+											<input type="radio" name="qaGroup" class="with-gap" id="radioReject" name="radioReject" value="-1" onchange="onQaRadioChange()">
+											<label for="radioReject">REJECT</label>
 										</div>
 										</center>
 									</div>
@@ -2982,12 +2984,20 @@
 			radioState = $('input[name=qaGroup]:checked').attr('id');
 			if(radioState === "radioPass"){
 				$('#qaFailRow').fadeOut(function(onComplete){
-					$('select').material_select('destroy');
+					$('#qaFailRow').fadeOut();
+					$('#qaFailComment').fadeOut();
 				});
 			}
-			else {
+			else if(radioState === "radioRework") {
 				$('select').material_select();
 				$('#qaFailRow').fadeIn();
+				$('#qaFailComment').fadeIn();
+			}
+			else {
+				$('#qaFailRow').fadeOut(function(onComplete){
+					$('#qaFailRow').fadeOut();
+					$('#qaFailComment').fadeOut();
+				});
 			}
 		}
 
@@ -3201,13 +3211,23 @@
 				Materialize.toast("Check what you have missed.",4000,'rounded');
 			}
 			else {
+				var radioValue;
+				if(radioState == "radioPass") {
+					radioValue = '1';
+				}
+				else if(radioState == "radioRework") {
+					radioValue = '0';
+				}
+				else {
+					radioValue = '-1';
+				}
 				$.ajax({
 					url: 'submit_qa.php',
 					type: 'POST',
 					data: {
 						qa_pcb_no: $('#qa_pcb_no').val(),
-						result: ((radioState == "radioPass") ? '1' : '0'),
-						reason: $('#qaFailReason').val(),
+						result: radioValue,
+						reason: (radioState == "radioRework" ? $('#qaFailReason').val() : ""),
 						qaDatePicker: $('#qaDatePicker').val(),
 						qa_op_name: $('#qa_op_name').val().toUpperCase(),
 						qa_stage: $('#qa_stage').val(),
@@ -3223,6 +3243,7 @@
 							$('#qaFailRow').fadeOut();
 							$('#qa_pcb_no').focus();
 							radioState = "radioPass";
+							$('#qaFailComment').val('');
 							$('#qaFailCommentRow').fadeOut();
 						}
 						else if(msg.includes("exist")) {
@@ -3249,6 +3270,7 @@
 			$('#qaFailRow').fadeOut();
 			$('#qa_pcb_no').focus();
 			radioState = "radioPass";
+			$('#qaFailComment').val('');
 			$('#qaFailCommentRow').fadeOut();
 		});
 
