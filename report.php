@@ -75,6 +75,12 @@
 				$cnt = 0;
 				$excelDataArray = array();
 
+				$totalPcb = 0;
+				$totalHsg = 0;
+				$totalPotting = 0;
+				$totalCal = 0;
+				$totalHead = 0;
+
 				array_push($excelDataArray, array("Daily Record - ".$_POST['fuze_diameter']."mm ".$_POST['fuze_type']." - LOT ".$_POST['lot_no']));
 
 				array_push($excelDataArray, array(""));
@@ -131,8 +137,25 @@
 						mysqli_num_rows($headRes),
 					));
 
+					$totalPcb += mysqli_num_rows($pcbRes);
+					$totalHsg += mysqli_num_rows($hsgRes);
+					$totalPotting += mysqli_num_rows($pottingRes);
+					$totalCal += mysqli_num_rows($calRes);
+					$totalHead += mysqli_num_rows($headRes);
+
 					//print_r($value->format('d-m-Y'));
 				}
+
+				array_push($excelDataArray, array(""));
+				array_push($excelDataArray, array(
+					"",
+					"TOTAL",
+					$totalPcb,
+					$totalHsg,
+					$totalPotting,
+					$totalCal,
+					$totalHead
+				));
 
 				$filename = 'Testing Daily Count - '.$_POST['fuze_diameter'].' '.$_POST['fuze_type'].' LOT '.$_POST['lot_no'].'.xls';
 				$xls = new Excel_XML;
