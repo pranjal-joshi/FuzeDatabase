@@ -2,6 +2,95 @@
 	
 	include('db_config.php');
 
+	function addToRejection($array,$db) {
+		if(strtoupper($array[25]) == "FAIL") {
+			$rejReason = "";
+			if(!between($array[1],7,14)) {
+				$rejReason.="Current, ";
+			}
+			if(!between($array[2],5.3,6.2)) {
+				$rejReason.="VEE, ";
+			}
+			if(!between($array[3],600,700)) {
+				$rejReason.="Vbat-PST, ";
+			}
+			if(!between($array[4],12,21)) {
+				$rejReason.="PST Amp, ";
+			}
+			if(!between($array[5],30,120)) {
+				$rejReason.="PST Width, ";
+			}
+			if(!between($array[6],45,55)) {
+				$rejReason.="MOD Freq, ";
+			}
+			if(!between($array[7],7,8.1)) {
+				$rejReason.="MOD DC, ";
+			}
+			if(!between($array[8],0.95,1.35)) {
+				$rejReason.="MOD AC, ";
+			}
+			if(!between($array[9],695,730)) {
+				$rejReason.="VBAT-Cap Charge T, ";
+			}
+			if(!between($array[10],15.3,16.7)) {
+				$rejReason.="VRF Amp, ";
+			}
+			if(!between($array[11],2.08,2.3)) {
+				$rejReason.="VBAT-VRF, ";
+			}
+			if(!between($array[12],2.7,3.2)) {
+				$rejReason.="VBAT-SIL, ";
+			}
+			if(!between($array[13],30,120)) {
+				$rejReason.="DET Width PROX, ";
+			}
+			if(!between($array[14],-21,-12)) {
+				$rejReason.="DET Amp PROX, ";
+			}
+			if(!between($array[15],4,6)) {
+				$rejReason.="Cycles PROX, ";
+			}
+			if(!between($array[16],5.2,6.4)) {
+				$rejReason.="BPF DC PROX, ";
+			}
+			if(!between($array[17],2.5,3.6)) {
+				$rejReason.="BPF AC PROX, ";
+			}
+			if(!between($array[18],480,650)) {
+				$rejReason.="SIL, ";
+			}
+			if(!between($array[19],18.8,21)) {
+				$rejReason.="LVP, ";
+			}
+			if(!between($array[20],0,10)) {
+				$rejReason.="Delay PD, ";
+			}
+			if(!between($array[21],-22,-6.5)) {
+				$rejReason.="DET Amp PD, ";
+			}
+			if($array[22] != "PASS") {
+				$rejReason.="SAFE Test, ";
+			}
+			$rejReason = rtrim($rejReason,", ");
+			$rejReason.=";";
+			
+			$rejSql = "UPDATE `lot_table` SET `rejected`='1',
+			`rejection_stage`='POTTING',
+			`rejection_remark`='".$rejReason."' 
+			WHERE `pcb_no`='".$array[0]."' AND `fuze_type` = '".$_COOKIE['fuzeType']."' AND `fuze_diameter` = '".$_COOKIE['fuzeDia']."'";
+
+			$res = mysqli_query($db,$rejSql);
+			print_r($rejSql);
+		}
+	}
+
+	function between($val,$min,$max) {
+		if(($val >= $min) && ($val <= $max)) {
+			return true;
+		}
+		return false;
+	}
+
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		$s = str_replace("\"", "", strtoupper($_POST['jsonData']));
@@ -38,6 +127,7 @@
 			die("fail");
 		}
 		else{
+			addToRejection($dataArray, $db);
 			die("ok");
 		}
 	}
