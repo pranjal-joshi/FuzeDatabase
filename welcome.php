@@ -3550,6 +3550,10 @@
 							Materialize.toast('Record saved',2000,'rounded');
 							$('#pcbTestingManualClearButton').trigger('click');
 						}
+						else if(msg.includes("lot_overflow")) {
+							Materialize.toast('Lot Overflow!',2000,'rounded');
+							alert("*** Kit Lot already full! ***\n\nCan't enter more than 60 units in the same kit lot!\nPlease change the kit lot number!");
+						}
 						else {
 							console.log(msg);
 							Materialize.toast('Failed to save the record!',2000,'rounded');
