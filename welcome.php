@@ -557,21 +557,28 @@
 							<br>
 
 							<div class="row">
-								<div class="col s4" id="qa_module">
+								<div class="col s3" id="qa_module">
 									<center>
 										<img class="responsive-img" src="qa_logo.svg">
 										<br>
 										<span style="font-size: 22px">Q/A</span>
 									</center>
 								</div>
-								<div class="col s4" id="production_module">
+								<div class="col s3" id="ppc_module">
+									<center>
+										<img class="responsive-img" src="ppc.svg">
+										<br>
+										<span style="font-size: 22px">PPC</span>
+									</center>
+								</div>
+								<div class="col s3" id="production_module">
 									<center>
 										<img class="responsive-img" src="production.svg">
 										<br>
 										<span style="font-size: 22px">Production</span>
 									</center>
 								</div>
-								<div class="col s4" id="testing_module">
+								<div class="col s3" id="testing_module">
 									<center>
 										<img class="responsive-img" src="testing.svg">
 										<br>
@@ -626,6 +633,21 @@
 										$('#testtingDialog').dialog('close');
 									});
 								});
+								$('#ppc_module').click(function() {
+									$("#ppcDialog" ).dialog({
+               			autoOpen: false,
+               			modal : true,
+										show : 'blind',
+										hide : 'blind',
+										width: '30%',
+										title: "PPC Module"
+       						});
+       						$('#ppcDialog').dialog('open');
+									$('.ui-widget-overlay').bind('click', function(){
+										$('#ppcDialog').unbind();
+										$('#ppcDialog').dialog('close');
+									});
+								});
 							</script>
 
 						</div>
@@ -639,6 +661,12 @@
 						<div id='qaDialog' style="display: none;">
 							<ul>
 								<li><a href="analytics.php" target="_blank" style="color: blue;">&#9672; Vendor wise Rejection</a></li>
+							</ul>
+						</div>
+
+						<div id='ppcDialog' style="display: none;">
+							<ul>
+								<li><a href="" target="_blank" style="color: blue;">&#9672; Add PPC module here!</a></li>
 							</ul>
 						</div>
 
