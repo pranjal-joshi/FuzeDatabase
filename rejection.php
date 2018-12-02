@@ -28,7 +28,8 @@
 					break;
 			}
 
-			$checkSql = "SELECT * FROM `".$table_name."` WHERE `pcb_no`='".$_POST['pcb_no']."'";
+			//$checkSql = "SELECT * FROM `".$table_name."` WHERE `pcb_no`='".$_POST['pcb_no']."'";
+			$checkSql = "SELECT * FROM `lot_table` WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type`='".$_POST['fuze']."' AND `fuze_diameter`='".$_POST['diameter']."'";
 			$checkRes = mysqli_query($db, $checkSql);
 
 			if($checkRes->num_rows < 1) {
