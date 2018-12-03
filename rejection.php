@@ -28,7 +28,6 @@
 					break;
 			}
 
-			//$checkSql = "SELECT * FROM `".$table_name."` WHERE `pcb_no`='".$_POST['pcb_no']."'";
 			$checkSql = "SELECT * FROM `lot_table` WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type`='".$_POST['fuze']."' AND `fuze_diameter`='".$_POST['diameter']."'";
 			$checkRes = mysqli_query($db, $checkSql);
 
@@ -51,9 +50,14 @@
 			$sql = "UPDATE `lot_table` SET `rejected`='0', `acception_remark`='".$_POST['remark']."'
 			WHERE `pcb_no`='".$_POST['pcb_no']."' AND `fuze_type` = '".$_POST['fuze']."' AND `fuze_diameter` = '".$_POST['diameter']."'";
 
-			print_r($sql);
+			//print_r($sql);
 
 			$result = mysqli_query($db, $sql);
+
+			// remove qa fail data unconditionally
+			$qaSql = "UPDATE `qa_table` SET `result`='1', `comment`='', reason='0' WHERE `pcb_no`='".$_POST['pcb_no']."'";
+			$qaRes = mysqli_query($db, $qaSql);
+			print_r($qaSql);
 
 			if($result){
 				die("ok");
