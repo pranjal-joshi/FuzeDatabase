@@ -473,7 +473,7 @@
 									<div class="row" style="display: none;" id="qaFailRow">
 										<div class="input-field col s12">
 											<select name="qaFailReason" id="qaFailReason">
-												<option value="" disabled selected>Select reason for rejection</option>
+												<option value="" disabled selected>Select reason of Rejection/Rework</option>
 												<option value="1">1 - Wire not properly soldered</option>
 												<option value="2">2 - Broken wire, Damaged Insulation</option>
 												<option value="3">3 - Improper wire length</option>
@@ -3023,8 +3023,8 @@
 			}
 			else {
 				$('#qaFailRow').fadeOut(function(onComplete){
-					$('#qaFailRow').fadeOut();
-					$('#qaFailComment').fadeOut();
+					$('#qaFailRow').fadeIn();
+				$('#qaFailComment').fadeIn();
 				});
 			}
 		}
