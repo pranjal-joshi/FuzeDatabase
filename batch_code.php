@@ -64,16 +64,11 @@
 			<center><h4>Example</h4></center>
 			<table>
 				<tr>
-					<td>Batch code: </td>
-					<td>3P0818</td>
-					<td>Start PCB No (6 Digit): </td>
-					<td>35001</td>
-					<td>End PCB No (6 Digit): </td>
-					<td>45000</td>
-					<td>Gun Type: </td>
-					<td>105</td>
-					<td>Fuze Type: </td>
-					<td>PROX</td>
+					<td>Batch code: 3P0818</td>
+					<td>Start PCB No (6 Digit): 35001</td>
+					<td>End PCB No (6 Digit): 45000</td>
+					<td>Gun Type: 105</td>
+					<td>Fuze Type: PROX</td>
 				</tr>
 			</table>
 		</form>
