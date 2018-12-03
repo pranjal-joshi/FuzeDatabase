@@ -438,16 +438,36 @@
 	</footer>
 
 	<script type="text/javascript">
-		$('select').material_select();
 
 		switch($.cookie('fuzeDia')){
 			case '105':
 				document.getElementById('loginNavTitle').innerHTML = "105 mm Fuze Database";
+				$('#rejection_fuze_diameter').val("105");
+				$('#acception_fuze_diameter').val("105");
 				break;
 			case '155':
 				document.getElementById('loginNavTitle').innerHTML = "155 mm Fuze Database";
+				$('#rejection_fuze_diameter').val("155");
+				$('#acception_fuze_diameter').val("155");
 				break;
 		}
+
+		switch($.cookie('fuzeType')) {
+			case 'EPD':
+				$('#rejection_fuze_type').val("EPD");
+				$('#acception_fuze_type').val("EPD");
+				break;
+			case 'TIME':
+				$('#rejection_fuze_type').val("TIME");
+				$('#acception_fuze_type').val("TIME");
+				break;
+			case 'PROX':
+				$('#rejection_fuze_type').val("PROX");
+				$('#acception_fuze_type').val("PROX");
+				break;
+		}
+
+		$('select').material_select();
 
 		$('#rejection_clear').click(function(){
 			$('#rejection_scan_pcb').val('');
