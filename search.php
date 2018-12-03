@@ -105,7 +105,8 @@
 		$query = str_replace("*", "%", $_POST['query']);
 		$table_head = "";
 
-		if($_COOKIE['searchFuzeType'] == "PROX") {
+		error_reporting(0);
+		if($_COOKIE['searchFuzeType'] == "PROX" || $_COOKIE['searchFuzeType'] == "") {
 			switch ($searchInTable) {
 				case '1':
 					$searchInTable = "after_pu";
@@ -146,6 +147,7 @@
 					break;
 			}
 		}
+		error_reporting(E_ALL);
 
 		switch ($_POST['select']) {
 			case '1':
