@@ -666,7 +666,7 @@
 
 						<div id='ppcDialog' style="display: none;">
 							<ul>
-								<li><a href="" target="_blank" style="color: blue;">&#9672; Add PPC module here!</a></li>
+								<li><a href="batch_code.php" target="_blank" style="color: blue;">&#9672; PCB Batch Code Entry</a></li>
 							</ul>
 						</div>
 
