@@ -219,10 +219,10 @@
 				$reasonToShow = "31 - Crystal pad damaged";
 				break;
 			case '50':
-				$reasonToShow = "50 - Others";
+				$reasonToShow = "50 - Others: ".$qaRow['comment'];
 				break;
 			case '100':
-				$reasonToShow = "100 - MULTIPLE FAULTS";
+				$reasonToShow = "100 - MULTIPLE FAULTS: ".$qaRow['comment'];
 				break;
 			default:
 				$reasonToShow = "N/A";
