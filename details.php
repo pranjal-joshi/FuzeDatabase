@@ -763,6 +763,16 @@
 									</tr>
 
 									<tr>
+										<td class='center'><span class='center'>Rejection Comment <span></td>
+										<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+										<td class='center'>
+											<div class='input-field col s12 center'>
+												<input type='text' id='qaDetailsComment'>
+											</div>
+										</td>
+									</tr>
+
+									<tr>
 										<td class='center'><span class='center'>Date <span></td>
 										<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 										<td class='center'>
@@ -908,8 +918,9 @@
 											$('#qaDetailsRejectionStage').val('".$row[2]."');
 											$('#qaDetailsResult').val('".($row[3] == '1' ? 'PASS' : 'FAIL')."');
 											$('#qaDetailsReason').val('".$row[4]."');
-											$('#qaDetailsTimestamp').val('".$row[5]."');
-											$('#qaDetailsOperator').val('".$row[6]."');
+											$('#qaDetailsComment').val('".$row[5]."');
+											$('#qaDetailsTimestamp').val('".$row[6]."');
+											$('#qaDetailsOperator').val('".$row[7]."');
 											$('#qaDetailsPcbNo').prop('readonly','true');
 											$('#qaDetailsPcbNo').click(function(){
 												alert('PCB number is primary record. You can\'t change it!')
