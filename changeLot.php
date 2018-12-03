@@ -3,10 +3,19 @@
 
 	$html = "<html>
 	<title>Lot Change</title>
+	<head>
+		<!-- Set responsive viewport -->
+		<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+
+		<!-- Disable caching of browser -->
+		<meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate' />
+		<meta http-equiv='Pragma' content='no-cache' />
+		<meta http-equiv='Expires' content='0' />
+	</head>
 	<body style='background-color: #c0c0c0;'>
 	<br>
 	<center>
-		<h3>Change Lot No</h3>
+		<h2>Change Lot No</h2>
 		<form action='changeLot.php' method='POST'>
 			<table>
 				<tr>
