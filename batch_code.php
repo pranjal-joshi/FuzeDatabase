@@ -2,6 +2,22 @@
 
 	include('db_config.php');
 
+	if(!isset($_COOKIE['fuzeLogin'])) {
+		die("
+			<html>
+				<body style='background-color: #c0c0c0;'>
+					<center>
+						<br>
+						<br>
+						<h3 style='color:red;'>Please login to access this application</h3>
+						<br>
+						<a href='index.php'>Click here to Login</a>
+					</center>
+				</body>
+			</html>
+		");
+	}
+
 	$html = "<html>
 	<title>Batch Code Entry</title>
 	<style>
