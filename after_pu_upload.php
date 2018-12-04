@@ -3,6 +3,7 @@
 	include('db_config.php');
 	require('library/php-excel-reader/excel_reader2.php');
 	require('library/SpreadsheetReader.php');
+	include('pcb_batch.php');
 
 		function addToRejection($array,$db) {
 		if(strtoupper($array[23]) == "FAIL") {
@@ -253,6 +254,7 @@
 					{
 						$html.="<tr>";
 						$pcb_no = isset($Row[0]) ? strtoupper($Row[0]) : '';
+						$pcb_no = concatPcbBatch($pcb_no,$_COOKIE['fuzeType'],$_COOKIE['fuzeDia'],"HEAD",$db);
 						$vbat_pst = isset($Row[1]) ? $Row[1] : '';
 						$pst_wid = isset($Row[2]) ? $Row[2] : '';
 						$pst_amp = isset($Row[3]) ? $Row[3] : '';

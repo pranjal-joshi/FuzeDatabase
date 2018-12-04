@@ -2,6 +2,8 @@
 	
 	include('db_config.php');
 
+	include('pcb_batch.php');
+
 	function addToRejection($array,$db) {
 		if(strtoupper($array[25]) == "FAIL") {
 			$rejReason = "";
@@ -99,6 +101,7 @@
 		$dataArray = explode(",", $s);
 
 		$dataArray[0] = str_replace("O", "0", strtoupper($dataArray[0]));
+		$dataArray[0] = concatPcbBatch($dataArray[0],$_COOKIE['fuzeType'],$_COOKIE['fuzeDia'],"POTTING",$db);
 
 		print_r($dataArray);
 
