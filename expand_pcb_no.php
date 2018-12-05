@@ -36,19 +36,27 @@
 	echo $html;
 
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+		ini_set('max_execution_time', 10800);			// change exec time - heavy loops
+
 		if($_POST['btn'] == "PROX") {
-			echo "<br><center>Expanding potting_table...";
-			$newPcb = "";
-			$sql = "SELECT `pcb_no` FROM `potting_table` WHERE 1";
-			$res = mysqli_query($db, $sql);
-			while($row = mysqli_fetch_assoc($res)) {
-				if(strlen($row['pcb_no']) < 8) {
-					$newPcb = concatPcbBatch($row['pcb_no'],$_POST['btn'],"105","POTTING",$db);
-					$updateSql = "UPDATE `potting_table` SET `pcb_no`='".$newPcb."' WHERE `pcb_no`='".$row['pcb_no']."'";
-					$updateRes = mysqli_query($db, $updateSql);
+			$tblNames = array("pcb_testing","housing_table","potting_table","calibration_table","after_pu");
+			for($i=0;$i<sizeof($tblNames);$i++) {
+				echo "<br><center>Expanding ".$tblNames[$i]."...";
+				flush();
+				ob_flush();
+				$newPcb = "";
+				$sql = "SELECT `pcb_no` FROM `".$tblNames[$i]."` WHERE 1";
+				$res = mysqli_query($db, $sql);
+				while($row = mysqli_fetch_assoc($res)) {
+					if(strlen($row['pcb_no']) < 8) {
+						$newPcb = concatPcbBatch($row['pcb_no'],$_POST['btn'],"105","DUMMY",$db);
+						$updateSql = "UPDATE `".$tblNames[$i]."` SET `pcb_no`='".$newPcb."' WHERE `pcb_no`='".$row['pcb_no']."'";
+						$updateRes = mysqli_query($db, $updateSql);
+					}
 				}
+				echo " Done!</center>";
 			}
-			echo " Done!</center>";
 		}
 	}
 
