@@ -26,6 +26,8 @@
 
 	include("db_config.php");
 
+	include("pcb_batch.php");
+
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		if($_POST['task'] == 'add') {
@@ -54,6 +56,8 @@
 			*/
 
 			// Don't check if already exist.. Just replace!
+
+			$_POST['pcb_no'] = concatPcbBatch($_POST['pcb_no'],$_COOKIE['fuzeType'],$_COOKIE['fuzeDia'],"CALIBRATION",$db);
 
 			$sql = "";
 			if(checkTimestampType($_POST['datePicker'])) {
