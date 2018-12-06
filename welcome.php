@@ -320,8 +320,6 @@
 				<div class="col m1"></div>
 				<div class="col m10 s12">
 
-					<!----------------------- PROX Cards ----------------------------------->
-
 					<br>
 					<div class="card-panel grey lighten-4" id="calibrationCard" style="display: none;">
 						<div class="row">
@@ -883,23 +881,6 @@
 								<br>
 
 								<div class="row">
-									<!--<div class="input-field col s2">
-										<select name="lotFuzeType" id="lotFuzeType" required>
-											<option value="" disabled selected>-- Please select --</option>
-											<option value="EPD">EPD</option>
-											<option value="TIME">TIME</option>
-											<option value="PROX">PROX</option>
-										</select>
-										<label>Select Fuze Type</label>
-									</div>
-									<div class="input-field col s2">
-										<select name="lotSize" id="lotSize" required>
-											<option value="" disabled selected>-- Please select --</option>
-											<option value="30">30</option>
-											<option value="60">60</option>
-										</select>
-										<label>Select Kit-Lot size</label>
-									</div>-->
 									<div class="input-field col s4">
 										<input id="mainLotNoText" name="mainLotNoText" type="text" autofocus>
 										<label for="mainLotNoText"><center>Enter Main Lot Number</center></label>
@@ -1445,7 +1426,6 @@
 						</div>
 					</div>
 
-					<!----------------------- EPD Cards ----------------------------------->
 
 					<div class="card-panel grey lighten-4" id="epdAtePcbCard" style="display: none;">
 						<div class="row">
@@ -1790,8 +1770,6 @@
 
 						</div>
 					</div>
-
-					<!--------------------------------------------------------------------->
 
 					<div class="card-panel grey lighten-4" id="searchCard" style="display: none;">
 						<div class="row">
