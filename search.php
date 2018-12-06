@@ -292,7 +292,8 @@
 					}
 				}
 				else {
-					$value.="<td class='center'>".$row['pcb_no']."</td>";
+					// removed temporarily
+					//$value.="<td class='center'>".$row['pcb_no']."</td>";
 					$value.="<td class='center'>".$lotRow['fuze_type']."</td>";
 					$value.="<td class='center'>".$lotRow['main_lot']."</td>";
 					$value.="<td class='center'>".$lotRow['kit_lot']."</td>";
