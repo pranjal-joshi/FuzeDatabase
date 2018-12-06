@@ -57,7 +57,7 @@
 
 			// Don't check if already exist.. Just replace!
 
-			$_POST['pcb_no'] = concatPcbBatch($_POST['pcb_no'],$_COOKIE['fuzeType'],$_COOKIE['fuzeDia'],"CALIBRATION",$db);
+			$_POST['pcb_no'] = strtoUpper(concatPcbBatch($_POST['pcb_no'],$_COOKIE['fuzeType'],$_COOKIE['fuzeDia'],"CALIBRATION",$db));
 
 			$sql = "";
 			if(checkTimestampType($_POST['datePicker'])) {
@@ -107,7 +107,7 @@
 
 		if($_POST['task'] == 'load') {
 
-			$sql = "SELECT * FROM `calibration_table` WHERE `pcb_no`='".$_POST['pcb_no']."'";
+			$sql = "SELECT * FROM `calibration_table` WHERE `pcb_no` LIKE '%".$_POST['pcb_no']."'";
 
 			$res = mysqli_query($db, $sql);
 
