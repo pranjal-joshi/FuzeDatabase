@@ -90,6 +90,13 @@
 				</body>
 				");
 		}
+		else {
+			include('db_config.php');
+			$dateSql = "SELECT CURRENT_DATE";
+			$dateRes = mysqli_query($db, $dateSql);
+			$date = mysqli_fetch_assoc($dateRes);
+			setcookie("currentDate",$date['CURRENT_DATE'],0,"/");
+		}
 	?>
 
 	<body class="indexBody">
@@ -3692,7 +3699,7 @@
 		}
 
 		function getTodaysDate() {
-			var date = new Date();
+			var date = new Date($.cookie("currentDate"));
 			locale = "en-us";
 			dateString = date.getDate().toString() + " " + date.toLocaleString(locale, { month: "long" }) + ", " + date.getFullYear();
 			return dateString;
