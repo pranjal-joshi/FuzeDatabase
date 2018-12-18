@@ -111,7 +111,7 @@
 				<footer class='page-footer red lighten-2'>
 					<div class='footer-copyright'>
 						<div class='container'>
-							<center>&copy; Bharat Electronics Ltd. (2018), All rights reserved.</center>
+							<center>&copy; Bharat Electronics Ltd. (".strval(date('Y'))."), All rights reserved.</center>
 						</div>
 					</div>
 				</footer>
@@ -183,7 +183,7 @@
 		<footer class="page-footer teal lighten-2">
 			<div class="footer-copyright">
 				<div class="container">
-					<center>&copy; Bharat Electronics Ltd. (2018), All rights reserved.</center>
+					<center>&copy; Bharat Electronics Ltd. (".strval(date('Y'))."), All rights reserved.</center>
 				</div>
 			</div>
 		</footer>
