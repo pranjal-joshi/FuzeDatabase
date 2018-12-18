@@ -660,6 +660,8 @@
 						<div id='productionDialog' style="display: none;">
 							<ul>
 								<li><a href="vendor.php" target="_blank" style="color: blue;">&#9672; Vendor wise PCB Series Entry</a></li>
+								<li><a id="barcodeRecordLink" href="#" style="color: blue;">&#9672; Lotwise Report : Barcode linking</a></li>
+								<li><a id="batteryRecordLink" href="#" style="color: blue;">&#9672; Lotwise Report: Battery linking</a></li>
 							</ul>
 						</div>
 
@@ -677,7 +679,9 @@
 
 						<div id='testingDialog' style="display: none;">
 							<ul>
-								<li><a href="analytics.php" target="_blank" style="color: blue;">&#9672; Testing Count</a></li>
+								<li><a href="analytics.php" target="_blank" style="color: blue;">&#9672; Analytics: Testing Count</a></li>
+								<li><a id="dailyCountLink" href="#" style="color: blue;">&#9672; Lotwise Report : Daily Count + Cumulative</a></li>
+								<li><a id="testingRecordLink" href="#" style="color: blue;">&#9672; Lotwise Report: Electrical Parameters (All stages)</a></li>
 							</ul>
 						</div>
 
@@ -1966,12 +1970,40 @@
 				}
 			);
 
+		$('#dailyCountLink').click(function () {
+			$('#testingDialog').dialog('close');
+			$('#reportModal').openModal();
+			$('#reportSelect option[value=testing_daily_count]').prop('selected',true);
+			$('select').material_select();
+		});
+
+		$('#testingRecordLink').click(function() {
+			$('#testingDialog').dialog('close');
+			$('#reportModal').openModal();
+			$('#reportSelect option[value=testing_record]').prop('selected',true);
+			$('select').material_select();
+		});
+
+		$('#barcodeRecordLink').click(function() {
+			$('#productionDialog').dialog('close');
+			$('#reportModal').openModal();
+			$('#reportSelect option[value=barcode_record]').prop('selected',true);
+			$('select').material_select();
+		});
+
+		$('#batteryRecordLink').click(function() {
+			$('#productionDialog').dialog('close');
+			$('#reportModal').openModal();
+			$('#reportSelect option[value=battery_record]').prop('selected',true);
+			$('select').material_select();
+		});
+
 		$('#reportButton').click(function() {
 			if($('#reportSelect :selected').val() == "" || $('#reportFuzeSelect :selected').val() == "" || $('#reportDiaSelect :selected').val() == "" || $('#reportLotNo').val() == "") {
 				Materialize.toast('Please select the required fields',2500,'rounded');
 			}
 			else {
-				Materialize.toast('Generating Report. Please wait..',2500,'rounded');
+				Materialize.toast('Generating Report. Please wait..',5000,'rounded');
 				$.ajax({
 					url : 'report.php',
 					type: 'post',
