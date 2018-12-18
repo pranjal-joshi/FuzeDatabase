@@ -87,7 +87,7 @@
 				");
 		}
 
-		if($_COOKIE['searchFuzeType'] == "PROX") {
+		if($_COOKIE['searchFuzeType'] == "PROX" || $_COOKIE['searchFuzeType'] == "") {
 			$lotQuery = "SELECT * FROM `lot_table` WHERE `pcb_no` = '".$pcb_no."'";
 			$lotResult = mysqli_query($db, $lotQuery);
 			$lotRow = mysqli_fetch_assoc($lotResult);
