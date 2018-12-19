@@ -250,7 +250,8 @@
 				foreach ($Reader as $Row)
 				{
 					$cnt++;
-					if($cnt > 7)	//5 for old chambers - 7 for optimized chamber -- compatible with new prox head - logToExcel
+					//if($cnt > 7)	//5 for old chambers - 7 for optimized chamber -- compatible with new prox head - logToExcel
+					if($cnt > 5)
 					{
 						$html.="<tr>";
 						$pcb_no = isset($Row[0]) ? strtoupper($Row[0]) : '';
