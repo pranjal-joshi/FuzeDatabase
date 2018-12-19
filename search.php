@@ -6,6 +6,8 @@
 
 	include('db_config.php');
 
+	ini_set('max_execution_time', 1080);
+
 	// This functions maps string input dates into a large query for search
 	/*function dateRangeQuery($startDate, $endDate, $searchInTable, $searchIn) {
 		$monthArray = array("January","February","March","April","May","June","July","August","September","October","November","December");
