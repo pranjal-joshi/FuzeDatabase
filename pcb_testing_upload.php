@@ -287,9 +287,14 @@
 						$result = isset($Row[23]) ? $Row[23] : '';
 						// index 24 contains bpf ac noise which is required only for after_pu stage - wrong
 						// index 25 contains bpf dc noise which is required only for after_pu stage - wrong
+						/* UPLOAD INDEX BUG FIX
 						$bpf_noise_ac = isset($Row[24]) ? $Row[24] : '';
 						$bpf_noise_dc = isset($Row[25]) ? $Row[25] : '';
 						$record_date = isset($Row[26]) ? ltrim($Row[26],"0") : '';
+						*/
+						$bpf_noise_ac = isset($Row[24-1]) ? $Row[24-1] : '';
+						$bpf_noise_dc = isset($Row[25-1]) ? $Row[25-1] : '';
+						$record_date = isset($Row[26-1]) ? ltrim($Row[26-1],"0") : '';
 
 						$html.="<td>".($cnt-4)."</td>";
 						$html.="<td>".$pcb_no."</td>";
