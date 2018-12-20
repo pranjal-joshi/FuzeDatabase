@@ -107,7 +107,9 @@
 
 		if($_POST['task'] == 'load') {
 
-			$sql = "SELECT * FROM `calibration_table` WHERE `pcb_no` LIKE '%".$_POST['pcb_no']."'";
+			$_POST['pcb_no'] = strtoUpper(concatPcbBatch($_POST['pcb_no'],$_COOKIE['fuzeType'],$_COOKIE['fuzeDia'],"CALIBRATION",$db));
+
+			$sql = "SELECT * FROM `calibration_table` WHERE `pcb_no` LIKE '".$_POST['pcb_no']."'";
 
 			$res = mysqli_query($db, $sql);
 
