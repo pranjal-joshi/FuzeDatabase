@@ -2706,8 +2706,8 @@
 										$('#calibrationDetailsResValue').val('".$row[6]."K\u2126');
 										$('#calibrationDetailsFreqAfter').val('".$row[7]." MHz');
 										$('#calibrationDetailsBpfAfter').val('".$row[8]." V');
-										$('#calibrationDetailsDate').val('".$row[9]."');
-										$('#calibrationDetailsOperator').val('".$row[10 ]."');
+										$('#calibrationDetailsDate').val('".$row[10]."');
+										$('#calibrationDetailsOperator').val('".$row[9]."');
 
 										$('#calibrationDetailsPcbNo').prop('readonly','true');
 										$('#calibrationDetailsPcbNo').click(function(){
