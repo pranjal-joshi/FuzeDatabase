@@ -9,7 +9,7 @@
 
 {*} WARNING: THIS FOLDER CONTAINS SENSITIVE TESTING & PRODUCTION DATA.
 
-{*}	DO NOT SHARE OR TAMPER WITH BACKUP FILES AS THIS WILL LEAD TO RESTORE FAILURE.
+{*} DO NOT SHARE OR TAMPER WITH BACKUP FILES AS THIS WILL LEAD TO RESTORE FAILURE.
 
 ######################################################################################
 
@@ -18,10 +18,10 @@
 [+] Your computer is disaster recovery node for Fuze-Database.
 
 [+] In case of data loss, server crash or data courruption,
-		Files stored in this folders will be used to recover the data.
+    Files stored in this folders will be used to recover the data.
 
 [+] If you reached here accidently, just go back without touching anything.
-		Unless you know what you are doing!
+    Unless you know what you are doing!
 
 [+] Contact Fuze-Database Administrator if you wan't to know anything more than this.
 
