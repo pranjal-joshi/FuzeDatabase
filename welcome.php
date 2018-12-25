@@ -181,6 +181,7 @@
 								<div class="input-field col s3">
 									<select name="searchSelect" id="searchSelect">
 										<option value="1" selected>PCB Number</option>
+										<option value="11">Lot Number</option>
 										<option value="2">RF Number</option>
 										<option value="3">Resistor Value</option>
 										<option value="4">Before Freq</option>

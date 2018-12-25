@@ -195,6 +195,10 @@
 				$searchIn = "result";
 				$query = strtoupper($query);
 				break;
+			case '11':
+				$searchInTable = "lot_table";
+				$searchIn = "kit_lot";
+
 		}
 
 		if($_POST['select'] == '1') {
@@ -231,6 +235,9 @@
 		$sql = "";
 		if($_POST['quickSearch'] == '0') {
 			$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE '".$query."%'";
+		}
+		elseif ($_POST['select'] == '11') {		// if searching in kit lot
+			$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."`='".$query."' AND `fuze_type`='".$_COOKIE['searchFuzeType']."';";
 		}
 		else {
 			$today = date("Y-m-d",strtotime("today"));
@@ -273,6 +280,7 @@
 					$value.="<td class='center'>".$row[$searchIn]."</td>";
 				}
 				//$value.="<td class='center'>".strtoupper($searchInTable)."</td>";
+				error_reporting(0);
 				if($searchInTable != 'calibration_table') {
 					if($_POST['select'] != '1') {
 						if($row['result'] == "FAIL") {
@@ -292,6 +300,14 @@
 						$value.="<td class='center'>".$lotRow['main_lot']."</td>";
 						$value.="<td class='center'>".$lotRow['kit_lot']."</td>";
 					}
+					if($searchInTable != 'lot_table') {
+						$value.="<td class='center'><a href='details.php/?q=".$row['pcb_no']."&t=".$searchInTable."' class='btn waves-effect waves-light' target='_blank'>VIEW details</a></td>";
+					}
+				}
+				elseif ($searchInTable == "lot_table") {
+					$value.="<td class='center'>".$lotRow['fuze_type']."</td>";
+					$value.="<td class='center'>".$lotRow['main_lot']."</td>";
+					$value.="<td class='center'>".$lotRow['kit_lot']."</td>";
 				}
 				else {
 					// removed temporarily
@@ -299,9 +315,10 @@
 					$value.="<td class='center'>".$lotRow['fuze_type']."</td>";
 					$value.="<td class='center'>".$lotRow['main_lot']."</td>";
 					$value.="<td class='center'>".$lotRow['kit_lot']."</td>";
+					$value.="<td class='center'><a href='details.php/?q=".$row['pcb_no']."&t=".$searchInTable."' class='btn waves-effect waves-light' target='_blank'>VIEW details</a></td>";
 				}
+				error_reporting(E_ALL);
 				//$value.="<td class='center'><a href='details.php/?q=".$row[$searchIn]."&s=".$searchIn."&t=".$searchInTable."' class='btn waves-effect waves-light' target='_blank'>VIEW details</a></td>";
-				$value.="<td class='center'><a href='details.php/?q=".$row['pcb_no']."&t=".$searchInTable."' class='btn waves-effect waves-light' target='_blank'>VIEW details</a></td>";
 				$value.="<td class='center'><a href='print.php/?q=".$row['pcb_no']."' class='btn waves-effect waves-light blue-grey' target='_blank'>PRINT</a></td>";
 				$value.="</tr></center>";
 			}
