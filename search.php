@@ -237,6 +237,7 @@
 			$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."` LIKE '".$query."%'";
 		}
 		elseif ($_POST['select'] == '11') {		// if searching in kit lot
+			$query = preg_replace('/[^0-9]/', '', $query);		// allow search of numbers only
 			$sql = "SELECT * FROM `".$searchInTable."` WHERE `".$searchIn."`='".$query."' AND `fuze_type`='".$_COOKIE['searchFuzeType']."';";
 		}
 		else {
