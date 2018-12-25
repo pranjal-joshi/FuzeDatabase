@@ -1820,7 +1820,7 @@
 	<footer class="page-footer teal lighten-2">
 		<div class="footer-copyright">
 			<div class="container">
-				<center>&copy; Bharat Electronics Ltd. (".strval(date('Y'))."), All rights reserved.</center>
+				<center>&copy; Bharat Electronics Ltd. (<?php echo(strval(date('Y'))); ?>), All rights reserved.</center>
 			</div>
 		</div>
 	</footer>
