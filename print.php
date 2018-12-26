@@ -248,7 +248,7 @@
 
 				<style>
 					th, td {
-						padding: 3px;
+						padding: 2px;
 					}
 
 					table, th, td {
@@ -319,7 +319,7 @@
 					<p id='tableInfo'>Visual Inspection</p>
 					<table>
 						<tr id='tableHeader'>
-							<td>PCB Number</td>
+							<!--<td>PCB Number</td>-->
 							<td>Result</td>
 							<td>Rejection<br>Stage</td>
 							<td>Rejection<br>Code</td>
@@ -327,16 +327,16 @@
 							<td>Operator</td>
 						</tr>
 						<tr>
-							<td>".str_replace("EPD", "", $lotRow['pcb_no'])."</td>
+							<!--<td>".str_replace("EPD", "", $lotRow['pcb_no'])."</td>-->
 							<td>".($qaRow['result'] == '1' ? 'PASS' : 'FAIL')."</td>
 							<td>".($qaRow['stage'] == '' ? 'N/A' : $qaRow['stage'])."</td>
 							<td>".($qaRow['reason'] == '0' ? 'N/A' : $qaRow['reason'])."</td>
 							<td>".$qaRow['record_date']."</td>
 							<td>".$qaRow['op_name']."</td>
 						</tr>";
-						if($qaRow['reason'] != '0') {
+						if($qaRow['reason'] != '0' && $qaRow['reason'] != "") {
 							$html.= "<tr>
-							<td colspan='2'>Rejection Reason</td>
+							<td colspan='1'>Rejection Reason</td>
 							<td colspan='4'>".$reasonToShow."</td>
 						</tr>";
 						}
@@ -378,26 +378,26 @@
 							<tr id='tableHeader'>
 								<td>PCB Number</td>
 								<td>RF<br>Number</td>
-								<td>Freq before<br>Calibration</td>
+								<!--<td>Freq before<br>Calibration</td>-->
 								<td>BPF before<br>Calibration</td>
 								<td>Resistor<br>changed</td>
 								<td>Resistor<br>Value</td>
 								<td>Freq after<br>Calibration</td>
 								<td>BPF after<br>Calibration</td>
-								<td>Record Date</td>
-								<td>Operator</td>
+								<td>Before cal<br>Information</td>
+								<td>After cal<br>Information</td>
 							</tr>
 							<tr>
 								<td>".$calRow['pcb_no']."</td>
 								<td>".$calRow['rf_no']."</td>
-								<td>".($calRow['before_freq'] == '' ? '--' : $calRow['before_freq'].' MHz')."</td>
+								<!--<td>".($calRow['before_freq'] == '' ? '--' : $calRow['before_freq'].' MHz')."</td>-->
 								<td>".$calRow['before_bpf']." V</td>
 								<td>".($calRow['changed'] == '1' ? 'YES' : 'NO')."</td>
 								<td>".$calRow['res_val']." K&#8486;</td>
 								<td>".($calRow['after_freq'] == '' ? '--' : $calRow['after_freq'].' MHz')."</td>
 								<td>".$calRow['after_bpf']." V</td>
-								<td>".$calRow['timestamp']."</td>
-								<td>".$calRow['op_name']."</td>
+								<td>".$calRow['timestamp']."<br>".$calRow['op_name']."</td>
+								<td>".$calRow['timestamp_after_cal']."<br>".$calRow['op_name_after_cal']."</td>
 							</tr>
 						</table>
 					</div>
@@ -873,7 +873,7 @@
 			}
 
 			$html.=	"
-								<div id='rejectionTable' style='float: bottom; margin-left: 15px;'>
+								<div id='rejectionTable' style='float: left; margin-left: 15px;'>
 									<p id='tableInfo'>Rejection Report</p>
 									<table style='width: 170px;'>
 										<tr id='tableHeader'>
@@ -901,7 +901,7 @@
 							";
 
 			$html.= "
-							<div id='batteryTable' style='float: bottom; margin-left: 15px;'>
+							<div id='batteryTable' style='float: left; margin-left: 15px;'>
 								<p id='tableInfo'>Battery Information</p>
 								<table style='width: 210px;'>
 									<tr id='tableHeader'>
@@ -916,7 +916,7 @@
 							";
 
 			$html.= "
-							<div id='barcodeTable' style='float: bottom; margin-left: 15px;'>
+							<div id='barcodeTable' style='float: left; margin-left: 15px;'>
 								<p id='tableInfo'>Barcode Information</p>
 								<table style='width: 210px;'>
 									<tr id='tableHeader'>
