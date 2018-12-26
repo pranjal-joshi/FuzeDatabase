@@ -343,6 +343,8 @@
 				`after_freq`='".$_POST['after_freq']."',
 				`after_bpf`='".$_POST['after_bpf']."',
 				`timestamp`='".$_POST['timestamp']."',
+				`timestamp_after_cal`='".$_POST['timestamp_after_cal']."',
+				`op_name_after_cal`='".$_POST['op_name_after_cal']."',
 				`op_name`='".$_POST['op_name']."' WHERE `pcb_no`='".$_POST['pcb_no']."'";
 
 				$results = mysqli_query($db,$sql);
@@ -2666,18 +2668,35 @@
 										</tr>
 
 										<tr>
-											<td class='center'><span class='center'>Date<span></td>
+											<td class='center'><span class='center'>Date - Before cal<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='calibrationDetailsDate'>
 												</div>
 											</td>
-											<td class='center'><span class='center'>Operator<span></td>
+											<td class='center'><span class='center'>Operator - Before cal<span></td>
 											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
 											<td class='center'>
 												<div class='input-field col s12 center'>
 													<input type='text' id='calibrationDetailsOperator'>
+												</div>
+											</td>
+										</tr>
+
+										<tr>
+											<td class='center'><span class='center'>Date - After cal<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='calibrationDetailsDateAfter'>
+												</div>
+											</td>
+											<td class='center'><span class='center'>Operator - After cal<span></td>
+											<td class='center'><span class='center' style='font-weight: bold;'>:<span></td>
+											<td class='center'>
+												<div class='input-field col s12 center'>
+													<input type='text' id='calibrationDetailsOperatorAfter'>
 												</div>
 											</td>
 										</tr>
@@ -2706,8 +2725,10 @@
 										$('#calibrationDetailsResValue').val('".$row[6]."K\u2126');
 										$('#calibrationDetailsFreqAfter').val('".$row[7]." MHz');
 										$('#calibrationDetailsBpfAfter').val('".$row[8]." V');
-										$('#calibrationDetailsDate').val('".$row[10]."');
 										$('#calibrationDetailsOperator').val('".$row[9]."');
+										$('#calibrationDetailsDate').val('".$row[10]."');
+										$('#calibrationDetailsDateAfter').val('".$row[11]."');
+										$('#calibrationDetailsOperatorAfter').val('".$row[12]."');
 
 										$('#calibrationDetailsPcbNo').prop('readonly','true');
 										$('#calibrationDetailsPcbNo').click(function(){
@@ -2739,7 +2760,9 @@
 													res_change: ($('#calibrationDetailsResChange').val().toUpperCase() == 'YES' ? '1' : '0'),
 													res_val: $('#calibrationDetailsResValue').val().replace(/[^\d.-]/g, ''),
 													timestamp: $('#calibrationDetailsDate').val(),
-													op_name: $('#calibrationDetailsOperator').val().toUpperCase()
+													timestamp_after_cal: $('#calibrationDetailsDateAfter').val(),
+													op_name: $('#calibrationDetailsOperator').val().toUpperCase(),
+													op_name_after_cal: $('#calibrationDetailsOperatorAfter').val().toUpperCase()
 												},
 												success: function(msg) {
 													console.log(msg);
