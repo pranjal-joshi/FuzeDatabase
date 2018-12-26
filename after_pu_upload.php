@@ -282,8 +282,8 @@
 						$result = isset($Row[24]) ? $Row[24] : '';
 						$record_date = isset($Row[25]) ? ltrim($Row[25],"0") : 0;
 
-						//$html.="<td>".($cnt-5)."</td>";
-						$html.="<td>".($cnt-7)."</td>";
+						$html.="<td>".($cnt-5)."</td>";
+						//$html.="<td>".($cnt-7)."</td>";
 						$html.="<td>".$pcb_no."</td>";
 						$html.="<td>".$vbat_pst."</td>";
 						$html.="<td>".$pst_wid."</td>";
