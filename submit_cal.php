@@ -61,7 +61,25 @@
 
 			$sql = "";
 			if(checkTimestampType($_POST['datePicker'])) {
-				$sql = "REPLACE INTO `calibration_table` (`_id`, `pcb_no`, `rf_no`, `before_freq`, `before_bpf`, `changed`, `res_val`, `after_freq`, `after_bpf`, `timestamp`, `op_name`) VALUES (
+				if(checkTimestampType($_POST['datePicker2'])) {
+					$sql = "REPLACE INTO `calibration_table` (`_id`, `pcb_no`, `rf_no`, `before_freq`, `before_bpf`, `changed`, `res_val`, `after_freq`, `after_bpf`, `timestamp`, `op_name`, `timestamp_after_cal`, `op_name_after_cal`) VALUES (
+						NULL, 
+						'".substr($_POST['pcb_no'],0,12)."', 
+						'".$_POST['rf_no']."', 
+						'".$_POST['before_freq']."', 
+						'".$_POST['before_bpf']."',
+						'".$_POST['changed']."', 
+						'".$_POST['resChange']."', 
+						'".$_POST['after_freq']."', 
+						'".$_POST['after_bpf']."', 
+						STR_TO_DATE('".$_POST['datePicker']."', '%e %M, %Y'), 
+						'".$_POST['op_name']."', 
+						STR_TO_DATE('".$_POST['datePicker2']."', '%e %M, %Y'), 
+						'".$_POST['op_name_after_cal']."'
+						);";
+				}
+				else {
+					$sql = "REPLACE INTO `calibration_table` (`_id`, `pcb_no`, `rf_no`, `before_freq`, `before_bpf`, `changed`, `res_val`, `after_freq`, `after_bpf`, `timestamp`, `op_name`, `timestamp_after_cal`, `op_name_after_cal`) VALUES (
 					NULL, 
 					'".substr($_POST['pcb_no'],0,12)."', 
 					'".$_POST['rf_no']."', 
@@ -72,11 +90,15 @@
 					'".$_POST['after_freq']."', 
 					'".$_POST['after_bpf']."', 
 					STR_TO_DATE('".$_POST['datePicker']."', '%e %M, %Y'), 
-					'".$_POST['op_name']."'
+					'".$_POST['op_name']."', 
+					'".$_POST['datePicker2']."', 
+					'".$_POST['op_name_after_cal']."'
 					);";
+				}
 			}
 			else {
-				$sql = "REPLACE INTO `calibration_table` (`_id`, `pcb_no`, `rf_no`, `before_freq`, `before_bpf`, `changed`, `res_val`, `after_freq`, `after_bpf`, `timestamp`, `op_name`) VALUES (
+				if(checkTimestampType($_POST['datePicker2'])) {
+					$sql = "REPLACE INTO `calibration_table` (`_id`, `pcb_no`, `rf_no`, `before_freq`, `before_bpf`, `changed`, `res_val`, `after_freq`, `after_bpf`, `timestamp`, `op_name`, `timestamp_after_cal`, `op_name_after_cal`) VALUES (
 					NULL, 
 					'".substr($_POST['pcb_no'],0,12)."', 
 					'".$_POST['rf_no']."', 
@@ -87,8 +109,28 @@
 					'".$_POST['after_freq']."', 
 					'".$_POST['after_bpf']."', 
 					'".$_POST['datePicker']."', 
-					'".$_POST['op_name']."'
+					'".$_POST['op_name']."',
+					STR_TO_DATE('".$_POST['datePicker2']."', '%e %M, %Y'), 
+					'".$_POST['op_name_after_cal']."'
 					);";
+				}
+				else {
+					$sql = "REPLACE INTO `calibration_table` (`_id`, `pcb_no`, `rf_no`, `before_freq`, `before_bpf`, `changed`, `res_val`, `after_freq`, `after_bpf`, `timestamp`, `op_name`, `timestamp_after_cal`, `op_name_after_cal`) VALUES (
+					NULL, 
+					'".substr($_POST['pcb_no'],0,12)."', 
+					'".$_POST['rf_no']."', 
+					'".$_POST['before_freq']."', 
+					'".$_POST['before_bpf']."',
+					'".$_POST['changed']."', 
+					'".$_POST['resChange']."', 
+					'".$_POST['after_freq']."', 
+					'".$_POST['after_bpf']."', 
+					'".$_POST['datePicker']."', 
+					'".$_POST['op_name']."',
+					'".$_POST['datePicker2']."', 
+					'".$_POST['op_name_after_cal']."'
+					);";
+				}
 			}
 
 				//STR_TO_DATE('".$_POST['datePicker']."', '%e %M, %Y'), 

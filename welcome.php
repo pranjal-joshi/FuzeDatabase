@@ -411,7 +411,7 @@
 
 								<div class="row">
 									<center>
-										<span style="font-weight: bold; font-size: 16px" class="teal-text text-darken-2">Additional Information</span>
+										<span style="font-weight: bold; font-size: 16px" class="teal-text text-darken-2">Additional Information - Before Calibration</span>
 									</center>
 								</div>
 
@@ -423,6 +423,23 @@
 									<div class="input-field col s6">
 										<input type="text" name="op_name" id="op_name" required>
 										<label for="op_name"><center>Operator's Name</center></label>
+									</div>
+								</div>
+
+								<div class="row">
+									<center>
+										<span style="font-weight: bold; font-size: 16px" class="teal-text text-darken-2">Additional Information - After Calibration</span>
+									</center>
+								</div>
+
+								<div class="row">
+									<div class="input-field col s6">
+										<input type="text" name="datePickerAfterCal" id="datePickerAfterCal" class="datepicker" required>
+										<label for="datePickerAfterCal"><center>Record date</center></label>
+									</div>
+									<div class="input-field col s6">
+										<input type="text" name="op_name_after_cal" id="op_name_after_cal" required>
+										<label for="op_name_after_cal"><center>Operator's Name</center></label>
 									</div>
 								</div>
 
@@ -2097,6 +2114,7 @@
 					}
 				});
 				$('#datePicker').val(getTodaysDate());
+				$('#datePickerAfterCal').val(getTodaysDate());
 				break;
 			case '4':
 				$('#afterPUCard').fadeIn();
@@ -3232,6 +3250,8 @@
 					changed: (($('#resChange').val().length > 0) ? '1' : '0'),
 					datePicker: $('#datePicker').val(),
 					op_name: $('#op_name').val().toUpperCase(),
+					datePicker2: $('#datePickerAfterCal').val(),
+					op_name_after_cal: $('#op_name_after_cal').val().toUpperCase(),
 					task: 'add'
 				},
 				success: function(msg) {
@@ -3302,6 +3322,10 @@
 									$('#op_name').val(msg['0']['op_name']);
 									$('#pcb_no').focus();
 									$('#datePicker').val(msg['0']['timestamp']);
+									if(msg['0']['timestamp_after_cal'] != "0000-00-00") {
+										$('#datePickerAfterCal').val(msg['0']['timestamp_after_cal']);
+									}
+									$('#op_name_after_cal').val(msg['0']['op_name_after_cal']);
 								}
 								catch(err) { // do nothing
 									console.log(err);
