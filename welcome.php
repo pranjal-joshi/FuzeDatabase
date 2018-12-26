@@ -3320,12 +3320,15 @@
 									$('#after_bpf').val(msg['0']['after_bpf']);
 									$('#op_name').focus();
 									$('#op_name').val(msg['0']['op_name']);
-									$('#pcb_no').focus();
 									$('#datePicker').val(msg['0']['timestamp']);
 									if(msg['0']['timestamp_after_cal'] != "0000-00-00") {
 										$('#datePickerAfterCal').val(msg['0']['timestamp_after_cal']);
 									}
-									$('#op_name_after_cal').val(msg['0']['op_name_after_cal']);
+									if(msg['0']['op_name_after_cal'] != "") {
+										$('#op_name_after_cal').focus();
+										$('#op_name_after_cal').val(msg['0']['op_name_after_cal']);
+									}
+									$('#pcb_no').focus();
 								}
 								catch(err) { // do nothing
 									console.log(err);
