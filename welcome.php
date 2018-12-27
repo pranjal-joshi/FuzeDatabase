@@ -841,6 +841,22 @@
 								<a class='btn red waves-effect' id='barcodeClearButton' >CLEAR</a>
 							</center>
 
+							<div class="row">
+								<br><br>
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">Or Upload Excel file</span>
+								</center>
+								<br>
+								<form action="submit_barcode.php" method="POST" enctype="multipart/form-data">
+								
+									<center>
+										<input type="file"  name="file" >
+										<button type="submit" value="submit" class="btn">Upload</button>
+									</center>
+
+								</form>
+							</div>
+
 						</div>
 					</div>
 
