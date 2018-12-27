@@ -201,30 +201,35 @@
 					$pcbRes = mysqli_query($db, $pcbSql);
 					array_push($excelPcbArray, array("PCB No", "KIT LOT", "Current", "VEE", "VBAT-PST", "PST-AMP", "PST-WID", "MOD FREQ", "MOD DC", "MOD AC", "CAP CHARGE", "VRF-AMP", "VBAT-VRF", "VBAT-SIL", "DET-WID", "DET-AMP", "CYCLES", "BPF DC", "BPF AC", "BPF NOISE DC", "BPF NOISE AC", "SIL", "LVP", "PD DELAY", "PD DET", "SAFE", "RESULT", "OPERATOR", "DATE"));
 					while ($row = mysqli_fetch_assoc($pcbRes)) {
+						$row = array_map('trim', $row);
 						array_push($excelPcbArray, array($row['pcb_no'],$row['kit_lot'],$row['i'],$row['vee'],$row['vbat_pst'],$row['pst_amp'],$row['pst_wid'],$row['mod_freq'],$row['mod_dc'],$row['mod_ac'],$row['cap_charge'],$row['vrf_amp'],$row['vbat_vrf'],$row['vbat_sil'],$row['det_wid'],$row['det_amp'],$row['cycles'],$row['bpf_dc'],$row['bpf_ac'],$row['bpf_noise_ac'],$row['bpf_noise_dc'],$row['sil'],$row['lvp'],$row['pd_delay'],$row['pd_det'],$row['safe'],$row['result'],$row['op_name'],$row['record_date']));
 					}
 
 					$hsgRes = mysqli_query($db, $hsgSql);
 					array_push($excelHsgArray, array("PCB No", "KIT LOT", "Current", "VEE", "VBAT-PST", "PST-AMP", "PST-WID", "MOD FREQ", "MOD DC", "MOD AC", "CAP CHARGE", "VRF-AMP", "VBAT-VRF", "VBAT-SIL", "DET-WID", "DET-AMP", "CYCLES", "BPF DC", "BPF AC", "SIL", "LVP", "PD DELAY", "PD DET", "SAFE", "RESULT", "OPERATOR", "DATE"));
 					while ($row = mysqli_fetch_assoc($hsgRes)) {
+						$row = array_map('trim', $row);
 						array_push($excelHsgArray, array($row['pcb_no'],$row['kit_lot'],$row['i'],$row['vee'],$row['vbat_pst'],$row['pst_amp'],$row['pst_wid'],$row['mod_freq'],$row['mod_dc'],$row['mod_ac'],$row['cap_charge'],$row['vrf_amp'],$row['vbat_vrf'],$row['vbat_sil'],$row['det_wid'],$row['det_amp'],$row['cycles'],$row['bpf_dc'],$row['bpf_ac'],$row['sil'],$row['lvp'],$row['pd_delay'],$row['pd_det'],$row['safe'],$row['result'],$row['op_name'],$row['record_date']));
 					}
 
 					$pottingRes = mysqli_query($db, $pottingSql);
 					array_push($excelPottingArray, array("PCB No", "KIT LOT", "Current", "VEE", "VBAT-PST", "PST-AMP", "PST-WID", "MOD FREQ", "MOD DC", "MOD AC", "CAP CHARGE", "VRF-AMP", "VBAT-VRF", "VBAT-SIL", "DET-WID", "DET-AMP", "CYCLES", "BPF DC", "BPF AC", "SIL", "LVP", "PD DELAY", "PD DET", "SAFE", "RESULT", "OPERATOR", "DATE"));
 					while ($row = mysqli_fetch_assoc($pottingRes)) {
+						$row = array_map('trim', $row);
 						array_push($excelPottingArray, array($row['pcb_no'],$row['kit_lot'],$row['i'],$row['vee'],$row['vbat_pst'],$row['pst_amp'],$row['pst_wid'],$row['mod_freq'],$row['mod_dc'],$row['mod_ac'],$row['cap_charge'],$row['vrf_amp'],$row['vbat_vrf'],$row['vbat_sil'],$row['det_wid'],$row['det_amp'],$row['cycles'],$row['bpf_dc'],$row['bpf_ac'],$row['sil'],$row['lvp'],$row['pd_delay'],$row['pd_det'],$row['safe'],$row['result'],$row['op_name'],$row['record_date']));
 					}
 
 					$calRes = mysqli_query($db, $calSql);
-					array_push($excelCalArray, array("PCB No", "RF No", "F Before", "BPF Before", "Res changed", "Res Value", "F After", "BPF After", "OPERATOR", "DATE", "KIT LOT"));
+					array_push($excelCalArray, array("PCB No", "RF No", "KIT LOT", "F Before", "BPF Before", "Res changed", "Res Value", "F After", "BPF After", "OPERATOR Before", "DATE Before",  "OPERATOR After", "DATE After"));
 					while ($row = mysqli_fetch_assoc($calRes)) {
-						array_push($excelCalArray, array($row['pcb_no'],$row['rf_no'],$row['before_freq'],$row['before_bpf'],$row['changed'],$row['res_val'],$row['after_freq'],$row['after_bpf'],$row['op_name'],$row['timestamp'],$row['kit_lot']));
+						$row = array_map('trim', $row);
+						array_push($excelCalArray, array($row['pcb_no'],$row['rf_no'],$row['kit_lot'],$row['before_freq'],$row['before_bpf'],$row['changed'],$row['res_val'],$row['after_freq'],$row['after_bpf'],$row['op_name'],$row['timestamp'],$row['op_name_after_cal'],$row['timestamp_after_cal']));
 					}
 
 					$headRes = mysqli_query($db, $headSql);
 					array_push($excelHeadArray, array("PCB No", "KIT LOT", "CUrrent 1.5S", "Current 4.5S", "VEE", "VBAT-PST", "PST-AMP", "PST-WID", "FREQ", "SPAN", "BPF AC CAL", "VBAT-SIL", "DET-WID", "DET-AMP", "CYCLES", "BPF DC", "BPF AC", "BPF NOISE AC", "BPF NOISE DC", "SIL", "SIL AT 0", "LVP", "PD DELAY", "PD DET AMP", "PD DET WIDTH", "RESULT", "DATE"));
 					while ($row = mysqli_fetch_assoc($pottingRes)) {
+						$row = array_map('trim', $row);
 						array_push($excelheadArray, array($row['pcb_no'],$row['kit_lot'],$row['i_1.5'],$row['i_4.5'],$row['vee'],$row['vbat_pst'],$row['pst_amp'],$row['pst_wid'],$row['freq'],$row['span'],$row['bpf_ac_cal'],$row['vbat_sil'],$row['det_wid'],$row['det_amp'],$row['cycles'],$row['bpf_dc'],$row['bpf_ac'],$row['bpf_noise_ac'],$row['bpf_noise_dc'],$row['sil'],$row['sil_at_0'],$row['lvp'],$row['pd_delay'],$row['pd_det_amp'],$row['pd_det_width'],$row['result'],$row['record_date']));
 					}
 					
