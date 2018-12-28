@@ -431,13 +431,13 @@
 							</tr>
 							<tr>
 								<td rowspan='3'>PST Test</td>
-								<td>VBAT-PST Delay</td>
+								<td>VBAT-PST</td>
 								<td>".$pcbRow['vbat_pst']." mS</td>
 								<td>".$housingRow['vbat_pst']." mS</td>
 								<td>".$pottingRow['vbat_pst']." mS</td>
 							</tr>
 							<tr>
-								<td>PST Amplitude</td>
+								<td>PST Ampl</td>
 								<td>".$pcbRow['pst_amp']." V</td>
 								<td>".$housingRow['pst_amp']." V</td>
 								<td>".$pottingRow['pst_amp']." V</td>
@@ -469,7 +469,7 @@
 							</tr>
 							<tr>
 								<td>DET CAP<br>Charge T</td>
-								<td>VBAT-Cap Charge T</td>
+								<td>VBAT-Cap<br>Charge T</td>
 								<td>".$pcbRow['cap_charge']." mS</td>
 								<td>".$housingRow['cap_charge']." mS</td>
 								<td>".$pottingRow['cap_charge']." mS</td>
@@ -495,27 +495,27 @@
 								<td>".$pottingRow['vrf_amp']." V</td>
 							</tr>
 							<tr>
-								<td>VBAT-VRF Delay</td>
+								<td>VBAT-VRF</td>
 								<td>".$pcbRow['vbat_vrf']." Sec</td>
 								<td>".$housingRow['vbat_vrf']." Sec</td>
 								<td>".$pottingRow['vbat_vrf']." Sec</td>
 							</tr>
 							<tr>
 								<td>Silence</td>
-								<td>VBAT-SIL Delay</td>
+								<td>VBAT-SIL</td>
 								<td>".$pcbRow['vbat_sil']." Sec</td>
 								<td>".$housingRow['vbat_sil']." Sec</td>
 								<td>".$pottingRow['vbat_sil']." Sec</td>
 							</tr>
 							<tr>
 								<td  rowspan='5'>PROX</td>
-								<td>DET Pulse Width</td>
+								<td>DET Width</td>
 								<td>".$pcbRow['det_wid']." uS</td>
 								<td>".$housingRow['det_wid']." uS</td>
 								<td>".$pottingRow['det_wid']." uS</td>
 							</tr>
 							<tr>
-								<td>DET Amplitude</td>
+								<td>DET Ampl</td>
 								<td>".$pcbRow['det_amp']." V</td>
 								<td>".$housingRow['det_amp']." V</td>
 								<td>".$pottingRow['det_amp']." V</td>
@@ -560,14 +560,14 @@
 								<td>".$pottingRow['pd_delay']." uS</td>
 							</tr>
 							<tr>
-								<td>DET Amplitude</td>
+								<td>DET Ampl</td>
 								<td>".$pcbRow['pd_det']." V</td>
 								<td>".$housingRow['pd_det']." V</td>
 								<td>".$pottingRow['pd_det']." V</td>
 							</tr>
 							<tr>
 								<td>SAFE</td>
-								<td>No PST/No DET</td>
+								<td>No PST & DET</td>
 								<td>".$pcbRow['safe']." </td>
 								<td>".$housingRow['safe']." </td>
 								<td>".$pottingRow['safe']." </td>
