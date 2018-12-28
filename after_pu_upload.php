@@ -234,7 +234,8 @@
 					");
 			}
 
-			for($i=0;$i<$totalSheet;$i++){
+			//for($i=0;$i<$totalSheet;$i++){
+			for($i=0;$i<1;$i++){
 
 
 				$Reader->ChangeSheet($i);
