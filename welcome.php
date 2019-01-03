@@ -1557,6 +1557,12 @@
 								<form action="head_epd_upload_csv.php" method="POST" enctype="multipart/form-data">
 								
 									<center>
+										<div class="col s2"></div>
+										<div class="input-field col s4">
+											<input id="main_lot" name="main_lot" type="text" autofocus>
+											<label for="main_lot"><center>Main Lot</center></label>
+										</div>
+										<br>
 										<input type="file"  name="file" >
 										<button type="submit" value="submit" class="btn">Upload</button>
 									</center>
