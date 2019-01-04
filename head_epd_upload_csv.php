@@ -72,6 +72,23 @@
 		return false;
 	}
 
+	function cookieReverseLookup($cookie) {
+		switch ($cookie) {
+			case 2:
+				return "PCB";
+				break;
+			case 9:
+				return "HOUSING";
+				break;
+			case 11:
+				return "POTTED HOUSING";
+				break;
+			case 16:
+				return "HEAD";
+				break;
+		}
+	}
+
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		if($_POST['main_lot'] == '') {
@@ -202,7 +219,7 @@
 				<script text='text/javascript'>$('#uploadTable').hide();</script>
 				";
 
-				$sql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`head_epd_csv` ( `_id` INT NULL DEFAULT NULL AUTO_INCREMENT , `pcb_no` VARCHAR(8) NULL DEFAULT NULL , `op_id` SMALLINT NULL DEFAULT NULL , `tester_id` SMALLINT NULL DEFAULT NULL , `assy_stage` VARCHAR(2) NULL DEFAULT NULL , `record_date` DATE NULL DEFAULT NULL , `record_time` TIME NULL DEFAULT NULL , `partial_test` VARCHAR(3) NULL DEFAULT NULL DEFAULT 'NO' , `vbat_v` FLOAT NULL DEFAULT NULL , `vbat_i` FLOAT NULL DEFAULT NULL , `vdd` FLOAT NULL DEFAULT NULL , `tpcd_delay` INT NULL DEFAULT NULL , `pst_delay` INT NULL DEFAULT NULL , `pst_amp` FLOAT NULL DEFAULT NULL , `pst_width` INT NULL DEFAULT NULL , `pd_delay` INT NULL DEFAULT NULL , `pd_amp` FLOAT NULL DEFAULT NULL , `pd_width` INT NULL DEFAULT NULL , `delay_delay` INT NULL DEFAULT NULL , `delay_amp` FLOAT NULL DEFAULT NULL , `delay_width` INT NULL DEFAULT NULL , `si_mode` TINYINT NULL DEFAULT NULL , `si_delay` INT NULL DEFAULT NULL , `si_amp` FLOAT NULL DEFAULT NULL , `si_width` INT NULL DEFAULT NULL , `safe_pst` FLOAT NULL DEFAULT NULL , `safe_det` FLOAT NULL DEFAULT NULL , `result` VARCHAR(4) NULL DEFAULT NULL DEFAULT 'PASS' , `t1_status` INT NULL DEFAULT NULL , `t2_status` INT NULL DEFAULT NULL , `t3_status` INT NULL DEFAULT NULL , `t4_status` INT NULL DEFAULT NULL , PRIMARY KEY (`_id`), UNIQUE (`pcb_no`)) ENGINE = InnoDB COMMENT = 'EPD table to store CSV files from Dot-Sys ATEs';";
+				$sql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`head_epd_csv` ( `_id` INT NULL DEFAULT NULL AUTO_INCREMENT , `pcb_no` VARCHAR(8) NULL DEFAULT NULL , `op_id` SMALLINT NULL DEFAULT NULL , `tester_id` SMALLINT NULL DEFAULT NULL , `assy_stage` VARCHAR(4) NULL DEFAULT NULL , `record_date` DATE NULL DEFAULT NULL , `record_time` TIME NULL DEFAULT NULL , `partial_test` VARCHAR(3) NULL DEFAULT NULL DEFAULT 'NO' , `vbat_v` FLOAT NULL DEFAULT NULL , `vbat_i` FLOAT NULL DEFAULT NULL , `vdd` FLOAT NULL DEFAULT NULL , `tpcd_delay` INT NULL DEFAULT NULL , `pst_delay` INT NULL DEFAULT NULL , `pst_amp` FLOAT NULL DEFAULT NULL , `pst_width` INT NULL DEFAULT NULL , `pd_delay` INT NULL DEFAULT NULL , `pd_amp` FLOAT NULL DEFAULT NULL , `pd_width` INT NULL DEFAULT NULL , `delay_delay` INT NULL DEFAULT NULL , `delay_amp` FLOAT NULL DEFAULT NULL , `delay_width` INT NULL DEFAULT NULL , `si_mode` TINYINT NULL DEFAULT NULL , `si_delay` INT NULL DEFAULT NULL , `si_amp` FLOAT NULL DEFAULT NULL , `si_width` INT NULL DEFAULT NULL , `safe_pst` FLOAT NULL DEFAULT NULL , `safe_det` FLOAT NULL DEFAULT NULL , `result` VARCHAR(4) NULL DEFAULT NULL DEFAULT 'PASS' , `t1_status` INT NULL DEFAULT NULL , `t2_status` INT NULL DEFAULT NULL , `t3_status` INT NULL DEFAULT NULL , `t4_status` INT NULL DEFAULT NULL , PRIMARY KEY (`_id`), UNIQUE (`pcb_no`)) ENGINE = InnoDB COMMENT = 'EPD table to store CSV files from Dot-Sys ATEs';";
 
 				$sqlResult = mysqli_query($db,$sql);
 
@@ -239,7 +256,53 @@
 					$fuze_diameter = substr($z,4,1);
 					$fuze_type = substr($z,3,1);
 
-					$addSql.= trim("(NULL, '"
+					switch($assy_stage) {
+						case '0';
+							$assy_stage = "PCB";
+							$indexCookie = 2;
+							break;
+						case '1';
+							$assy_stage = "HSG";
+							$indexCookie = 9;
+							break;
+						case '2';
+							$assy_stage = "POT";
+							$indexCookie = 11;
+							break;
+						case '3';
+							$assy_stage = "HEAD";
+							$indexCookie = 16;
+							break;
+					}
+					switch($fuze_diameter) {
+						case '0':
+							$fuze_diameter = '105';
+							break;
+						case '1':
+							$fuze_diameter = '130';
+							break;
+						case '2':
+							$fuze_diameter = '155';
+							break;
+					}
+					switch($fuze_type) {
+						case '0':
+							$fuze_type = 'TIME';
+							break;
+						case '1':
+							$fuze_type = 'EPD';
+							break;
+						case '2':
+							$fuze_type = 'PROX';
+							break;
+					}
+
+					if($fuze_type != $_COOKIE['fuzeType'] || $fuze_diameter != $_COOKIE['fuzeDia'] || $indexCookie != $_COOKIE['fuzeStart']) {
+						$html.="<tr><td colspan='20'><b>Data from Different Assy stage/ Different Fuze! Skipping this entry because you logged in as ".$_COOKIE['fuzeType']." - ".$_COOKIE['fuzeDia']." - ".cookieReverseLookup($_COOKIE['fuzeStart'])."</b></td><tr>";
+					}
+					else {
+
+						$addSql.= trim("(NULL, '"
 										.$pcb_no."', '"
 										.$op_id."', '"
 										.$tester_id."', '"
@@ -272,79 +335,42 @@
 										.$dataArray[27]."', '"
 										.($dataArray[28] == "1" ? "PASS" : "FAIL")."'),");
 
-					switch($assy_stage) {
-						case '0';
-							$assy_stage = "PCB";
-							break;
-						case '1';
-							$assy_stage = "HSG";
-							break;
-						case '2';
-							$assy_stage = "POT";
-							break;
-						case '3';
-							$assy_stage = "HEAD";
-							break;
-					}
-					switch($fuze_diameter) {
-						case '0':
-							$fuze_diameter = '105';
-							break;
-						case '1':
-							$fuze_diameter = '130';
-							break;
-						case '2':
-							$fuze_diameter = '155';
-							break;
-					}
-					switch($fuze_type) {
-						case '0':
-							$fuze_type = 'TIME';
-							break;
-						case '1':
-							$fuze_type = 'EPD';
-							break;
-						case '2':
-							$fuze_type = 'PROX';
-							break;
-					}
+						$html.= "<tr>";
+						$html.="<td>".($cnt-1)."</td>";
+						$html.="<td>".$lot_no."</td>";
+						$html.="<td>".$pcb_no."</td>";
+						$html.="<td>".$op_id."</td>";
+						$html.="<td>".$assy_stage."</td>";
+						$html.="<td>".$tester_id."</td>";
+						$html.="<td>".$dataArray[1]."</td>";
+						$html.="<td>".$dataArray[0]."</td>";
+						$html.="<td>".($dataArray[4] == "1" ? "YES" : "NO")."</td>";
+						$html.="<td>".$dataArray[5]."</td>";
+						$html.="<td>".$dataArray[6]."</td>";
+						$html.="<td>".$dataArray[7]."</td>";
+						$html.="<td>".$dataArray[8]."</td>";
+						$html.="<td>".$dataArray[9]."</td>";
+						$html.="<td>".$dataArray[10]."</td>";
+						$html.="<td>".$dataArray[11]."</td>";
+						$html.="<td>".$dataArray[12]."</td>";
+						$html.="<td>".$dataArray[13]."</td>";
+						$html.="<td>".$dataArray[14]."</td>";
+						$html.="<td>".$dataArray[15]."</td>";
+						$html.="<td>".$dataArray[16]."</td>";
+						$html.="<td>".$dataArray[17]."</td>";
+						$html.="<td>".$dataArray[18]."</td>";
+						$html.="<td>".$dataArray[19]."</td>";
+						$html.="<td>".$dataArray[20]."</td>";
+						$html.="<td>".$dataArray[21]."</td>";
+						$html.="<td>".$dataArray[22]."</td>";
+						$html.="<td>".$dataArray[23]."</td>";
+						$html.="<td>".$dataArray[24]."</td>";
+						$html.="<td>".$dataArray[25]."</td>";
+						$html.="<td>".$dataArray[26]."</td>";
+						$html.="<td>".$dataArray[27]."</td>";
+						$html.="<td>".($dataArray[28] == "1" ? "PASS" : "FAIL")."</td>";
 
-					$html.= "<tr>";
-					$html.="<td>".($cnt-1)."</td>";
-					$html.="<td>".$lot_no."</td>";
-					$html.="<td>".$pcb_no."</td>";
-					$html.="<td>".$op_id."</td>";
-					$html.="<td>".$assy_stage."</td>";
-					$html.="<td>".$tester_id."</td>";
-					$html.="<td>".$dataArray[1]."</td>";
-					$html.="<td>".$dataArray[0]."</td>";
-					$html.="<td>".($dataArray[4] == "1" ? "YES" : "NO")."</td>";
-					$html.="<td>".$dataArray[5]."</td>";
-					$html.="<td>".$dataArray[6]."</td>";
-					$html.="<td>".$dataArray[7]."</td>";
-					$html.="<td>".$dataArray[8]."</td>";
-					$html.="<td>".$dataArray[9]."</td>";
-					$html.="<td>".$dataArray[10]."</td>";
-					$html.="<td>".$dataArray[11]."</td>";
-					$html.="<td>".$dataArray[12]."</td>";
-					$html.="<td>".$dataArray[13]."</td>";
-					$html.="<td>".$dataArray[14]."</td>";
-					$html.="<td>".$dataArray[15]."</td>";
-					$html.="<td>".$dataArray[16]."</td>";
-					$html.="<td>".$dataArray[17]."</td>";
-					$html.="<td>".$dataArray[18]."</td>";
-					$html.="<td>".$dataArray[19]."</td>";
-					$html.="<td>".$dataArray[20]."</td>";
-					$html.="<td>".$dataArray[21]."</td>";
-					$html.="<td>".$dataArray[22]."</td>";
-					$html.="<td>".$dataArray[23]."</td>";
-					$html.="<td>".$dataArray[24]."</td>";
-					$html.="<td>".$dataArray[25]."</td>";
-					$html.="<td>".$dataArray[26]."</td>";
-					$html.="<td>".$dataArray[27]."</td>";
-					$html.="<td>".($dataArray[28] == "1" ? "PASS" : "FAIL")."</td>";
-
-					$sqlDummyLot.= "(
+						$sqlDummyLot.= "(
 						NULL,
 						'".$fuze_type."', 
 						'".$fuze_diameter."', 
@@ -353,6 +379,7 @@
 						'EPD".$pcb_no."', 
 						'60'
 					),";
+					}
 				}
 				$addSql = rtrim($addSql,",");
 				$addSql.=";";
