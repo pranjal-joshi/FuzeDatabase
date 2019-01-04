@@ -172,10 +172,14 @@
 						<span class='red-text text-darken-2' style='font-size: 18px; font-weight: bold;' id='uploadSpan'>Uploading.. Please wait.</span>
 						<br>
 						<a href='welcome.php'>Click here to Go Back</a>
+						<br><br>
+						<h6 style='font-weight:bold;'>Only ".$_COOKIE['fuzeType']." - ".$_COOKIE['fuzeDia']." - ".cookieReverseLookup($_COOKIE['fuzeStart'])." Data will be uploaded. Other data will be ignored.</h6>
+						<br>
 					</center>
 					<br>
 				</div>
 				";
+
 			$html.="<table class='striped' style='padding: 10px' id='uploadTable' style='display: none;'>";
 			$html.="
 				<thead>
@@ -298,7 +302,7 @@
 					}
 
 					if($fuze_type != $_COOKIE['fuzeType'] || $fuze_diameter != $_COOKIE['fuzeDia'] || $indexCookie != $_COOKIE['fuzeStart']) {
-						$html.="<tr><td colspan='20'><b>Data from Different Assy stage/ Different Fuze! Skipping this entry because you logged in as ".$_COOKIE['fuzeType']." - ".$_COOKIE['fuzeDia']." - ".cookieReverseLookup($_COOKIE['fuzeStart'])."</b></td><tr>";
+						//$html.="<tr><td colspan='20'><b>Data from Different Assy stage/ Different Fuze! Skipping this entry because you logged in as ".$_COOKIE['fuzeType']." - ".$_COOKIE['fuzeDia']." - ".cookieReverseLookup($_COOKIE['fuzeStart'])."</b></td><tr>";
 					}
 					else {
 
