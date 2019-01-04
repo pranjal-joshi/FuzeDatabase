@@ -1479,8 +1479,17 @@
 								<form action="pcb_epd_upload_csv.php" method="POST" enctype="multipart/form-data">
 								
 									<center>
-										<input type="file"  name="file" >
-										<button type="submit" value="submit" class="btn">Upload</button>
+										<div class="row">
+											<div class="col s4"></div>
+											<div class="input-field col s4">
+												<input id="main_lot" name="main_lot" type="text" autofocus>
+												<label for="main_lot"><center>Enter Main Lot</center></label>
+											</div>
+										</div>
+										<div class="row">
+											<input type="file"  name="file" >
+											<button type="submit" value="submit" class="btn">Upload</button>
+										</div>
 									</center>
 
 								</form>
@@ -1505,9 +1514,9 @@
 									<center>
 										<div class="row">
 											<div class="col s4"></div>
-											<div class='input-field col s4 center'>
-												<input type="number" name="main_lot">
-												<label for="main_lot">*Enter Main Lot No</label>
+											<div class="input-field col s4">
+												<input id="main_lot" name="main_lot" type="text" autofocus>
+												<label for="main_lot"><center>Enter Main Lot</center></label>
 											</div>
 										</div>
 										<div class="row">
@@ -1536,10 +1545,19 @@
 								<form action="potted_epd_upload_csv.php" method="POST" enctype="multipart/form-data">
 								
 									<center>
-										<input type="file"  name="file" >
-										<button type="submit" value="submit" class="btn">Upload</button>
+										<div class="row">
+											<div class="col s4"></div>
+											<div class="input-field col s4">
+												<input id="main_lot" name="main_lot" type="text" autofocus>
+												<label for="main_lot"><center>Enter Main Lot</center></label>
+											</div>
+										</div>
+										<div class="row">
+											<input type="file"  name="file" >
+											<button type="submit" value="submit" class="btn">Upload</button>
+										</div>
 									</center>
-
+									
 								</form>
 							</div>
 
@@ -1560,14 +1578,17 @@
 								<form action="head_epd_upload_csv.php" method="POST" enctype="multipart/form-data">
 								
 									<center>
-										<div class="col s2"></div>
-										<div class="input-field col s4">
-											<input id="main_lot" name="main_lot" type="text" autofocus>
-											<label for="main_lot"><center>Main Lot</center></label>
+										<div class="row">
+											<div class="col s4"></div>
+											<div class="input-field col s4">
+												<input id="main_lot" name="main_lot" type="text" autofocus>
+												<label for="main_lot"><center>Enter Main Lot</center></label>
+											</div>
 										</div>
-										<br>
-										<input type="file"  name="file" >
-										<button type="submit" value="submit" class="btn">Upload</button>
+										<div class="row">
+											<input type="file"  name="file" >
+											<button type="submit" value="submit" class="btn">Upload</button>
+										</div>
 									</center>
 
 								</form>
