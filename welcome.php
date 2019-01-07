@@ -1839,6 +1839,136 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4" id="timeAtePcbCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">PCB - Upload CSV file from Dot-Sys TIME ATE</span>
+								</center>
+							</div>
+
+							<div class="row">
+								<br>
+								<form action="pcb_time_upload_csv.php" method="POST" enctype="multipart/form-data">
+								
+									<center>
+										<div class="row">
+											<div class="col s4"></div>
+											<div class="input-field col s4">
+												<input id="main_lot" name="main_lot" type="text" autofocus>
+												<label for="main_lot"><center>Enter Main Lot</center></label>
+											</div>
+										</div>
+										<div class="row">
+											<input type="file"  name="file" >
+											<button type="submit" value="submit" class="btn">Upload</button>
+										</div>
+									</center>
+
+								</form>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="card-panel grey lighten-4" id="timeAteHousingCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">HOUSING - Upload CSV file from Dot-Sys TIME ATE</span>
+								</center>
+							</div>
+
+							<div class="row">
+								<br>
+								<form action="housing_time_upload_csv.php" method="POST" enctype="multipart/form-data">
+								
+									<center>
+										<div class="row">
+											<div class="col s4"></div>
+											<div class="input-field col s4">
+												<input id="main_lot" name="main_lot" type="text" autofocus>
+												<label for="main_lot"><center>Enter Main Lot</center></label>
+											</div>
+										</div>
+										<div class="row">
+											<input type="file"  name="file" >
+											<button type="submit" value="submit" class="btn">Upload</button>
+										</div>
+									</center>
+
+								</form>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="card-panel grey lighten-4" id="timeAtePottedCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">POTTED HOUSING - Upload CSV file from Dot-Sys TIME ATE</span>
+								</center>
+							</div>
+
+							<div class="row">
+								<br>
+								<form action="potted_time_upload_csv.php" method="POST" enctype="multipart/form-data">
+								
+									<center>
+										<div class="row">
+											<div class="col s4"></div>
+											<div class="input-field col s4">
+												<input id="main_lot" name="main_lot" type="text" autofocus>
+												<label for="main_lot"><center>Enter Main Lot</center></label>
+											</div>
+										</div>
+										<div class="row">
+											<input type="file"  name="file" >
+											<button type="submit" value="submit" class="btn">Upload</button>
+										</div>
+									</center>
+
+								</form>
+							</div>
+						</div>
+						</div>
+
+						<div class="card-panel grey lighten-4" id="timeAteHeadCard" style="display: none;">
+						<div class="row">
+							
+							<div class="row">
+								<center>
+									<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">ELECTRONIC HEAD - Upload CSV file from Dot-Sys TIME ATE</span>
+								</center>
+							</div>
+
+							<div class="row">
+								<br>
+								<form action="head_time_upload_csv.php" method="POST" enctype="multipart/form-data">
+								
+									<center>
+										<div class="row">
+											<div class="col s4"></div>
+											<div class="input-field col s4">
+												<input id="main_lot" name="main_lot" type="text" autofocus>
+												<label for="main_lot"><center>Enter Main Lot</center></label>
+											</div>
+										</div>
+										<div class="row">
+											<input type="file"  name="file" >
+											<button type="submit" value="submit" class="btn">Upload</button>
+										</div>
+									</center>
+
+								</form>
+							</div>
+						</div>
+					</div>
+
 					<div class="card-panel grey lighten-4" id="searchCard" style="display: none;">
 						<div class="row">
 							<center>
@@ -3116,6 +3246,78 @@
 					$('#epdPcbTestingDetailsTitle').html("EPD - ELECTRONIC HEAD Test Report");
 					$('#epdHeadTestingDetailsCard').fadeIn();
 					$('#epdPcbTestingDetailsPcbNo').focus();
+					break;
+				default:
+					$('#unavailableCard').fadeIn();
+			}
+		}
+		else if($.cookie('fuzeType') == "TIME" && $.cookie('fuzeAccess') != "37BD0D3935B47BE2AB57BCF91B57F499") {
+			switch($.cookie('fuzeStart')){
+				case '1':
+					$('select').material_select();
+					$('#qaCard').fadeIn();
+					$('#qaCard').keypress(function (e) {
+						var key = e.which || e.keyCode;
+						if(key == 13)  // the enter key code
+						{
+							$('#qaSubmitButton').trigger('click');
+							return false;  
+						}
+					});
+					$('#qaCard').keydown(function (e) {
+						var key = e.which || e.keyCode;
+						if(key == 27)  // the esc key code
+						{
+							$('#qaClearButton').trigger('click');
+							return false;  
+						}
+					});
+					$('#qaDatePicker').val(getTodaysDate());
+					break;
+				case '2':
+					$('#timeAtePcbCard').fadeIn();
+					break;
+				case '7':
+					$('#lotCard').fadeIn();
+					$('#lotManualPcb').keypress(function (e) {
+						var key = e.which;
+						if(key == 13)  // the enter key code
+						{
+							$('#lotManualButton').trigger('click');
+							return false;  
+						}
+					});
+					break;
+				case '8':
+					$('#timePcbTestingDetailsCard').fadeIn();
+					$('#timePcbTestingDetailsPcbNo').focus();
+					break;
+				case '9':
+					$('#timeAteHousingCard').fadeIn();
+					break;
+				case '10':
+					$('#timeTestingClone').clone().appendTo("#timeHousingTestingDetailsCard");
+					$('#timePcbTestingDetailsTitle').html("TIME - HOUSING Test Report");
+					$('#timeHousingTestingDetailsCard').fadeIn();
+					$('#timePcbTestingDetailsPcbNo').focus();
+					break;
+				case '11':
+					$('#timeAtePottingCard').fadeIn();
+					break;
+				case '12':
+					$('#timeTestingClone').clone().appendTo("#timePottedTestingDetailsCard");
+					$('#timePcbTestingDetailsTitle').html("TIME - POTTED HOUSING Test Report");
+					$('#timePottedTestingDetailsCard').fadeIn();
+					$('#timePcbTestingDetailsPcbNo').focus();
+					break;
+				case '16':
+					$('#timeAteHeadCard').fadeIn();
+					break;
+				case '17':
+					$('#timeTestingClone').clone().appendTo("#timeHeadTestingDetailsCard");
+					$('#timePcbTestingDetailsTitle').html("TIME - ELECTRONIC HEAD Test Report");
+					$('#timeHeadTestingDetailsCard').fadeIn();
+					$('#timePcbTestingDetailsPcbNo').focus();
 					break;
 				default:
 					$('#unavailableCard').fadeIn();
