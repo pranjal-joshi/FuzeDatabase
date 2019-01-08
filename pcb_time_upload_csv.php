@@ -434,6 +434,19 @@
 				if($res) {
 					echo $html;
 				}
+				else if($displayCount == 1) {
+					echo("
+						<body bgcolor='#e0e0e0'>
+							<center>
+								<br><br>
+									<h2 style='color: red;'>There are no entries of ".$_COOKIE['fuzeType']." - ".$_COOKIE['fuzeDia']." - ".cookieReverseLookup($_COOKIE['fuzeStart'])." in the uploaded CSV file.</h3>
+									<br><br>
+									<h3><a href='welcome.php'>Click Here to Go Back</a> & Upload CSV file that contains data of ".$_COOKIE['fuzeType']." - ".$_COOKIE['fuzeDia']." - ".cookieReverseLookup($_COOKIE['fuzeStart'])."</h3>
+								<br>
+							</center>
+						</body>
+						");
+				}
 
 				for($cnt=2;$cnt<=count($csvArray)-2;$cnt++) {					// auto add to rejection while uploading CSV
 					$dataArray = explode("\t", $csvArray[$cnt][0]);
