@@ -3302,7 +3302,7 @@
 					$('#timePcbTestingDetailsPcbNo').focus();
 					break;
 				case '11':
-					$('#timeAtePottingCard').fadeIn();
+					$('#timeAtePottedCard').fadeIn();
 					break;
 				case '12':
 					$('#timeTestingClone').clone().appendTo("#timePottedTestingDetailsCard");
