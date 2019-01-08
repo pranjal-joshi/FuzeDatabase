@@ -3,8 +3,11 @@
 	include('db_config.php');
 
 	function addTimeCsvRejection($pcb_no,$array,$rejStage,$db) {
+		$sql = "";
 		if(strtoupper($array[28]) == "0") {									// go inside only if failed
 			$rejReason = "";
+			print_r($array);
+			print_r('<br><br>');
 			if(!between($array[7],3,8)) {
 				$rejReason.="Current, ";
 			}
@@ -60,6 +63,14 @@
 			$sql = "UPDATE `lot_table` SET `rejected`='1',
 			`rejection_stage`='".$rejStage."',
 			`rejection_remark`='".$rejReason."' 
+			WHERE `pcb_no`='TIME".$pcb_no."' AND `fuze_type` = '".$_COOKIE['fuzeType']."' AND `fuze_diameter` = '".$_COOKIE['fuzeDia']."'";
+
+			$sql = preg_replace('/[\x00-\x1F\x7F]/', '', $sql);
+
+			$res = mysqli_query($db,$sql);
+		}
+		else {
+			$sql = "UPDATE `lot_table` SET `rejected`='0' 
 			WHERE `pcb_no`='TIME".$pcb_no."' AND `fuze_type` = '".$_COOKIE['fuzeType']."' AND `fuze_diameter` = '".$_COOKIE['fuzeDia']."'";
 
 			$sql = preg_replace('/[\x00-\x1F\x7F]/', '', $sql);
@@ -226,7 +237,9 @@
 				<script text='text/javascript'>$('#uploadTable').hide();</script>
 				";
 
-				$sql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`pcb_time_csv` ( `_id` INT NULL DEFAULT NULL AUTO_INCREMENT , `pcb_no` VARCHAR(8) NULL DEFAULT NULL , `op_id` SMALLINT NULL DEFAULT NULL , `tester_id` SMALLINT NULL DEFAULT NULL , `assy_stage` VARCHAR(4) NULL DEFAULT NULL , `record_date` DATE NULL DEFAULT NULL , `record_time` TIME NULL DEFAULT NULL , `partial_test` VARCHAR(3) NULL DEFAULT NULL DEFAULT 'NO' , `vbat_v` FLOAT NULL DEFAULT NULL , `vbat_i` FLOAT NULL DEFAULT NULL , `tpcd_delay` INT NULL DEFAULT NULL , `pst_delay` INT NULL DEFAULT NULL , `pst_amp` FLOAT NULL DEFAULT NULL , `pst_width` INT NULL DEFAULT NULL , `3_delay` FLOAT NULL DEFAULT NULL , `3_amp` FLOAT NULL DEFAULT NULL , `3_width` INT NULL DEFAULT NULL , `16_delay` FLOAT NULL DEFAULT NULL , `16_amp` FLOAT NULL DEFAULT NULL , `16_width` INT NULL DEFAULT NULL , `24_delay` FLOAT NULL DEFAULT NULL , `24_amp` FLOAT NULL DEFAULT NULL , `24_width` INT NULL DEFAULT NULL , `pd_det` FLOAT NULL DEFAULT NULL , `safe_pst` FLOAT NULL DEFAULT NULL , `safe_det` FLOAT NULL DEFAULT NULL , `result` VARCHAR(4) NULL DEFAULT NULL DEFAULT 'PASS' , `t1_status` INT NULL DEFAULT NULL , `t2_status` INT NULL DEFAULT NULL , `t3_status` INT NULL DEFAULT NULL , `t4_status` INT NULL DEFAULT NULL , `t5_status` INT NULL DEFAULT NULL , PRIMARY KEY (`_id`), UNIQUE (`pcb_no`)) ENGINE = InnoDB COMMENT = 'TIME table to store CSV files from Dot-Sys ATEs';";
+				//$sql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`pcb_time_csv` ( `_id` INT NULL DEFAULT NULL AUTO_INCREMENT , `pcb_no` VARCHAR(8) NULL DEFAULT NULL , `op_id` SMALLINT NULL DEFAULT NULL , `tester_id` SMALLINT NULL DEFAULT NULL , `assy_stage` VARCHAR(4) NULL DEFAULT NULL , `record_date` DATE NULL DEFAULT NULL , `record_time` TIME NULL DEFAULT NULL , `partial_test` VARCHAR(3) NULL DEFAULT NULL DEFAULT 'NO' , `vbat_v` FLOAT NULL DEFAULT NULL , `vbat_i` FLOAT NULL DEFAULT NULL , `tpcd_delay` INT NULL DEFAULT NULL , `pst_delay` INT NULL DEFAULT NULL , `pst_amp` FLOAT NULL DEFAULT NULL , `pst_width` INT NULL DEFAULT NULL , `3_delay` FLOAT NULL DEFAULT NULL , `3_amp` FLOAT NULL DEFAULT NULL , `3_width` INT NULL DEFAULT NULL , `16_delay` FLOAT NULL DEFAULT NULL , `16_amp` FLOAT NULL DEFAULT NULL , `16_width` INT NULL DEFAULT NULL , `24_delay` FLOAT NULL DEFAULT NULL , `24_amp` FLOAT NULL DEFAULT NULL , `24_width` INT NULL DEFAULT NULL , `pd_det` FLOAT NULL DEFAULT NULL , `safe_pst` FLOAT NULL DEFAULT NULL , `safe_det` FLOAT NULL DEFAULT NULL , `result` VARCHAR(4) NULL DEFAULT NULL DEFAULT 'PASS' , `t1_status` INT NULL DEFAULT NULL , `t2_status` INT NULL DEFAULT NULL , `t3_status` INT NULL DEFAULT NULL , `t4_status` INT NULL DEFAULT NULL , `t5_status` INT NULL DEFAULT NULL , PRIMARY KEY (`_id`), UNIQUE (`pcb_no`)) ENGINE = InnoDB COMMENT = 'TIME table to store CSV files from Dot-Sys ATEs';";
+
+				$sql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`pcb_time_csv` ( `_id` INT NULL DEFAULT NULL AUTO_INCREMENT , `pcb_no` VARCHAR(8) NULL DEFAULT NULL , `op_id` SMALLINT NULL DEFAULT NULL , `tester_id` SMALLINT NULL DEFAULT NULL , `assy_stage` VARCHAR(4) NULL DEFAULT NULL , `record_date` DATE NULL DEFAULT NULL , `record_time` TIME NULL DEFAULT NULL , `partial_test` VARCHAR(3) NULL DEFAULT NULL DEFAULT 'NO' , `vbat_v` FLOAT NULL DEFAULT NULL , `vbat_i` FLOAT NULL DEFAULT NULL , `tpcd_delay` INT NULL DEFAULT NULL , `pst_delay` INT NULL DEFAULT NULL , `pst_amp` FLOAT NULL DEFAULT NULL , `pst_width` INT NULL DEFAULT NULL , `3_delay` FLOAT NULL DEFAULT NULL , `3_amp` FLOAT NULL DEFAULT NULL , `3_width` INT NULL DEFAULT NULL , `16_delay` FLOAT NULL DEFAULT NULL , `16_amp` FLOAT NULL DEFAULT NULL , `16_width` INT NULL DEFAULT NULL , `24_delay` FLOAT NULL DEFAULT NULL , `24_amp` FLOAT NULL DEFAULT NULL , `24_width` INT NULL DEFAULT NULL , `pd_det` FLOAT NULL DEFAULT NULL , `safe_pst` FLOAT NULL DEFAULT NULL , `safe_det` FLOAT NULL DEFAULT NULL , `result` VARCHAR(4) NULL DEFAULT NULL DEFAULT 'PASS' , `t1_status` INT NULL DEFAULT NULL , `t2_status` INT NULL DEFAULT NULL , `t3_status` INT NULL DEFAULT NULL , `t4_status` INT NULL DEFAULT NULL , `t5_status` INT NULL DEFAULT NULL , PRIMARY KEY (`_id`)) ENGINE = InnoDB COMMENT = 'TIME table to store CSV files from Dot-Sys ATEs';";
 
 				$sqlResult = mysqli_query($db,$sql);
 
@@ -246,7 +259,7 @@
 
 				$csvArray = array_map('str_getcsv', file($uploadFilePath));
 
-				$addSql = "REPLACE INTO `pcb_time_csv` (`_id`, `pcb_no`, `op_id`, `tester_id`, `assy_stage`, `record_date`, `record_time`, `partial_test`, `t1_status`, `vbat_v`, `vbat_i`, `tpcd_delay`, `pst_delay`, `pst_amp`, `pst_width`, `3_delay`, `3_amp`, `3_width`, `t2_status`, `16_delay`, `16_amp`, `16_width`, `t3_status`, `24_delay`, `24_amp`, `24_width`, `t4_status`, `pd_det`, `t5_status`, `safe_pst`, `safe_det`, `result`) VALUES ";
+				$addSql = "INSERT INTO `pcb_time_csv` (`_id`, `pcb_no`, `op_id`, `tester_id`, `assy_stage`, `record_date`, `record_time`, `partial_test`, `t1_status`, `vbat_v`, `vbat_i`, `tpcd_delay`, `pst_delay`, `pst_amp`, `pst_width`, `3_delay`, `3_amp`, `3_width`, `t2_status`, `16_delay`, `16_amp`, `16_width`, `t3_status`, `24_delay`, `24_amp`, `24_width`, `t4_status`, `pd_det`, `t5_status`, `safe_pst`, `safe_det`, `result`) VALUES ";
 
 				$sqlDummyLot = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES ";
 
@@ -422,18 +435,16 @@
 
 				if($res) {
 					echo $html;
-				}echo $html;
+				}
 
-				/*for($cnt=1;$cnt<=count($csvArray)-2;$cnt++) {					// auto add to rejection while uploading CSV
+				for($cnt=2;$cnt<=count($csvArray)-2;$cnt++) {					// auto add to rejection while uploading CSV
 					$dataArray = explode("\t", $csvArray[$cnt][0]);
 					$dataArray = array_map('trim', $dataArray);
-					print_r($dataArray);
 					$z = preg_replace('/[\x00-\x1F\x7F]/', '', explode("\t", $dataArray[3])[0]);	// filter non-printable chars
-					$z = str_pad($z,14,"0",STR_PAD_LEFT);		// LEFT PAD WITH ZEROS
 					$lot_no = $dataArray[2];
-					$pcb_no = substr($z,6);
+					$pcb_no = substr($z,8,6);
 					addTimeCsvRejection($pcb_no,$dataArray,"PCB",$db);
-				}*/
+				}
 
 				$sqlAutoIncReset = "ALTER TABLE `pcb_time_csv` DROP `_id`;";
 				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);

@@ -3,8 +3,11 @@
 	include('db_config.php');
 
 	function addTimeCsvRejection($pcb_no,$array,$rejStage,$db) {
+		$sql = "";
 		if(strtoupper($array[28]) == "0") {									// go inside only if failed
 			$rejReason = "";
+			print_r($array);
+			print_r('<br><br>');
 			if(!between($array[7],3,8)) {
 				$rejReason.="Current, ";
 			}
@@ -60,6 +63,14 @@
 			$sql = "UPDATE `lot_table` SET `rejected`='1',
 			`rejection_stage`='".$rejStage."',
 			`rejection_remark`='".$rejReason."' 
+			WHERE `pcb_no`='TIME".$pcb_no."' AND `fuze_type` = '".$_COOKIE['fuzeType']."' AND `fuze_diameter` = '".$_COOKIE['fuzeDia']."'";
+
+			$sql = preg_replace('/[\x00-\x1F\x7F]/', '', $sql);
+
+			$res = mysqli_query($db,$sql);
+		}
+		else {
+			$sql = "UPDATE `lot_table` SET `rejected`='0' 
 			WHERE `pcb_no`='TIME".$pcb_no."' AND `fuze_type` = '".$_COOKIE['fuzeType']."' AND `fuze_diameter` = '".$_COOKIE['fuzeDia']."'";
 
 			$sql = preg_replace('/[\x00-\x1F\x7F]/', '', $sql);
@@ -427,15 +438,14 @@
 					echo $html;
 				}
 
-				/*for($cnt=1;$cnt<=count($csvArray)-2;$cnt++) {					// auto add to rejection while uploading CSV
+				for($cnt=2;$cnt<=count($csvArray)-2;$cnt++) {					// auto add to rejection while uploading CSV
 					$dataArray = explode("\t", $csvArray[$cnt][0]);
 					$dataArray = array_map('trim', $dataArray);
-					print_r($dataArray);
 					$z = preg_replace('/[\x00-\x1F\x7F]/', '', explode("\t", $dataArray[3])[0]);	// filter non-printable chars
 					$lot_no = $dataArray[2];
-					$pcb_no = substr($z,6);
+					$pcb_no = substr($z,8,6);
 					addTimeCsvRejection($pcb_no,$dataArray,"HOUSING",$db);
-				}*/
+				}
 
 				$sqlAutoIncReset = "ALTER TABLE `housing_time_csv` DROP `_id`;";
 				$autoIncResult = mysqli_query($db, $sqlAutoIncReset);
