@@ -6,8 +6,6 @@
 		$sql = "";
 		if(strtoupper($array[28]) == "0") {									// go inside only if failed
 			$rejReason = "";
-			print_r($array);
-			print_r('<br><br>');
 			if(!between($array[7],3,8)) {
 				$rejReason.="Current, ";
 			}
