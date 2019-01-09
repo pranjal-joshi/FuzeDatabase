@@ -255,7 +255,7 @@
 
 				$csvArray = array_map('str_getcsv', file($uploadFilePath));
 
-				$addSql = "INSERT INTO `pcb_time_csv` (`_id`, `pcb_no`, `op_id`, `tester_id`, `assy_stage`, `record_date`, `record_time`, `partial_test`, `t1_status`, `vbat_v`, `vbat_i`, `tpcd_delay`, `pst_delay`, `pst_amp`, `pst_width`, `3_delay`, `3_amp`, `3_width`, `t2_status`, `16_delay`, `16_amp`, `16_width`, `t3_status`, `24_delay`, `24_amp`, `24_width`, `t4_status`, `pd_det`, `t5_status`, `safe_pst`, `safe_det`, `result`) VALUES ";
+				$addSql = "REPLACE INTO `pcb_time_csv` (`_id`, `pcb_no`, `op_id`, `tester_id`, `assy_stage`, `record_date`, `record_time`, `partial_test`, `t1_status`, `vbat_v`, `vbat_i`, `tpcd_delay`, `pst_delay`, `pst_amp`, `pst_width`, `3_delay`, `3_amp`, `3_width`, `t2_status`, `16_delay`, `16_amp`, `16_width`, `t3_status`, `24_delay`, `24_amp`, `24_width`, `t4_status`, `pd_det`, `t5_status`, `safe_pst`, `safe_det`, `result`) VALUES ";
 
 				$sqlDummyLot = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES ";
 
