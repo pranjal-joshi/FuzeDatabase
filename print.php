@@ -121,6 +121,23 @@
 			$barcodeResult = mysqli_query($db, $barcodeQuery);
 			$barcodeRow = mysqli_fetch_assoc($barcodeResult);
 		}
+		elseif ($_COOKIE['searchFuzeType'] == "TIME") {
+			$lotQuery = "SELECT * FROM `lot_table` WHERE `pcb_no` = 'TIME".$pcb_no."'";
+			$lotResult = mysqli_query($db, $lotQuery);
+			$lotRow = mysqli_fetch_assoc($lotResult);
+
+			$qaQuery =  "SELECT * FROM `qa_table` WHERE `pcb_no` = 'TIME".$pcb_no."'";
+			$qaResult = mysqli_query($db, $qaQuery);
+			$qaRow = mysqli_fetch_assoc($qaResult);
+
+			$batteryQuery = "SELECT * FROM `battery_table` WHERE `pcb_no` = 'TIME".$pcb_no."'";
+			$batteryResult = mysqli_query($db, $batteryQuery);
+			$batteryRow = mysqli_fetch_assoc($batteryResult);
+
+			$barcodeQuery = "SELECT * FROM `barcode_table` WHERE `pcb_no` = 'TIME".$pcb_no."'";
+			$barcodeResult = mysqli_query($db, $barcodeQuery);
+			$barcodeRow = mysqli_fetch_assoc($barcodeResult);
+		}
 
 		$reasonToShow = "";
 
@@ -307,7 +324,7 @@
 						</tr>
 						<tr>
 							<td>".$lotRow['fuze_diameter']."mm ".$lotRow['fuze_type']."</td>
-							<td>".str_replace("EPD", "", $lotRow['pcb_no'])."</td>
+							<td>".str_replace("TIME", "", str_replace("EPD", "", $lotRow['pcb_no']))."</td>
 							<td>".$lotRow['main_lot']."</td>
 							<td>".$lotRow['kit_lot']."</td>
 						</tr>
@@ -327,7 +344,7 @@
 							<td>Operator</td>
 						</tr>
 						<tr>
-							<!--<td>".str_replace("EPD", "", $lotRow['pcb_no'])."</td>-->
+							<!--<td>".str_replace("TIME", "", str_replace("EPD", "", $lotRow['pcb_no']))."</td>-->
 							<td>".($qaRow['result'] == '1' ? 'PASS' : 'FAIL')."</td>
 							<td>".($qaRow['stage'] == '' ? 'N/A' : $qaRow['stage'])."</td>
 							<td>".($qaRow['reason'] == '0' ? 'N/A' : $qaRow['reason'])."</td>
@@ -870,6 +887,169 @@
 						<br>
 					</div>
 					";
+					break;
+
+				case "TIME":
+
+					$pcbQuery =  "SELECT * FROM `pcb_time_csv` WHERE `pcb_no` = '".$pcb_no."'";
+					$pcbResult = mysqli_query($db, $pcbQuery);
+					$pcbRow = mysqli_fetch_assoc($pcbResult);
+
+					$hsgQuery =  "SELECT * FROM `housing_time_csv` WHERE `pcb_no` = '".$pcb_no."'";
+					$hsgResult = mysqli_query($db, $hsgQuery);
+					$hsgRow = mysqli_fetch_assoc($hsgResult);
+
+					$pottingQuery =  "SELECT * FROM `potted_time_csv` WHERE `pcb_no` = '".$pcb_no."'";
+					$pottingResult = mysqli_query($db, $pottingQuery);
+					$pottingRow = mysqli_fetch_assoc($pottingResult);
+
+					$headQuery =  "SELECT * FROM `head_time_csv` WHERE `pcb_no` = '".$pcb_no."'";
+					$headResult = mysqli_query($db, $headQuery);
+					$headRow = mysqli_fetch_assoc($headResult);
+
+					$html.= "
+						<div id='timePcbTable' style='clear: both;'>
+						<p id='tableInfo'>Test Reports</p>
+						<table style='font-size: 15px;'>
+							<tr id='tableHeader'>
+								<td rowspan='2'>Test</td>
+								<td>Parameter</td>
+								<td>PCB Testing</td>
+								<td>Housing</td>
+								<td>Potting</td>
+								<td>Electronic<br>Head</td>
+							</tr>
+							<tr>
+								<td>PCB Number</td>
+								<td colspan='4'>".str_replace("TIME", "", $pcbRow['pcb_no'])."</td>
+							</tr>
+							<tr>
+								<td>VIN</td>
+								<td>Current (I)</td>
+								<td>".$pcbRow['vbat_i']." mA</td>
+								<td>".$hsgRow['vbat_i']." mA</td>
+								<td>".$pottingRow['vbat_i']." mA</td>
+								<td>".$headRow['vbat_i']." mA</td>
+							</tr>
+							<tr>
+								<td rowspan='3'>PST<br>Test</td>
+								<td>PST Amplitude</td>
+								<td>".$pcbRow['pst_amp']." V</td>
+								<td>".$hsgRow['pst_amp']." V</td>
+								<td>".$pottingRow['pst_amp']." V</td>
+								<td>".$headRow['pst_amp']." V</td>
+							</tr>
+							<tr>
+								<td>PST Width</td>
+								<td>".$pcbRow['pst_width']." uS</td>
+								<td>".$hsgRow['pst_width']." uS</td>
+								<td>".$pottingRow['pst_width']." uS</td>
+								<td>".$headRow['pst_width']." uS</td>
+							<tr>
+								<td>VBAT-PST Delay</td>
+								<td>".$pcbRow['pst_delay']." mS</td>
+								<td>".$hsgRow['pst_delay']." mS</td>
+								<td>".$pottingRow['pst_delay']." mS</td>
+								<td>".$headRow['pst_delay']." mS</td>
+							</tr>
+							<tr>
+								<td rowspan='3'>Time<br>Test<br>Set Time<br>3 Sec</td>
+								<td>DET Amplitude</td>
+								<td>-".$pcbRow['3_amp']." V</td>
+								<td>-".$hsgRow['3_amp']." V</td>
+								<td>-".$pottingRow['3_amp']." V</td>
+								<td>-".$headRow['3_amp']." V</td>
+							</tr>
+							<tr>
+								<td>DET Width</td>
+								<td>".$pcbRow['3_width']." uS</td>
+								<td>".$hsgRow['3_width']." uS</td>
+								<td>".$pottingRow['3_width']." uS</td>
+								<td>".$headRow['3_width']." uS</td>
+							<tr>
+								<td>DET Delay</td>
+								<td>".$pcbRow['3_delay']." S</td>
+								<td>".$hsgRow['3_delay']." S</td>
+								<td>".$pottingRow['3_delay']." S</td>
+								<td>".$headRow['3_delay']." S</td>
+							</tr>
+							<tr>
+								<td rowspan='3'>Time<br>Test<br>Set Time<br>16.25 Sec</td>
+								<td>DET Amplitude</td>
+								<td>-".$pcbRow['16_amp']." V</td>
+								<td>-".$hsgRow['16_amp']." V</td>
+								<td>-".$pottingRow['16_amp']." V</td>
+								<td>-".$headRow['16_amp']." V</td>
+							</tr>
+							<tr>
+								<td>DET Width</td>
+								<td>".$pcbRow['16_width']." uS</td>
+								<td>".$hsgRow['16_width']." uS</td>
+								<td>".$pottingRow['16_width']." uS</td>
+								<td>".$headRow['16_width']." uS</td>
+							<tr>
+								<td>DET Delay</td>
+								<td>".$pcbRow['16_delay']." S</td>
+								<td>".$hsgRow['16_delay']." S</td>
+								<td>".$pottingRow['16_delay']." S</td>
+								<td>".$headRow['16_delay']." S</td>
+							</tr>
+							<tr>
+								<td rowspan='3'>Time<br>Test<br>Set Time<br>24.75 Sec</td>
+								<td>DET Amplitude</td>
+								<td>-".$pcbRow['24_amp']." V</td>
+								<td>-".$hsgRow['24_amp']." V</td>
+								<td>-".$pottingRow['24_amp']." V</td>
+								<td>-".$headRow['24_amp']." V</td>
+							</tr>
+							<tr>
+								<td>DET Width</td>
+								<td>".$pcbRow['24_width']." uS</td>
+								<td>".$hsgRow['24_width']." uS</td>
+								<td>".$pottingRow['24_width']." uS</td>
+								<td>".$headRow['24_width']." uS</td>
+							<tr>
+								<td>DET Delay</td>
+								<td>".$pcbRow['24_delay']." S</td>
+								<td>".$hsgRow['24_delay']." S</td>
+								<td>".$pottingRow['24_delay']." S</td>
+								<td>".$headRow['24_delay']." S</td>
+							</tr>
+							<tr>
+								<td >PD</td>
+								<td>DET Amplitude</td>
+								<td>-".$pcbRow['pd_det']." V</td>
+								<td>-".$hsgRow['pd_det']." V</td>
+								<td>-".$pottingRow['pd_det']." V</td>
+								<td>-".$headRow['pd_det']." V</td>
+							</tr>
+							<tr>
+								<td>SAFE</td>
+								<td>No PST/No DET</td>
+								<td>PST Amp = ".$pcbRow['safe_pst']."V<br>DET Amp = ".$pcbRow['safe_det']."V</td>
+								<td>PST Amp = ".$hsgRow['safe_pst']."V<br>DET Amp = ".$hsgRow['safe_det']."V</td>
+								<td>PST Amp = ".$pottingRow['safe_pst']."V<br>DET Amp = ".$pottingRow['safe_det']."V</td>
+								<td>PST Amp = ".$headRow['safe_pst']."V<br>DET Amp = ".$headRow['safe_det']."V</td>
+							</tr>
+							<tr>
+								<td>RESULT</td>
+								<td>PASS/FAIL</td>
+								<td>".$pcbRow['result']." </td>
+								<td>".$hsgRow['result']." </td>
+								<td>".$pottingRow['result']." </td>
+								<td>".$headRow['result']." </td>
+							</tr>
+							<!--<tr>		//disabled
+								<td colspan='2'>Operator Name</td>
+								<td>".($pcbRow['op_name'] == "" ? "*ATE*" : explode("&", $pcbRow['op_name'])[0]."<br>".explode("&", $pcbRow['op_name'])[1])."</td>
+								<td>".($housingRow['op_name'] == "" ? "*ATE*" : explode("&", $housingRow['op_name'])[0]."<br>".explode("&", $housingRow['op_name'])[1])."</td>
+								<td>".($pottingRow['op_name'] == "" ? "*ATE*" : explode("&", $pottingRow['op_name'])[0]."<br>".explode("&", $pottingRow['op_name'])[1])."</td>
+							</tr>-->
+						</table>
+						<br>
+					</div>
+					";
+					break;
 			}
 
 			$html.=	"
