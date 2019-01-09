@@ -149,6 +149,22 @@
 					break;
 			}
 		}
+		elseif($_COOKIE['searchFuzeType'] == "TIME") {
+			switch ($searchInTable) {
+				case '4':
+					$searchInTable = "pcb_time_csv";
+					break;
+				case '5':
+					$searchInTable = "housing_time_csv";
+					break;
+				case '6':
+					$searchInTable = "potted_time_csv";
+					break;
+				case '7':
+					$searchInTable = "head_time_csv";
+					break;
+			}
+		}
 		error_reporting(E_ALL);
 
 		switch ($_POST['select']) {
@@ -254,7 +270,6 @@
 		if($_POST['select'] == '8') {
 			$sql = dateRangeQuery($_POST['datepicker1'],$_POST['datepicker2'],$searchInTable,$searchIn);
 		}
-
 		$results = mysqli_query($db,$sql);
 
 		$value = "<center><table class='centered striped' style='left: 0px; right: 0px; top: 0px; bottom: 0px;'>".$table_head;
@@ -262,7 +277,16 @@
 		$cnt = 0;
 		if($results) {
 			while ($row = mysqli_fetch_assoc($results)) {
-				$sqlLot = "SELECT * FROM `lot_table` WHERE `pcb_no` LIKE '%".$row['pcb_no']."'";
+				$sqlLot = "";
+				if($_COOKIE['searchFuzeType'] == "EPD") {
+					$sqlLot = "SELECT * FROM `lot_table` WHERE `pcb_no` LIKE '%".$row['pcb_no']."' AND `fuze_type`='EPD'";
+				}
+				else if($_COOKIE['searchFuzeType'] == "TIME") {
+					$sqlLot = "SELECT * FROM `lot_table` WHERE `pcb_no` LIKE '%".$row['pcb_no']."' AND `fuze_type`='TIME'";
+				}
+				else {
+					$sqlLot = "SELECT * FROM `lot_table` WHERE `pcb_no` LIKE '%".$row['pcb_no']."' AND `fuze_type`='PROX'";
+				}
 				$lotResult = mysqli_query($db,$sqlLot);
 				$lotRow = mysqli_fetch_assoc($lotResult);
 				$value.="<tr>";
