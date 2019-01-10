@@ -95,7 +95,7 @@
 			die("<center><br><br><h3 style='color:red;'>Main Lot can't be kept blank. Go back & enter valid data.</h3><br><br><a href='welcome.php'>Click here to Go Back</a></center>");
 		}
 
-		if($_FILES['file']['type'] != "application/vnd.ms-excel") {
+		if($_FILES['file']['type'] != "application/vnd.ms-excel" && $_FILES['file']['type'] != "text/csv") {
 			die("
 				<center>
 					<br/><h2 style='color: red;'>Sorry, File type is not allowed. Only CSV file can be uploaded.</h2>
