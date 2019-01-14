@@ -677,6 +677,7 @@
 
 						<div id='productionDialog' style="display: none;">
 							<ul>
+								<li><a href="contract.php" target="_blank" style="color: blue;">&#9672; Manage Production Contract</a></li>
 								<li><a href="vendor.php" target="_blank" style="color: blue;">&#9672; Vendor wise PCB Series Entry</a></li>
 								<li><a id="barcodeRecordLink" href="#" style="color: blue;">&#9672; Lotwise Report : Barcode linking</a></li>
 								<li><a id="batteryRecordLink" href="#" style="color: blue;">&#9672; Lotwise Report: Battery linking</a></li>
@@ -2007,6 +2008,180 @@
 						</div>
 					</div>
 
+					<div class="card-panel grey lighten-4 col s8" id="productionSummaryCard" style="display: none;">
+						<div class="row">
+							<center>
+								<br>
+								<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Production summary sheet</span>
+							</center>
+							<div class="row"><br>
+								<div class="input-field col s2">
+									<input type="text" name="lot_no" id="lot_no" autofocus>
+									<label for="lot_no">Main Lot No.</label>
+								</div>
+								<div class="input-field col s2">
+									<select name="fuze_type" id="fuze_type" required>
+										<option value="" disabled selected>--Select--</option>
+										<option value="EPD">EPD</option>
+										<option value="TIME">TIME</option>
+										<option value="PROX">PROX</option>
+									</select>
+									<label>Fuze Type</label>
+								</div>
+								<div class="input-field col s2">
+									<select name="fuze_diameter" id="fuze_diameter" required>
+										<option value="" selected disabled>--Select--</option>
+										<option value="105">105 mm</option>
+										<option value="155">155 mm</option>
+									</select>
+									<label>Gun Type</label>
+								</div>
+								<div class="input-field col s2">
+									<select name="shift" id="shift" required>
+										<option value="G" selected>General</option>
+										<option value="1">First</option>
+										<option value="2">Second</option>
+										<option value="3">Third</option>
+									</select>
+									<label>Shift</label>
+								</div>
+								<div class='input-field col s4 center' id="productionSummaryDatePickerDiv">
+									<input type='text' id='productionSummaryDatePicker' class="datepicker">
+									<label for="productionSummaryDatePicker">Select Date</label>
+								</div>
+							</div>
+							<div class="row">
+							<table class="responsive-table">
+								<thead>
+									<tr>
+										<td class='center'><span class='center' style="font-weight: bold;">Processes</span></td>
+										<td class='center'><span class='center' style="font-weight: bold;"></span></td>
+										<td class='center'><span class='center' style="font-weight: bold;">Lot<br>Number</span></td>
+										<td class='center'><span class='center' style="font-weight: bold;">Tested/Assembled<br>Quanity</span></td>
+										<td class='center'><span class='center' style="font-weight: bold;">No. of<br>Operators</span></td>
+									</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td class='center'><span style="font-weight: bold; font-size: 18px" class="teal-text text-darken-2 center">Testing Summary</span></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>Assy PCB<br>Visual Inspection</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp1"></td>
+									<td class='center'><input class="col s10" type="number" id="cp1"></td>
+									<td class='center'><input class="col s10" type="number" id="op1"></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>Elec. Hsg. Moulded<br>Ground Pin</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp2"></td>
+									<td class='center'><input class="col s10" type="number" id="cp2"></td>
+									<td class='center'><input class="col s10" type="number" id="op2"></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>Elec. Housing<br>Unmoulded</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp3"></td>
+									<td class='center'><input class="col s10" type="number" id="cp3"></td>
+									<td class='center'><input class="col s10" type="number" id="op3"></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>Elec. Housing<br>Moulded</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp4"></td>
+									<td class='center'><input class="col s10" type="number" id="cp4"></td>
+									<td class='center'><input class="col s10" type="number" id="op4"></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>Electronic<br>Head</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp5"></td>
+									<td class='center'><input class="col s10" type="number" id="cp5"></td>
+									<td class='center'><input class="col s10" type="number" id="op5"></td>
+								</tr>
+								</tbody>
+							</table>
+							<br>
+							<table class="responsive-table">
+								<tbody>
+								<tr>
+									<td class='center'><span style="font-weight: bold; font-size: 18px" class="teal-text text-darken-2 center">Mechanical Assembly</span></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>Reserve Battery<br>Tinning</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp6"></td>
+									<td class='center'><input class="col s10" type="number" id="cp6"></td>
+									<td class='center'><input class="col s10" type="number" id="op6"></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>Elec. Housing<br>Unmoulded</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp7"></td>
+									<td class='center'><input class="col s10" type="number" id="cp7"></td>
+									<td class='center'><input class="col s10" type="number" id="op7"></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>Elec. Housing<br>Moulded</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp8"></td>
+									<td class='center'><input class="col s10" type="number" id="cp8"></td>
+									<td class='center'><input class="col s10" type="number" id="op8"></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>Assy Fuze<br>Base</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp9"></td>
+									<td class='center'><input class="col s10" type="number" id="cp9"></td>
+									<td class='center'><input class="col s10" type="number" id="op9"></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>Assy Fuze</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp10"></td>
+									<td class='center'><input class="col s10" type="number" id="cp10"></td>
+									<td class='center'><input class="col s10" type="number" id="op10"></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>Electronic<br>Head</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp11"></td>
+									<td class='center'><input class="col s10" type="number" id="cp11"></td>
+									<td class='center'><input class="col s10" type="number" id="op11"></td>
+								</tr>
+								</tbody>
+							</table>
+							<br>
+							<table class="responsive-table">
+								<tbody>
+								<tr>
+									<td class='center'><span style="font-weight: bold; font-size: 18px" class="teal-text text-darken-2 center">S&A Assembly</span></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>S&A<br>Visual Inspection</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp12"></td>
+									<td class='center'><input class="col s10" type="number" id="cp12"></td>
+									<td class='center'><input class="col s10" type="number" id="op12"></td>
+								</tr>
+								<tr>
+									<td class='center'><span class='center'>Electronic Fuze<br>Final</span></td>
+									<td class='center'><span class='center'>:</span></td>
+									<td class='center'><input class="col s10" type="number" id="lp13"></td>
+									<td class='center'><input class="col s10" type="number" id="cp13"></td>
+									<td class='center'><input class="col s10" type="number" id="op13"></td>
+								</tr>
+								</tbody>
+							</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="card-panel grey lighten-4 col s3" id="productionSummaryCard2" style="display: none; margin-left: 15px;">
+						<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Cumulative Quantity</span>
+					</div>
+
 				</div>
 			</div>
 	</main>
@@ -3175,6 +3350,31 @@
 				window.location = "mtrlmgmt.php";
 				break;
 
+			case '18':
+				$('#productionSummaryCard').fadeIn();
+					switch($.cookie('fuzeDia')){
+						case '105':
+							$('#fuze_diameter').val("105");
+							break;
+						case '155':
+							$('#fuze_diameter').val("155");
+							break;
+					}
+					switch($.cookie('fuzeType')) {
+						case 'EPD':
+							$('#fuze_type').val("EPD");
+							break;
+						case 'TIME':
+							$('#fuze_type').val("TIME");
+							break;
+						case 'PROX':
+							$('#fuze_type').val("PROX");
+							break;
+					}
+					$('select').material_select();
+					$('#productionSummaryDatePicker').val(getTodaysDate());
+					break;
+
 			default:
 				$('#unavailableCard').fadeIn();
 			}
@@ -3247,6 +3447,30 @@
 					$('#epdHeadTestingDetailsCard').fadeIn();
 					$('#epdPcbTestingDetailsPcbNo').focus();
 					break;
+				case '18':
+					$('#productionSummaryCard').fadeIn();
+					switch($.cookie('fuzeDia')){
+						case '105':
+							$('#fuze_diameter').val("105");
+							break;
+						case '155':
+							$('#fuze_diameter').val("155");
+							break;
+					}
+					switch($.cookie('fuzeType')) {
+						case 'EPD':
+							$('#fuze_type').val("EPD");
+							break;
+						case 'TIME':
+							$('#fuze_type').val("TIME");
+							break;
+						case 'PROX':
+							$('#fuze_type').val("PROX");
+							break;
+					}
+					$('select').material_select();
+					$('#productionSummaryDatePicker').val(getTodaysDate());
+					break;
 				default:
 					$('#unavailableCard').fadeIn();
 			}
@@ -3318,6 +3542,31 @@
 					$('#timePcbTestingDetailsTitle').html("TIME - ELECTRONIC HEAD Test Report");
 					$('#timeHeadTestingDetailsCard').fadeIn();
 					$('#timePcbTestingDetailsPcbNo').focus();
+					break;
+				case '18':
+					$('#productionSummaryCard').fadeIn();
+					$('#productionSummaryCard2').fadeIn();
+					switch($.cookie('fuzeDia')){
+						case '105':
+							$('#fuze_diameter').val("105");
+							break;
+						case '155':
+							$('#fuze_diameter').val("155");
+							break;
+					}
+					switch($.cookie('fuzeType')) {
+						case 'EPD':
+							$('#fuze_type').val("EPD");
+							break;
+						case 'TIME':
+							$('#fuze_type').val("TIME");
+							break;
+						case 'PROX':
+							$('#fuze_type').val("PROX");
+							break;
+					}
+					$('select').material_select();
+					$('#productionSummaryDatePicker').val(getTodaysDate());
 					break;
 				default:
 					$('#unavailableCard').fadeIn();
@@ -3999,6 +4248,8 @@
 			close: 'Ok',
 			closeOnSelect: false // Close upon selecting a date,
 		});
+
+		$('select').material_select();
 
 	</script>
 
