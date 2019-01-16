@@ -18,8 +18,22 @@
 		");
 	}
 
+	$conQuery = "SELECT DISTINCT `contract_no` FROM `fuze_production_contract`";
+	$conRes = mysqli_query($db, $conQuery);
+
+	$optVar = "";
+
+	while($row = mysqli_fetch_assoc($conRes)) {
+		$optVar.="<option value='".$row['contract_no']."'>".$row['contract_no']."</option>";
+	}
+
 	$html = "<html>
 	<title>Production Contract</title>
+	<head>
+		<meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate' />
+		<meta http-equiv='Pragma' content='no-cache' />
+		<meta http-equiv='Expires' content='0' />
+	</head>
 	<style>
 		th, td {
 			padding: 6px;
@@ -52,7 +66,11 @@
 			<table>
 				<tr>
 					<td>Contract No: </td>
-					<td><input type='text' name='contract_no' placeholder='Leave empty to create new...'></td>
+					<td>
+						<select name='contract_no'>
+							<option value='new'>Create New</option>".$optVar."
+						</select>
+					</td>
 					<td>Quantity: </td>
 					<td><input type='number' name='qty'></td>
 					<td>Gun Type: </td>
@@ -91,30 +109,36 @@
 		error_reporting(0);
 
 		if($_SERVER['REQUEST_METHOD'] == 'GET'){
-			$delSql = "DELETE FROM `fuze_production_contract` WHERE `contract_no`='".$_GET['d']."'";
+			$delSql = "DELETE FROM `fuze_production_contract` WHERE `_id`='".$_GET['d']."'";
 			$delRes = mysqli_query($db, $delSql);
 		}
 
-		$sql = "SELECT * FROM `fuze_production_contract`";
+		$sql = "SELECT DISTINCT `contract_no` FROM `fuze_production_contract`";
 		$res = mysqli_query($db, $sql);
 
 		if($_SERVER['REQUEST_METHOD'] == 'POST'){
+			$contract_no = "";
+			if($_POST['contract_no'] == "new") {
+				$contract_no = "C/N-".strval(mysqli_num_rows($res)+1); 
+			}
+			else {
+				$contract_no = $_POST['contract_no'];
+			}
 
-			$contract_no = "C/N-".strval(mysqli_num_rows($res)+1); 
-
-			$tblSql = "CREATE TABLE `fuze_database`.`fuze_production_contract` ( `_id` INT NOT NULL AUTO_INCREMENT , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` SMALLINT(3) NOT NULL , `qty` BIGINT NOT NULL , `contract_no` VARCHAR(20) NOT NULL , PRIMARY KEY (`_id`), UNIQUE(`contract_no`)) ENGINE = InnoDB";
+			$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_contract` ( `_id` INT NOT NULL AUTO_INCREMENT , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` SMALLINT(3) NOT NULL , `qty` BIGINT NOT NULL , `contract_no` VARCHAR(20) NOT NULL , PRIMARY KEY (`_id`)) ENGINE = InnoDB";
 			$tblRes = mysqli_query($db, $tblSql);
 
-			$addSql = "REPLACE INTO `fuze_production_contract` (`_id`,`fuze_type`,`fuze_diameter`,`qty`,`contract_no`) VALUES (
+			$addSql = "INSERT INTO `fuze_production_contract` (`_id`,`fuze_type`,`fuze_diameter`,`qty`,`contract_no`) VALUES (
 				NULL, 
 				'".$_POST['fuzeType']."', 
 				'".$_POST['fuzeDia']."', 
 				'".$_POST['qty']."', 
-				'".($_POST['contract_no'] == "" ? $contract_no : "C/N-".$_POST['contract_no'])."'
+				'".($_POST['contract_no'] == "new" ? $contract_no : "C/N-".str_replace("C/N-", "", $_POST['contract_no']))."'
 				)";
 
 			$addRes = mysqli_query($db, $addSql);
 
+			header("Refresh:1");
 		}
 
 		$sql = "SELECT * FROM `fuze_production_contract`";
@@ -129,7 +153,7 @@
 					<td>".$row['qty']."</td>
 					<td>".$row['fuze_type']."</td>
 					<td>".$row['fuze_diameter']."</td>
-					<td><a href='contract.php/?d=".$row['contract_no']."'>DELETE</a></td>
+					<td><a href='contract.php/?d=".$row['_id']."'>DELETE</a></td>
 				</tr>
 			";
 			$cnt++;
