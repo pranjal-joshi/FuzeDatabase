@@ -97,7 +97,7 @@
 			<br>
 		</form>
 		<h3 style='color:blue;'>-- Launched Production Information--</h3>
-		<table>
+		<table style='float: left; margin-left: 20px;'>
 			<tr id='tableHeader'>
 				<td>SN. </td>
 				<td>Contract No</td>
@@ -174,6 +174,36 @@
 
 		error_reporting(E_ALL);
 	
+	$html.="
+	</table>
+
+	<table style='float: left; margin-left: 30px;'>
+		<tr id='tableHeader'>
+			<td>SN. </td>
+			<td>Contract No</td>
+			<td>Quantity</td>
+			<td>Fuze Type</td>
+			<td>Gun Type</td>
+		</tr>
+		";
+
+	$sql = "SELECT * FROM `fuze_production_contract`";
+	$res = mysqli_query($db, $sql);
+
+	$cnt = 1;
+	while ($row = mysqli_fetch_assoc($res)) {
+		$html.="
+			<tr>
+				<td>".$cnt."</td>
+				<td>".$row['contract_no']."</td>
+				<td>".$row['qty']."</td>
+				<td>".$row['fuze_type']."</td>
+				<td>".$row['fuze_diameter']."</td>
+			</tr>
+		";
+		$cnt++;
+	}
+
 	$html.="
 	</table>
 	</center>
