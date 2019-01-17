@@ -23,6 +23,10 @@
 					<td><input type='text' name='pcb_no'></td>
 				</tr>
 				<tr>
+					<td>Enter Main Lot No: </td>
+					<td><input type='text' name='main_lot'></td>
+				</tr>
+				<tr>
 					<td>Enter new (correct) Kit Lot No: </td>
 					<td><input type='text' name='kit_lot'></td>
 				</tr>
@@ -38,10 +42,10 @@
 	echo $html;
 
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
-		$sql = "UPDATE `lot_table` SET `kit_lot`='".$_POST['kit_lot']."' WHERE `pcb_no`='".$_POST['pcb_no']."'";
+		$sql = "UPDATE `lot_table` SET `kit_lot`='".$_POST['kit_lot']."', `main_lot`='".$_POST['main_lot']."' WHERE `pcb_no`='".$_POST['pcb_no']."'";
 		$res = mysqli_query($db,$sql);
 		if($res) {
-			echo "<center><h3>Successfully transferred ".$_POST['pcb_no']." to Kit Lot: ".$_POST['kit_lot']."</h3></center>";
+			echo "<center><h3>Successfully transferred ".$_POST['pcb_no']." to Main Lot: ".$_POST['main_lot']." Kit Lot: ".$_POST['kit_lot']."</h3></center>";
 		}
 		else {
 			echo "<center><h3 style='color: red;'>DATABASE CONNECTION ERROR!!</h3></center>";
