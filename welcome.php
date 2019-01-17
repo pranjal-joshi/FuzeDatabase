@@ -2016,26 +2016,33 @@
 								<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Production summary sheet</span>
 							</center>
 							<div class="row"><br>
-								<div class="input-field col s2">
-									<input type="text" name="lot_no" id="lot_no" autofocus>
-									<label for="lot_no">Main Lot No.</label>
-								</div>
-								<div class="input-field col s2">
-									<select name="fuze_type" id="fuze_type" required>
+								<div class="input-field col s3">
+									<select name="contract_no_select" id="contract_no_select" required>
 										<option value="" disabled selected>--Select--</option>
-										<option value="EPD">EPD</option>
-										<option value="TIME">TIME</option>
-										<option value="PROX">PROX</option>
+										<?php 
+											include('db_config.php');
+											$sql = "SELECT DISTINCT `contract_no` FROM `fuze_production_contract` ORDER BY `contract_no` DESC";
+											$res = mysqli_query($db, $sql);
+											while($row = mysqli_fetch_assoc($res)) {
+												echo "<option value='".$row['contract_no']."'>".$row['contract_no']."</option>";
+											}
+										?>
 									</select>
-									<label>Fuze Type</label>
+									<label>Select Contract</label>
 								</div>
-								<div class="input-field col s2">
-									<select name="fuze_diameter" id="fuze_diameter" required>
-										<option value="" selected disabled>--Select--</option>
-										<option value="105">105 mm</option>
-										<option value="155">155 mm</option>
+								<div class="input-field col s3">
+									<select name="lot_no_select" id="lot_no_select" required>
+										<option value="" disabled selected>--Select--</option>
+										<?php 
+											include('db_config.php');
+											$sql = "SELECT DISTINCT `lot_no` FROM `fuze_production_launch` ORDER BY `lot_no` DESC";
+											$res = mysqli_query($db, $sql);
+											while($row = mysqli_fetch_assoc($res)) {
+												echo "<option value='".$row['lot_no']."'>".$row['lot_no']."</option>";
+											}
+										?>
 									</select>
-									<label>Gun Type</label>
+									<label>Select Lot</label>
 								</div>
 								<div class="input-field col s2">
 									<select name="shift" id="shift" required>
@@ -2052,7 +2059,7 @@
 								</div>
 							</div>
 							<div class="row">
-							<table class="responsive-table">
+							<table>
 								<thead>
 									<tr>
 										<td class='center'><span class='center' style="font-weight: bold;">Processes</span></td>
@@ -4213,6 +4220,32 @@
 			$('#safePass').prop('checked',true);
 			$('#resultPass').prop('checked',true);
 			$('#pcbTestingManualPcbNo').focus();
+		});
+
+		$('#lot_no_select').on('change',function(){
+			if($('#contract_no_select').val() == "" || $('#lot_no_select').val() == "") {
+				Materialize.toast('Select valid Contract No. / Lot No.',4000,'rounded');
+			}
+			else {
+				$.ajax({
+					url: 'production_summary.php',
+					type: 'POST',
+					data: {
+						task: 'check',
+						lot_no: $('#lot_no_select').val(),
+						contract_no: $('#contract_no_select').val()
+					},
+					success: function(msg) {
+						console.log(msg);
+						if(!msg.includes("ok")) {
+							alert("Invalid combination of Contract No. & Lot No.!\nPlease verify your selection again.");
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + "\n\nIs web-server offline?");
+					}
+				});
+			}
 		});
 
 		function occurrences(string, subString, allowOverlapping) {
