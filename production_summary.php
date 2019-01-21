@@ -32,7 +32,7 @@
 			$fuze_type = $fetchRow['fuze_type'];
 			$fuze_diameter = $fetchRow['fuze_diameter'];
 
-			$delSql = "DELETE FROM `fuze_production_record` WHERE `record_date`=STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y')";
+			$delSql = "DELETE FROM `fuze_production_record` WHERE `record_date`=STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y') AND `shift`='".$_POST['shift']."'";
 			$delRes = mysqli_query($db, $delSql);
 
 			$sd = $_POST['summaryData'];
@@ -81,19 +81,6 @@
 				'".$_POST['lot_no']."', '')
 				";
 
-				/*$addSql = "INSERT INTO `fuze_production_record` (`_id`, `fuze_type`, `fuze_diameter`, `record_date`, `stream`, `operation`, `process_cnt`, `op_cnt`, `shift`, `lot_no`, `remark`) VALUES 
-				(NULL, 
-				'".$fuze_type."', 
-				'".$fuze_diameter."', 
-				STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'), 
-				'TEST', 
-				'".$operationArray[0]."', 
-				'".$_POST['summaryData']['5']."', 
-				'".$_POST['summaryData']['6']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', 
-				'-')";
-				print_r($addSql);*/
 				$addRes = mysqli_query($db, $addSql);
 
 				if($addRes) {
