@@ -2076,42 +2076,42 @@
 								<tr>
 									<td class='center'><span class='center'>Assy PCB<br>Visual Inspection</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp1"></td>
+									<td class='center'><input class="col s10" disabled id="lp1"></td>
 									<td class='center'><input class="col s10" type="number" id="cp1"></td>
 									<td class='center'><input class="col s10" type="number" id="op1"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Hsg. Moulded<br>Ground Pin</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp2"></td>
+									<td class='center'><input class="col s10" disabled id="lp2"></td>
 									<td class='center'><input class="col s10" type="number" id="cp2"></td>
 									<td class='center'><input class="col s10" type="number" id="op2"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Unmoulded</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp3"></td>
+									<td class='center'><input class="col s10" disabled id="lp3"></td>
 									<td class='center'><input class="col s10" type="number" id="cp3"></td>
 									<td class='center'><input class="col s10" type="number" id="op3"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Moulded</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp4"></td>
+									<td class='center'><input class="col s10" disabled id="lp4"></td>
 									<td class='center'><input class="col s10" type="number" id="cp4"></td>
 									<td class='center'><input class="col s10" type="number" id="op4"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Electronic<br>Head</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp5"></td>
+									<td class='center'><input class="col s10" disabled id="lp5"></td>
 									<td class='center'><input class="col s10" type="number" id="cp5"></td>
 									<td class='center'><input class="col s10" type="number" id="op5"></td>
 								</tr>
 								</tbody>
 							</table>
 							<br>
-							<table class="responsive-table">
+							<table>
 								<tbody>
 								<tr>
 									<td class='center'><span style="font-weight: bold; font-size: 18px" class="teal-text text-darken-2 center">Mechanical Assembly</span></td>
@@ -2119,49 +2119,49 @@
 								<tr>
 									<td class='center'><span class='center'>Reserve Battery<br>Tinning</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp6"></td>
+									<td class='center'><input class="col s10" disabled id="lp6"></td>
 									<td class='center'><input class="col s10" type="number" id="cp6"></td>
 									<td class='center'><input class="col s10" type="number" id="op6"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Unmoulded</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp7"></td>
+									<td class='center'><input class="col s10" disabled id="lp7"></td>
 									<td class='center'><input class="col s10" type="number" id="cp7"></td>
 									<td class='center'><input class="col s10" type="number" id="op7"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Moulded</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp8"></td>
+									<td class='center'><input class="col s10" disabled id="lp8"></td>
 									<td class='center'><input class="col s10" type="number" id="cp8"></td>
 									<td class='center'><input class="col s10" type="number" id="op8"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Assy Fuze<br>Base</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp9"></td>
+									<td class='center'><input class="col s10" disabled id="lp9"></td>
 									<td class='center'><input class="col s10" type="number" id="cp9"></td>
 									<td class='center'><input class="col s10" type="number" id="op9"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Assy Fuze</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp10"></td>
+									<td class='center'><input class="col s10" disabled id="lp10"></td>
 									<td class='center'><input class="col s10" type="number" id="cp10"></td>
 									<td class='center'><input class="col s10" type="number" id="op10"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Electronic<br>Head</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp11"></td>
+									<td class='center'><input class="col s10" disabled id="lp11"></td>
 									<td class='center'><input class="col s10" type="number" id="cp11"></td>
 									<td class='center'><input class="col s10" type="number" id="op11"></td>
 								</tr>
 								</tbody>
 							</table>
 							<br>
-							<table class="responsive-table">
+							<table>
 								<tbody>
 								<tr>
 									<td class='center'><span style="font-weight: bold; font-size: 18px" class="teal-text text-darken-2 center">S&A Assembly</span></td>
@@ -2169,19 +2169,22 @@
 								<tr>
 									<td class='center'><span class='center'>S&A<br>Visual Inspection</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp12"></td>
+									<td class='center'><input class="col s10" disabled id="lp12"></td>
 									<td class='center'><input class="col s10" type="number" id="cp12"></td>
 									<td class='center'><input class="col s10" type="number" id="op12"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Electronic Fuze<br>Final</span></td>
 									<td class='center'><span class='center'>:</span></td>
-									<td class='center'><input class="col s10" type="number" id="lp13"></td>
+									<td class='center'><input class="col s10" disabled id="lp13"></td>
 									<td class='center'><input class="col s10" type="number" id="cp13"></td>
 									<td class='center'><input class="col s10" type="number" id="op13"></td>
 								</tr>
 								</tbody>
 							</table>
+							<center>
+								<a class="waves-effect waves-light btn" id="summarySubmitButton">SUBMIT</a>
+							</center>
 							</div>
 						</div>
 					</div>
@@ -3360,28 +3363,18 @@
 
 			case '18':
 				$('#productionSummaryCard').fadeIn();
-					switch($.cookie('fuzeDia')){
-						case '105':
-							$('#fuze_diameter').val("105");
-							break;
-						case '155':
-							$('#fuze_diameter').val("155");
-							break;
+				$('#productionSummaryCard2').fadeIn();
+				$('select').material_select();
+				$('#productionSummaryDatePicker').val(getTodaysDate());
+				$('#productionSummaryCard').keypress(function (e) {
+					var key = e.which || e.keyCode;
+					if(key == 13)  // the enter key code
+					{
+						$('#summarySubmitButton').trigger('click');
+						return false;  
 					}
-					switch($.cookie('fuzeType')) {
-						case 'EPD':
-							$('#fuze_type').val("EPD");
-							break;
-						case 'TIME':
-							$('#fuze_type').val("TIME");
-							break;
-						case 'PROX':
-							$('#fuze_type').val("PROX");
-							break;
-					}
-					$('select').material_select();
-					$('#productionSummaryDatePicker').val(getTodaysDate());
-					break;
+				});
+				break;
 
 			default:
 				$('#unavailableCard').fadeIn();
@@ -3457,27 +3450,17 @@
 					break;
 				case '18':
 					$('#productionSummaryCard').fadeIn();
-					switch($.cookie('fuzeDia')){
-						case '105':
-							$('#fuze_diameter').val("105");
-							break;
-						case '155':
-							$('#fuze_diameter').val("155");
-							break;
-					}
-					switch($.cookie('fuzeType')) {
-						case 'EPD':
-							$('#fuze_type').val("EPD");
-							break;
-						case 'TIME':
-							$('#fuze_type').val("TIME");
-							break;
-						case 'PROX':
-							$('#fuze_type').val("PROX");
-							break;
-					}
+					$('#productionSummaryCard2').fadeIn();
 					$('select').material_select();
 					$('#productionSummaryDatePicker').val(getTodaysDate());
+					$('#productionSummaryCard').keypress(function (e) {
+						var key = e.which || e.keyCode;
+						if(key == 13)  // the enter key code
+						{
+							$('#summarySubmitButton').trigger('click');
+							return false;  
+						}
+					});
 					break;
 				default:
 					$('#unavailableCard').fadeIn();
@@ -3554,27 +3537,16 @@
 				case '18':
 					$('#productionSummaryCard').fadeIn();
 					$('#productionSummaryCard2').fadeIn();
-					switch($.cookie('fuzeDia')){
-						case '105':
-							$('#fuze_diameter').val("105");
-							break;
-						case '155':
-							$('#fuze_diameter').val("155");
-							break;
-					}
-					switch($.cookie('fuzeType')) {
-						case 'EPD':
-							$('#fuze_type').val("EPD");
-							break;
-						case 'TIME':
-							$('#fuze_type').val("TIME");
-							break;
-						case 'PROX':
-							$('#fuze_type').val("PROX");
-							break;
-					}
 					$('select').material_select();
 					$('#productionSummaryDatePicker').val(getTodaysDate());
+					$('#productionSummaryCard').keypress(function (e) {
+						var key = e.which || e.keyCode;
+						if(key == 13)  // the enter key code
+						{
+							$('#summarySubmitButton').trigger('click');
+							return false;  
+						}
+					});
 					break;
 				default:
 					$('#unavailableCard').fadeIn();
@@ -4238,7 +4210,56 @@
 					success: function(msg) {
 						console.log(msg);
 						if(!msg.includes("ok")) {
+							$('#lot_no_select').val("");
+							$('#lot_no_select').material_select();
 							alert("Invalid combination of Contract No. & Lot No.!\nPlease verify your selection again.");
+						}
+						else {
+							for(var i=0;i<13;i++) {
+								$('#lp'+(i+1).toString()).val($('#lot_no_select').val());
+							}
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + "\n\nIs web-server offline?");
+					}
+				});
+			}
+		});
+
+		$('#summarySubmitButton').click(function(){
+			if($('#productionSummaryDatePicker').val() == "" || $('#contract_no_select').val() == null || $("#lot_no_select").val() == null) {
+				Materialize.toast("Please select/enter required details",3000,'rounded');
+			}
+			else {
+				var summaryData = new Array();
+				var isEmpty = false;
+				$('#productionSummaryCard input').each(function(){
+						if($(this).val() == "") {
+							summaryData.push('0');
+						}
+						else {
+							summaryData.push($(this).val());
+						}
+				});
+				$.ajax({
+					url: 'production_summary.php',
+					type: 'POST',
+					data: {
+						task: 'save',
+						summaryData: summaryData,
+						shift: $('#shift').val(),
+						lot_no: $('#lot_no_select').val(),
+						contract_no: $('#contract_no_select').val(),
+						record_date: $('#productionSummaryDatePicker').val()
+					},
+					success: function(msg) {
+						console.log(msg);
+						if(msg.includes("ok")) {
+							Materialize.toast("Record submitted.",3000,'rounded');
+						}
+						else {
+							console.log(msg);
 						}
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
