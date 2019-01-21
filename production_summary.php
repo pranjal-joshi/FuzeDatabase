@@ -4,10 +4,77 @@
 
 	if(isset($_COOKIE['fuzeLogin'])) {
 
+		$operationArray = array("VISUAL","HSG GND PIN","HSG UNMOULDED","HSG MOULDED","HEAD","BATTERY TINNING","HSG UNMOULDED","HSG MOULDED","FUZE BASE","FUZE ASSY","HEAD","VISUAL","FUZE FINAL");
+
 		if($_POST['task'] == 'check') {
-			$sql = "SELECT * FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."' AND `contract_no`='".$_POST['contract_no']."'";
+			$sql = "SELECT * FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."' AND `contract_no`='".$_POST['contract_no']."' AND `lot_no`='".$_POST['lot_no']."'";
 			$res = mysqli_query($db, $sql);
 			$cnt = mysqli_num_rows($res);
+
+			$sql1 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='TEST' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[0]."'";
+			$sql2 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='TEST' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[1]."'";
+			$sql3 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='TEST' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[2]."'";
+			$sql4 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='TEST' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[3]."'";
+			$sql5 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='TEST' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[4]."'";
+
+			$sql6 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='ASSY' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[5]."'";
+			$sql7 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='ASSY' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[6]."'";
+			$sql8 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='ASSY' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[7]."'";
+			$sql9 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='ASSY' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[8]."'";
+			$sql10 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='ASSY' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[9]."'";
+			$sql11 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='ASSY' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[10]."'";
+
+			$sql12 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='S&A' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[11]."'";
+			$sql13 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='S&A' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[12]."'";
+
+			$sql1res = mysqli_query($db, $sql1);
+			$sql2res = mysqli_query($db, $sql2);
+			$sql3res = mysqli_query($db, $sql3);
+			$sql4res = mysqli_query($db, $sql4);
+			$sql5res = mysqli_query($db, $sql5);
+			$sql6res = mysqli_query($db, $sql6);
+			$sql7res = mysqli_query($db, $sql7);
+			$sql8res = mysqli_query($db, $sql8);
+			$sql9res = mysqli_query($db, $sql9);
+			$sql10res = mysqli_query($db, $sql10);
+			$sql11res = mysqli_query($db, $sql11);
+			$sql12res = mysqli_query($db, $sql12);
+			$sql13res = mysqli_query($db, $sql13);
+
+			$sql1row = mysqli_fetch_assoc($sql1res);
+			$sql2row = mysqli_fetch_assoc($sql2res);
+			$sql3row = mysqli_fetch_assoc($sql3res);
+			$sql4row = mysqli_fetch_assoc($sql4res);
+			$sql5row = mysqli_fetch_assoc($sql5res);
+			$sql6row = mysqli_fetch_assoc($sql6res);
+			$sql7row = mysqli_fetch_assoc($sql7res);
+			$sql8row = mysqli_fetch_assoc($sql8res);
+			$sql9row = mysqli_fetch_assoc($sql9res);
+			$sql10row = mysqli_fetch_assoc($sql10res);
+			$sql11row = mysqli_fetch_assoc($sql11res);
+			$sql12row = mysqli_fetch_assoc($sql12res);
+			$sql13row = mysqli_fetch_assoc($sql13res);
+
+			$cumulativeArray = array();
+
+			array_push($cumulativeArray, array("1"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("2"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("3"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("4"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("5"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("6"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("7"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("8"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("9"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("10"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("11"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("12"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("13"=>$sql1row['process_cnt']));
+
+			$cumulativeArrayJson = json_encode($cumulativeArray, JSON_NUMERIC_CHECK);
+
+			print_r($cumulativeArrayJson);
+
 			if($cnt > 0) {
 				echo "ok";
 			}
@@ -16,10 +83,8 @@
 			}
 		}
 		elseif($_POST['task'] == 'save') {
-			$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_record` ( `_id` INT NOT NULL AUTO_INCREMENT , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` VARCHAR(4) NOT NULL , `record_date` DATE NOT NULL , `stream` VARCHAR(4) NOT NULL , `operation` TEXT NOT NULL , `process_cnt` INT NOT NULL , `op_cnt` INT NOT NULL , `shift` VARCHAR(10) NOT NULL , `lot_no` SMALLINT NOT NULL , `remark` TEXT , PRIMARY KEY (`_id`)) ENGINE = InnoDB COMMENT = 'holds production & cumulative count info';";
+			$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_record` ( `_id` INT NOT NULL AUTO_INCREMENT , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` VARCHAR(4) NOT NULL , `record_date` DATE NOT NULL , `stream` VARCHAR(4) NOT NULL , `operation` TEXT NOT NULL , `process_cnt` INT NOT NULL , `op_cnt` INT NOT NULL , `shift` VARCHAR(10) NOT NULL , `lot_no` VARCHAR(20) NOT NULL , `remark` TEXT , PRIMARY KEY (`_id`)) ENGINE = InnoDB COMMENT = 'holds production & cumulative count info';";
 			$tblRes = mysqli_query($db, $tblSql);
-
-			$operationArray = array("VISUAL","HSG GND PIN","HSG UNMOULDED","HSG MOULDED","HEAD","BATTERY TINNING","HSG UNMOULDED","HSG MOULDED","FUZE BASE","FUZE ASSY","HEAD","VISUAL","FUZE FINAL");
 
 			unset($_POST['summaryData']['0']);
 			unset($_POST['summaryData']['1']);
@@ -32,7 +97,7 @@
 			$fuze_type = $fetchRow['fuze_type'];
 			$fuze_diameter = $fetchRow['fuze_diameter'];
 
-			$delSql = "DELETE FROM `fuze_production_record` WHERE `record_date`=STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y') AND `shift`='".$_POST['shift']."'";
+			$delSql = "DELETE FROM `fuze_production_record` WHERE `record_date`=STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y') AND `shift`='".$_POST['shift']."' AND `lot_no`='".$_POST['lot_no']."'";
 			$delRes = mysqli_query($db, $delSql);
 
 			$sd = $_POST['summaryData'];
