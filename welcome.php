@@ -2190,7 +2190,96 @@
 					</div>
 
 					<div class="card-panel grey lighten-4 col s3" id="productionSummaryCard2" style="display: none; margin-left: 15px;">
-						<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Cumulative Quantity</span>
+						<br>
+						<center>
+							<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Cumulative Quantity</span>
+						</center>
+						<br>
+						<table>
+							<thead>
+								<tr>
+									<td><span class='center' style="font-weight: bold;">Process</span></td>
+									<td><span class='center' style="font-weight: bold;">Cumulative<br>Count</span></td>
+									<td><span class='center' style="font-weight: bold;">Lot<br>Quantity</span></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class='center'><span style="font-weight: bold; font-size: 18px" class="teal-text text-darken-2 center">Testing</span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>PCB Visual<br>Inspection</span></td>
+									<td><span class='center' id="cc1"></span></td>
+									<td><span class='center' id="lc1"></span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>HSG GND<br>Pin Solder</span></td>
+									<td><span class='center' id="cc2"></span></td>
+									<td><span class='center' id="lc2"></span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>HSG<br>Unmoulded</span></td>
+									<td><span class='center' id="cc3"></span></td>
+									<td><span class='center' id="lc3"></span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>HSG<br>Moulded</span></td>
+									<td><span class='center' id="cc4"></span></td>
+									<td><span class='center' id="lc4"></span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>Elec.<br>Head</span></td>
+									<td><span class='center' id="cc5"></span></td>
+									<td><span class='center' id="lc5"></span></td>
+								</tr>
+								<tr>
+									<td class='center'><span style="font-weight: bold; font-size: 18px" class="teal-text text-darken-2 center">Assembly</span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>Battery<br>Tinning</span></td>
+									<td><span class='center' id="cc6"></span></td>
+									<td><span class='center' id="lc6"></span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>HSG<br>Unmoulded</span></td>
+									<td><span class='center' id="cc7"></span></td>
+									<td><span class='center' id="lc7"></span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>HSG<br>Moulded</span></td>
+									<td><span class='center' id="cc8"></span></td>
+									<td><span class='center' id="lc8"></span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>Assy Fuze<br>Base</span></td>
+									<td><span class='center' id="cc9"></span></td>
+									<td><span class='center' id="lc9"></span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>Assy<br>Fuze</span></td>
+									<td><span class='center' id="cc10"></span></td>
+									<td><span class='center' id="lc10"></span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>Elec.<br>Head</span></td>
+									<td><span class='center' id="cc11"></span></td>
+									<td><span class='center' id="lc11"></span></td>
+								</tr>
+								<tr>
+									<td class='center'><span style="font-weight: bold; font-size: 18px" class="teal-text text-darken-2 center">S&A</span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>Visual<br>Inspection</span></td>
+									<td><span class='center' id="cc12"></span></td>
+									<td><span class='center' id="lc12"></span></td>
+								</tr>
+								<tr>
+									<td><span class='center'>Elec. Fuze<br>Final</span></td>
+									<td><span class='center' id="cc13"></span></td>
+									<td><span class='center' id="lc13"></span></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 
 				</div>
