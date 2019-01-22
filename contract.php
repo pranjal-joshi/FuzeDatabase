@@ -268,7 +268,8 @@
 					<td>".$row['qty']."</td>
 					<td>".$row['fuze_type']."</td>
 					<td>".$row['fuze_diameter']."</td>
-					<td><a href='contract.php/?d=".$row['_id']."'>DELETE</a></td>
+					<!--<td><a href='contract.php/?d=".$row['_id']."' onclick='cnf()'>DELETE</a></td>-->
+					<td><a href='#' onclick='cnf(".$row['_id'].")'>DELETE</a></td>
 				</tr>
 			";
 			$cnt++;
@@ -280,6 +281,19 @@
 	</table>
 	</center>
 	</body>
+	<script>
+		function cnf(id) {
+			var x = confirm('Are you sure you want to delete this contract?');
+			console.log(x);
+			if(x) {
+				location.href = 'contract.php/?d='+id;
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	</script>
 	</html>";
 
 	echo $html;
