@@ -2077,36 +2077,36 @@
 									<td class='center'><span class='center'>Assy PCB<br>Visual Inspection</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp1"></td>
-									<td class='center'><input class="col s10" type="number" id="cp1"></td>
-									<td class='center'><input class="col s10" type="number" id="op1"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp1"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op1"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Hsg. Moulded<br>Ground Pin</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp2"></td>
-									<td class='center'><input class="col s10" type="number" id="cp2"></td>
-									<td class='center'><input class="col s10" type="number" id="op2"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp2"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op2"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Unmoulded</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp3"></td>
-									<td class='center'><input class="col s10" type="number" id="cp3"></td>
-									<td class='center'><input class="col s10" type="number" id="op3"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp3"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op3"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Moulded</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp4"></td>
-									<td class='center'><input class="col s10" type="number" id="cp4"></td>
-									<td class='center'><input class="col s10" type="number" id="op4"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp4"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op4"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Electronic<br>Head</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp5"></td>
-									<td class='center'><input class="col s10" type="number" id="cp5"></td>
-									<td class='center'><input class="col s10" type="number" id="op5"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp5"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op5"></td>
 								</tr>
 								</tbody>
 							</table>
@@ -2120,43 +2120,43 @@
 									<td class='center'><span class='center'>Reserve Battery<br>Tinning</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp6"></td>
-									<td class='center'><input class="col s10" type="number" id="cp6"></td>
-									<td class='center'><input class="col s10" type="number" id="op6"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp6"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op6"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Unmoulded</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp7"></td>
-									<td class='center'><input class="col s10" type="number" id="cp7"></td>
-									<td class='center'><input class="col s10" type="number" id="op7"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp7"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op7"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Moulded</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp8"></td>
-									<td class='center'><input class="col s10" type="number" id="cp8"></td>
-									<td class='center'><input class="col s10" type="number" id="op8"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp8"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op8"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Assy Fuze<br>Base</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp9"></td>
-									<td class='center'><input class="col s10" type="number" id="cp9"></td>
-									<td class='center'><input class="col s10" type="number" id="op9"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp9"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op9"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Assy Fuze</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp10"></td>
-									<td class='center'><input class="col s10" type="number" id="cp10"></td>
-									<td class='center'><input class="col s10" type="number" id="op10"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp10"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op10"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Electronic<br>Head</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp11"></td>
-									<td class='center'><input class="col s10" type="number" id="cp11"></td>
-									<td class='center'><input class="col s10" type="number" id="op11"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp11"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op11"></td>
 								</tr>
 								</tbody>
 							</table>
@@ -2170,15 +2170,15 @@
 									<td class='center'><span class='center'>S&A<br>Visual Inspection</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp12"></td>
-									<td class='center'><input class="col s10" type="number" id="cp12"></td>
-									<td class='center'><input class="col s10" type="number" id="op12"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp12"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op12"></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Electronic Fuze<br>Final</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp13"></td>
-									<td class='center'><input class="col s10" type="number" id="cp13"></td>
-									<td class='center'><input class="col s10" type="number" id="op13"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp13"></td>
+									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op13"></td>
 								</tr>
 								</tbody>
 							</table>
@@ -2195,7 +2195,7 @@
 							<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Cumulative Quantity</span>
 						</center>
 						<br>
-						<table>
+						<table class="striped">
 							<thead>
 								<tr>
 									<td><span class='center' style="font-weight: bold;">Process</span></td>
@@ -4283,7 +4283,7 @@
 			$('#pcbTestingManualPcbNo').focus();
 		});
 
-		$('#lot_no_select').on('change',function(){
+		function lotCumulativeLoad(){
 			if($('#contract_no_select').val() == "" || $('#lot_no_select').val() == "") {
 				Materialize.toast('Select valid Contract No. / Lot No.',4000,'rounded');
 			}
@@ -4298,15 +4298,24 @@
 					},
 					success: function(msg) {
 						console.log(msg);
-						if(!msg.includes("ok")) {
-							$('#lot_no_select').val("");
-							$('#lot_no_select').material_select();
-							alert("Invalid combination of Contract No. & Lot No.!\nPlease verify your selection again.");
-						}
-						else {
-							for(var i=0;i<13;i++) {
-								$('#lp'+(i+1).toString()).val($('#lot_no_select').val());
+						try {
+							jsonData = JSON.parse(msg);
+							console.log(jsonData);
+							if(jsonData[14]['cnt'] == "ok") {
+								for(var i=0;i<13;i++) {
+									$('#lp'+(i+1).toString()).val($('#lot_no_select').val());
+									$('#cc'+(i+1).toString()).html(jsonData[i][(i+1).toString()]);
+									$('#lc'+(i+1).toString()).html(jsonData[13]['lot_qty']);
+								}
 							}
+							else {
+								$('#lot_no_select').val("");
+								$('#lot_no_select').material_select();
+								alert("Invalid combination of Contract No. & Lot No.!\nPlease verify your selection again.");
+							}
+						}
+						catch(err) {
+							alert("ERROR FETCHING DATABASE! SHOW THIS ERROR TO ADMIN:\n\n"+err);
 						}
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -4314,7 +4323,9 @@
 					}
 				});
 			}
-		});
+		}
+
+		$('#lot_no_select').on('change', lotCumulativeLoad);
 
 		$('#summarySubmitButton').click(function(){
 			if($('#productionSummaryDatePicker').val() == "" || $('#contract_no_select').val() == null || $("#lot_no_select").val() == null) {
@@ -4346,6 +4357,8 @@
 						console.log(msg);
 						if(msg.includes("ok")) {
 							Materialize.toast("Record submitted.",3000,'rounded');
+							setTimeout(lotCumulativeLoad(),500);
+							//lotCumulativeLoad();
 						}
 						else {
 							console.log(msg);
