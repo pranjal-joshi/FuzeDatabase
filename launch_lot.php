@@ -18,8 +18,14 @@
 		");
 	}
 
-	$selQuery = "SELECT DISTINCT`contract_no` FROM `fuze_production_contract`;";
+	$selQuery = "SELECT DISTINCT `contract_no` FROM `fuze_production_contract`;";
 	$selRes = mysqli_query($db, $selQuery);
+
+	$selLotQuery = "SELECT DISTINCT `lot_no` FROM `fuze_production_launch`;";
+	$selLotRes = mysqli_query($db, $selLotQuery);
+
+	$selLotQuery = "SELECT DISTINCT `lot_no` FROM `fuze_production_launch`;";
+	$selLotRes = mysqli_query($db, $selLotQuery);
 
 	$html = "<html>
 	<title>Launch Production</title>
@@ -34,7 +40,7 @@
 		}
 
 		table, th, td {
-			border: 1px solid black;
+			border: 2px solid black;
 			border-collapse: collapse;
 		}
 
@@ -59,9 +65,8 @@
 		<form action='launch_lot.php' method='POST'>
 			<table>
 				<tr>
-					<td>Select Contract: </td>
-					<td>
-						<select name='contract_no'>";
+					<td>Select Contract:
+						<select name='contract_no' style='margin-left: 15px;'>";
 
 	while($row = mysqli_fetch_assoc($selRes)) {
 		$html.="<option value='".$row['contract_no']."'>".$row['contract_no']."</option>";
@@ -71,25 +76,36 @@
 							
 						</select>
 					</td>
-					<td>Lot No: </td>
-					<td><input type='text' name='lot_no' placeholder='Leave blank to create new..'></td>
-					<td>Lot Quantity: </td>
-					<td><input type='number' name='lot_qty'></td>
-					<td>Gun Type: </td>
-					<td>
-						<select name='fuzeDia'>
-							<option value='105'>105</option>
-							<option value='155'>155</option>
+					<td>Lot No: 
+						<select name='lot_no' style='margin-left: 15px;'>
+							<option value=''>Create New</option>";
+
+	while($row = mysqli_fetch_assoc($selLotRes)) {
+		$html.="<option value='".$row['lot_no']."'>".$row['lot_no']."</option>";
+	}
+
+		$html.="
 						</select>
 					</td>
-					<td>Fuze Type: </td>
-					<td>
-						<select name='fuzeType'>
+					<td>Gun Type:
+						<select name='fuzeDia' style='margin-left: 15px;'>
+							<option value='105'>105</option>
+							<option value='155'>155</option>
+							<option value='NA'>N/A</option>
+						</select>
+					</td>
+					<td>Fuze Type:
+						<select name='fuzeType' style='margin-left: 15px;'>
 							<option value='EPD'>EPD</option>
 							<option value='TIME'>TIME</option>
 							<option value='PROX'>PROX</option>
+							<option value='SETR'>SETTER</option>
 						</select>
 					</td>
+				</tr>
+				<tr>
+					<td colspan='2' align='left'>Lot Quantity: <input type='number' name='lot_qty' style='margin-left: 37px;'></td>
+					<td colspan='2' align='left'>Lot Marking: <input type='text' name='lot_marking' style='margin-left: 37px;'></td>
 				</tr>
 			</table>
 			<br>
@@ -100,13 +116,14 @@
 		<table style='float: left; margin-left: 20px;'>
 			<tr id='tableHeader'>
 				<td>SN. </td>
-				<td>Contract No</td>
+				<td>Contract<br>No</td>
 				<td>Order Qty</td>
 				<td>Lot No</td>
-				<td>Lot Quantity</td>
+				<td>Lot<br>Marking</td>
+				<td>Lot<br>Quantity</td>
 				<td>Fuze Type</td>
 				<td>Gun Type</td>
-				<td>Start Date</td>
+				<td>Start<br>Date</td>
 				<td>Action</td>
 			</tr>
 		";
@@ -114,13 +131,13 @@
 		error_reporting(0);
 
 		if($_SERVER['REQUEST_METHOD'] == 'GET'){
-			$delSql = "DELETE FROM `fuze_production_launch` WHERE `lot_no`='".$_GET['d']."'";
+			$delSql = "DELETE FROM `fuze_production_launch` WHERE `_id`='".$_GET['d']."'";
 			$delRes = mysqli_query($db, $delSql);
 		}
 
 		if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-			$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_launch` ( `_id` INT NOT NULL AUTO_INCREMENT , `contract_no` VARCHAR(20) NOT NULL , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` SMALLINT NOT NULL , `lot_qty` MEDIUMINT NOT NULL , `lot_no` VARCHAR(10) NOT NULL , `start_date` DATE NOT NULL , `end_date` DATE , PRIMARY KEY (`_id`) , UNIQUE KEY (`lot_no`)) ENGINE = InnoDB COMMENT = 'hold launched production info';";
+			$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_launch` ( `_id` INT NOT NULL AUTO_INCREMENT , `contract_no` VARCHAR(20) NOT NULL , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` SMALLINT NOT NULL , `lot_qty` MEDIUMINT NOT NULL , `lot_no` VARCHAR(20) NOT NULL , `lot_marking` TEXT , `start_date` DATE NOT NULL , `end_date` DATE , PRIMARY KEY (`_id`) , UNIQUE KEY (`lot_no`)) ENGINE = InnoDB COMMENT = 'hold launched production info';";
 			$tblRes = mysqli_query($db, $tblSql);
 
 			$lot_no = "";
@@ -133,18 +150,21 @@
 				$lot_no = $_POST['lot_no'];
 			}
 
-			$addSql = "REPLACE INTO `fuze_production_launch` (`_id`,`fuze_type`,`fuze_diameter`,`lot_qty`,`lot_no`,`contract_no`,`start_date`,`end_date`) VALUES (
+			$addSql = "REPLACE INTO `fuze_production_launch` (`_id`,`fuze_type`,`fuze_diameter`,`lot_qty`,`lot_no`,`lot_marking`,`contract_no`,`start_date`,`end_date`) VALUES (
 				NULL, 
 				'".$_POST['fuzeType']."', 
 				'".$_POST['fuzeDia']."', 
 				'".$_POST['lot_qty']."', 
 				'".$lot_no."', 
+				'".$_POST['lot_marking']."', 
 				'".$_POST['contract_no']."',
 				CURRENT_DATE(),
 				NULL
 				)";
 
 			$addRes = mysqli_query($db, $addSql);
+
+			header("Refresh:1");
 		}
 
 		$sql = "SELECT * FROM `fuze_production_launch`";
@@ -162,11 +182,12 @@
 					<td>".$row['contract_no']."</td>
 					<td>".$conRow['qty']."</td>
 					<td>".$row['lot_no']."</td>
+					<td style='word-wrap: break-word; max-width: 150px;'>".$row['lot_marking']."</td>
 					<td>".$row['lot_qty']."</td>
 					<td>".$row['fuze_type']."</td>
 					<td>".$row['fuze_diameter']."</td>
 					<td>".$row['start_date']."</td>
-					<td><a href='launch_lot.php/?d=".$row['lot_no']."'>DELETE</a></td>
+					<td><a href='#' onclick='cnf(".$row['_id'].")'>DELETE</a></td>
 				</tr>
 			";
 			$cnt++;
@@ -208,6 +229,19 @@
 	</table>
 	</center>
 	</body>
+	<script>
+		function cnf(id) {
+			var x = confirm('Are you sure you want to delete this contract?');
+			console.log(x);
+			if(x) {
+				location.href = 'launch_lot.php/?d='+id;
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	</script>
 	</html>";
 
 	echo $html;
