@@ -27,6 +27,10 @@
 			$sql12 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='S&A' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[11]."'";
 			$sql13 = "SELECT SUM(`process_cnt`) AS `process_cnt` FROM `fuze_production_record` WHERE `stream`='S&A' AND `lot_no`='".$_POST['lot_no']."'  AND `operation`='".$operationArray[12]."'";
 
+			$lotSizeSql = "SELECT `lot_qty` FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."'";
+			$lotSizeRes = mysqli_query($db, $lotSizeSql);
+			$lotSizeRow = mysqli_fetch_assoc($lotSizeRes);
+
 			$sql1res = mysqli_query($db, $sql1);
 			$sql2res = mysqli_query($db, $sql2);
 			$sql3res = mysqli_query($db, $sql3);
@@ -58,29 +62,30 @@
 			$cumulativeArray = array();
 
 			array_push($cumulativeArray, array("1"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("2"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("3"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("4"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("5"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("6"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("7"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("8"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("9"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("10"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("11"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("12"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("13"=>$sql1row['process_cnt']));
+			array_push($cumulativeArray, array("2"=>$sql2row['process_cnt']));
+			array_push($cumulativeArray, array("3"=>$sql3row['process_cnt']));
+			array_push($cumulativeArray, array("4"=>$sql4row['process_cnt']));
+			array_push($cumulativeArray, array("5"=>$sql5row['process_cnt']));
+			array_push($cumulativeArray, array("6"=>$sql6row['process_cnt']));
+			array_push($cumulativeArray, array("7"=>$sql7row['process_cnt']));
+			array_push($cumulativeArray, array("8"=>$sql8row['process_cnt']));
+			array_push($cumulativeArray, array("9"=>$sql9row['process_cnt']));
+			array_push($cumulativeArray, array("10"=>$sql10row['process_cnt']));
+			array_push($cumulativeArray, array("11"=>$sql11row['process_cnt']));
+			array_push($cumulativeArray, array("12"=>$sql12row['process_cnt']));
+			array_push($cumulativeArray, array("13"=>$sql13row['process_cnt']));
+			array_push($cumulativeArray, array("lot_qty"=>$lotSizeRow['lot_qty']));
+
+			if($cnt > 0) {
+				array_push($cumulativeArray, array("cnt"=>"ok"));
+			}
+			else {
+				array_push($cumulativeArray, array("cnt"=>"invalid"));
+			}
 
 			$cumulativeArrayJson = json_encode($cumulativeArray, JSON_NUMERIC_CHECK);
 
-			print_r($cumulativeArrayJson);
-
-			if($cnt > 0) {
-				echo "ok";
-			}
-			else {
-				"invalid";
-			}
+			echo($cumulativeArrayJson);
 		}
 		elseif($_POST['task'] == 'save') {
 			$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_record` ( `_id` INT NOT NULL AUTO_INCREMENT , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` VARCHAR(4) NOT NULL , `record_date` DATE NOT NULL , `stream` VARCHAR(4) NOT NULL , `operation` TEXT NOT NULL , `process_cnt` INT NOT NULL , `op_cnt` INT NOT NULL , `shift` VARCHAR(10) NOT NULL , `lot_no` VARCHAR(20) NOT NULL , `remark` TEXT , PRIMARY KEY (`_id`)) ENGINE = InnoDB COMMENT = 'holds production & cumulative count info';";
