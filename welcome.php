@@ -677,6 +677,7 @@
 
 						<div id='productionDialog' style="display: none;">
 							<ul>
+								<li><a href="contract.php" target="_blank" style="color: blue;">&#9672; Production Summary</a></li>
 								<li><a href="contract.php" target="_blank" style="color: blue;">&#9672; Manage Production Contract</a></li>
 								<li><a href="launch_lot.php" target="_blank" style="color: blue;">&#9672; Launch Production Lot</a></li>
 								<li><a href="vendor.php" target="_blank" style="color: blue;">&#9672; Vendor wise PCB Series Entry</a></li>
@@ -2013,7 +2014,7 @@
 						<div class="row">
 							<center>
 								<br>
-								<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Production summary sheet</span>
+								<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Production Summary Sheet</span>
 							</center>
 							<div class="row"><br>
 								<div class="input-field col s3">
@@ -4373,6 +4374,7 @@
 
 		$('#productionSummaryDatePicker').on('change', loadProductionSummaryByDate);
 		$('#shift').on('change', loadProductionSummaryByDate);
+		$('#lot_no_select').on('change', loadProductionSummaryByDate);
 
 		$('#summarySubmitButton').click(function(){
 			if($('#productionSummaryDatePicker').val() == "" || $('#contract_no_select').val() == null || $("#lot_no_select").val() == null) {
