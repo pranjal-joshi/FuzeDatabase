@@ -241,17 +241,6 @@
 				$addRes = mysqli_query($db, $addSql);
 			}
 
-			/*$addSql = "INSERT INTO `fuze_production_contract` (`_id`,`fuze_type`,`fuze_diameter`,`qty`,`contract_no`) VALUES (
-				NULL, 
-				'".$_POST['fuzeType']."', 
-				'".$_POST['fuzeDia']."', 
-				'".$_POST['qty']."', 
-				'".($_POST['contract_no'] == "new" ? $contract_no : "C/N-".str_replace("C/N-", "", $_POST['contract_no']))."'
-				)";
-
-			$addRes = mysqli_query($db, $addSql);
-			*/
-
 			header("Refresh:1");
 		}
 
