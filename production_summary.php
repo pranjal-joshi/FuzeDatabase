@@ -9,7 +9,7 @@
 		$qtyRes = mysqli_query($db, $qtyQuery);
 		$qtyRow = mysqli_fetch_assoc($qtyRes);
 		if(($cumulativeCount + $submittedCount) > $qtyRow['lot_qty']) {
-			die("Error: Only ".strval($qtyRow['lot_qty']-$cumulativeCount)." Qty of ".$operation." can be added to this lot.\nPending Qty of ".strval($qtyRow['lot_qty']-$cumulativeCount+$submittedCount)." must be added to the next lot.");
+			die("<div style='color:red'>Error: </div><br>Only ".strval($qtyRow['lot_qty']-$cumulativeCount)." Qty of ".$operation." can be added to this lot.<br><br>Remaining Qty of ".strval($qtyRow['lot_qty']-$cumulativeCount+$submittedCount)." must be added to the next lot.");
 		}
 	}
 
@@ -118,8 +118,6 @@
 			$delRes = mysqli_query($db, $delSql);
 
 			$sd = $_POST['summaryData'];
-
-			print_r($sd);
 
 			$sdCnt = 5;
 			for($opCnt=0;$opCnt<13;$opCnt++) {

@@ -2187,6 +2187,9 @@
 							</center>
 							</div>
 						</div>
+						<div style="display: none" id="productionSummaryErrorDialog">
+							
+						</div>
 					</div>
 
 					<div class="card-panel grey lighten-4 col s3" id="productionSummaryCard2" style="display: none; margin-left: 15px;">
@@ -4359,6 +4362,16 @@
 							Materialize.toast("Record submitted.",3000,'rounded');
 							setTimeout(lotCumulativeLoad(),500);
 							//lotCumulativeLoad();
+						}
+						else if(msg.includes("Error")) {
+							$('#productionSummaryErrorDialog').html("<b>"+msg+"</b>");
+							$('#productionSummaryErrorDialog').dialog({
+               			modal : true,
+										show : 'blind',
+										hide : 'blind',
+										width: '30%',
+										title: "Quantity Mismatch"
+       						});
 						}
 						else {
 							console.log(msg);
