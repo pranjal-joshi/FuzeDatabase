@@ -99,6 +99,28 @@
 
 			echo($cumulativeArrayJson);
 		}
+		elseif($_POST['task'] == 'load') {			// load data on date change
+
+			$loadSql = "SELECT * FROM `fuze_production_record` WHERE `record_date`=STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y') AND `shift`='".$_POST['shift']."' AND `lot_no`='".$_POST['lot_no']."'";
+			$loadRes = mysqli_query($db, $loadSql);
+
+			$loadCountArray = array();
+			$c = 1;
+			if(mysqli_num_rows($loadRes) == 0) {
+				for($i=0;$i<13;$i++) {
+					array_push($loadCountArray, array("cnt"=>"", "op"=>""));
+				}
+			}
+			else {
+				while ($row = mysqli_fetch_assoc($loadRes)) {
+					array_push($loadCountArray, array("cnt"=>$row['process_cnt'], "op"=>$row['op_cnt']));
+				}
+			}
+
+			$loadCountArrayJson = json_encode($loadCountArray, JSON_NUMERIC_CHECK);
+			echo($loadCountArrayJson);
+
+		}
 		elseif($_POST['task'] == 'save') {
 			$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_record` ( `_id` INT NOT NULL AUTO_INCREMENT , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` VARCHAR(4) NOT NULL , `record_date` DATE NOT NULL , `stream` VARCHAR(4) NOT NULL , `operation` TEXT NOT NULL , `process_cnt` INT NOT NULL , `op_cnt` INT NOT NULL , `shift` VARCHAR(10) NOT NULL , `lot_no` VARCHAR(20) NOT NULL , `remark` TEXT , PRIMARY KEY (`_id`)) ENGINE = InnoDB COMMENT = 'holds production & cumulative count info';";
 			$tblRes = mysqli_query($db, $tblSql);

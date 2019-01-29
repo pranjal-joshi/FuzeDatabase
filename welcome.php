@@ -4314,8 +4314,15 @@
 							else {
 								$('#lot_no_select').val("");
 								$('#lot_no_select').material_select();
-								alert("Invalid combination of Contract No. & Lot No.!\nPlease verify your selection again.");
-							}
+								$('#productionSummaryErrorDialog').html("<b>Invalid combination of Contract No. & Lot No!<br>Please verify your selection again.</b>");
+								$('#productionSummaryErrorDialog').dialog({
+	               			modal : true,
+											show : 'blind',
+											hide : 'blind',
+											width: '30%',
+											title: "Contract & Lot Mismatch"
+	       						});
+								}
 						}
 						catch(err) {
 							alert("ERROR FETCHING DATABASE! SHOW THIS ERROR TO ADMIN:\n\n"+err);
@@ -4328,7 +4335,45 @@
 			}
 		}
 
+		function loadProductionSummaryByDate() {
+			if($('#contract_no_select').val() == "" || $('#lot_no_select').val() == "") {
+				Materialize.toast('Select valid Contract No. / Lot No.',4000,'rounded');
+			}
+			else {
+				$.ajax({
+					url: 'production_summary.php',
+					type: 'POST',
+					data: {
+						task: 'load',
+						lot_no: $('#lot_no_select').val(),
+						contract_no: $('#contract_no_select').val(),
+						shift: $('#shift').val(),
+						record_date: $('#productionSummaryDatePicker').val()
+					},
+					success: function(msg) {
+						console.log(msg);
+						try {
+							jsonData = JSON.parse(msg);
+							for(var i=1;i<14;i++) {
+								$('#cp'+i.toString()).val((jsonData[i-1]['cnt'] == "0" ? "" : jsonData[i-1]['cnt']));
+								$('#op'+i.toString()).val((jsonData[i-1]['op'] == "0" ? "" : jsonData[i-1]['op']));
+							}
+						}
+						catch(err) {
+							// do nothing here
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + "\n\nIs web-server offline?");
+					}
+				});
+			}
+		}
+
 		$('#lot_no_select').on('change', lotCumulativeLoad);
+
+		$('#productionSummaryDatePicker').on('change', loadProductionSummaryByDate);
+		$('#shift').on('change', loadProductionSummaryByDate);
 
 		$('#summarySubmitButton').click(function(){
 			if($('#productionSummaryDatePicker').val() == "" || $('#contract_no_select').val() == null || $("#lot_no_select").val() == null) {
