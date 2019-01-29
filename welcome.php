@@ -677,7 +677,7 @@
 
 						<div id='productionDialog' style="display: none;">
 							<ul>
-								<li><a href="contract.php" target="_blank" style="color: blue;">&#9672; Production Summary</a></li>
+								<li><a href="production_summary.php" target="_blank" style="color: blue;">&#9672; Production Summary</a></li>
 								<li><a href="contract.php" target="_blank" style="color: blue;">&#9672; Manage Production Contract</a></li>
 								<li><a href="launch_lot.php" target="_blank" style="color: blue;">&#9672; Launch Production Lot</a></li>
 								<li><a href="vendor.php" target="_blank" style="color: blue;">&#9672; Vendor wise PCB Series Entry</a></li>
