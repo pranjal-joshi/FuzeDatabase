@@ -4351,7 +4351,6 @@
 						record_date: $('#productionSummaryDatePicker').val()
 					},
 					success: function(msg) {
-						console.log(msg);
 						try {
 							jsonData = JSON.parse(msg);
 							for(var i=1;i<14;i++) {
