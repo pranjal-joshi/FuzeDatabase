@@ -15,9 +15,11 @@
 
 	if(isset($_COOKIE['fuzeLogin'])) {
 
+		if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
 		$operationArray = array("VISUAL","HSG GND PIN","HSG UNMOULDED","HSG MOULDED","HEAD","BATTERY TINNING","HSG UNMOULDED","HSG MOULDED","FUZE BASE","FUZE ASSY","HEAD","VISUAL","FUZE FINAL");
 
-		$sql = "SELECT * FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."' AND `contract_no`='".$_POST['contract_no']."' AND `lot_no`='".$_POST['lot_no']."'";
+		$sql = "SELECT * FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."'";
 			$res = mysqli_query($db, $sql);
 			$cnt = mysqli_num_rows($res);
 
@@ -69,135 +71,369 @@
 			$sql12row = mysqli_fetch_assoc($sql12res);
 			$sql13row = mysqli_fetch_assoc($sql13res);
 
-		if($_POST['task'] == 'check') {
+			if($_POST['task'] == 'check') {
 
-			$cumulativeArray = array();
+				$cumulativeArray = array();
 
-			array_push($cumulativeArray, array("1"=>$sql1row['process_cnt']));
-			array_push($cumulativeArray, array("2"=>$sql2row['process_cnt']));
-			array_push($cumulativeArray, array("3"=>$sql3row['process_cnt']));
-			array_push($cumulativeArray, array("4"=>$sql4row['process_cnt']));
-			array_push($cumulativeArray, array("5"=>$sql5row['process_cnt']));
-			array_push($cumulativeArray, array("6"=>$sql6row['process_cnt']));
-			array_push($cumulativeArray, array("7"=>$sql7row['process_cnt']));
-			array_push($cumulativeArray, array("8"=>$sql8row['process_cnt']));
-			array_push($cumulativeArray, array("9"=>$sql9row['process_cnt']));
-			array_push($cumulativeArray, array("10"=>$sql10row['process_cnt']));
-			array_push($cumulativeArray, array("11"=>$sql11row['process_cnt']));
-			array_push($cumulativeArray, array("12"=>$sql12row['process_cnt']));
-			array_push($cumulativeArray, array("13"=>$sql13row['process_cnt']));
-			array_push($cumulativeArray, array("lot_qty"=>$lotSizeRow['lot_qty']));
+				array_push($cumulativeArray, array("1"=>$sql1row['process_cnt']));
+				array_push($cumulativeArray, array("2"=>$sql2row['process_cnt']));
+				array_push($cumulativeArray, array("3"=>$sql3row['process_cnt']));
+				array_push($cumulativeArray, array("4"=>$sql4row['process_cnt']));
+				array_push($cumulativeArray, array("5"=>$sql5row['process_cnt']));
+				array_push($cumulativeArray, array("6"=>$sql6row['process_cnt']));
+				array_push($cumulativeArray, array("7"=>$sql7row['process_cnt']));
+				array_push($cumulativeArray, array("8"=>$sql8row['process_cnt']));
+				array_push($cumulativeArray, array("9"=>$sql9row['process_cnt']));
+				array_push($cumulativeArray, array("10"=>$sql10row['process_cnt']));
+				array_push($cumulativeArray, array("11"=>$sql11row['process_cnt']));
+				array_push($cumulativeArray, array("12"=>$sql12row['process_cnt']));
+				array_push($cumulativeArray, array("13"=>$sql13row['process_cnt']));
+				array_push($cumulativeArray, array("lot_qty"=>$lotSizeRow['lot_qty']));
 
-			if($cnt > 0) {
-				array_push($cumulativeArray, array("cnt"=>"ok"));
-			}
-			else {
-				array_push($cumulativeArray, array("cnt"=>"invalid"));
-			}
-
-			$cumulativeArrayJson = json_encode($cumulativeArray, JSON_NUMERIC_CHECK);
-
-			echo($cumulativeArrayJson);
-		}
-		elseif($_POST['task'] == 'load') {			// load data on date change
-
-			$loadSql = "SELECT * FROM `fuze_production_record` WHERE `record_date`=STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y') AND `shift`='".$_POST['shift']."' AND `lot_no`='".$_POST['lot_no']."'";
-			$loadRes = mysqli_query($db, $loadSql);
-
-			$loadCountArray = array();
-			$c = 1;
-			if(mysqli_num_rows($loadRes) == 0) {
-				for($i=0;$i<13;$i++) {
-					array_push($loadCountArray, array("cnt"=>"", "op"=>""));
-				}
-			}
-			else {
-				while ($row = mysqli_fetch_assoc($loadRes)) {
-					array_push($loadCountArray, array("cnt"=>$row['process_cnt'], "op"=>$row['op_cnt']));
-				}
-			}
-
-			$loadCountArrayJson = json_encode($loadCountArray, JSON_NUMERIC_CHECK);
-			echo($loadCountArrayJson);
-
-		}
-		elseif($_POST['task'] == 'save') {
-			$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_record` ( `_id` INT NOT NULL AUTO_INCREMENT , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` VARCHAR(4) NOT NULL , `record_date` DATE NOT NULL , `stream` VARCHAR(4) NOT NULL , `operation` TEXT NOT NULL , `process_cnt` INT NOT NULL , `op_cnt` INT NOT NULL , `shift` VARCHAR(10) NOT NULL , `lot_no` VARCHAR(20) NOT NULL , `remark` TEXT , PRIMARY KEY (`_id`)) ENGINE = InnoDB COMMENT = 'holds production & cumulative count info';";
-			$tblRes = mysqli_query($db, $tblSql);
-
-			unset($_POST['summaryData']['0']);
-			unset($_POST['summaryData']['1']);
-			unset($_POST['summaryData']['2']);
-			unset($_POST['summaryData']['3']);
-
-			$fetchSql = "SELECT * FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."'";
-			$fetchRes = mysqli_query($db, $fetchSql);
-			$fetchRow = mysqli_fetch_assoc($fetchRes);
-			$fuze_type = $fetchRow['fuze_type'];
-			$fuze_diameter = $fetchRow['fuze_diameter'];
-
-			$delSql = "DELETE FROM `fuze_production_record` WHERE `record_date`=STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y') AND `shift`='".$_POST['shift']."' AND `lot_no`='".$_POST['lot_no']."'";
-			$delRes = mysqli_query($db, $delSql);
-
-			$sd = $_POST['summaryData'];
-
-			$sdCnt = 5;
-			for($opCnt=0;$opCnt<13;$opCnt++) {
-				isOverflow($sd[strval($sdCnt)], $sql1row['process_cnt'], $_POST['lot_no'], $operationArray[$opCnt], $db);
-				$sdCnt += 3;
-			}
-
-			$addSql = "INSERT INTO `fuze_production_record` (`_id`,`fuze_type`,`fuze_diameter`,`record_date`,`stream`,`operation`,`process_cnt`,`op_cnt`,`shift`,`lot_no`,`remark`) VALUES 
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'TEST','".$operationArray[0]."','".$sd['5']."','".$sd['6']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', ''),
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'TEST','".$operationArray[1]."','".$sd['8']."','".$sd['9']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', ''),
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'TEST','".$operationArray[2]."','".$sd['11']."','".$sd['12']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', ''),
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'TEST','".$operationArray[3]."','".$sd['14']."','".$sd['15']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', ''),
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'TEST','".$operationArray[4]."','".$sd['17']."','".$sd['18']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', ''),
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'ASSY','".$operationArray[5]."','".$sd['20']."','".$sd['21']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', ''),
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'ASSY','".$operationArray[6]."','".$sd['23']."','".$sd['24']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', ''),
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'ASSY','".$operationArray[7]."','".$sd['26']."','".$sd['27']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', ''),
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'ASSY','".$operationArray[8]."','".$sd['29']."','".$sd['30']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', ''),
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'ASSY','".$operationArray[9]."','".$sd['32']."','".$sd['33']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', ''),
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'ASSY','".$operationArray[10]."','".$sd['35']."','".$sd['36']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', ''),
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'S&A','".$operationArray[11]."','".$sd['38']."','".$sd['39']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', ''),
-				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'S&A','".$operationArray[12]."','".$sd['41']."','".$sd['42']."', 
-				'".$_POST['shift']."', 
-				'".$_POST['lot_no']."', '')
-				";
-
-				$addRes = mysqli_query($db, $addSql);
-
-				if($addRes) {
-					echo "ok";
+				if($cnt > 0) {
+					array_push($cumulativeArray, array("cnt"=>"ok"));
 				}
 				else {
-					echo "fail";
+					array_push($cumulativeArray, array("cnt"=>"invalid"));
 				}
-		}
+
+				$cumulativeArrayJson = json_encode($cumulativeArray, JSON_NUMERIC_CHECK);
+
+				echo($cumulativeArrayJson);
+			}
+			elseif($_POST['task'] == 'load') {			// load data on date change
+
+				$loadSql = "SELECT * FROM `fuze_production_record` WHERE `record_date`=STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y') AND `shift`='".$_POST['shift']."' AND `lot_no`='".$_POST['lot_no']."'";
+				$loadRes = mysqli_query($db, $loadSql);
+
+				$loadCountArray = array();
+				$c = 1;
+				if(mysqli_num_rows($loadRes) == 0) {
+					for($i=0;$i<13;$i++) {
+						array_push($loadCountArray, array("cnt"=>"", "op"=>""));
+					}
+				}
+				else {
+					while ($row = mysqli_fetch_assoc($loadRes)) {
+						array_push($loadCountArray, array("cnt"=>$row['process_cnt'], "op"=>$row['op_cnt']));
+					}
+				}
+
+				$loadCountArrayJson = json_encode($loadCountArray, JSON_NUMERIC_CHECK);
+				echo($loadCountArrayJson);
+
+			}
+			elseif($_POST['task'] == 'report') {
+				$cumulativeArray = array();
+
+				array_push($cumulativeArray, array("1"=>$sql1row['process_cnt']));
+				array_push($cumulativeArray, array("2"=>$sql2row['process_cnt']));
+				array_push($cumulativeArray, array("3"=>$sql3row['process_cnt']));
+				array_push($cumulativeArray, array("4"=>$sql4row['process_cnt']));
+				array_push($cumulativeArray, array("5"=>$sql5row['process_cnt']));
+				array_push($cumulativeArray, array("6"=>$sql6row['process_cnt']));
+				array_push($cumulativeArray, array("7"=>$sql7row['process_cnt']));
+				array_push($cumulativeArray, array("8"=>$sql8row['process_cnt']));
+				array_push($cumulativeArray, array("9"=>$sql9row['process_cnt']));
+				array_push($cumulativeArray, array("10"=>$sql10row['process_cnt']));
+				array_push($cumulativeArray, array("11"=>$sql11row['process_cnt']));
+				array_push($cumulativeArray, array("12"=>$sql12row['process_cnt']));
+				array_push($cumulativeArray, array("13"=>$sql13row['process_cnt']));
+				array_push($cumulativeArray, array("lot_qty"=>$lotSizeRow['lot_qty']));
+
+				if($cnt > 0) {
+					array_push($cumulativeArray, array("cnt"=>"ok"));
+				}
+				else {
+					array_push($cumulativeArray, array("cnt"=>"invalid"));
+				}
+
+				$reportArray = array();
+
+				$datesSql = "SELECT DISTINCT `record_date` FROM `fuze_production_record` WHERE `lot_no`='".$_POST['lot_no']."' ORDER BY `record_date` ASC";
+				$dateRes = mysqli_query($db, $datesSql);
+
+				while($dateRow = mysqli_fetch_assoc($dateRes)){
+
+					$testDataCatcher = array();
+
+					for($i=0;$i<5;$i++){
+						$testSql = "SELECT SUM(`process_cnt`) AS `process_cnt`, SUM(`op_cnt`) AS `op_cnt` FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."' AND `stream`='TEST' AND `operation`='".$operationArray[$i]."'";
+						$testRes = mysqli_query($db, $testSql);
+						$testRow = mysqli_fetch_assoc($testRes);
+						if($testRow['process_cnt'] > 0){
+							array_push($testDataCatcher, array("operation"=>$operationArray[$i], "cnt"=>$testRow['process_cnt'], "op_cnt"=>$testRow['op_cnt'], "stream"=>"test"));
+						}
+						else {
+							array_push($testDataCatcher, array("operation"=>$operationArray[$i], "cnt"=>"-", "op_cnt"=>"-", "stream"=>"test"));
+						}
+					}
+					for($i=5;$i<11;$i++){
+						$testSql = "SELECT SUM(`process_cnt`) AS `process_cnt`, SUM(`op_cnt`) AS `op_cnt` FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."' AND `stream`='ASSY' AND `operation`='".$operationArray[$i]."'";
+						$testRes = mysqli_query($db, $testSql);
+						$testRow = mysqli_fetch_assoc($testRes);
+						if($testRow['process_cnt'] > 0){
+							array_push($testDataCatcher, array("operation"=>$operationArray[$i], "cnt"=>$testRow['process_cnt'], "op_cnt"=>$testRow['op_cnt'], "stream"=>"assy"));
+						}
+						else {
+							array_push($testDataCatcher, array("operation"=>$operationArray[$i], "cnt"=>"-", "op_cnt"=>"-", "stream"=>"assy"));
+						}
+					}
+					for($i=11;$i<13;$i++){
+						$testSql = "SELECT SUM(`process_cnt`) AS `process_cnt`, SUM(`op_cnt`) AS `op_cnt` FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."' AND `stream`='S&A' AND `operation`='".$operationArray[$i]."'";
+						$testRes = mysqli_query($db, $testSql);
+						$testRow = mysqli_fetch_assoc($testRes);
+						if($testRow['process_cnt'] > 0){
+							array_push($testDataCatcher, array("operation"=>$operationArray[$i], "cnt"=>$testRow['process_cnt'], "op_cnt"=>$testRow['op_cnt'], "stream"=>"S&A"));
+						}
+						else {
+							array_push($testDataCatcher, array("operation"=>$operationArray[$i], "cnt"=>"-", "op_cnt"=>"-", "stream"=>"S&A"));
+						}
+					}
+					array_push($reportArray, array('date'=>$dateRow['record_date'],"data"=>$testDataCatcher));
+				}
+
+				/*while($dateRow = mysqli_fetch_assoc($dateRes)){
+					$shiftSql = "SELECT DISTINCT `shift` FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."'";
+					$shiftRes = mysqli_query($db, $shiftSql);
+
+					while($shiftRow = mysqli_fetch_assoc($shiftRes)){
+
+						$testSql = "SELECT * FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."' AND `shift`='".$shiftRow['shift']."' AND `stream`='TEST'";
+						$testRes = mysqli_query($db, $testSql);
+
+						$testDataCatcher = array();
+						$recDate = "";
+						$shift="";
+
+						while($testRow = mysqli_fetch_assoc($testRes)){
+							//array_push($reportArray, array("record_date"=>$testRow['record_date'], "data"=>array("cnt"=>$testRow['process_cnt'], "op"=>$testRow['op_cnt'], "shift"=>$testRow['shift'])));
+
+							array_push($testDataCatcher, array("operation"=>$testRow['operation'], "cnt"=>$testRow['process_cnt'], "op_cnt"=>$testRow['op_cnt']));
+							$recDate = $testRow['record_date'];
+							$shift = $testRow['shift'];
+						}
+						array_push($reportArray, array("record_date"=>$recDate, array("shift"=>$shift,"data"=>$testDataCatcher)));
+
+					}
+
+				}*/
+				$reportArrayJson = json_encode($reportArray, JSON_NUMERIC_CHECK);
+				echo $reportArrayJson;
+			}
+			elseif($_POST['task'] == 'save') {
+				$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_record` ( `_id` INT NOT NULL AUTO_INCREMENT , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` VARCHAR(4) NOT NULL , `record_date` DATE NOT NULL , `stream` VARCHAR(4) NOT NULL , `operation` TEXT NOT NULL , `process_cnt` INT NOT NULL , `op_cnt` INT NOT NULL , `shift` VARCHAR(10) NOT NULL , `lot_no` VARCHAR(20) NOT NULL , `remark` TEXT , PRIMARY KEY (`_id`)) ENGINE = InnoDB COMMENT = 'holds production & cumulative count info';";
+				$tblRes = mysqli_query($db, $tblSql);
+
+				unset($_POST['summaryData']['0']);
+				unset($_POST['summaryData']['1']);
+				unset($_POST['summaryData']['2']);
+				unset($_POST['summaryData']['3']);
+
+				$fetchSql = "SELECT * FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."'";
+				$fetchRes = mysqli_query($db, $fetchSql);
+				$fetchRow = mysqli_fetch_assoc($fetchRes);
+				$fuze_type = $fetchRow['fuze_type'];
+				$fuze_diameter = $fetchRow['fuze_diameter'];
+
+				$delSql = "DELETE FROM `fuze_production_record` WHERE `record_date`=STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y') AND `shift`='".$_POST['shift']."' AND `lot_no`='".$_POST['lot_no']."'";
+				$delRes = mysqli_query($db, $delSql);
+
+				$sd = $_POST['summaryData'];
+
+				$sdCnt = 5;
+				for($opCnt=0;$opCnt<13;$opCnt++) {
+					isOverflow($sd[strval($sdCnt)], $sql1row['process_cnt'], $_POST['lot_no'], $operationArray[$opCnt], $db);
+					$sdCnt += 3;
+				}
+
+				$addSql = "INSERT INTO `fuze_production_record` (`_id`,`fuze_type`,`fuze_diameter`,`record_date`,`stream`,`operation`,`process_cnt`,`op_cnt`,`shift`,`lot_no`,`remark`) VALUES 
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'TEST','".$operationArray[0]."','".$sd['5']."','".$sd['6']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', ''),
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'TEST','".$operationArray[1]."','".$sd['8']."','".$sd['9']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', ''),
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'TEST','".$operationArray[2]."','".$sd['11']."','".$sd['12']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', ''),
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'TEST','".$operationArray[3]."','".$sd['14']."','".$sd['15']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', ''),
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'TEST','".$operationArray[4]."','".$sd['17']."','".$sd['18']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', ''),
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'ASSY','".$operationArray[5]."','".$sd['20']."','".$sd['21']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', ''),
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'ASSY','".$operationArray[6]."','".$sd['23']."','".$sd['24']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', ''),
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'ASSY','".$operationArray[7]."','".$sd['26']."','".$sd['27']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', ''),
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'ASSY','".$operationArray[8]."','".$sd['29']."','".$sd['30']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', ''),
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'ASSY','".$operationArray[9]."','".$sd['32']."','".$sd['33']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', ''),
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'ASSY','".$operationArray[10]."','".$sd['35']."','".$sd['36']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', ''),
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'S&A','".$operationArray[11]."','".$sd['38']."','".$sd['39']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', ''),
+					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'S&A','".$operationArray[12]."','".$sd['41']."','".$sd['42']."', 
+					'".$_POST['shift']."', 
+					'".$_POST['lot_no']."', '')
+					";
+
+					$addRes = mysqli_query($db, $addSql);
+
+					if($addRes) {
+						echo "ok";
+					}
+					else {
+						echo "fail";
+					}
+				}
+			}
+			elseif($_SERVER['REQUEST_METHOD'] == 'GET'){
+
+				$selLotQuery = "SELECT DISTINCT `lot_no` FROM `fuze_production_launch` ORDER BY `lot_no`;";
+				$selLotRes = mysqli_query($db, $selLotQuery);
+
+				$html= "
+					<html>
+						<title>Production Summary</title>
+						<head>
+							<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
+							<meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate' />
+							<meta http-equiv='Pragma' content='no-cache' />
+							<meta http-equiv='Expires' content='0' />
+
+							<script type='text/javascript' src='jquery.min.js'></script>
+							<script type='text/javascript' src='materialize.min.js'></script>
+							<script type='text/javascript' src='jquery.cookie.js'></script>
+							<script src='/FuzeDatabase/jquery-ui.js'></script>
+						</head>
+						<style>
+							th, td {
+								padding: 6px;
+							}
+
+							table, th, td {
+								border: 2px solid black;
+								border-collapse: collapse;
+							}
+
+							body {
+								margin-left: 6px;
+								background-color: #d0d0d0;
+							}
+
+							tr {
+								text-align: center;
+							}
+
+							#tableHeader {
+								font-weight: bold;
+								font-size: 18px;
+							}
+						</style>
+						<body style='background-color: #c0c0c0;'>
+							<br>
+							<center>
+								<h2 style='color:red;'>Production Summary</h2>
+									<table>
+										<td>Select Lot No: 
+											<select name='lot_no' id='lot_no' style='margin-left: 15px;'>
+												<option value=''>Create New</option>";
+
+			while($row = mysqli_fetch_assoc($selLotRes)) {
+				$html.="<option value='".$row['lot_no']."'>".$row['lot_no']."</option>";
+			}
+			$html.="
+											</select>
+										</td>
+									</table>
+									<br>
+									<button type='submit' id='submitBtn'>DISPLAY</button>
+								<br>
+								<div id='reportTable'></div>
+						</body>
+
+						<script type='text/javascript'>
+							$('#submitBtn').on('click', function(){
+								$.ajax({
+									url: 'production_summary.php',
+									type: 'POST',
+									data: {
+										task: 'report',
+										lot_no: $('#lot_no').val()
+									},
+									success: function(msg) {
+										console.log(msg);
+										try {
+											jsonData = JSON.parse(msg);
+											console.log(jsonData);
+
+											var tblData = \"
+												<table>
+													<table style=\"float: left; margin-left: 20px;\">
+														<tr id=\"tableHeader\">
+															<td>Date</td>
+															<td>Visual<br>Inspection</td>
+															<td>GND Pin<br>Soldering</td>
+															<td>Housing<br>Unmoulded</td>
+															<td>Housing<br>Moulded</td>
+															<td>Electronic<br>Head</td>
+															<td>Battery<br>Tinning</td>
+															<td>Elec Hsg<br>Assy</td>
+															<td>Elec Hsg<br>Moulded</td>
+															<td>Assy<br>Fuze Base</td>
+															<td>Assy<br>Fuze</td>
+															<td>Electronic<br>Head</td>
+															<td>Visual<br>Inspection</td>
+															<td>Electronic<br>Head Final</td>
+														</tr>
+												</table>
+											';
+
+											$('#reportTable').html(tblData);
+										}
+										catch(err) {
+											alert('ERROR FETCHING DATABASE! SHOW THIS ERROR TO ADMIN:\\n\\n'+err);
+										}
+								},
+								error: function(XMLHttpRequest, textStatus, errorThrown) {
+									 alert(errorThrown + '\\n\\nIs web-server offline?');
+								}
+								});
+							});
+						</script>
+
+					</html>	
+				";
+
+				echo $html;
+			}
+	}
+	else {
+		die("
+			<html>
+				<body style='background-color: #c0c0c0;'>
+					<center>
+						<br>
+						<br>
+						<h3 style='color:red;'>Please login to access this application</h3>
+						<br>
+						<a href='index.php'>Click here to Login</a>
+					</center>
+				</body>
+			</html>
+		");
 	}
 
 ?>
