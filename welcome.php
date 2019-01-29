@@ -386,9 +386,9 @@
 										</script>
 									</div>
 									<div class="col s6">
-										<input type="radio" name="group1" class="with-gap" id="radioYes" name="radioYes" value="1" onchange="onRadioChange()">
+										<input type="radio" name="group1" class="with-gap" id="radioYes" name="radioYes" value="1" onchange="onRadioChange()" checked>
 										<label for="radioYes">Yes</label>
-										<input type="radio" name="group1" class="with-gap" id="radioNo" name="radioNo" value="0" onchange="onRadioChange()" checked>
+										<input type="radio" name="group1" class="with-gap" id="radioNo" name="radioNo" value="0" onchange="onRadioChange()">
 										<label for="radioNo">No</label>
 									</div>
 									</center>
@@ -396,7 +396,7 @@
 
 								<div class="row">
 									<div class="input-field col s2">
-										<input type="text" name="resChange" id="resChange" disabled>
+										<input type="text" name="resChange" id="resChange">
 										<label for="resChange"><center>Resistor (K&#8486;)</center></label>
 									</div>
 									<div class="input-field col s5">
