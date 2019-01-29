@@ -2,12 +2,22 @@
 
 	include('db_config.php');
 
+	$ovfMsg = "";
+
+	function isOverflow($submittedCount, $cumulativeCount, $lotNumber, $operation, $db) {
+		$qtyQuery = "SELECT `lot_qty` FROM `fuze_production_launch` WHERE `lot_no`='".$lotNumber."'";
+		$qtyRes = mysqli_query($db, $qtyQuery);
+		$qtyRow = mysqli_fetch_assoc($qtyRes);
+		if(($cumulativeCount + $submittedCount) > $qtyRow['lot_qty']) {
+			die("Error: Only ".strval($qtyRow['lot_qty']-$cumulativeCount)." Qty of ".$operation." can be added to this lot.\nPending Qty of ".strval($qtyRow['lot_qty']-$cumulativeCount+$submittedCount)." must be added to the next lot.");
+		}
+	}
+
 	if(isset($_COOKIE['fuzeLogin'])) {
 
 		$operationArray = array("VISUAL","HSG GND PIN","HSG UNMOULDED","HSG MOULDED","HEAD","BATTERY TINNING","HSG UNMOULDED","HSG MOULDED","FUZE BASE","FUZE ASSY","HEAD","VISUAL","FUZE FINAL");
 
-		if($_POST['task'] == 'check') {
-			$sql = "SELECT * FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."' AND `contract_no`='".$_POST['contract_no']."' AND `lot_no`='".$_POST['lot_no']."'";
+		$sql = "SELECT * FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."' AND `contract_no`='".$_POST['contract_no']."' AND `lot_no`='".$_POST['lot_no']."'";
 			$res = mysqli_query($db, $sql);
 			$cnt = mysqli_num_rows($res);
 
@@ -59,6 +69,8 @@
 			$sql12row = mysqli_fetch_assoc($sql12res);
 			$sql13row = mysqli_fetch_assoc($sql13res);
 
+		if($_POST['task'] == 'check') {
+
 			$cumulativeArray = array();
 
 			array_push($cumulativeArray, array("1"=>$sql1row['process_cnt']));
@@ -108,6 +120,12 @@
 			$sd = $_POST['summaryData'];
 
 			print_r($sd);
+
+			$sdCnt = 5;
+			for($opCnt=0;$opCnt<13;$opCnt++) {
+				isOverflow($sd[strval($sdCnt)], $sql1row['process_cnt'], $_POST['lot_no'], $operationArray[$opCnt], $db);
+				$sdCnt += 3;
+			}
 
 			$addSql = "INSERT INTO `fuze_production_record` (`_id`,`fuze_type`,`fuze_diameter`,`record_date`,`stream`,`operation`,`process_cnt`,`op_cnt`,`shift`,`lot_no`,`remark`) VALUES 
 				(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'TEST','".$operationArray[0]."','".$sd['5']."','".$sd['6']."', 
