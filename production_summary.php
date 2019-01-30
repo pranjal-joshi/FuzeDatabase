@@ -157,7 +157,7 @@
 
 				$reportArray = array();
 
-				$datesSql = "SELECT DISTINCT `record_date` FROM `fuze_production_record` WHERE `lot_no`='".$_POST['lot_no']."' ORDER BY `record_date` ASC";
+				$datesSql = "SELECT DISTINCT `record_date` FROM `fuze_production_record` WHERE `lot_no`='".$_POST['lot_no']."' ORDER BY `record_date` DESC";
 				$dateRes = mysqli_query($db, $datesSql);
 
 				while($dateRow = mysqli_fetch_assoc($dateRes)){
@@ -165,7 +165,7 @@
 					$testDataCatcher = array();
 
 					for($i=0;$i<5;$i++){
-						$testSql = "SELECT SUM(`process_cnt`) AS `process_cnt`, SUM(`op_cnt`) AS `op_cnt` FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."' AND `stream`='TEST' AND `operation`='".$operationArray[$i]."'";
+						$testSql = "SELECT SUM(`process_cnt`) AS `process_cnt`, SUM(`op_cnt`) AS `op_cnt` FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."' AND `stream`='TEST' AND `operation`='".$operationArray[$i]."' AND `lot_no`='".$_POST['lot_no']."'";
 						$testRes = mysqli_query($db, $testSql);
 						$testRow = mysqli_fetch_assoc($testRes);
 						if($testRow['process_cnt'] > 0){
@@ -176,7 +176,7 @@
 						}
 					}
 					for($i=5;$i<11;$i++){
-						$testSql = "SELECT SUM(`process_cnt`) AS `process_cnt`, SUM(`op_cnt`) AS `op_cnt` FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."' AND `stream`='ASSY' AND `operation`='".$operationArray[$i]."'";
+						$testSql = "SELECT SUM(`process_cnt`) AS `process_cnt`, SUM(`op_cnt`) AS `op_cnt` FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."' AND `stream`='ASSY' AND `operation`='".$operationArray[$i]."' AND `lot_no`='".$_POST['lot_no']."'";
 						$testRes = mysqli_query($db, $testSql);
 						$testRow = mysqli_fetch_assoc($testRes);
 						if($testRow['process_cnt'] > 0){
@@ -187,7 +187,7 @@
 						}
 					}
 					for($i=11;$i<13;$i++){
-						$testSql = "SELECT SUM(`process_cnt`) AS `process_cnt`, SUM(`op_cnt`) AS `op_cnt` FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."' AND `stream`='S&A' AND `operation`='".$operationArray[$i]."'";
+						$testSql = "SELECT SUM(`process_cnt`) AS `process_cnt`, SUM(`op_cnt`) AS `op_cnt` FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."' AND `stream`='S&A' AND `operation`='".$operationArray[$i]."' AND `lot_no`='".$_POST['lot_no']."'";
 						$testRes = mysqli_query($db, $testSql);
 						$testRow = mysqli_fetch_assoc($testRes);
 						if($testRow['process_cnt'] > 0){
@@ -364,7 +364,7 @@
 											jsonData = JSON.parse(msg);
 											console.log(jsonData);";
 
-							$tableVar = addslashes("<br><h3 style='margin-left: 20px; text-align: left; color: blue;'>Lot Progress: Quantity [Operator Count]</h3><table style='float: left; margin-left: 10px;'><tr id='tableHeader'><td style='min-width: 95px;' rowspan='2'>Date</td><td colspan='5'>Testing</td><td colspan='6'>Assembly</td><td colspan='2'>S&A</td></tr><tr id='tableHeader'><td>Visual<br>Inspection</td><td>GND Pin<br>Soldering</td><td>Housing<br>Unmoulded</td><td>Housing<br>Moulded</td><td>Electronic<br>Head</td><td>Battery<br>Tinning</td><td>Elec Hsg<br>Assy</td><td>Elec Hsg<br>Moulded</td><td>Assy<br>Fuze Base</td><td>Assy<br>Fuze</td><td>Electronic<br>Head</td><td>Visual<br>Inspection</td><td>Electronic<br>Head Final</td></tr>");
+							$tableVar = addslashes("<br><h3 style='margin-left: 20px; margin-bottom: 20px; text-align: left; color: blue;'>Lot Progress: Quantity [Operator Count]</h3><table style='float: left; margin-left: 10px;'><tr id='tableHeader'><td style='min-width: 95px;' rowspan='2'>Date</td><td colspan='5'>Testing</td><td colspan='6'>Assembly</td><td colspan='2'>S&A</td></tr><tr id='tableHeader'><td>Visual<br>Inspection</td><td>GND Pin<br>Soldering</td><td>Housing<br>Unmoulded</td><td>Housing<br>Moulded</td><td>Electronic<br>Head</td><td>Battery<br>Tinning</td><td>Elec Hsg<br>Assy</td><td>Elec Hsg<br>Moulded</td><td>Assy<br>Fuze Base</td><td>Assy<br>Fuze</td><td>Electronic<br>Head</td><td>Visual<br>Inspection</td><td>Electronic<br>Head Final</td></tr>");
 
 							$summaryTableVar = addslashes("<br><h3 style='margin-left: 20px; text-align: left; color: blue;'>Lot Summary:</h3><table style='float: left; margin-left: 10px;'><tr id='tableHeader'><td style='min-width: 95px;' rowspan='2'>Lot<br>Details</td><td colspan='5'>Testing</td><td colspan='6'>Assembly</td><td colspan='2'>S&A</td></tr><tr id='tableHeader'><td>Visual<br>Inspection</td><td>GND Pin<br>Soldering</td><td>Housing<br>Unmoulded</td><td>Housing<br>Moulded</td><td>Electronic<br>Head</td><td>Battery<br>Tinning</td><td>Elec Hsg<br>Assy</td><td>Elec Hsg<br>Moulded</td><td>Assy<br>Fuze Base</td><td>Assy<br>Fuze</td><td>Electronic<br>Head</td><td>Visual<br>Inspection</td><td>Electronic<br>Head Final</td></tr>");
 
