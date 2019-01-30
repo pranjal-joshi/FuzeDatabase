@@ -4279,7 +4279,6 @@
 					data: {
 						task: 'load',
 						lot_no: $('#lot_no_select').val(),
-						contract_no: $('#contract_no_select').val(),
 						shift: $('#shift').val(),
 						record_date: $('#productionSummaryDatePicker').val()
 					},

@@ -17,9 +17,16 @@
 
 		if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-		$operationArray = array("VISUAL","HSG GND PIN","HSG UNMOULDED","HSG MOULDED","HEAD","BATTERY TINNING","HSG UNMOULDED","HSG MOULDED","FUZE BASE","FUZE ASSY","HEAD","VISUAL","FUZE FINAL");
+			$operationArray = array("VISUAL","HSG GND PIN","HSG UNMOULDED","HSG MOULDED","HEAD","BATTERY TINNING","HSG UNMOULDED","HSG MOULDED","FUZE BASE","FUZE ASSY","HEAD","VISUAL","FUZE FINAL");
 
-		$sql = "SELECT * FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."'";
+			$sql = "";
+			if(isset($_POST['contract_no'])) {
+				$sql = "SELECT * FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."' AND `contract_no`='".$_POST['contract_no']."'";
+			}
+			else {
+				$sql = "SELECT * FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."'";
+			}
+
 			$res = mysqli_query($db, $sql);
 			$cnt = mysqli_num_rows($res);
 
@@ -193,31 +200,6 @@
 					array_push($reportArray, array('date'=>$dateRow['record_date'],"data"=>$testDataCatcher));
 				}
 
-				/*while($dateRow = mysqli_fetch_assoc($dateRes)){
-					$shiftSql = "SELECT DISTINCT `shift` FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."'";
-					$shiftRes = mysqli_query($db, $shiftSql);
-
-					while($shiftRow = mysqli_fetch_assoc($shiftRes)){
-
-						$testSql = "SELECT * FROM `fuze_production_record` WHERE `record_date`='".$dateRow['record_date']."' AND `shift`='".$shiftRow['shift']."' AND `stream`='TEST'";
-						$testRes = mysqli_query($db, $testSql);
-
-						$testDataCatcher = array();
-						$recDate = "";
-						$shift="";
-
-						while($testRow = mysqli_fetch_assoc($testRes)){
-							//array_push($reportArray, array("record_date"=>$testRow['record_date'], "data"=>array("cnt"=>$testRow['process_cnt'], "op"=>$testRow['op_cnt'], "shift"=>$testRow['shift'])));
-
-							array_push($testDataCatcher, array("operation"=>$testRow['operation'], "cnt"=>$testRow['process_cnt'], "op_cnt"=>$testRow['op_cnt']));
-							$recDate = $testRow['record_date'];
-							$shift = $testRow['shift'];
-						}
-						array_push($reportArray, array("record_date"=>$recDate, array("shift"=>$shift,"data"=>$testDataCatcher)));
-
-					}
-
-				}*/
 				$reportArrayJson = json_encode($reportArray, JSON_NUMERIC_CHECK);
 				echo $reportArrayJson;
 			}
