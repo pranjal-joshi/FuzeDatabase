@@ -144,7 +144,7 @@
 			if($_POST['lot_no'] == "") {
 				$sql = "SELECT * FROM `fuze_production_launch` WHERE `fuze_type`='".$_POST['fuzeType']."' AND `fuze_diameter`='".$_POST['fuzeDia']."'";
 				$res = mysqli_query($db, $sql);
-				$lot_no = $_POST['fuzeType']."_".str_pad(strval(mysqli_num_rows($res)+1),2,"0",STR_PAD_LEFT)."_".$_POST['fuzeDia']; 
+				$lot_no = $_POST['contract_no']."_".$_POST['fuzeType']."_".str_pad(strval(mysqli_num_rows($res)+1),2,"0",STR_PAD_LEFT)."_".$_POST['fuzeDia']; 
 			}
 			else {
 				$lot_no = $_POST['lot_no'];
