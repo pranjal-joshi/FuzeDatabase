@@ -349,7 +349,7 @@
 									<table>
 										<td>Select Lot No: 
 											<select name='lot_no' id='lot_no' style='margin-left: 15px;'>
-												<option value=''>Create New</option>";
+												<option value='' disabled selected>Click Here</option>";
 
 			while($row = mysqli_fetch_assoc($selLotRes)) {
 				$html.="<option value='".$row['lot_no']."'>".$row['lot_no']."</option>";
@@ -377,12 +377,10 @@
 										console.log(msg);
 										try {
 											jsonData = JSON.parse(msg);
-											console.log(jsonData);
+											console.log(jsonData);";
 
-											var tblData = \"
-												<table>
-													<table style=\"float: left; margin-left: 20px;\">
-														<tr id=\"tableHeader\">
+					/*$tableVar = addslashes("`<br><h3 style='margin-left: 20px;'>Lot Progress</h3><table>
+													<table style='float: left; margin-left: 10px;'><tr id='tableHeader'>
 															<td>Date</td>
 															<td>Visual<br>Inspection</td>
 															<td>GND Pin<br>Soldering</td>
@@ -398,9 +396,30 @@
 															<td>Visual<br>Inspection</td>
 															<td>Electronic<br>Head Final</td>
 														</tr>
-												</table>
-											';
+												</table>`");*/
 
+							$tableVar = addslashes("<br><h3 style='margin-left: 20px; text-align: left;'>Lot Progress: Quantity [Operator Count]</h3><table style='float: left; margin-left: 10px;'><tr id='tableHeader'><td style='min-width: 95px;' rowspan='2'>Date</td><td colspan='5'>Testing</td><td colspan='6'>Assembly</td><td colspan='2'>S&A</td></tr><tr id='tableHeader'><td>Visual<br>Inspection</td><td>GND Pin<br>Soldering</td><td>Housing<br>Unmoulded</td><td>Housing<br>Moulded</td><td>Electronic<br>Head</td><td>Battery<br>Tinning</td><td>Elec Hsg<br>Assy</td><td>Elec Hsg<br>Moulded</td><td>Assy<br>Fuze Base</td><td>Assy<br>Fuze</td><td>Electronic<br>Head</td><td>Visual<br>Inspection</td><td>Electronic<br>Head Final</td></tr>");
+
+						$html.="var tblData = \"".$tableVar."\";
+
+											for(var i=0;i<jsonData.length;i++) {
+
+												tblData += '<tr><td>'+jsonData[i]['date']+'</td>';
+
+												for(var j=0;j<13;j++) {
+													if(jsonData[i]['data'][j]['cnt'] == '-') {
+														tblData += '<td>-</td>';
+													}
+													else {
+														tblData += '<td>'+jsonData[i]['data'][j]['cnt']+'<br>['+jsonData[i]['data'][j]['op_cnt']+']</td>';
+													}
+												}
+
+												tblData += '</tr>';
+
+											}
+
+											tblData += '</table>';
 											$('#reportTable').html(tblData);
 										}
 										catch(err) {
