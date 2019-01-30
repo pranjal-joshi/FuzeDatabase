@@ -133,33 +133,46 @@
 		if($_SERVER['REQUEST_METHOD'] == 'GET'){
 			$delSql = "DELETE FROM `fuze_production_launch` WHERE `_id`='".$_GET['d']."'";
 			$delRes = mysqli_query($db, $delSql);
+			if(isset($_GET['d'])) {
+				Header('Location: '.$_SERVER['PHP_SELF']);
+			}
 		}
 
 		if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			if($_POST['task'] == 'save') {
 
-				$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_launch` ( `_id` INT NOT NULL AUTO_INCREMENT , `contract_no` VARCHAR(20) NOT NULL , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` SMALLINT NOT NULL , `lot_qty` MEDIUMINT NOT NULL , `lot_no` VARCHAR(20) NOT NULL , `lot_marking` TEXT , `start_date` DATE NOT NULL , `end_date` DATE , PRIMARY KEY (`_id`) , UNIQUE KEY (`lot_no`)) ENGINE = InnoDB COMMENT = 'hold launched production info';";
+				$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_launch` ( `_id` INT NOT NULL AUTO_INCREMENT , `contract_no` VARCHAR(40) NOT NULL , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` SMALLINT NOT NULL , `lot_qty` MEDIUMINT NOT NULL , `lot_no` VARCHAR(40) NOT NULL , `lot_marking` TEXT , `start_date` DATE NOT NULL , `end_date` DATE , PRIMARY KEY (`_id`) , UNIQUE KEY (`lot_no`)) ENGINE = InnoDB COMMENT = 'hold launched production info';";
 				$tblRes = mysqli_query($db, $tblSql);
+
+				// Pull Order Qty & Fuze Diameter from contract table
+				$sql = "SELECT * FROM `fuze_production_contract` WHERE `contract_no`='".$_POST['contract_no']."' AND `fuze_type`='".$_POST['fuzeType']."'";
+				$res = mysqli_query($db, $sql);
+				$row = mysqli_fetch_assoc($res);
+				// Pull over
 
 				$lot_no = "";
 				if($_POST['lot_no'] == "") {
-					$sql = "SELECT * FROM `fuze_production_launch` WHERE `fuze_type`='".$_POST['fuzeType']."' AND `fuze_diameter`='".$_POST['fuzeDia']."'";
+					$sql = "SELECT * FROM `fuze_production_launch` WHERE `fuze_type`='".$_POST['fuzeType']."' AND `fuze_diameter`='".$row['fuze_diameter']."'";
 					$res = mysqli_query($db, $sql);
-					$lot_no = $_POST['contract_no']."_".$_POST['fuzeType']."_".str_pad(strval(mysqli_num_rows($res)+1),2,"0",STR_PAD_LEFT)."_".$_POST['fuzeDia']; 
+					$lot_no = $_POST['contract_no']."_".$_POST['fuzeType']."_".str_pad(strval(mysqli_num_rows($res)+1),2,"0",STR_PAD_LEFT)."_".$row['fuze_diameter']; 
 				}
 				else {
 					$lot_no = $_POST['lot_no'];
 				}
 
+				if($_POST['lot_qty'] > $row['qty']) {
+					die("<center style='color: red; font-weight:bold;'>ERROR: Lot Quantity Must be less than Order Quantity!</center>");
+				}
+
 				$addSql = "REPLACE INTO `fuze_production_launch` (`_id`,`fuze_type`,`fuze_diameter`,`lot_qty`,`lot_no`,`lot_marking`,`contract_no`,`start_date`,`end_date`) VALUES (
 					NULL, 
 					'".$_POST['fuzeType']."', 
-					'".$_POST['fuzeDia']."', 
+					'".$row['fuze_diameter']."', 
 					'".$_POST['lot_qty']."', 
 					'".$lot_no."', 
 					'".$_POST['lot_marking']."', 
-					'".$_POST['contract_no']."',
+					'".$row['contract_no']."',
 					CURRENT_DATE(),
 					NULL
 					)";
