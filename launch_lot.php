@@ -24,15 +24,18 @@
 	$selLotQuery = "SELECT DISTINCT `lot_no` FROM `fuze_production_launch`;";
 	$selLotRes = mysqli_query($db, $selLotQuery);
 
-	$selLotQuery = "SELECT DISTINCT `lot_no` FROM `fuze_production_launch`;";
-	$selLotRes = mysqli_query($db, $selLotQuery);
-
 	$html = "<html>
 	<title>Launch Production</title>
 	<head>
+		<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
 		<meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate' />
 		<meta http-equiv='Pragma' content='no-cache' />
 		<meta http-equiv='Expires' content='0' />
+
+		<script type='text/javascript' src='jquery.min.js'></script>
+		<script type='text/javascript' src='materialize.min.js'></script>
+		<script type='text/javascript' src='jquery.cookie.js'></script>
+		<script src='/FuzeDatabase/jquery-ui.js'></script>
 	</head>
 	<style>
 		th, td {
@@ -65,19 +68,8 @@
 		<form action='launch_lot.php' method='POST'>
 			<table>
 				<tr>
-					<td>Select Contract:
-						<select name='contract_no' style='margin-left: 15px;'>";
-
-	while($row = mysqli_fetch_assoc($selRes)) {
-		$html.="<option value='".$row['contract_no']."'>".$row['contract_no']."</option>";
-	}
-
-	$html.="
-							
-						</select>
-					</td>
 					<td>Lot No: 
-						<select name='lot_no' style='margin-left: 15px;'>
+						<select name='lot_no' style='margin-left: 15px;' id='lot_no'>
 							<option value=''>Create New</option>";
 
 	while($row = mysqli_fetch_assoc($selLotRes)) {
@@ -87,28 +79,36 @@
 		$html.="
 						</select>
 					</td>
-					<td>Gun Type:
-						<select name='fuzeDia' style='margin-left: 15px;'>
-							<option value='105'>105</option>
-							<option value='155'>155</option>
-							<option value='NA'>N/A</option>
+					<td>Select Contract:
+						<select name='contract_no' style='margin-left: 15px;' id='contract_no'>";
+
+	while($row = mysqli_fetch_assoc($selRes)) {
+		$html.="<option value='".$row['contract_no']."'>".$row['contract_no']."</option>";
+	}
+
+	$html.="
+							
 						</select>
 					</td>
 					<td>Fuze Type:
-						<select name='fuzeType' style='margin-left: 15px;'>
+						<select name='fuzeType' style='margin-left: 5px;' id='fuzeType'>
 							<option value='EPD'>EPD</option>
 							<option value='TIME'>TIME</option>
 							<option value='PROX'>PROX</option>
 							<option value='SETR'>SETTER</option>
 						</select>
 					</td>
+					<td>
+						Order Qty: <div id='loadOrderQty'>Select Fuze Type</div>
+					</td>
 				</tr>
 				<tr>
-					<td colspan='2' align='left'>Lot Quantity: <input type='number' name='lot_qty' style='margin-left: 37px;'></td>
-					<td colspan='2' align='left'>Lot Marking: <input type='text' name='lot_marking' style='margin-left: 37px;'></td>
+					<td colspan='2' align='left'>Lot Quantity: <input type='number' name='lot_qty' id='lot_qty' style='margin-left: 37px;'></td>
+					<td colspan='2' align='left'>Lot Marking: <input type='text' name='lot_marking' id='lot_marking' style='margin-left: 37px;'></td>
 				</tr>
 			</table>
 			<br>
+			<input type='hidden' name='task' value='save'>
 			<button type='submit'>SUBMIT</button>
 			<br>
 		</form>
@@ -137,34 +137,53 @@
 
 		if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-			$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_launch` ( `_id` INT NOT NULL AUTO_INCREMENT , `contract_no` VARCHAR(20) NOT NULL , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` SMALLINT NOT NULL , `lot_qty` MEDIUMINT NOT NULL , `lot_no` VARCHAR(20) NOT NULL , `lot_marking` TEXT , `start_date` DATE NOT NULL , `end_date` DATE , PRIMARY KEY (`_id`) , UNIQUE KEY (`lot_no`)) ENGINE = InnoDB COMMENT = 'hold launched production info';";
-			$tblRes = mysqli_query($db, $tblSql);
+			if($_POST['task'] == 'save') {
 
-			$lot_no = "";
-			if($_POST['lot_no'] == "") {
-				$sql = "SELECT * FROM `fuze_production_launch` WHERE `fuze_type`='".$_POST['fuzeType']."' AND `fuze_diameter`='".$_POST['fuzeDia']."'";
+				$tblSql = "CREATE TABLE IF NOT EXISTS `fuze_database`.`fuze_production_launch` ( `_id` INT NOT NULL AUTO_INCREMENT , `contract_no` VARCHAR(20) NOT NULL , `fuze_type` VARCHAR(4) NOT NULL , `fuze_diameter` SMALLINT NOT NULL , `lot_qty` MEDIUMINT NOT NULL , `lot_no` VARCHAR(20) NOT NULL , `lot_marking` TEXT , `start_date` DATE NOT NULL , `end_date` DATE , PRIMARY KEY (`_id`) , UNIQUE KEY (`lot_no`)) ENGINE = InnoDB COMMENT = 'hold launched production info';";
+				$tblRes = mysqli_query($db, $tblSql);
+
+				$lot_no = "";
+				if($_POST['lot_no'] == "") {
+					$sql = "SELECT * FROM `fuze_production_launch` WHERE `fuze_type`='".$_POST['fuzeType']."' AND `fuze_diameter`='".$_POST['fuzeDia']."'";
+					$res = mysqli_query($db, $sql);
+					$lot_no = $_POST['contract_no']."_".$_POST['fuzeType']."_".str_pad(strval(mysqli_num_rows($res)+1),2,"0",STR_PAD_LEFT)."_".$_POST['fuzeDia']; 
+				}
+				else {
+					$lot_no = $_POST['lot_no'];
+				}
+
+				$addSql = "REPLACE INTO `fuze_production_launch` (`_id`,`fuze_type`,`fuze_diameter`,`lot_qty`,`lot_no`,`lot_marking`,`contract_no`,`start_date`,`end_date`) VALUES (
+					NULL, 
+					'".$_POST['fuzeType']."', 
+					'".$_POST['fuzeDia']."', 
+					'".$_POST['lot_qty']."', 
+					'".$lot_no."', 
+					'".$_POST['lot_marking']."', 
+					'".$_POST['contract_no']."',
+					CURRENT_DATE(),
+					NULL
+					)";
+
+				$addRes = mysqli_query($db, $addSql);
+
+				header("Refresh:1");
+			}
+			elseif($_POST['task'] == 'loadOrderQty') {
+				$sql = "SELECT `qty`,`fuze_diameter` FROM `fuze_production_contract` WHERE `contract_no`='".$_POST['contract_no']."' AND `fuze_type`='".$_POST['fuzeType']."'";
 				$res = mysqli_query($db, $sql);
-				$lot_no = $_POST['contract_no']."_".$_POST['fuzeType']."_".str_pad(strval(mysqli_num_rows($res)+1),2,"0",STR_PAD_LEFT)."_".$_POST['fuzeDia']; 
+				$row = mysqli_fetch_assoc($res);
+				die($row['qty']."<br>".$row['fuze_diameter']."mm");
 			}
-			else {
-				$lot_no = $_POST['lot_no'];
+			elseif($_POST['task'] == 'loadLotDetails') {
+				$sql = "SELECT * FROM `fuze_production_launch` WHERE `lot_no`='".$_POST['lot_no']."'";
+				$res = mysqli_query($db, $sql);
+				$lotArray = array();
+				while($row = mysqli_fetch_assoc($res)) {
+					array_push($lotArray, array("contract_no"=>$row['contract_no'],"fuze_type"=>$row['fuze_type'],"lot_qty"=>$row['lot_qty'],"lot_marking"=>$row['lot_marking']));
+				}
+				$jsonLotArray = json_encode($lotArray, JSON_NUMERIC_CHECK);
+				die($jsonLotArray);
 			}
-
-			$addSql = "REPLACE INTO `fuze_production_launch` (`_id`,`fuze_type`,`fuze_diameter`,`lot_qty`,`lot_no`,`lot_marking`,`contract_no`,`start_date`,`end_date`) VALUES (
-				NULL, 
-				'".$_POST['fuzeType']."', 
-				'".$_POST['fuzeDia']."', 
-				'".$_POST['lot_qty']."', 
-				'".$lot_no."', 
-				'".$_POST['lot_marking']."', 
-				'".$_POST['contract_no']."',
-				CURRENT_DATE(),
-				NULL
-				)";
-
-			$addRes = mysqli_query($db, $addSql);
-
-			header("Refresh:1");
 		}
 
 		$sql = "SELECT * FROM `fuze_production_launch`";
@@ -241,6 +260,63 @@
 				return false;
 			}
 		}
+
+		function loadOrderQty(){
+			$.ajax({
+					url: 'launch_lot.php',
+					type: 'POST',
+					data: {
+						task: 'loadOrderQty',
+						contract_no: $('#contract_no').val(),
+						fuzeType: $('#fuzeType').val()
+					},
+					success: function(msg) {
+						$('#loadOrderQty').html(msg);
+						if(msg == '<br>mm') {
+							$('#loadOrderQty').html('N/A');
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + 'Is web-server offline?');
+					}
+				});
+		}
+
+		function loadLotDetails() {
+			$.ajax({
+					url: 'launch_lot.php',
+					type: 'POST',
+					data: {
+						task: 'loadLotDetails',
+						lot_no: $('#lot_no').val()
+					},
+					success: function(msg) {
+						try {
+							jsonData = JSON.parse(msg);
+							jsonData = jsonData[0];
+							$('#lot_qty').val(jsonData['lot_qty']);
+							$('#lot_marking').val(jsonData['lot_marking']);
+							$('#contract_no').val(jsonData['contract_no']);
+							$('#fuzeType').val(jsonData['fuze_type']);
+							loadOrderQty();
+						}
+						catch(err) {
+							console.log(err);
+						}
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + 'Is web-server offline?');
+					}
+				});
+		}
+
+		loadOrderQty();
+
+		$('#fuzeType').on('change', loadOrderQty);
+		$('#contract_no').on('change', loadOrderQty);
+
+		$('#lot_no').on('change', loadLotDetails);
+
 	</script>
 	</html>";
 
