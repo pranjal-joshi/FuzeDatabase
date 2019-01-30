@@ -2010,7 +2010,7 @@
 						</div>
 					</div>
 
-					<div class="card-panel grey lighten-4 col s8" id="productionSummaryCard" style="display: none;">
+					<div class="card-panel grey lighten-4 col s12" id="productionSummaryCard" style="display: none;">
 						<div class="row">
 							<center>
 								<br>
@@ -2068,6 +2068,8 @@
 										<td class='center'><span class='center' style="font-weight: bold;">Lot<br>Number</span></td>
 										<td class='center'><span class='center' style="font-weight: bold;">Tested/Assembled<br>Quanity</span></td>
 										<td class='center'><span class='center' style="font-weight: bold;">No. of<br>Operators</span></td>
+										<td class='center'><span class='center' style="font-weight: bold;">Cumulative<br>Count</span></td>
+										<td class='center'><span class='center' style="font-weight: bold;">Lot<br>Quantity</span></td>
 									</tr>
 								</thead>
 								<tbody>
@@ -2080,6 +2082,8 @@
 									<td class='center'><input class="col s10" disabled id="lp1"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp1"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op1"></td>
+									<td class='center'><span class='center' id="cc1"></span></td>
+									<td class='center'><span class='center' id="lc1"></span></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Ground Pin</span></td>
@@ -2087,6 +2091,8 @@
 									<td class='center'><input class="col s10" disabled id="lp2"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp2"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op2"></td>
+									<td class='center'><span class='center' id="cc2"></span></td>
+									<td class='center'><span class='center' id="lc2"></span></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Unmoulded</span></td>
@@ -2094,6 +2100,8 @@
 									<td class='center'><input class="col s10" disabled id="lp3"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp3"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op3"></td>
+									<td class='center'><span class='center' id="cc3"></span></td>
+									<td class='center'><span class='center' id="lc3"></span></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Moulded</span></td>
@@ -2101,6 +2109,8 @@
 									<td class='center'><input class="col s10" disabled id="lp4"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp4"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op4"></td>
+									<td class='center'><span class='center' id="cc4"></span></td>
+									<td class='center'><span class='center' id="lc4"></span></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Electronic<br>Head</span></td>
@@ -2108,6 +2118,8 @@
 									<td class='center'><input class="col s10" disabled id="lp5"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp5"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op5"></td>
+									<td class='center'><span class='center' id="cc5"></span></td>
+									<td class='center'><span class='center' id="lc5"></span></td>
 								</tr>
 								</tbody>
 							</table>
@@ -2123,6 +2135,8 @@
 									<td class='center'><input class="col s10" disabled id="lp6"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp6"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op6"></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="cc6"></span></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="lc6"></span></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Unmoulded</span></td>
@@ -2130,6 +2144,8 @@
 									<td class='center'><input class="col s10" disabled id="lp7"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp7"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op7"></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="cc7"></span></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="lc7"></span></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Elec. Housing<br>Moulded</span></td>
@@ -2137,6 +2153,8 @@
 									<td class='center'><input class="col s10" disabled id="lp8"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp8"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op8"></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="cc8"></span></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="lc8"></span></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Assy Fuze<br>Base</span></td>
@@ -2144,6 +2162,8 @@
 									<td class='center'><input class="col s10" disabled id="lp9"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp9"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op9"></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="cc9"></span></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="lc9"></span></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Assy Fuze</span></td>
@@ -2151,6 +2171,8 @@
 									<td class='center'><input class="col s10" disabled id="lp10"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp10"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op10"></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="cc10"></span></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="lc10"></span></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Electronic<br>Head</span></td>
@@ -2158,6 +2180,8 @@
 									<td class='center'><input class="col s10" disabled id="lp11"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp11"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op11"></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="cc11"></span></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="lc11"></span></td>
 								</tr>
 								</tbody>
 							</table>
@@ -2173,6 +2197,8 @@
 									<td class='center'><input class="col s10" disabled id="lp12"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp12"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op12"></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="cc12"></span></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="lc12"></span></td>
 								</tr>
 								<tr>
 									<td class='center'><span class='center'>Electronic Fuze<br>Final</span></td>
@@ -2180,6 +2206,8 @@
 									<td class='center'><input class="col s10" disabled id="lp13"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp13"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op13"></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="cc13"></span></td>
+									<td style='min-width: 85px;' class='center'><span class='center' id="lc13"></span></td>
 								</tr>
 								</tbody>
 							</table>
@@ -2191,99 +2219,6 @@
 						<div style="display: none" id="productionSummaryErrorDialog">
 							
 						</div>
-					</div>
-
-					<div class="card-panel grey lighten-4 col s3" id="productionSummaryCard2" style="display: none; margin-left: 15px;">
-						<br>
-						<center>
-							<span style="font-weight: bold; font-size: 24px" class="teal-text text-darken-2">Cumulative Quantity</span>
-						</center>
-						<br>
-						<table class="striped">
-							<thead>
-								<tr>
-									<td><span class='center' style="font-weight: bold;">Process</span></td>
-									<td><span class='center' style="font-weight: bold;">Cumulative<br>Count</span></td>
-									<td><span class='center' style="font-weight: bold;">Lot<br>Quantity</span></td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class='center'><span style="font-weight: bold; font-size: 18px" class="teal-text text-darken-2 center">Testing</span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>PCB Visual<br>Inspection</span></td>
-									<td><span class='center' id="cc1"></span></td>
-									<td><span class='center' id="lc1"></span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>HSG GND<br>Pin Solder</span></td>
-									<td><span class='center' id="cc2"></span></td>
-									<td><span class='center' id="lc2"></span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>HSG<br>Unmoulded</span></td>
-									<td><span class='center' id="cc3"></span></td>
-									<td><span class='center' id="lc3"></span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>HSG<br>Moulded</span></td>
-									<td><span class='center' id="cc4"></span></td>
-									<td><span class='center' id="lc4"></span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>Elec.<br>Head</span></td>
-									<td><span class='center' id="cc5"></span></td>
-									<td><span class='center' id="lc5"></span></td>
-								</tr>
-								<tr>
-									<td class='center'><span style="font-weight: bold; font-size: 18px" class="teal-text text-darken-2 center">Assembly</span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>Battery<br>Tinning</span></td>
-									<td><span class='center' id="cc6"></span></td>
-									<td><span class='center' id="lc6"></span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>HSG<br>Unmoulded</span></td>
-									<td><span class='center' id="cc7"></span></td>
-									<td><span class='center' id="lc7"></span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>HSG<br>Moulded</span></td>
-									<td><span class='center' id="cc8"></span></td>
-									<td><span class='center' id="lc8"></span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>Assy Fuze<br>Base</span></td>
-									<td><span class='center' id="cc9"></span></td>
-									<td><span class='center' id="lc9"></span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>Assy<br>Fuze</span></td>
-									<td><span class='center' id="cc10"></span></td>
-									<td><span class='center' id="lc10"></span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>Elec.<br>Head</span></td>
-									<td><span class='center' id="cc11"></span></td>
-									<td><span class='center' id="lc11"></span></td>
-								</tr>
-								<tr>
-									<td class='center'><span style="font-weight: bold; font-size: 18px" class="teal-text text-darken-2 center">S&A</span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>Visual<br>Inspection</span></td>
-									<td><span class='center' id="cc12"></span></td>
-									<td><span class='center' id="lc12"></span></td>
-								</tr>
-								<tr>
-									<td><span class='center'>Elec. Fuze<br>Final</span></td>
-									<td><span class='center' id="cc13"></span></td>
-									<td><span class='center' id="lc13"></span></td>
-								</tr>
-							</tbody>
-						</table>
 					</div>
 
 				</div>
@@ -3456,7 +3391,6 @@
 
 			case '18':
 				$('#productionSummaryCard').fadeIn();
-				$('#productionSummaryCard2').fadeIn();
 				$('select').material_select();
 				$('#productionSummaryDatePicker').val(getTodaysDate());
 				$('#productionSummaryCard').keypress(function (e) {
@@ -3543,7 +3477,6 @@
 					break;
 				case '18':
 					$('#productionSummaryCard').fadeIn();
-					$('#productionSummaryCard2').fadeIn();
 					$('select').material_select();
 					$('#productionSummaryDatePicker').val(getTodaysDate());
 					$('#productionSummaryCard').keypress(function (e) {
@@ -3629,7 +3562,6 @@
 					break;
 				case '18':
 					$('#productionSummaryCard').fadeIn();
-					$('#productionSummaryCard2').fadeIn();
 					$('select').material_select();
 					$('#productionSummaryDatePicker').val(getTodaysDate());
 					$('#productionSummaryCard').keypress(function (e) {
