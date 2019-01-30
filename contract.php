@@ -34,6 +34,7 @@
 	$html = "<html>
 	<title>Production Contract</title>
 	<head>
+		<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
 		<meta http-equiv='Cache-Control' content='no-cache, no-store, must-revalidate' />
 		<meta http-equiv='Pragma' content='no-cache' />
 		<meta http-equiv='Expires' content='0' />
@@ -126,25 +127,25 @@
 				<tr>
 					<td align='left' style='padding-left: 15px;' >EPD</td>
 					<td class='flex-container'>
-						<input type='number' name='qty_epd' style='margin-left:15px; width:50%;' placeholder='EPD Quantity'>
+						<input type='number' name='qty_epd' style='margin-left:15px; width:50%;' placeholder='EPD Order Quantity'>
 					</td>
 				</tr>
 				<tr>
 					<td align='left' style='padding-left: 15px;' >TIME</td>
 					<td class='flex-container'>
-						<input type='number' name='qty_time' style='margin-left:15px; width:50%;' placeholder='TIME Quantity'>
+						<input type='number' name='qty_time' style='margin-left:15px; width:50%;' placeholder='TIME Order Quantity'>
 					</td>
 				</tr>
 				<tr>
 					<td align='left' style='padding-left: 15px;' >PROX</td>
 					<td class='flex-container'>
-						<input type='number' name='qty_prox' style='margin-left:15px; width:50%;' placeholder='PROX Quantity'>
+						<input type='number' name='qty_prox' style='margin-left:15px; width:50%;' placeholder='PROX Order Quantity'>
 					</td>
 				</tr>
 				<tr>
 					<td align='left' style='padding-left: 15px;' >SETTER</td>
 					<td class='flex-container'>
-						<input type='number' name='qty_setter' style='margin-left:15px; width:50%;' placeholder='SETTER Quantity'>
+						<input type='number' name='qty_setter' style='margin-left:15px; width:50%;' placeholder='SETTER Order Quantity'>
 					</td>
 				</tr>
 			</table>
