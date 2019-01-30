@@ -2082,7 +2082,7 @@
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="op1"></td>
 								</tr>
 								<tr>
-									<td class='center'><span class='center'>Elec. Hsg. Moulded<br>Ground Pin</span></td>
+									<td class='center'><span class='center'>Elec. Housing<br>Ground Pin</span></td>
 									<td class='center'><span class='center'>:</span></td>
 									<td class='center'><input class="col s10" disabled id="lp2"></td>
 									<td class='center'><input class="col s10" type="number" min="0" oninput="validity.valid||(value='');" id="cp2"></td>
