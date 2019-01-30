@@ -157,6 +157,9 @@
 			'".$dataArray[0]."',
 			'60')";
 			*/
+
+			// FOLLOWING CODE IS DISABLED DUE TO PROBLEM : PROX-HSG AUTO REJECT EVEN FOR PASSED FUZES
+			/*
 			if($dataArray[25] == "PASS") 				// ADD to lot only if passed
 			{
 				$sql = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
@@ -184,6 +187,19 @@
 			}
 
 			addToRejection($dataArray, $db);
+			*/
+			// COMMENT FOLLOWING CODE IF AUTO REJECTION IS ENABLED AGAIN.
+			$sql = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
+				(NULL,
+				'".$_COOKIE['fuzeType']."',
+				'".$_COOKIE['fuzeDia']."',
+				'".$_POST['main_lot']."',
+				'".$_POST['kit_lot']."',
+				'".$dataArray[0]."',
+				'60')";
+
+				$res = mysqli_query($db, $sql);
+
 			die("ok");
 		}
 	}
