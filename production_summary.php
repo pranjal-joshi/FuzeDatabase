@@ -9,7 +9,7 @@
 		$qtyRes = mysqli_query($db, $qtyQuery);
 		$qtyRow = mysqli_fetch_assoc($qtyRes);
 		if(($cumulativeCount + $submittedCount) > $qtyRow['lot_qty']) {
-			die("<div style='color:red'>Error: </div><br>Only ".strval($qtyRow['lot_qty']-$cumulativeCount)." Qty of ".$operation." can be added to this lot.<br><br>Remaining Qty of ".strval($qtyRow['lot_qty']-$cumulativeCount+$submittedCount)." must be added to the next lot.");
+			die("<div style='color:red'>Error: </div><br>Only ".strval($qtyRow['lot_qty']-$cumulativeCount)." Qty of ".$operation." can be added to this lot.<br><br>Remaining Qty of ".strval($submittedCount-$qtyRow['lot_qty'])." must be added to the next lot.");
 		}
 	}
 
@@ -200,6 +200,8 @@
 					array_push($reportArray, array('date'=>$dateRow['record_date'],"data"=>$testDataCatcher));
 				}
 
+				$reportArray = array("cumulativeArray"=>$cumulativeArray,"reportArray"=>$reportArray);
+
 				$reportArrayJson = json_encode($reportArray, JSON_NUMERIC_CHECK);
 				echo $reportArrayJson;
 			}
@@ -343,7 +345,8 @@
 									<br>
 									<button type='submit' id='submitBtn'>DISPLAY</button>
 								<br>
-								<div id='reportTable'></div>
+								<div id='summaryTable'></div>
+								<div id='reportTable' style='margin-top: 150px;'></div>
 						</body>
 
 						<script type='text/javascript'>
@@ -361,48 +364,40 @@
 											jsonData = JSON.parse(msg);
 											console.log(jsonData);";
 
-					/*$tableVar = addslashes("`<br><h3 style='margin-left: 20px;'>Lot Progress</h3><table>
-													<table style='float: left; margin-left: 10px;'><tr id='tableHeader'>
-															<td>Date</td>
-															<td>Visual<br>Inspection</td>
-															<td>GND Pin<br>Soldering</td>
-															<td>Housing<br>Unmoulded</td>
-															<td>Housing<br>Moulded</td>
-															<td>Electronic<br>Head</td>
-															<td>Battery<br>Tinning</td>
-															<td>Elec Hsg<br>Assy</td>
-															<td>Elec Hsg<br>Moulded</td>
-															<td>Assy<br>Fuze Base</td>
-															<td>Assy<br>Fuze</td>
-															<td>Electronic<br>Head</td>
-															<td>Visual<br>Inspection</td>
-															<td>Electronic<br>Head Final</td>
-														</tr>
-												</table>`");*/
+							$tableVar = addslashes("<br><h3 style='margin-left: 20px; text-align: left; color: blue;'>Lot Progress: Quantity [Operator Count]</h3><table style='float: left; margin-left: 10px;'><tr id='tableHeader'><td style='min-width: 95px;' rowspan='2'>Date</td><td colspan='5'>Testing</td><td colspan='6'>Assembly</td><td colspan='2'>S&A</td></tr><tr id='tableHeader'><td>Visual<br>Inspection</td><td>GND Pin<br>Soldering</td><td>Housing<br>Unmoulded</td><td>Housing<br>Moulded</td><td>Electronic<br>Head</td><td>Battery<br>Tinning</td><td>Elec Hsg<br>Assy</td><td>Elec Hsg<br>Moulded</td><td>Assy<br>Fuze Base</td><td>Assy<br>Fuze</td><td>Electronic<br>Head</td><td>Visual<br>Inspection</td><td>Electronic<br>Head Final</td></tr>");
 
-							$tableVar = addslashes("<br><h3 style='margin-left: 20px; text-align: left;'>Lot Progress: Quantity [Operator Count]</h3><table style='float: left; margin-left: 10px;'><tr id='tableHeader'><td style='min-width: 95px;' rowspan='2'>Date</td><td colspan='5'>Testing</td><td colspan='6'>Assembly</td><td colspan='2'>S&A</td></tr><tr id='tableHeader'><td>Visual<br>Inspection</td><td>GND Pin<br>Soldering</td><td>Housing<br>Unmoulded</td><td>Housing<br>Moulded</td><td>Electronic<br>Head</td><td>Battery<br>Tinning</td><td>Elec Hsg<br>Assy</td><td>Elec Hsg<br>Moulded</td><td>Assy<br>Fuze Base</td><td>Assy<br>Fuze</td><td>Electronic<br>Head</td><td>Visual<br>Inspection</td><td>Electronic<br>Head Final</td></tr>");
+							$summaryTableVar = addslashes("<br><h3 style='margin-left: 20px; text-align: left; color: blue;'>Lot Summary:</h3><table style='float: left; margin-left: 10px;'><tr id='tableHeader'><td style='min-width: 95px;' rowspan='2'>Lot<br>Details</td><td colspan='5'>Testing</td><td colspan='6'>Assembly</td><td colspan='2'>S&A</td></tr><tr id='tableHeader'><td>Visual<br>Inspection</td><td>GND Pin<br>Soldering</td><td>Housing<br>Unmoulded</td><td>Housing<br>Moulded</td><td>Electronic<br>Head</td><td>Battery<br>Tinning</td><td>Elec Hsg<br>Assy</td><td>Elec Hsg<br>Moulded</td><td>Assy<br>Fuze Base</td><td>Assy<br>Fuze</td><td>Electronic<br>Head</td><td>Visual<br>Inspection</td><td>Electronic<br>Head Final</td></tr>");
 
 						$html.="var tblData = \"".$tableVar."\";
 
-											for(var i=0;i<jsonData.length;i++) {
+											for(var i=0;i<jsonData['reportArray'].length;i++) {
 
-												tblData += '<tr><td>'+jsonData[i]['date']+'</td>';
+												tblData += '<tr><td>'+jsonData['reportArray'][i]['date']+'</td>';
 
 												for(var j=0;j<13;j++) {
-													if(jsonData[i]['data'][j]['cnt'] == '-') {
+													if(jsonData['reportArray'][i]['data'][j]['cnt'] == '-') {
 														tblData += '<td>-</td>';
 													}
 													else {
-														tblData += '<td>'+jsonData[i]['data'][j]['cnt']+'<br>['+jsonData[i]['data'][j]['op_cnt']+']</td>';
+														tblData += '<td>'+jsonData['reportArray'][i]['data'][j]['cnt']+'<br>['+jsonData['reportArray'][i]['data'][j]['op_cnt']+']</td>';
 													}
 												}
-
 												tblData += '</tr>';
-
 											}
 
 											tblData += '</table>';
 											$('#reportTable').html(tblData);
+
+											var summaryTableData = \"".$summaryTableVar."\";
+
+											summaryTableData += '<td>'+$('#lot_no').val()+'</td>';
+
+											for(var j=0;j<13;j++) {
+												summaryTableData += '<td>'+jsonData['cumulativeArray'][j][j+1]+'</td>';
+											}
+
+											summaryTableData += '</tr></table>';
+											$('#summaryTable').html(summaryTableData);
 										}
 										catch(err) {
 											alert('ERROR FETCHING DATABASE! SHOW THIS ERROR TO ADMIN:\\n\\n'+err);
