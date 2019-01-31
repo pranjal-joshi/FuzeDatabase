@@ -225,11 +225,24 @@
 
 				$sd = $_POST['summaryData'];
 
-				$sdCnt = 5;
+				/*$sdCnt = 5;
 				for($opCnt=0;$opCnt<13;$opCnt++) {
 					isOverflow($sd[strval($sdCnt)], $sql1row['process_cnt'], $_POST['lot_no'], $operationArray[$opCnt], $db);
 					$sdCnt += 3;
-				}
+				}*/
+				isOverflow($sd['5'], $sql1row['process_cnt'], $_POST['lot_no'], $operationArray[0], $db);
+				isOverflow($sd['8'], $sql2row['process_cnt'], $_POST['lot_no'], $operationArray[1], $db);
+				isOverflow($sd['11'], $sql3row['process_cnt'], $_POST['lot_no'], $operationArray[2], $db);
+				isOverflow($sd['14'], $sql4row['process_cnt'], $_POST['lot_no'], $operationArray[3], $db);
+				isOverflow($sd['17'], $sql5row['process_cnt'], $_POST['lot_no'], $operationArray[4], $db);
+				isOverflow($sd['20'], $sql6row['process_cnt'], $_POST['lot_no'], $operationArray[5], $db);
+				isOverflow($sd['23'], $sql7row['process_cnt'], $_POST['lot_no'], $operationArray[6], $db);
+				isOverflow($sd['26'], $sql8row['process_cnt'], $_POST['lot_no'], $operationArray[7], $db);
+				isOverflow($sd['29'], $sql9row['process_cnt'], $_POST['lot_no'], $operationArray[8], $db);
+				isOverflow($sd['32'], $sql10row['process_cnt'], $_POST['lot_no'], $operationArray[9], $db);
+				isOverflow($sd['35'], $sql11row['process_cnt'], $_POST['lot_no'], $operationArray[10], $db);
+				isOverflow($sd['38'], $sql12row['process_cnt'], $_POST['lot_no'], $operationArray[11], $db);
+				isOverflow($sd['41'], $sql13row['process_cnt'], $_POST['lot_no'], $operationArray[12], $db);
 
 				$addSql = "INSERT INTO `fuze_production_record` (`_id`,`fuze_type`,`fuze_diameter`,`record_date`,`stream`,`operation`,`process_cnt`,`op_cnt`,`shift`,`lot_no`,`remark`) VALUES 
 					(NULL, '".$fuze_type."','".$fuze_diameter."',STR_TO_DATE('".$_POST['record_date']."', '%e %M, %Y'),'TEST','".$operationArray[0]."','".$sd['5']."','".$sd['6']."', 
