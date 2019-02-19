@@ -4164,7 +4164,16 @@
 					}
 					if($(this).attr('id') != "pcbTestingManualRecordDate") {		// field name remains same - DOM manipulted
 						if($(this).attr('id') == "pcbTestingManualPcbNo") {
-							manualTestingData.push($(this).val().substring(0,12));
+							//manualTestingData.push($(this).val().substring(0,12));
+							console.log($(this).val());
+							console.log($(this).val().length);
+							if($(this).val().length < 7) {
+								manualTestingData.push($(this).val().padStart(6,"0"));
+								console.log($(this).val().padStart(6,"0"));
+							}
+							else {
+								manualTestingData.push($(this).val().substring(0,12));
+							}
 						}
 						else {
 							manualTestingData.push($(this).val());
