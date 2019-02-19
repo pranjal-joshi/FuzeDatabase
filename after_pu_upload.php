@@ -256,6 +256,7 @@
 					{
 						$html.="<tr>";
 						$pcb_no = isset($Row[0]) ? strtoupper($Row[0]) : '';
+						$pcb_no = str_pad($pcb_no, 6, "0", STR_PAD_LEFT);
 						$pcb_no = concatPcbBatch($pcb_no,$_COOKIE['fuzeType'],$_COOKIE['fuzeDia'],"HEAD",$db);
 						$vbat_pst = isset($Row[1]) ? $Row[1] : '';
 						$pst_wid = isset($Row[2]) ? $Row[2] : '';

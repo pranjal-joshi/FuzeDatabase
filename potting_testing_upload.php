@@ -253,6 +253,7 @@
 					{
 						$html.="<tr>";
 						$pcb_no = str_replace("O", "0", (isset($Row[0]) ? strtoupper($Row[0]) : '')) ;
+						$pcb_no = str_pad($pcb_no, 6, "0", STR_PAD_LEFT);
 						$pcb_no = concatPcbBatch($pcb_no,$_COOKIE['fuzeType'],$_COOKIE['fuzeDia'],"POTTING",$db);
 						$current = isset($Row[1]) ? $Row[1] : '';
 						$vee = isset($Row[2]) ? $Row[2] : '';
