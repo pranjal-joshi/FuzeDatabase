@@ -4109,8 +4109,8 @@
 							console.log($(this).val());
 							console.log($(this).val().length);
 							if($(this).val().length < 7) {
-								manualTestingData.push($(this).val().padStart(6,$(this).val()));
-								console.log($(this).val().padStart(6,$(this).val()));
+								manualTestingData.push($(this).val().padStart(6,"0"));
+								console.log($(this).val().padStart(6,"0"));
 							}
 							else {
 								manualTestingData.push($(this).val().substring(0,12));
@@ -4138,8 +4138,8 @@
 							console.log($(this).val());
 							console.log($(this).val().length);
 							if($(this).val().length < 7) {
-								manualTestingData.push($(this).val().padStart(6,$(this).val()));
-								console.log($(this).val().padStart(6,$(this).val()));
+								manualTestingData.push($(this).val().padStart(6,"0"));
+								console.log($(this).val().padStart(6,"0"));
 							}
 							else {
 								manualTestingData.push($(this).val().substring(0,12));
