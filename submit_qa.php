@@ -16,7 +16,12 @@
 		*/
 
 		if($_COOKIE['fuzeType'] == "EPD") {
+			$_POST['qa_pcb_no'] = substr($_POST['qa_pcb_no'], -6);
 			$_POST['qa_pcb_no'] = "EPD".$_POST['qa_pcb_no'];
+		}
+		elseif($_COOKIE['fuzeType'] == "TIME") {
+			$_POST['qa_pcb_no'] = substr($_POST['qa_pcb_no'], -6);
+			$_POST['qa_pcb_no'] = "TIME".$_POST['qa_pcb_no'];
 		}
 
 		$sql = "REPLACE INTO `qa_table` (`_id`, `pcb_no`, `stage`, `result`, `reason`, `record_date`, `op_name`, `comment`) VALUES (
