@@ -105,11 +105,11 @@
 			$barcodeRow = mysqli_fetch_assoc($barcodeResult);
 		}
 		elseif ($_COOKIE['searchFuzeType'] == "EPD") {
-			$lotQuery = "SELECT * FROM `lot_table` WHERE `pcb_no` = 'EPD".$pcb_no."'";
+			$lotQuery = "SELECT * FROM `lot_table` WHERE `pcb_no` = '".$pcb_no."'";
 			$lotResult = mysqli_query($db, $lotQuery);
 			$lotRow = mysqli_fetch_assoc($lotResult);
 
-			$qaQuery =  "SELECT * FROM `qa_table` WHERE `pcb_no` = 'EPD".$pcb_no."'";
+			$qaQuery =  "SELECT * FROM `qa_table` WHERE `pcb_no` = '".$pcb_no."'";
 			$qaResult = mysqli_query($db, $qaQuery);
 			$qaRow = mysqli_fetch_assoc($qaResult);
 
@@ -122,11 +122,11 @@
 			$barcodeRow = mysqli_fetch_assoc($barcodeResult);
 		}
 		elseif ($_COOKIE['searchFuzeType'] == "TIME") {
-			$lotQuery = "SELECT * FROM `lot_table` WHERE `pcb_no` = 'TIME".$pcb_no."'";
+			$lotQuery = "SELECT * FROM `lot_table` WHERE `pcb_no` = '".$pcb_no."'";
 			$lotResult = mysqli_query($db, $lotQuery);
 			$lotRow = mysqli_fetch_assoc($lotResult);
 
-			$qaQuery =  "SELECT * FROM `qa_table` WHERE `pcb_no` = 'TIME".$pcb_no."'";
+			$qaQuery =  "SELECT * FROM `qa_table` WHERE `pcb_no` = '".$pcb_no."'";
 			$qaResult = mysqli_query($db, $qaQuery);
 			$qaRow = mysqli_fetch_assoc($qaResult);
 
