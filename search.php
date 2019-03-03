@@ -135,6 +135,9 @@
 		}
 		elseif($_COOKIE['searchFuzeType'] == "EPD") {
 			switch ($searchInTable) {
+				case '3':
+					$searchInTable = "qa_table";
+					break;
 				case '4':
 					$searchInTable = "pcb_epd_csv";
 					break;
@@ -151,6 +154,9 @@
 		}
 		elseif($_COOKIE['searchFuzeType'] == "TIME") {
 			switch ($searchInTable) {
+				case '3':
+					$searchInTable = "qa_table";
+					break;
 				case '4':
 					$searchInTable = "pcb_time_csv";
 					break;
@@ -352,7 +358,7 @@
 			echo $value."</table>";
 		}
 		else {
-			//echo($sql);		// UNCOMMENT THIS LATER
+			echo($sql);		// UNCOMMENT THIS LATER
 			die("<br><p style='color: red; font-weight: bold;'>Failed to search!</p>");
 		}
 	}
