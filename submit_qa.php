@@ -3,6 +3,8 @@
 
 	include('db_config.php');
 
+	include('pcb_batch.php');
+
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 		//$sqlCheck = "SELECT * from `qa_table` WHERE `pcb_no`='".$_POST['qa_pcb_no']."';";
@@ -14,7 +16,7 @@
 			die("exist");
 		}
 		*/
-
+		$_POST['qa_pcb_no'] = concatPcbBatch($_POST['qa_pcb_no'],$_COOKIE['fuzeType'],$_COOKIE['fuzeDia'],"QA",$db);
 		if($_COOKIE['fuzeType'] == "EPD") {
 			$_POST['qa_pcb_no'] = substr($_POST['qa_pcb_no'], -6);
 			$_POST['qa_pcb_no'] = "EPD".$_POST['qa_pcb_no'];
