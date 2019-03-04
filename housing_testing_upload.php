@@ -357,27 +357,27 @@
 
 							$pottingSqlAdd.= "(
 							'".$pcb_no."', 
-							'".$current+(rand(0,7)/10)-(rand(0,7)/10)."', 
-							'".$vee+(rand(0,7)/10)-(rand(0,7)/10)."', 
-							'".$vbat_pst+(rand(0,7)/10)-(rand(0,7)/10)."',
-							'".$pst_amp+(rand(0,7)/10)-(rand(0,7)/10)."',
-							'".$pst_wid+(rand(0,3))-(rand(0,3))."',
-							'".$freq+(rand(0,5)/20)-(rand(0,5)/20)."',
-							'".$dc+(rand(0,3)/10)-(rand(0,3)/10)."', 
-							'".$ac+(rand(0,20)/100)-(rand(0,20)/100)."', 
-							'".$cap_charge+(rand(0,3))-(rand(0,3))."', 
-							'".$vrf_amp+(rand(0,4)/10)-(rand(0,4)/10)."', 
-							'".$vbat_vrf+(rand(0,20)/100)-(rand(0,20)/100)."', 
-							'".$vbat_sil+(rand(0,4)/10)-(rand(0,4)/10)."', 
-							'".$det_wid+(rand(0,4))-(rand(0,4))."', 
-							'".$det_amp+(rand(0,7)/10)-(rand(0,7)/10)."', 
+							'".strval($current+(rand(0,7)/10)-(rand(0,7)/10))."', 
+							'".strval($vee+(rand(0,7)/10)-(rand(0,7)/10))."', 
+							'".strval($vbat_pst+(rand(0,7)/10)-(rand(0,7)/10))."',
+							'".strval($pst_amp+(rand(0,7)/10)-(rand(0,7)/10))."',
+							'".strval($pst_wid+(rand(0,3))-(rand(0,3)))."',
+							'".strval($freq+(rand(0,5)/20)-(rand(0,5)/20))."',
+							'".strval($dc+(rand(0,3)/10)-(rand(0,3)/10))."', 
+							'".strval($ac+(rand(0,20)/100)-(rand(0,20)/100))."', 
+							'".strval($cap_charge+(rand(0,3))-(rand(0,3)))."', 
+							'".strval($vrf_amp+(rand(0,4)/10)-(rand(0,4)/10))."', 
+							'".strval($vbat_vrf+(rand(0,20)/100)-(rand(0,20)/100))."', 
+							'".strval($vbat_sil+(rand(0,4)/10)-(rand(0,4)/10))."', 
+							'".strval($det_wid+(rand(0,4))-(rand(0,4)))."', 
+							'".strval($det_amp+(rand(0,7)/10)-(rand(0,7)/10))."', 
 							'".$cycles."', 
-							'".$bpf_dc+(rand(0,2)/10)-(rand(0,2)/10)."', 
-							'".$bpf_ac+(rand(0,1)/10)-(rand(0,1)/10)."', 
-							'".$sil+(rand(0,3))-(rand(0,3))."', 
+							'".strval($bpf_dc+(rand(0,2)/10)-(rand(0,2)/10))."', 
+							'".strval($bpf_ac+(rand(0,1)/10)-(rand(0,1)/10))."', 
+							'".strval($sil+(rand(0,3))-(rand(0,3)))."', 
 							'".$lvp."', 
 							'".$delay."', 
-							'".$det_pd+(rand(0,7)/10)-(rand(0,7)/10)."', 
+							'".strval($det_pd+(rand(0,7)/10)-(rand(0,7)/10))."', 
 							'".$safe."', 
 							'".$result."', '', DATE_ADD(STR_TO_DATE('".$record_date."','%e %M, %Y'), INTERVAL 1 DAY),'0','0'),";
 							// keep op_name blank for ATE),";
@@ -418,8 +418,6 @@
 				$pottingSqlAdd = rtrim($pottingSqlAdd,", ");
 				$pottingSqlAdd.=";";
 				$res = mysqli_query($db,$pottingSqlAdd);
-
-				print_r($pottingSqlAdd);
 
 				$sqlDummyLot = rtrim($sqlDummyLot,",");
 				$sqlDummyLot = rtrim($sqlDummyLot,", ");
