@@ -117,12 +117,12 @@
 			<tr id='tableHeader'>
 				<td>SN. </td>
 				<td>Contract<br>No</td>
-				<td>Order Qty</td>
-				<td>Lot No</td>
+				<td>Order<br>Qty</td>
+				<td>Lot<br>No</td>
 				<td>Lot<br>Marking</td>
 				<td>Lot<br>Quantity</td>
-				<td>Fuze Type</td>
-				<td>Gun Type</td>
+				<td>Fuze<br>Type</td>
+				<td>Gun<br>Type</td>
 				<td>Start<br>Date</td>
 				<td>Action</td>
 			</tr>
