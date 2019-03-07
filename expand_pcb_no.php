@@ -40,7 +40,7 @@
 		ini_set('max_execution_time', 10800);			// change exec time - heavy loops
 
 		if($_POST['btn'] == "PROX") {
-			$tblNames = array("pcb_testing","housing_table","potting_table","calibration_table","after_pu");
+			$tblNames = array("qa_table","pcb_testing","housing_table","potting_table","calibration_table","after_pu","lot_table");
 			for($i=0;$i<sizeof($tblNames);$i++) {
 				echo "<br><center>Expanding ".$tblNames[$i]."...";
 				flush();
