@@ -80,11 +80,12 @@
 			array_push($pottingDataArray, "*ATE*");
 			array_push($pottingDataArray, $array[27]);
 			array_push($pottingDataArray, $array[28]);
-			print_r($array);
-			print_r($pottingDataArray);
 			return $pottingDataArray;
 		}
-		return;
+		else {
+			$pottingDataArray = array_fill(0, 29, '');
+			return $pottingDataArray;
+		}
 	}
 
 	function addToRejection($array,$db) {
@@ -178,8 +179,6 @@
 
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-		print_r($_POST);
-
 		$s = str_replace("\"", "", strtoupper($_POST['jsonData']));
 		$s = trim($s,"[]");
 		$s = str_replace(" ", "", $s);
@@ -216,12 +215,10 @@
 		$sqlAdd = trim($sqlAdd,",");
 		$sqlAdd.=");";
 
-		print_r($sqlAdd);
-
 		$res = mysqli_query($db,$sqlAdd);
 
 		$pottingDataArray = addToEpoxyPotting($dataArray);
-
+		print_r($pottingDataArray);
 		$cnt = 0;
 		foreach ($pottingDataArray as $value) {
 			if($cnt<27) {									// don't read main lot n kit lot from form to make query
@@ -234,9 +231,9 @@
 		$pottingSqlAdd = trim($pottingSqlAdd,",");
 		$pottingSqlAdd.=");";
 
-		print_r($pottingSqlAdd);
-
 		$res = mysqli_query($db,$pottingSqlAdd);
+
+		print_r($pottingSqlAdd);
 
 		//$recordDateSql = "UPDATE `housing_table` SET `record_date` = '".$_POST['record_date']."' WHERE `pcb_no` = '".$dataArray[0]."'";
 
