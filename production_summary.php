@@ -5,6 +5,10 @@
 	$ovfMsg = "";
 
 	function isOverflow($submittedCount, $cumulativeCount, $lotNumber, $operation, $db) {
+		print_r($submittedCount);
+		print_r($cumulativeCount);
+		print_r($lotNumber);
+		print_r($operation);
 		$qtyQuery = "SELECT `lot_qty` FROM `fuze_production_launch` WHERE `lot_no`='".$lotNumber."'";
 		$qtyRes = mysqli_query($db, $qtyQuery);
 		$qtyRow = mysqli_fetch_assoc($qtyRes);
