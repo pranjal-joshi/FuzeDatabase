@@ -40,7 +40,7 @@
 			$results = mysqli_query($db,$sql);
 
 			// create dummy lot entry on visual - for analytics and lot linking purpose.
-			$sql = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
+			/*$sql = "REPLACE INTO `lot_table`(`_id`,`fuze_type`, `fuze_diameter`, `main_lot`, `kit_lot`, `pcb_no`, `kit_lot_size`) VALUES 
 			(NULL,
 			'".$_COOKIE['fuzeType']."',
 			'".$_COOKIE['fuzeDia']."',
@@ -50,6 +50,7 @@
 			'60')";
 
 			$res = mysqli_query($db, $sql);
+			*/
 
 			if($results === true){
 				echo "ok";
