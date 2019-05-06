@@ -565,7 +565,79 @@
 									<a class="btn waves-effect waves-red red lighten-2" id="qaClearButton">CLEAR</a>
 								</center>
 
+								<div class="row">
+									<br><br>
+									<center>
+										<span style="font-weight: bold; font-size: 20px" class="teal-text text-darken-2">PCB Inward Record</span>
+									</center>
+								</div>
+
+								<div class="row">
+
+									<div class="input-field col s3">
+										<input type="text" name="inDatePicker" id="inDatePicker" class="datepicker" required>
+										<label for="inDatePicker"><center>In Entry date</center></label>
+									</div>
+
+									<div class="input-field col s2">
+										<select name="in_fuze_type" id="in_fuze_type" required>
+											<option value="" disabled selected>--Select--</option>
+											<option value="EPD">EPD</option>
+											<option value="TIME">TIME</option>
+											<option value="PROX">PROX</option>
+										</select>
+										<label>Fuze Type</label>
+									</div>
+
+									<div class="input-field col s2">
+										<select name="in_fuze_diameter" id="in_fuze_diameter" required>
+											<option value="" selected disabled>--Select--</option>
+											<option value="105">105 mm</option>
+											<option value="155">155 mm</option>
+										</select>
+										<label>Gun Type</label>
+									</div>
+
+									<div class="input-field col s3">
+										<select name="in_vendor" id="in_vendor" required>
+											<option value="" selected disabled>--Select--</option>
+											<option value="Kaynes">Kaynes</option>
+											<option value="SGS">SGS</option>
+											<option value="Interfab">Interfab</option>
+											<option value="Frontline">Frontline</option>
+										</select>
+										<label>Vendor</label>
+									</div>
+
+									<div class="input-field col s2">
+										<input type="text" name="in_op_name" id="in_op_name" required>
+										<label for="in_op_name"><center>Operator Name</center></label>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="input-field col s4">
+										<input type="number" name="in_received" id="in_received" required>
+										<label for="in_received"><center>PCB Received Qty</center></label>
+									</div>
+									<div class="input-field col s4">
+										<input type="number" name="in_accepted" id="in_accepted" required>
+										<label for="in_accepted"><center>PCB Accepted Qty</center></label>
+									</div>
+									<div class="input-field col s4">
+										<input type="number" name="in_rejected" id="in_rejected" required>
+										<label for="in_rejected"><center>PCB Rejected Qty</center></label>
+									</div>
+								</div>
+
+								<center>
+									<a class="waves-effect waves-light btn" id="inSubmitButton">SUBMIT</a>
+									<a class="btn waves-effect waves-red red lighten-2" id="inClearButton">CLEAR</a>
+								</center>
 							</form>
+
+							<div class="row"></div>
+							<div id="inwardTable"></div>
 
 						</div>
 					</div>
@@ -2481,6 +2553,8 @@
 					}
 				});
 				$('#qaDatePicker').val(getTodaysDate());
+				$('#inDatePicker').val(getTodaysDate());
+				loadInwardTable();
 				break;
 			case '2':
 				$('#pcbTestingCard').fadeIn();
@@ -3429,6 +3503,8 @@
 						}
 					});
 					$('#qaDatePicker').val(getTodaysDate());
+					$('#inDatePicker').val(getTodaysDate());
+					loadInwardTable();
 					break;
 				case '2':
 					$('#epdAtePcbCard').fadeIn();
@@ -3514,6 +3590,8 @@
 						}
 					});
 					$('#qaDatePicker').val(getTodaysDate());
+					$('#inDatePicker').val(getTodaysDate());
+					loadInwardTable();
 					break;
 				case '2':
 					$('#timeAtePcbCard').fadeIn();
@@ -3843,6 +3921,55 @@
 					}, 300);
 				}
 			});
+
+		function loadInwardTable() {
+			$.ajax({
+				url: 'pcb_in.php',
+				type: 'POST',
+				data: {
+					type: 'load'
+				},
+				success: function(msg) {
+					console.log(msg);
+					$('#inwardTable').html(msg);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					 alert(errorThrown + "\n\nIs web-server offline?");
+				}
+			});
+		}
+
+		$('#inSubmitButton').click(function(){
+			if (($('#in_op_name').val().length == 0) || ($('#in_received').val().length == 0) || ($('#in_rejected').val().length == 0) || ($('#in_accepted').val().length == 0) || $('#in_fuze_type :selected').val() == "" || $('#in_fuze_diameter :selected').val() == "" || $('#in_vendor :selected').val() == ""){
+				Materialize.toast("Can't save with blank fields.",4000,'rounded');
+				Materialize.toast("Check what you have missed.",4000,'rounded');
+			}
+			else {
+				$.ajax({
+					url: 'pcb_in.php',
+					type: 'POST',
+					data: {
+						type: 'save',
+						reason: (radioState == "radioRework" ? $('#qaFailReason').val() : ""),
+						date: $('#inDatePicker').val(),
+						op_name: $('#in_op_name').val().toUpperCase(),
+						fuze_type: $('#in_fuze_type').val(),
+						fuze_diameter: $('#in_fuze_diameter').val(),
+						vendor: $('#in_vendor').val(),
+						received:  $('#in_received').val(),
+						rejected:  $('#in_rejected').val(),
+						accepted:  $('#in_accepted').val()
+					},
+					success: function(msg) {
+						console.log(msg);
+						$('#inwardTable').html(msg);
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) {
+						 alert(errorThrown + "\n\nIs web-server offline?");
+					}
+				});
+			}
+		});
 
 		$('#qaSubmitButton').click(function(){
 			if (($('#qa_pcb_no').val().length == 0) || ($('#qa_op_name').val().length == 0) || ($('#qaDatePicker').val().length == 0) || $('#qa_stage :selected').val() == ""){
