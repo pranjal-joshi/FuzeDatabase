@@ -632,7 +632,6 @@
 
 								<center>
 									<a class="waves-effect waves-light btn" id="inSubmitButton">SUBMIT</a>
-									<a class="btn waves-effect waves-red red lighten-2" id="inClearButton">CLEAR</a>
 								</center>
 							</form>
 
@@ -767,6 +766,7 @@
 						<div id='ppcDialog' style="display: none;">
 							<ul>
 								<li><a href="batch_code.php" target="_blank" style="color: blue;">&#9672; PCB Batch Code Entry</a></li>
+								<li><a href="pcb_in.php" target="_blank" style="color: blue;">&#9672; PCB Stock Availability</a>
 							</ul>
 						</div>
 
@@ -3963,6 +3963,9 @@
 					success: function(msg) {
 						console.log(msg);
 						$('#inwardTable').html(msg);
+						if(msg.includes('<tr>')) {
+							Materialize.toast("Record Saved",3000,'rounded');
+						}
 					},
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
 						 alert(errorThrown + "\n\nIs web-server offline?");

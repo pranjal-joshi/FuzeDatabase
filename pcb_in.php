@@ -40,28 +40,28 @@
 										<td>".$epd105Row['sum_received']."</td>
 										<td>".$epd105Row['sum_accepted']."</td>
 										<td>".$epd105Row['sum_rejected']."</td>
-										<td>".$epd105Row['stock']."</td>
+										<td><b>".$epd105Row['stock']."</b></td>
 									</tr>
 									<tr>
 										<td>EPD 155</td>
 										<td>".$epd155Row['sum_received']."</td>
 										<td>".$epd155Row['sum_accepted']."</td>
 										<td>".$epd155Row['sum_rejected']."</td>
-										<td>".$epd155Row['stock']."</td>
+										<td><b>".$epd155Row['stock']."</b></td>
 									</tr>
 									<tr>
 										<td>TIME</td>
 										<td>".$timeRow['sum_received']."</td>
 										<td>".$timeRow['sum_accepted']."</td>
 										<td>".$timeRow['sum_rejected']."</td>
-										<td>".$timeRow['stock']."</td>
+										<td><b>".$timeRow['stock']."</b></td>
 									</tr>
 									<tr>
 										<td>PROX</td>
 										<td>".$proxRow['sum_received']."</td>
 										<td>".$proxRow['sum_accepted']."</td>
 										<td>".$proxRow['sum_rejected']."</td>
-										<td>".$proxRow['stock']."</td>
+										<td><b>".$proxRow['stock']."</b></td>
 									</tr>
 								</tbody>
 							</table><br><br>
@@ -124,5 +124,66 @@
 		}
 
 	}
-
 ?>
+
+<html>
+
+	<style type="text/css">
+			.inwardBody {
+				display: flex;
+				min-height: 100vh;
+				flex-direction: column;
+			}
+			.contents {
+				flex: 1;
+			}
+	</style>
+
+	<head>
+		<link rel='shortcut icon' type='image/x-icon' href='/FuzeDatabase/favicon.ico'/>
+		<link rel="stylesheet" type="text/css" href="materialize.min.css">
+		<link rel='stylesheet' href='/FuzeDatabase/jquery-ui.css'>
+
+		<script type="text/javascript" src="jquery.min.js"></script>
+		<script type="text/javascript" src="materialize.min.js"></script>
+		<script type="text/javascript" src="jquery.cookie.js"></script>
+		<script src='/FuzeDatabase/jquery-ui.js'></script>
+
+		<!-- Set responsive viewport -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<!-- Disable caching of browser -->
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+
+		<title>PCB Stock</title>
+	</head>
+
+	<body class="inwardBody">
+		<main class="contents">
+
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper teal lighten-2">
+					<a href="#!" class="brand-logo center" id="loginNavTitle">PCB Stock Availability</a>
+
+					<a><span class='white-text text-darken-5 left' style='font-size: 18px; padding-left: 20px; font-weight: bold' onclick='self.close();'>Back</span></a>
+				</div>
+			</nav>
+		</div>
+
+		<div class="row">
+			<div id="inwardTable">
+				<?php loadInwardTable($db); ?>
+			</div>
+		</div>
+
+	</main>
+	</body>
+
+	<script type="text/javascript">
+		
+	</script>
+
+</html>
