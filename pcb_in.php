@@ -4,6 +4,14 @@
 
 	include('pcb_batch.php');
 
+	function loadDate($db, $date, $fuze_type, $fuze_diameter, $vendor) {
+		$loadSql = "SELECT SUM(`received`) AS `sum_received`, SUM(`accepted`) AS `sum_accepted`, SUM(`rejected`) AS `sum_rejected`, SUM(`received`)-SUM(`accepted`)-SUM(`rejected`) AS `stock` FROM `pcb_inout` WHERE `fuze_type`='".$fuze_type."' AND `fuze_diameter`='".$fuze_diameter."' AND `vendor`='".$vendor."' AND `date`=STR_TO_DATE('".$date."','%e %M, %Y')";
+		$loadRes = mysqli_query($db, $loadSql);
+		$loadRow = mysqli_fetch_assoc($loadRes);
+		$loadData = array('received'=>$loadRow['sum_received'],'accepted'=>$loadRow['sum_accepted'],'rejected'=>$loadRow['sum_rejected']);
+		die(json_encode($loadData, JSON_NUMERIC_CHECK));
+	}
+
 	function loadInwardTable($db) {
 		$loadSql = "SELECT * FROM `pcb_inout` ORDER BY `date` DESC LIMIT 200";
 		$loadRes = mysqli_query($db, $loadSql);
@@ -24,6 +32,11 @@
 		$epd155Row = mysqli_fetch_assoc($epd155Res);
 
 		$html="<div class='row'>
+						<br>
+					  <center>
+							<span style='font-weight: bold; font-size: 20px' class='teal-text text-darken-2'>Stock Summary</span>
+						</center>
+						<br>
 						<table class='centered'>
 								<thead>
 									<tr>
@@ -64,7 +77,12 @@
 										<td><b>".$proxRow['stock']."</b></td>
 									</tr>
 								</tbody>
-							</table><br><br>
+							</table>
+							<br>
+						  <center>
+								<span style='font-weight: bold; font-size: 20px' class='teal-text text-darken-2'>Stock Records</span>
+							</center>
+							<br>
 							<table class='centered'>
 								<thead>
 									<tr>
@@ -115,14 +133,16 @@
 							";
 			$createRes = mysqli_query($db, $createSql);
 
-			$sql = "INSERT INTO `pcb_inout` (`_id`, `date`, `vendor`, `fuze_type`, `fuze_diameter`, `received`, `accepted`, `rejected`, `op_name`) VALUES (NULL, STR_TO_DATE('".$_POST['date']."','%e %M, %Y'), '".$_POST['vendor']."', '".$_POST['fuze_type']."', '".$_POST['fuze_diameter']."', '".$_POST['received']."', '".$_POST['accepted']."', '".$_POST['rejected']."', '".$_POST['op_name']."')";
+			$sql = "REPLACE INTO `pcb_inout` (`_id`, `date`, `vendor`, `fuze_type`, `fuze_diameter`, `received`, `accepted`, `rejected`, `op_name`) VALUES (NULL, STR_TO_DATE('".$_POST['date']."','%e %M, %Y'), '".$_POST['vendor']."', '".$_POST['fuze_type']."', '".$_POST['fuze_diameter']."', '".$_POST['received']."', '".$_POST['accepted']."', '".$_POST['rejected']."', '".$_POST['op_name']."')";
 			$res = mysqli_query($db, $sql);
 			loadInwardTable($db);
 		}
 		else if($_POST['type'] == 'load') {
 			loadInwardTable($db);
 		}
-
+		else if($_POST['type'] == 'loadDate') {
+			loadDate($db, $_POST['date'], $_POST['fuze_type'], $_POST['fuze_diameter'], $_POST['vendor']);
+		}
 	}
 ?>
 

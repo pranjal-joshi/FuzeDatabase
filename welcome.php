@@ -2555,6 +2555,10 @@
 				$('#qaDatePicker').val(getTodaysDate());
 				$('#inDatePicker').val(getTodaysDate());
 				loadInwardTable();
+				$('#inDatePicker').change(function(){loadInwardRecord()});
+				$('#in_fuze_type').change(function(){loadInwardRecord()});
+				$('#in_fuze_diameter').change(function(){loadInwardRecord()});
+				$('#in_vendor').change(function(){loadInwardRecord()});
 				break;
 			case '2':
 				$('#pcbTestingCard').fadeIn();
@@ -3505,6 +3509,10 @@
 					$('#qaDatePicker').val(getTodaysDate());
 					$('#inDatePicker').val(getTodaysDate());
 					loadInwardTable();
+					$('#inDatePicker').change(function(){loadInwardRecord()});
+					$('#in_fuze_type').change(function(){loadInwardRecord()});
+					$('#in_fuze_diameter').change(function(){loadInwardRecord()});
+					$('#in_vendor').change(function(){loadInwardRecord()});
 					break;
 				case '2':
 					$('#epdAtePcbCard').fadeIn();
@@ -3592,6 +3600,10 @@
 					$('#qaDatePicker').val(getTodaysDate());
 					$('#inDatePicker').val(getTodaysDate());
 					loadInwardTable();
+					$('#inDatePicker').change(function(){loadInwardRecord()});
+					$('#in_fuze_type').change(function(){loadInwardRecord()});
+					$('#in_fuze_diameter').change(function(){loadInwardRecord()});
+					$('#in_vendor').change(function(){loadInwardRecord()});
 					break;
 				case '2':
 					$('#timeAtePcbCard').fadeIn();
@@ -3932,6 +3944,34 @@
 				success: function(msg) {
 					console.log(msg);
 					$('#inwardTable').html(msg);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					 alert(errorThrown + "\n\nIs web-server offline?");
+				}
+			});
+		}
+
+		function loadInwardRecord() {
+			$.ajax({
+				url: 'pcb_in.php',
+				type: 'POST',
+				data: {
+					type: 'loadDate',
+					date: $('#inDatePicker').val(),
+					vendor: $('#in_vendor').val(),
+					fuze_type: $('#in_fuze_type').val(),
+					fuze_diameter: $('#in_fuze_diameter').val()
+				},
+				success: function(msg) {
+					console.log(msg);
+					jsonData = JSON.parse(msg);
+					$('#in_received').val(jsonData['received']);
+					$('#in_accepted').val(jsonData['accepted']);
+					$('#in_rejected').val(jsonData['rejected']);
+					$('#in_received').focus();
+					$('#in_accepted').focus();
+					$('#in_rejected').focus();
+					$('#in_rejected').blur();
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
 					 alert(errorThrown + "\n\nIs web-server offline?");
