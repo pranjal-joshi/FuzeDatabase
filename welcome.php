@@ -767,6 +767,7 @@
 							<ul>
 								<li><a href="batch_code.php" target="_blank" style="color: blue;">&#9672; PCB Batch Code Entry</a></li>
 								<li><a href="pcb_in.php" target="_blank" style="color: blue;">&#9672; PCB Stock Availability</a>
+								<li><a href="bom_in.php" target="_blank" style="color: blue;">&#9672; Manage BOM</a>
 							</ul>
 						</div>
 
